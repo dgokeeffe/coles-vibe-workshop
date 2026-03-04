@@ -1,0 +1,2314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vibe Coding Workshop — Databricks</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    /* === THEME VARIABLES === */
+    :root {
+      --db-lava:       #FF3621;
+      --db-lava-light: #FF5F46;
+      --db-navy:       #1B3139;
+      --db-ink:        #0B2026;
+      --db-teal:       #1B5162;
+      --db-green:      #00A972;
+      --db-oat:        #F9F7F4;
+      --db-oat-medium: #EEEDE9;
+      --db-oat-dark:   #DBD7CE;
+      --db-white:      #FFFFFF;
+
+      --bg-primary:    var(--db-oat);
+      --bg-secondary:  var(--db-white);
+      --bg-dark:       var(--db-navy);
+      --text-primary:  var(--db-ink);
+      --text-secondary: #4A5E68;
+      --text-on-dark:  var(--db-white);
+      --accent:        var(--db-lava);
+      --accent-hover:  #E02E1A;
+      --accent-glow:   rgba(255, 54, 33, 0.15);
+      --divider:       var(--db-oat-medium);
+
+      --font-display: 'DM Sans', sans-serif;
+      --font-body:    'DM Sans', sans-serif;
+      --font-mono:    'DM Mono', monospace;
+    }
+
+    /* === BASE RESET === */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-snap-type: y mandatory; }
+    body { font-family: var(--font-body); background: var(--bg-primary); color: var(--text-primary); overflow-x: hidden; }
+
+    /* === TYPOGRAPHY === */
+    h1 { font-family: var(--font-display); font-weight: 700; font-size: clamp(2.5rem, 5vw, 4.5rem); letter-spacing: -0.02em; line-height: 1.1; }
+    h2 { font-family: var(--font-display); font-weight: 700; font-size: clamp(1.8rem, 3.5vw, 3rem); letter-spacing: -0.01em; line-height: 1.2; }
+    h3 { font-family: var(--font-display); font-weight: 500; font-size: clamp(1.2rem, 2vw, 1.5rem); line-height: 1.3; }
+    p, li { font-family: var(--font-body); font-weight: 400; font-size: clamp(1rem, 1.5vw, 1.25rem); line-height: 1.6; }
+    code, .mono { font-family: var(--font-mono); font-weight: 400; font-size: 0.9em; }
+
+    /* === SLIDE CONTAINER === */
+    .slide {
+      min-height: 100vh;
+      padding: clamp(2rem, 5vw, 4rem) clamp(3rem, 8vw, 8rem);
+      scroll-snap-align: start;
+      display: flex; flex-direction: column;
+      justify-content: center;
+      position: relative; overflow: hidden;
+    }
+
+    /* === ENTRANCE ANIMATIONS === */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+    .slide.visible .reveal { opacity: 1; transform: translateY(0); }
+    .reveal:nth-child(1) { transition-delay: 0.1s; }
+    .reveal:nth-child(2) { transition-delay: 0.2s; }
+    .reveal:nth-child(3) { transition-delay: 0.3s; }
+    .reveal:nth-child(4) { transition-delay: 0.4s; }
+    .reveal:nth-child(5) { transition-delay: 0.5s; }
+    .reveal:nth-child(6) { transition-delay: 0.6s; }
+    .reveal:nth-child(7) { transition-delay: 0.7s; }
+
+    /* === PROGRESS BAR === */
+    .progress-bar { position: fixed; top: 0; left: 0; height: 3px; background: var(--accent); z-index: 100; transition: width 0.3s ease; }
+
+    /* === NAV DOTS === */
+    .nav-dots { position: fixed; right: 1.5rem; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 8px; z-index: 100; }
+    .nav-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--db-oat-medium); border: none; cursor: pointer; transition: all 0.3s ease; padding: 0; }
+    .nav-dot.active { background: var(--accent); transform: scale(1.4); }
+
+    /* === SLIDE NUMBER === */
+    .slide-number { position: fixed; bottom: 1.5rem; right: 2rem; font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-secondary); z-index: 100; opacity: 0.6; }
+
+    /* === DARK SLIDE === */
+    .slide-dark { background: var(--db-navy); color: var(--text-on-dark); }
+    .slide-dark h1, .slide-dark h2, .slide-dark h3, .slide-dark p, .slide-dark li { color: var(--text-on-dark); }
+    .slide-dark .text-muted { color: rgba(255,255,255,0.65); }
+
+    /* === LIGHT SLIDE === */
+    .slide-light { background: var(--db-oat); }
+    .slide-white { background: var(--db-white); }
+
+    /* === ACCENT TEXT === */
+    .text-lava { color: var(--db-lava); }
+    .text-green { color: var(--db-green); }
+    .text-teal { color: var(--db-teal); }
+    .text-muted { color: var(--text-secondary); }
+
+    /* === ACCENT LINE === */
+    .accent-line { width: 60px; height: 4px; background: var(--db-lava); border-radius: 2px; margin-bottom: 1.5rem; }
+    .accent-line-white { width: 60px; height: 4px; background: var(--db-white); border-radius: 2px; margin-bottom: 1.5rem; }
+
+    /* === SUBTITLE === */
+    .subtitle { font-weight: 400; color: var(--text-secondary); font-size: clamp(1.1rem, 2vw, 1.5rem); margin-top: 0.75rem; }
+    .slide-dark .subtitle { color: rgba(255,255,255,0.7); }
+
+    /* === META === */
+    .meta { font-family: var(--font-mono); font-size: 0.9rem; color: var(--text-secondary); margin-top: 2rem; }
+    .slide-dark .meta { color: rgba(255,255,255,0.5); }
+
+    /* === CARD GRID === */
+    .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
+    .card {
+      background: var(--db-white);
+      border: 1px solid var(--db-oat-medium);
+      border-radius: 12px;
+      padding: 1.5rem;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+    .card-icon { font-size: 2rem; margin-bottom: 0.75rem; }
+    .card h3 { margin-bottom: 0.5rem; color: var(--db-ink); }
+    .card p { color: var(--text-secondary); font-size: 0.95rem; }
+
+    .slide-dark .card { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.12); }
+    .slide-dark .card h3 { color: var(--db-white); }
+    .slide-dark .card p { color: rgba(255,255,255,0.65); }
+
+    /* === TWO COLUMN === */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; margin-top: 2rem; }
+    @media (max-width: 900px) { .two-col { grid-template-columns: 1fr; gap: 1.5rem; } }
+
+    /* === THREE COLUMN === */
+    .three-col { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 2rem; }
+    @media (max-width: 900px) { .three-col { grid-template-columns: 1fr; } }
+
+    /* === TIMELINE === */
+    .timeline { list-style: none; margin-top: 1.5rem; }
+    .timeline li { display: flex; gap: 1rem; margin-bottom: 1rem; align-items: flex-start; }
+    .timeline-time { font-family: var(--font-mono); font-weight: 500; font-size: 0.85rem; color: var(--db-lava); min-width: 100px; padding-top: 2px; }
+    .timeline-content h3 { font-size: 1.05rem; margin-bottom: 0.15rem; }
+    .timeline-content p { font-size: 0.9rem; color: var(--text-secondary); }
+    .slide-dark .timeline-content p { color: rgba(255,255,255,0.6); }
+
+    /* === BULLET LIST === */
+    .bullet-list { list-style: none; margin-top: 1rem; }
+    .bullet-list li { position: relative; padding-left: 1.5rem; margin-bottom: 0.75rem; font-size: clamp(0.95rem, 1.3vw, 1.15rem); }
+    .bullet-list li::before { content: ''; position: absolute; left: 0; top: 0.55em; width: 8px; height: 8px; background: var(--db-lava); border-radius: 2px; }
+    .slide-dark .bullet-list li::before { background: var(--db-lava-light); }
+
+    /* === NUMBERED LIST === */
+    .num-list { list-style: none; counter-reset: numlist; margin-top: 1rem; }
+    .num-list li { counter-increment: numlist; position: relative; padding-left: 2.5rem; margin-bottom: 1rem; font-size: clamp(0.95rem, 1.3vw, 1.15rem); }
+    .num-list li::before {
+      content: counter(numlist);
+      position: absolute; left: 0; top: -0.05em;
+      width: 1.8rem; height: 1.8rem;
+      background: var(--accent-glow); color: var(--db-lava);
+      font-family: var(--font-mono); font-weight: 700; font-size: 0.85rem;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 6px;
+    }
+
+    /* === CODE BLOCK === */
+    .code-block {
+      background: var(--db-navy);
+      border-radius: 10px;
+      padding: 1.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      line-height: 1.7;
+      color: #E0E0E0;
+      overflow-x: auto;
+      margin-top: 1rem;
+    }
+    .code-block .comment { color: #6A9955; }
+    .code-block .keyword { color: #569CD6; }
+    .code-block .string { color: #CE9178; }
+    .code-block .function { color: #DCDCAA; }
+    .code-block .type { color: #4EC9B0; }
+
+    /* === DIAGRAM === */
+    .diagram-box {
+      background: var(--db-white);
+      border: 2px solid var(--db-oat-medium);
+      border-radius: 12px;
+      padding: 2rem;
+      text-align: center;
+      margin-top: 1.5rem;
+    }
+    .slide-dark .diagram-box { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.15); }
+
+    .arch-flow { display: flex; align-items: center; justify-content: center; gap: 0.5rem; flex-wrap: wrap; margin: 1rem 0; }
+    .arch-node {
+      background: var(--db-white);
+      border: 2px solid var(--db-oat-dark);
+      border-radius: 10px;
+      padding: 0.75rem 1.25rem;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      font-weight: 500;
+      text-align: center;
+      min-width: 120px;
+    }
+    .arch-node-accent { border-color: var(--db-lava); background: var(--accent-glow); color: var(--db-ink); }
+    .arch-node-teal { border-color: var(--db-teal); background: rgba(27,81,98,0.08); }
+    .arch-node-green { border-color: var(--db-green); background: rgba(0,169,114,0.08); }
+    .arch-node-navy { border-color: var(--db-navy); background: rgba(27,49,57,0.06); }
+    .arch-arrow { font-size: 1.5rem; color: var(--db-oat-dark); font-weight: 300; }
+
+    .slide-dark .arch-node { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.25); color: var(--db-white); }
+    .slide-dark .arch-node-accent { border-color: var(--db-lava); background: rgba(255,54,33,0.15); }
+    .slide-dark .arch-node-teal { border-color: #2D8DAD; background: rgba(45,141,173,0.15); }
+    .slide-dark .arch-node-green { border-color: var(--db-green); background: rgba(0,169,114,0.15); }
+    .slide-dark .arch-arrow { color: rgba(255,255,255,0.3); }
+
+    /* === VERTICAL ARCH FLOW === */
+    .arch-flow-vertical { display: flex; flex-direction: column; align-items: center; gap: 0.25rem; margin: 1rem 0; }
+    .arch-arrow-down { font-size: 1.2rem; color: var(--db-oat-dark); transform: rotate(90deg); }
+    .slide-dark .arch-arrow-down { color: rgba(255,255,255,0.3); }
+
+    /* === BIG NUMBER === */
+    .big-number { font-family: var(--font-display); font-weight: 700; font-size: clamp(3rem, 6vw, 5rem); color: var(--db-lava); line-height: 1; }
+
+    /* === QUOTE === */
+    .quote-block { position: relative; padding-left: 2rem; margin: 1.5rem 0; }
+    .quote-block::before { content: '\201C'; position: absolute; left: -0.5rem; top: -1.5rem; font-size: 5rem; color: var(--db-lava); opacity: 0.2; font-family: Georgia, serif; }
+    .quote-text { font-size: clamp(1.2rem, 2vw, 1.6rem); font-style: italic; line-height: 1.5; }
+    .quote-author { font-family: var(--font-mono); font-size: 0.9rem; color: var(--text-secondary); margin-top: 0.75rem; }
+    .slide-dark .quote-author { color: rgba(255,255,255,0.5); }
+
+    /* === TAG === */
+    .tag { display: inline-block; padding: 0.25rem 0.75rem; border-radius: 20px; font-family: var(--font-mono); font-size: 0.75rem; font-weight: 500; margin-right: 0.5rem; margin-bottom: 0.5rem; }
+    .tag-lava { background: var(--accent-glow); color: var(--db-lava); }
+    .tag-teal { background: rgba(27,81,98,0.1); color: var(--db-teal); }
+    .tag-green { background: rgba(0,169,114,0.1); color: var(--db-green); }
+    .tag-navy { background: rgba(27,49,57,0.08); color: var(--db-navy); }
+
+    /* === SECTION NUMBER === */
+    .section-num { font-family: var(--font-mono); font-weight: 700; font-size: 0.8rem; color: var(--db-lava); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.75rem; }
+    .slide-dark .section-num { color: var(--db-lava-light); }
+
+    /* === LOGO === */
+    .db-logo { height: 32px; width: auto; }
+    .db-logo-large { height: 48px; width: auto; }
+
+    /* === ACCESSIBILITY === */
+    @media (prefers-reduced-motion: reduce) {
+      .reveal { transition: opacity 0.3s ease; transform: none; }
+      html { scroll-behavior: auto; }
+    }
+
+    /* === RESPONSIVE === */
+    @media (max-width: 768px) {
+      .nav-dots { display: none; }
+      .slide { padding: 1.5rem; }
+      .card-grid { grid-template-columns: 1fr; }
+      .three-col { grid-template-columns: 1fr; }
+    }
+
+    /* === SPECTRUM BAR === */
+    .spectrum { display: flex; border-radius: 8px; overflow: hidden; margin: 1rem 0; height: 48px; }
+    .spectrum-seg { flex: 1; display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: 0.7rem; font-weight: 500; color: white; }
+
+    /* === TABLE === */
+    .clean-table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+    .clean-table th, .clean-table td { padding: 0.75rem 1rem; text-align: left; font-size: 0.95rem; border-bottom: 1px solid var(--db-oat-medium); }
+    .clean-table th { font-weight: 700; color: var(--db-ink); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; }
+    .slide-dark .clean-table th { color: rgba(255,255,255,0.6); }
+    .slide-dark .clean-table td { color: var(--db-white); border-bottom-color: rgba(255,255,255,0.1); }
+
+    /* === STEP FLOW === */
+    .step-flow { display: flex; gap: 1rem; margin-top: 1.5rem; flex-wrap: wrap; }
+    .step-item { flex: 1; min-width: 180px; background: var(--db-white); border: 1px solid var(--db-oat-medium); border-radius: 10px; padding: 1.25rem; position: relative; }
+    .step-item .step-num { font-family: var(--font-mono); font-weight: 700; font-size: 1.5rem; color: var(--db-lava); margin-bottom: 0.5rem; }
+    .step-item h3 { font-size: 1rem; margin-bottom: 0.25rem; }
+    .step-item p { font-size: 0.85rem; color: var(--text-secondary); }
+    .slide-dark .step-item { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.12); }
+    .slide-dark .step-item h3 { color: var(--db-white); }
+    .slide-dark .step-item p { color: rgba(255,255,255,0.6); }
+
+    /* === CHECKLIST === */
+    .checklist { list-style: none; margin-top: 1rem; }
+    .checklist li { padding: 0.5rem 0 0.5rem 2rem; position: relative; font-size: 1rem; }
+    .checklist li::before { content: ''; position: absolute; left: 0; top: 0.65em; width: 16px; height: 16px; border: 2px solid var(--db-oat-dark); border-radius: 4px; }
+  </style>
+</head>
+<body>
+  <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+  <nav class="nav-dots" aria-label="Slide navigation"></nav>
+  <div class="slide-number"></div>
+
+  <!-- ============================================================ -->
+  <!-- SLIDE 1: TITLE -->
+  <!-- ============================================================ -->
+  <section class="slide slide-dark" aria-label="Title">
+    <div style="position:absolute;top:0;left:0;width:100%;height:100%;overflow:hidden;pointer-events:none;">
+      <div style="position:absolute;right:-80px;top:-80px;width:400px;height:400px;border:2px solid rgba(255,54,33,0.08);border-radius:50%;"></div>
+      <div style="position:absolute;right:-40px;top:-40px;width:320px;height:320px;border:2px solid rgba(255,54,33,0.05);border-radius:50%;"></div>
+      <div style="position:absolute;left:-120px;bottom:-120px;width:500px;height:500px;border:2px solid rgba(255,255,255,0.03);border-radius:50%;"></div>
+    </div>
+    <div class="reveal">
+      <svg class="db-logo-large" viewBox="0 0 180 36" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Databricks">
+        <path d="M0 9l15 8.5L30 9l-15-8.5L0 9z" fill="var(--db-lava)"/>
+        <path d="M0 18l15 8.5L30 18l-15-8.5L0 18z" fill="var(--db-lava)" opacity="0.7"/>
+        <path d="M0 27l15 8.5L30 27l-15-8.5L0 27z" fill="var(--db-lava)" opacity="0.4"/>
+        <text x="38" y="25" font-family="'DM Sans', sans-serif" font-weight="700" font-size="20" fill="white">databricks</text>
+      </svg>
+    </div>
+    <h1 class="reveal" style="margin-top:2rem;">Vibe Coding</h1>
+    <p class="reveal subtitle" style="font-size:clamp(1.3rem,2.5vw,2rem);margin-top:0.5rem;">Agentic Software Development<br>with Databricks</p>
+    <div class="reveal" style="width:60px;height:4px;background:var(--db-lava);border-radius:2px;margin-top:1.5rem;"></div>
+    <div class="reveal meta" style="margin-top:1.5rem;">
+      Coles Group &middot; Data & AI Engineering Team
+    </div>
+    <div class="reveal meta" style="margin-top:0.5rem;">
+      David O'Keeffe &middot; Solutions Architect, Databricks
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SLIDE 2: AGENDA -->
+  <!-- ============================================================ -->
+  <section class="slide slide-light" aria-label="Agenda">
+    <div class="reveal section-num">Full Day Workshop</div>
+    <h2 class="reveal">Today's Agenda</h2>
+    <div class="reveal accent-line"></div>
+    <div class="reveal two-col" style="margin-top:1rem;">
+      <div>
+        <h3 style="color:var(--db-teal);margin-bottom:1rem;">Morning: Foundations</h3>
+        <ul class="timeline">
+          <li><span class="timeline-time">9:00 AM</span><div class="timeline-content"><h3>Welcome & The Paradigm Shift</h3><p>What is vibe coding? Live demo</p></div></li>
+          <li><span class="timeline-time">9:30 AM</span><div class="timeline-content"><h3>Session 1: Thinking in Specs</h3><p>PRDs, CLAUDE.md, encoding standards</p></div></li>
+          <li><span class="timeline-time">10:15 AM</span><div class="timeline-content"><h3 style="color:var(--text-secondary);">Break</h3></div></li>
+          <li><span class="timeline-time">10:30 AM</span><div class="timeline-content"><h3>Session 2: TDD + Agents</h3><p>Test-driven agentic development</p></div></li>
+          <li><span class="timeline-time">11:15 AM</span><div class="timeline-content"><h3 style="color:var(--db-green);">Lab 1: Data Pipeline</h3><p>75 min hands-on build</p></div></li>
+        </ul>
+      </div>
+      <div>
+        <h3 style="color:var(--db-teal);margin-bottom:1rem;">Afternoon: Build & Ship</h3>
+        <ul class="timeline">
+          <li><span class="timeline-time">12:30 PM</span><div class="timeline-content"><h3 style="color:var(--text-secondary);">Lunch</h3></div></li>
+          <li><span class="timeline-time">1:30 PM</span><div class="timeline-content"><h3>Session 3: Human-AI Partnership</h3><p>When to steer vs. delegate</p></div></li>
+          <li><span class="timeline-time">2:15 PM</span><div class="timeline-content"><h3>Session 4: Production Patterns</h3><p>AI Gateway, MLflow, Unity Catalog</p></div></li>
+          <li><span class="timeline-time">3:00 PM</span><div class="timeline-content"><h3 style="color:var(--text-secondary);">Break</h3></div></li>
+          <li><span class="timeline-time">3:15 PM</span><div class="timeline-content"><h3 style="color:var(--db-green);">Lab 2: Full-Stack App</h3><p>75 min capstone challenge</p></div></li>
+          <li><span class="timeline-time">4:30 PM</span><div class="timeline-content"><h3>Wrap-Up & Next Steps</h3><p>Demos, reflection, roadmap</p></div></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SLIDE 3: SECTION DIVIDER — THE PARADIGM SHIFT -->
+  <!-- ============================================================ -->
+  <section class="slide slide-dark" aria-label="Section: The Paradigm Shift">
+    <div class="reveal section-num">9:00 AM</div>
+    <h1 class="reveal">The Paradigm Shift</h1>
+    <p class="reveal subtitle">From writing code to directing AI agents</p>
+    <div class="reveal accent-line" style="background:var(--db-lava-light);margin-top:1.5rem;"></div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SLIDE 4: WHAT IS VIBE CODING -->
+  <!-- ============================================================ -->
+  <section class="slide slide-light" aria-label="What is Vibe Coding">
+    <div class="reveal section-num">The Shift</div>
+    <h2 class="reveal">What is Vibe Coding?</h2>
+    <div class="reveal accent-line"></div>
+    <div class="reveal quote-block" style="margin-top:1.5rem;">
+      <p class="quote-text">"There's a new kind of coding I call 'vibe coding', where you fully give in to the vibes, embrace exponentials, and forget that the code even exists."</p>
+      <p class="quote-author">— Andrej Karpathy, February 2025</p>
+    </div>
+    <div class="reveal two-col" style="margin-top:2rem;">
+      <div class="card" style="border-left:3px solid var(--db-oat-dark);">
+        <h3>Traditional Development</h3>
+        <ul class="bullet-list" style="margin-top:0.5rem;">
+          <li>Human writes every line</li>
+          <li>Slow iteration cycles</li>
+          <li>Knowledge bottlenecks</li>
+          <li>Context switching overhead</li>
+        </ul>
+      </div>
+      <div class="card" style="border-left:3px solid var(--db-lava);">
+        <h3>Agentic Development</h3>
+        <ul class="bullet-list" style="margin-top:0.5rem;">
+          <li>Human directs, agent implements</li>
+          <li>Tight feedback loops</li>
+          <li>Specs as leverage multipliers</li>
+          <li>10x amplification, not replacement</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SLIDE 5: THE PLATFORM — Coding Agents App Architecture -->
+  <!-- ============================================================ -->
+  <section class="slide slide-white" aria-label="Platform Architecture">
+    <div class="reveal section-num">Your Environment</div>
+    <h2 class="reveal">Coding Agents Databricks App</h2>
+    <div class="reveal accent-line"></div>
+    <p class="reveal text-muted" style="max-width:600px;">A browser-based terminal running AI coding agents — no local installation required. Everything runs on Databricks.</p>
+
+    <div class="reveal diagram-box" style="margin-top:1.5rem;">
+      <div class="arch-flow">
+        <div class="arch-node arch-node-accent" style="min-width:150px;">
+          <div style="font-size:1.2rem;margin-bottom:0.25rem;">&#x1F4BB;</div>
+          Browser<br><span style="font-size:0.7rem;opacity:0.7;">xterm.js terminal</span>
+        </div>
+        <div class="arch-arrow">&rarr;</div>
+        <div class="arch-node arch-node-teal" style="min-width:170px;">
+          <div style="font-size:1.2rem;margin-bottom:0.25rem;">&#x2699;&#xFE0F;</div>
+          Databricks App<br><span style="font-size:0.7rem;opacity:0.7;">Flask + Gunicorn</span>
+        </div>
+        <div class="arch-arrow">&rarr;</div>
+        <div class="arch-node" style="min-width:160px;">
+          <div style="font-size:1.2rem;margin-bottom:0.25rem;">&#x1F916;</div>
+          AI Agents<br><span style="font-size:0.7rem;opacity:0.7;">Claude Code / OpenCode</span>
+        </div>
+        <div class="arch-arrow">&rarr;</div>
+        <div class="arch-node arch-node-green" style="min-width:150px;">
+          <div style="font-size:1.2rem;margin-bottom:0.25rem;">&#x1F310;</div>
+          AI Gateway<br><span style="font-size:0.7rem;opacity:0.7;">Route &middot; Limit &middot; Trace</span>
+        </div>
+      </div>
+      <div style="display:flex;gap:1rem;justify-content:center;margin-top:1rem;flex-wrap:wrap;">
+        <span class="tag tag-lava">39 Pre-built Skills</span>
+        <span class="tag tag-teal">MCP Servers</span>
+        <span class="tag tag-green">MLflow Tracing</span>
+        <span class="tag tag-navy">Unity Catalog</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SLIDE 6: LEARNING OBJECTIVES -->
+  <!-- ============================================================ -->
+  <section class="slide slide-light" aria-label="Learning Objectives">
+    <div class="reveal section-num">By End of Day</div>
+    <h2 class="reveal">What You'll Learn</h2>
+    <div class="reveal accent-line"></div>
+    <div class="reveal card-grid">
+      <div class="card">
+        <div class="card-icon">&#x1F4DD;</div>
+        <h3>Write Effective PRDs</h3>
+        <p>Specifications that guide AI agents to build what you actually want</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#x1F4CB;</div>
+        <h3>CLAUDE.md Files</h3>
+        <p>Encode team standards as institutional memory for agents</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#x2705;</div>
+        <h3>TDD + Agents</h3>
+        <p>Use tests as unambiguous specs for dramatically better results</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#x1F3AF;</div>
+        <h3>Steer vs. Delegate</h3>
+        <p>Know when to direct the agent and when to let it work</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#x1F680;</div>
+        <h3>Build & Deploy</h3>
+        <p>Ship a working app on Databricks using agentic tools</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#x1F504;</div>
+        <h3>Daily Workflow</h3>
+        <p>Apply these patterns to pipelines, ML, web apps, and CI</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SLIDE 7: SECTION DIVIDER — SESSION 1 -->
+  <!-- ============================================================ -->
+  <section class="slide slide-dark" aria-label="Section: Session 1">
+    <div class="reveal section-num">Session 1 &middot; 9:30 AM</div>
+    <h1 class="reveal">Thinking in Specs</h1>
+    <p class="reveal subtitle">PRDs, CLAUDE.md, and the art of directing agents</p>
+    <div class="reveal accent-line" style="background:var(--db-lava-light);margin-top:1.5rem;"></div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SLIDE 8: WHY SPECS MATTER MORE -->
+  <!-- ============================================================ -->
+  <section class="slide slide-light" aria-label="Why Specs Matter">
+    <div class="reveal section-num">Session 1</div>
+    <h2 class="reveal">Why Specs Matter <span class="text-lava">More</span> with AI</h2>
+    <div class="reveal accent-line"></div>
+    <p class="reveal" style="font-size:clamp(1.1rem,1.8vw,1.4rem);max-width:700px;margin-top:0.5rem;">Garbage in, garbage out — but now at <strong>100x speed</strong>. Clear specs are your highest-leverage activity.</p>
+    <div class="reveal card-grid" style="margin-top:1.5rem;">
+      <div class="card">
+        <h3>A Good PRD Includes</h3>
+        <ul class="bullet-list" style="margin-top:0.5rem;">
+          <li>Clear acceptance criteria</li>
+          <li>Constraints & non-functional requirements</li>
+          <li>Data contracts and interfaces</li>
+          <li>Example inputs & expected outputs</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>CLAUDE.md Encodes</h3>
+        <ul class="bullet-list" style="margin-top:0.5rem;">
+          <li>Coding standards & patterns</li>
+          <li>Architectural decisions</li>
+          <li>Testing requirements</li>
+          <li>Tool and framework preferences</li>
+        </ul>
+      </div>
+    </div>
+    <div class="reveal" style="margin-top:1.5rem;">
+      <span class="tag tag-lava">Repository-level</span>
+      <span class="tag tag-teal">Project-level</span>
+      <span class="tag tag-green">User-level</span>
+      <span class="tag tag-navy">Evolve over time</span>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SLIDE 9: CLAUDE.MD EXAMPLE -->
+  <!-- ============================================================ -->
+  <section class="slide slide-white" aria-label="CLAUDE.md Example">
+    <div class="reveal section-num">Session 1</div>
+    <h2 class="reveal">CLAUDE.md in Action</h2>
+    <div class="reveal accent-line"></div>
+    <div class="reveal two-col">
+      <div>
+        <p style="margin-bottom:1rem;">A single file that shapes every line the agent writes. Add one rule — change all future output.</p>
+        <ul class="bullet-list">
+          <li><strong>Repository-level:</strong> team standards, architecture</li>
+          <li><strong>Project-level:</strong> specific patterns for this app</li>
+          <li><strong>User-level:</strong> personal preferences</li>
+        </ul>
+        <div style="margin-top:1.5rem;padding:1rem;background:var(--accent-glow);border-radius:8px;border-left:3px solid var(--db-lava);">
+          <p style="font-size:0.9rem;"><strong>Exercise:</strong> Write a CLAUDE.md for one of your current projects. 10 minutes.</p>
+        </div>
+      </div>
+      <div class="code-block" style="font-size:0.78rem;">
+<span class="comment"># CLAUDE.md</span>
+
+<span class="comment">## Tech Stack</span>
+<span class="keyword">-</span> Use <span class="type">PySpark</span> for all data processing
+<span class="keyword">-</span> All functions must have <span class="type">type hints</span>
+<span class="keyword">-</span> Tables use Unity Catalog:
+  <span class="string">workshop_vibe_coding.&lt;schema&gt;</span>
+
+<span class="comment">## Data Standards</span>
+<span class="keyword">-</span> Date columns: <span class="type">DATE</span>, YYYY-MM-DD
+<span class="keyword">-</span> Currency: <span class="type">DECIMAL(12,2)</span>
+<span class="keyword">-</span> All tables: <span class="function">processing_timestamp</span>
+<span class="keyword">-</span> Gold tables: partitioned by date
+
+<span class="comment">## Testing</span>
+<span class="keyword">-</span> pytest with PySpark fixtures
+<span class="keyword">-</span> Small DataFrames (5-10 rows)
+<span class="keyword">-</span> Assert schema, counts, values
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SESSION 1: ANATOMY OF A GREAT PRD -->
+  <!-- ============================================================ -->
+  <section class="slide slide-white" aria-label="Anatomy of a Great PRD">
+    <div class="reveal section-num">Session 1</div>
+    <h2 class="reveal">Anatomy of a Great PRD</h2>
+    <p class="reveal" style="color:var(--text-secondary);margin-bottom:2rem;">Every effective PRD for agentic development has four essential sections.</p>
+    <div class="reveal card-grid" style="grid-template-columns:repeat(2, 1fr);">
+      <div class="card">
+        <span class="tag tag-lava">1. Acceptance Criteria</span>
+        <h3 style="margin-top:0.75rem;">Definition of Done</h3>
+        <ul class="bullet-list" style="margin-top:0.5rem;">
+          <li>Specific, testable outcomes</li>
+          <li>"The API returns 200 with valid JSON"</li>
+          <li>"All tests pass with >90% coverage"</li>
+          <li>Agent knows exactly when to stop</li>
+        </ul>
+      </div>
+      <div class="card">
+        <span class="tag tag-teal">2. Constraints</span>
+        <h3 style="margin-top:0.75rem;">Non-Functional Requirements</h3>
+        <ul class="bullet-list" style="margin-top:0.5rem;">
+          <li>Language, framework, version</li>
+          <li>"Use FastAPI, not Flask"</li>
+          <li>"Python 3.10+, PySpark 3.5"</li>
+          <li>Security, performance boundaries</li>
+        </ul>
+      </div>
+      <div class="card">
+        <span class="tag tag-green">3. Data Contracts</span>
+        <h3 style="margin-top:0.75rem;">Interfaces &amp; Schemas</h3>
+        <ul class="bullet-list" style="margin-top:0.5rem;">
+          <li>Input/output schemas</li>
+          <li>Table schemas with column types</li>
+          <li>API request/response shapes</li>
+          <li>Error response formats</li>
+        </ul>
+      </div>
+      <div class="card">
+        <span class="tag tag-navy">4. Examples</span>
+        <h3 style="margin-top:0.75rem;">Concrete Input/Output</h3>
+        <ul class="bullet-list" style="margin-top:0.5rem;">
+          <li>Sample inputs &amp; expected outputs</li>
+          <li>"Given X, return Y"</li>
+          <li>Edge cases to handle</li>
+          <li>The more examples, the better</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SESSION 1: GOOD VS BAD PRD -->
+  <!-- ============================================================ -->
+  <section class="slide slide-light" aria-label="Good vs Bad PRD">
+    <div class="reveal section-num">Session 1</div>
+    <h2 class="reveal">Good vs Bad: PRD Comparison</h2>
+    <p class="reveal" style="color:var(--text-secondary);margin-bottom:1.5rem;">Garbage in, garbage out &mdash; at 100x speed. Precision matters more than ever.</p>
+    <div class="reveal two-col" style="gap:2rem;">
+      <div class="card" style="border-left:3px solid #dc2626;">
+        <span class="tag" style="background:rgba(220,38,38,0.1);color:#dc2626;">Vague PRD</span>
+        <div class="code-block" style="margin-top:1rem;font-size:0.85rem;">
+<span class="comment"># Bad: too vague</span>
+Build a dashboard that shows
+store metrics. Make it look nice.
+Use Python.
+        </div>
+        <ul class="bullet-list" style="margin-top:1rem;font-size:0.9rem;">
+          <li>No acceptance criteria</li>
+          <li>No specific framework</li>
+          <li>No data schema defined</li>
+          <li>"Look nice" is subjective</li>
+        </ul>
+      </div>
+      <div class="card" style="border-left:3px solid var(--db-green);">
+        <span class="tag tag-green">Precise PRD</span>
+        <div class="code-block" style="margin-top:1rem;font-size:0.85rem;">
+<span class="comment"># Good: specific and testable</span>
+<span class="keyword">Backend:</span> FastAPI with Pydantic models
+<span class="keyword">Frontend:</span> HTML + Tailwind + htmx
+<span class="keyword">Endpoint:</span> GET /api/metrics
+  <span class="keyword">Returns:</span> {store_id, date,
+    revenue: DECIMAL(12,2),
+    txn_count: INT}
+<span class="keyword">Tests:</span> pytest + httpx, 90% coverage
+        </div>
+        <ul class="bullet-list" style="margin-top:1rem;font-size:0.9rem;">
+          <li>Specific tech stack</li>
+          <li>Defined data contracts</li>
+          <li>Testable requirements</li>
+          <li>Clear "definition of done"</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SESSION 1: CLAUDE.MD SCOPE LEVELS -->
+  <!-- ============================================================ -->
+  <section class="slide slide-white" aria-label="CLAUDE.md Scope Levels">
+    <div class="reveal section-num">Session 1</div>
+    <h2 class="reveal">CLAUDE.md: Three Scope Levels</h2>
+    <p class="reveal" style="color:var(--text-secondary);margin-bottom:1.5rem;">Instructions cascade from global to project-specific. More specific rules override general ones.</p>
+    <div class="reveal" style="display:flex;flex-direction:column;gap:1.25rem;max-width:56rem;">
+      <div class="card" style="border-left:3px solid var(--db-teal);display:flex;align-items:flex-start;gap:1.5rem;">
+        <div style="min-width:140px;">
+          <span class="tag tag-teal">User-Level</span>
+          <div style="font-family:var(--font-mono);font-size:0.8rem;color:var(--text-secondary);margin-top:0.25rem;">~/.claude/CLAUDE.md</div>
+        </div>
+        <div>
+          <h3 style="margin-bottom:0.25rem;">Personal Preferences</h3>
+          <p style="font-size:0.9rem;color:var(--text-secondary);">Your coding style, preferred tools, git conventions. "Always use uv run for Python." "Use imperative mood in commits."</p>
+        </div>
+      </div>
+      <div style="text-align:center;color:var(--db-oat-dark);font-size:1.5rem;">&#x25BC;</div>
+      <div class="card" style="border-left:3px solid var(--db-lava);display:flex;align-items:flex-start;gap:1.5rem;">
+        <div style="min-width:140px;">
+          <span class="tag tag-lava">Repo-Level</span>
+          <div style="font-family:var(--font-mono);font-size:0.8rem;color:var(--text-secondary);margin-top:0.25rem;">./CLAUDE.md</div>
+        </div>
+        <div>
+          <h3 style="margin-bottom:0.25rem;">Team Standards</h3>
+          <p style="font-size:0.9rem;color:var(--text-secondary);">Architecture decisions, testing patterns, dependencies. "Use PySpark for all data processing." "All tables in Unity Catalog."</p>
+        </div>
+      </div>
+      <div style="text-align:center;color:var(--db-oat-dark);font-size:1.5rem;">&#x25BC;</div>
+      <div class="card" style="border-left:3px solid var(--db-green);display:flex;align-items:flex-start;gap:1.5rem;">
+        <div style="min-width:140px;">
+          <span class="tag tag-green">Project-Level</span>
+          <div style="font-family:var(--font-mono);font-size:0.8rem;color:var(--text-secondary);margin-top:0.25rem;">./src/CLAUDE.md</div>
+        </div>
+        <div>
+          <h3 style="margin-bottom:0.25rem;">Module-Specific Rules</h3>
+          <p style="font-size:0.9rem;color:var(--text-secondary);">Component-specific patterns and constraints. "All API endpoints return JSON." "Use Pydantic models for validation."</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SESSION 1: WHAT TO PUT IN CLAUDE.MD -->
+  <!-- ============================================================ -->
+  <section class="slide slide-light" aria-label="What to Put in CLAUDE.md">
+    <div class="reveal section-num">Session 1</div>
+    <h2 class="reveal">What to Put in Your CLAUDE.md</h2>
+    <div class="reveal two-col" style="margin-top:1.5rem;gap:2rem;">
+      <div>
+        <div class="card" style="margin-bottom:1rem;">
+          <span class="tag tag-green">Include</span>
+          <ul class="bullet-list" style="margin-top:0.75rem;">
+            <li><strong>Architecture decisions</strong> &mdash; "Medallion architecture: bronze/silver/gold"</li>
+            <li><strong>Coding standards</strong> &mdash; "All functions must have type hints"</li>
+            <li><strong>Testing patterns</strong> &mdash; "pytest with PySpark fixtures, 5-10 row DataFrames"</li>
+            <li><strong>Data standards</strong> &mdash; "DATE type for dates, DECIMAL(12,2) for currency"</li>
+            <li><strong>Dependencies</strong> &mdash; "Use databricks-sql-connector, not raw JDBC"</li>
+            <li><strong>Deploy patterns</strong> &mdash; "Package with DABs, deploy via CI/CD"</li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <div class="card" style="margin-bottom:1rem;">
+          <span class="tag" style="background:rgba(220,38,38,0.1);color:#dc2626;">Avoid</span>
+          <ul class="bullet-list" style="margin-top:0.75rem;">
+            <li><strong>Obvious things</strong> &mdash; "Write clean code" (too vague)</li>
+            <li><strong>Temporary context</strong> &mdash; "Fix the bug in line 42" (use prompts)</li>
+            <li><strong>Contradictions</strong> &mdash; Conflicting rules confuse the agent</li>
+            <li><strong>Overly rigid rules</strong> &mdash; Don't micromanage every decision</li>
+            <li><strong>Stale info</strong> &mdash; Remove rules that no longer apply</li>
+          </ul>
+        </div>
+        <div class="reveal" style="padding:1rem 1.25rem;background:rgba(0,169,114,0.08);border-radius:8px;border-left:3px solid var(--db-green);">
+          <p style="font-size:0.9rem;"><strong>Rule of thumb:</strong> If you've corrected the agent on the same thing twice, add it to CLAUDE.md.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SESSION 1: EVOLVING YOUR STANDARDS -->
+  <!-- ============================================================ -->
+  <section class="slide slide-white" aria-label="Evolving Your Standards">
+    <div class="reveal section-num">Session 1</div>
+    <h2 class="reveal">Evolving CLAUDE.md Over Time</h2>
+    <p class="reveal" style="color:var(--text-secondary);margin-bottom:1.5rem;">Your CLAUDE.md is a living document. It grows as you learn what works.</p>
+    <div class="reveal" style="display:flex;gap:1rem;align-items:stretch;">
+      <div class="card" style="flex:1;text-align:center;">
+        <div style="font-size:2rem;margin-bottom:0.5rem;">1</div>
+        <h3>Start Minimal</h3>
+        <p style="font-size:0.9rem;color:var(--text-secondary);margin-top:0.5rem;">Begin with 5-10 essential rules. Language, framework, testing approach.</p>
+      </div>
+      <div style="display:flex;align-items:center;color:var(--db-oat-dark);font-size:1.5rem;">&#x25B6;</div>
+      <div class="card" style="flex:1;text-align:center;">
+        <div style="font-size:2rem;margin-bottom:0.5rem;">2</div>
+        <h3>Observe Behaviour</h3>
+        <p style="font-size:0.9rem;color:var(--text-secondary);margin-top:0.5rem;">Watch where the agent goes off-track. Note repeated corrections.</p>
+      </div>
+      <div style="display:flex;align-items:center;color:var(--db-oat-dark);font-size:1.5rem;">&#x25B6;</div>
+      <div class="card" style="flex:1;text-align:center;">
+        <div style="font-size:2rem;margin-bottom:0.5rem;">3</div>
+        <h3>Add Rules</h3>
+        <p style="font-size:0.9rem;color:var(--text-secondary);margin-top:0.5rem;">When you correct the agent twice, add a rule. Be specific, not vague.</p>
+      </div>
+      <div style="display:flex;align-items:center;color:var(--db-oat-dark);font-size:1.5rem;">&#x25B6;</div>
+      <div class="card" style="flex:1;text-align:center;">
+        <div style="font-size:2rem;margin-bottom:0.5rem;">4</div>
+        <h3>Prune &amp; Refine</h3>
+        <p style="font-size:0.9rem;color:var(--text-secondary);margin-top:0.5rem;">Remove overly restrictive rules. Simplify. Version control tracks evolution.</p>
+      </div>
+    </div>
+    <div class="reveal" style="margin-top:2rem;padding:1rem 1.5rem;background:rgba(27,81,98,0.06);border-radius:8px;border-left:3px solid var(--db-teal);">
+      <p><strong>Tip:</strong> Commit your CLAUDE.md to git. Review it in PRs. Treat it like any other team standard &mdash; it's your team's institutional memory for AI collaboration.</p>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SESSION 1: EXERCISE -->
+  <!-- ============================================================ -->
+  <section class="slide slide-light" aria-label="Exercise: Write Your CLAUDE.md">
+    <div class="reveal section-num">Exercise &middot; 10 Minutes</div>
+    <h2 class="reveal">Exercise: Write Your CLAUDE.md</h2>
+    <div class="reveal two-col" style="margin-top:1.5rem;gap:2rem;">
+      <div>
+        <h3 style="margin-bottom:1rem;">Your Task</h3>
+        <ol class="num-list">
+          <li>Think of a project you're currently working on</li>
+          <li>Open your Coding Agents terminal</li>
+          <li>Ask Claude Code to create a CLAUDE.md for that project</li>
+          <li>Review the output &mdash; does it capture your standards?</li>
+          <li>Edit and refine based on what's missing</li>
+        </ol>
+        <div style="margin-top:1.5rem;padding:1rem 1.25rem;background:rgba(255,54,33,0.06);border-radius:8px;border-left:3px solid var(--db-lava);">
+          <p style="font-size:0.9rem;"><strong>Prompt template:</strong> "Create a CLAUDE.md for a [type] project that uses [stack]. Our team standards include [standards]. We deploy with [method]."</p>
+        </div>
+      </div>
+      <div>
+        <h3 style="margin-bottom:1rem;">Discussion Questions</h3>
+        <div class="card">
+          <ul class="bullet-list" style="font-size:0.95rem;">
+            <li>What rules did you include that the agent wouldn't know on its own?</li>
+            <li>What Coles-specific standards should be in a shared team CLAUDE.md?</li>
+            <li>How would this change the agent's behaviour on your daily work?</li>
+            <li>What would you put at user-level vs repo-level?</li>
+          </ul>
+        </div>
+        <div style="margin-top:1rem;padding:1rem 1.25rem;background:rgba(0,169,114,0.08);border-radius:8px;border-left:3px solid var(--db-green);">
+          <p style="font-size:0.9rem;"><strong>Share with the group:</strong> We'll compare approaches and build a shared understanding of what good CLAUDE.md files look like.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SECTION DIVIDER — SESSION 2 -->
+  <!-- ============================================================ -->
+  <section class="slide slide-dark" aria-label="Section: Session 2">
+    <div class="reveal section-num">Session 2 &middot; 10:30 AM</div>
+    <h1 class="reveal">TDD + Agents</h1>
+    <p class="reveal subtitle">The secret weapon for reliable AI code generation</p>
+    <div class="reveal accent-line" style="background:var(--db-lava-light);margin-top:1.5rem;"></div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SLIDE 11: TDD WORKFLOW -->
+  <!-- ============================================================ -->
+  <section class="slide slide-light" aria-label="TDD Workflow">
+    <div class="reveal section-num">Session 2</div>
+    <h2 class="reveal">The TDD + Agent Workflow</h2>
+    <div class="reveal accent-line"></div>
+    <p class="reveal text-muted" style="max-width:600px;">Tests are unambiguous specifications. The agent runs them, reads failures, fixes code — a tight feedback loop that converges on working solutions.</p>
+    <div class="reveal step-flow" style="margin-top:1.5rem;">
+      <div class="step-item">
+        <div class="step-num">01</div>
+        <h3>Human Writes Test</h3>
+        <p>The test IS the spec. Be precise about inputs and outputs.</p>
+      </div>
+      <div class="step-item">
+        <div class="step-num">02</div>
+        <h3>Agent Implements</h3>
+        <p>Agent reads tests, writes code to satisfy them.</p>
+      </div>
+      <div class="step-item">
+        <div class="step-num">03</div>
+        <h3>Run & Iterate</h3>
+        <p>Agent runs tests, sees failures, fixes. Tight loop.</p>
+      </div>
+      <div class="step-item">
+        <div class="step-num">04</div>
+        <h3>Human Reviews</h3>
+        <p>Add edge cases. Agent handles them. Ship it.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SLIDE 12: WHY TDD WORKS -->
+  <!-- ============================================================ -->
+  <section class="slide slide-white" aria-label="Why TDD Works with Agents">
+    <div class="reveal section-num">Session 2</div>
+    <h2 class="reveal">Why TDD is <span class="text-lava">Exponentially</span> More Powerful with Agents</h2>
+    <div class="reveal accent-line"></div>
+    <div class="reveal three-col">
+      <div class="card" style="text-align:center;">
+        <div style="font-size:2.5rem;margin-bottom:0.5rem;">&#x1F3AF;</div>
+        <h3>Unambiguous Specs</h3>
+        <p>Tests remove interpretation. The agent knows exactly what "correct" looks like.</p>
+      </div>
+      <div class="card" style="text-align:center;">
+        <div style="font-size:2.5rem;margin-bottom:0.5rem;">&#x1F504;</div>
+        <h3>Self-Correcting Loop</h3>
+        <p>Run test &rarr; read failure &rarr; fix code &rarr; repeat. No human in the loop needed.</p>
+      </div>
+      <div class="card" style="text-align:center;">
+        <div style="font-size:2.5rem;margin-bottom:0.5rem;">&#x1F6E1;&#xFE0F;</div>
+        <h3>Guardrails</h3>
+        <p>Tests prevent the agent from "going off the rails" on complex implementations.</p>
+      </div>
+    </div>
+    <div class="reveal" style="margin-top:2rem;padding:1rem 1.5rem;background:rgba(0,169,114,0.08);border-radius:8px;border-left:3px solid var(--db-green);">
+      <p><strong>Pro tips:</strong> Start small (one test, one function). Use descriptive test names as documentation. Pin critical behavior with specific value assertions.</p>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SESSION 2: WRITING TESTS THAT GUIDE THE AGENT -->
+  <!-- ============================================================ -->
+  <section class="slide slide-white" aria-label="Writing Tests That Guide">
+    <div class="reveal section-num">Session 2</div>
+    <h2 class="reveal">Writing Tests That Guide the Agent</h2>
+    <p class="reveal" style="color:var(--text-secondary);margin-bottom:1.5rem;">Good tests are unambiguous specifications. They tell the agent exactly what "done" looks like.</p>
+    <div class="reveal two-col" style="gap:2rem;">
+      <div>
+        <div class="code-block" style="font-size:0.8rem;">
+<span class="keyword">def</span> <span class="function">test_clean_transactions</span>():
+    <span class="comment"># GIVEN: 10 rows, 2 with null amounts</span>
+    raw = create_test_df([
+        (<span class="string">"store_1"</span>, <span class="string">"2024-01-01"</span>, 42.50),
+        (<span class="string">"store_1"</span>, <span class="string">"2024-01-01"</span>, <span class="keyword">None</span>),
+        (<span class="string">"store_2"</span>, <span class="string">"2024-01-01"</span>, -5.00),
+        <span class="comment"># ... 7 more valid rows</span>
+    ])
+
+    <span class="comment"># WHEN: we clean the data</span>
+    result = clean_transactions(raw)
+
+    <span class="comment"># THEN: invalid rows removed</span>
+    <span class="keyword">assert</span> result.count() == 8
+    <span class="keyword">assert</span> <span class="string">"transaction_amount"</span> <span class="keyword">in</span> result.columns
+    <span class="keyword">assert</span> result.filter(
+        col(<span class="string">"transaction_amount"</span>) &lt;= 0
+    ).count() == 0
+        </div>
+      </div>
+      <div>
+        <h3 style="margin-bottom:1rem;">Key Principles</h3>
+        <div class="card" style="margin-bottom:0.75rem;">
+          <strong style="color:var(--db-lava);">Given-When-Then</strong>
+          <p style="font-size:0.9rem;margin-top:0.25rem;">Structure every test with clear setup, action, and assertions.</p>
+        </div>
+        <div class="card" style="margin-bottom:0.75rem;">
+          <strong style="color:var(--db-teal);">Concrete Values</strong>
+          <p style="font-size:0.9rem;margin-top:0.25rem;">Use specific test data &mdash; "10 rows, 2 invalid" not "some rows."</p>
+        </div>
+        <div class="card" style="margin-bottom:0.75rem;">
+          <strong style="color:var(--db-green);">Descriptive Names</strong>
+          <p style="font-size:0.9rem;margin-top:0.25rem;">Test names are documentation: <code>test_removes_null_amounts</code></p>
+        </div>
+        <div class="card">
+          <strong style="color:var(--db-navy);">Multiple Assertions</strong>
+          <p style="font-size:0.9rem;margin-top:0.25rem;">Check schema, row counts, and specific values for completeness.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SESSION 2: THE ITERATIVE CYCLE -->
+  <!-- ============================================================ -->
+  <section class="slide slide-light" aria-label="The Iterative Cycle">
+    <div class="reveal section-num">Session 2</div>
+    <h2 class="reveal">The Red-Green-Refactor Cycle</h2>
+    <p class="reveal" style="color:var(--text-secondary);margin-bottom:1.5rem;">TDD with an agent creates a tight, self-correcting feedback loop.</p>
+    <div class="reveal" style="display:flex;justify-content:center;gap:0.5rem;flex-wrap:wrap;margin-bottom:2rem;">
+      <div style="background:#fef2f2;border:2px solid #dc2626;border-radius:12px;padding:1rem 1.5rem;text-align:center;min-width:150px;">
+        <div style="font-size:1.5rem;font-weight:700;color:#dc2626;">RED</div>
+        <div style="font-size:0.85rem;margin-top:0.25rem;">Human writes<br>failing test</div>
+      </div>
+      <div style="display:flex;align-items:center;font-size:1.5rem;color:var(--db-oat-dark);">&#x25B6;</div>
+      <div style="background:#f0fdf4;border:2px solid var(--db-green);border-radius:12px;padding:1rem 1.5rem;text-align:center;min-width:150px;">
+        <div style="font-size:1.5rem;font-weight:700;color:var(--db-green);">GREEN</div>
+        <div style="font-size:0.85rem;margin-top:0.25rem;">Agent writes code<br>to pass test</div>
+      </div>
+      <div style="display:flex;align-items:center;font-size:1.5rem;color:var(--db-oat-dark);">&#x25B6;</div>
+      <div style="background:rgba(27,81,98,0.06);border:2px solid var(--db-teal);border-radius:12px;padding:1rem 1.5rem;text-align:center;min-width:150px;">
+        <div style="font-size:1.5rem;font-weight:700;color:var(--db-teal);">REFACTOR</div>
+        <div style="font-size:0.85rem;margin-top:0.25rem;">Human reviews<br>and improves</div>
+      </div>
+      <div style="display:flex;align-items:center;font-size:1.5rem;color:var(--db-oat-dark);">&#x25B6;</div>
+      <div style="background:rgba(255,54,33,0.06);border:2px solid var(--db-lava);border-radius:12px;padding:1rem 1.5rem;text-align:center;min-width:150px;">
+        <div style="font-size:1.5rem;font-weight:700;color:var(--db-lava);">REPEAT</div>
+        <div style="font-size:0.85rem;margin-top:0.25rem;">Add edge case<br>tests, iterate</div>
+      </div>
+    </div>
+    <div class="reveal card-grid" style="grid-template-columns:repeat(3, 1fr);">
+      <div class="card" style="text-align:center;">
+        <div class="big-number" style="color:var(--db-lava);">1-3</div>
+        <p style="font-size:0.9rem;">tests per iteration<br><strong>start small</strong></p>
+      </div>
+      <div class="card" style="text-align:center;">
+        <div class="big-number" style="color:var(--db-green);">2-5</div>
+        <p style="font-size:0.9rem;">iterations typical<br><strong>before all green</strong></p>
+      </div>
+      <div class="card" style="text-align:center;">
+        <div class="big-number" style="color:var(--db-teal);">90%+</div>
+        <p style="font-size:0.9rem;">success rate<br><strong>with good tests</strong></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SESSION 2: IMPROVING SUCCESS RATES -->
+  <!-- ============================================================ -->
+  <section class="slide slide-white" aria-label="Improving Success Rates">
+    <div class="reveal section-num">Session 2</div>
+    <h2 class="reveal">Strategies to Improve Success Rates</h2>
+    <div class="reveal" style="display:flex;flex-direction:column;gap:1rem;margin-top:1.5rem;">
+      <div class="card" style="display:flex;align-items:flex-start;gap:1.25rem;">
+        <div style="background:var(--db-lava);color:white;border-radius:50%;width:2.5rem;height:2.5rem;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;">1</div>
+        <div>
+          <h3>Start Small: One Test, One Function</h3>
+          <p style="font-size:0.9rem;color:var(--text-secondary);">Don't dump 20 tests at once. Write one test, let the agent implement, verify, then add the next.</p>
+        </div>
+      </div>
+      <div class="card" style="display:flex;align-items:flex-start;gap:1.25rem;">
+        <div style="background:var(--db-teal);color:white;border-radius:50%;width:2.5rem;height:2.5rem;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;">2</div>
+        <div>
+          <h3>Provide Examples in Tests, Not Just Assertions</h3>
+          <p style="font-size:0.9rem;color:var(--text-secondary);">Test data is the best documentation. Create realistic sample DataFrames with comments explaining expected behaviour.</p>
+        </div>
+      </div>
+      <div class="card" style="display:flex;align-items:flex-start;gap:1.25rem;">
+        <div style="background:var(--db-green);color:white;border-radius:50%;width:2.5rem;height:2.5rem;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;">3</div>
+        <div>
+          <h3>Use Descriptive Test Names as Documentation</h3>
+          <p style="font-size:0.9rem;color:var(--text-secondary);"><code>test_removes_null_amounts_and_negative_values</code> tells the agent exactly what the function should do.</p>
+        </div>
+      </div>
+      <div class="card" style="display:flex;align-items:flex-start;gap:1.25rem;">
+        <div style="background:var(--db-navy);color:white;border-radius:50%;width:2.5rem;height:2.5rem;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;">4</div>
+        <div>
+          <h3>Pin Critical Behaviour with Specific Value Assertions</h3>
+          <p style="font-size:0.9rem;color:var(--text-secondary);">Don't just check <code>count() &gt; 0</code>. Assert exact values: <code>revenue == 1234.56</code>. Specific assertions catch subtle bugs.</p>
+        </div>
+      </div>
+      <div class="card" style="display:flex;align-items:flex-start;gap:1.25rem;">
+        <div style="background:var(--db-lava-light);color:white;border-radius:50%;width:2.5rem;height:2.5rem;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;">5</div>
+        <div>
+          <h3>Know When to Break the Loop</h3>
+          <p style="font-size:0.9rem;color:var(--text-secondary);">If the agent fails the same test 3+ times, intervene. Read the error, add context to your prompt, or simplify the test.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SESSION 2: COMMON PITFALLS -->
+  <!-- ============================================================ -->
+  <section class="slide slide-light" aria-label="Common Pitfalls">
+    <div class="reveal section-num">Session 2</div>
+    <h2 class="reveal">Common TDD + Agent Pitfalls</h2>
+    <div class="reveal" style="margin-top:1.5rem;">
+      <table class="clean-table" style="width:100%;">
+        <thead>
+          <tr>
+            <th>Pitfall</th>
+            <th>What Happens</th>
+            <th>Fix</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Tests too vague</strong></td>
+            <td>Agent writes code that technically passes but doesn't do what you want</td>
+            <td>Add specific value assertions and edge cases</td>
+          </tr>
+          <tr>
+            <td><strong>Too many tests at once</strong></td>
+            <td>Agent gets confused trying to satisfy everything simultaneously</td>
+            <td>Write 1-3 tests, implement, then add more</td>
+          </tr>
+          <tr>
+            <td><strong>Not running tests between changes</strong></td>
+            <td>Bugs accumulate, harder to debug which change broke things</td>
+            <td>Run tests after each implementation step</td>
+          </tr>
+          <tr>
+            <td><strong>Testing implementation, not behaviour</strong></td>
+            <td>Tests break on valid refactors, agent gets stuck</td>
+            <td>Test inputs/outputs, not internal details</td>
+          </tr>
+          <tr>
+            <td><strong>Missing edge cases</strong></td>
+            <td>Code works for happy path but fails on empty input, nulls, duplicates</td>
+            <td>Add edge case tests after happy path passes</td>
+          </tr>
+          <tr>
+            <td><strong>Ignoring test output</strong></td>
+            <td>Agent generates code, human doesn't verify test results</td>
+            <td>Always read test output &mdash; it's your feedback loop</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SESSION 2: WHERE HUMANS ARE ESSENTIAL -->
+  <!-- ============================================================ -->
+  <section class="slide slide-white" aria-label="Where Humans Are Essential">
+    <div class="reveal section-num">Session 2</div>
+    <h2 class="reveal">Where Human Input Is Essential</h2>
+    <p class="reveal" style="color:var(--text-secondary);margin-bottom:1.5rem;">AI agents excel at implementation, but some decisions require human judgement.</p>
+    <div class="reveal card-grid" style="grid-template-columns:repeat(3, 1fr);">
+      <div class="card" style="border-top:3px solid var(--db-lava);">
+        <h3>Architecture &amp; Design</h3>
+        <p style="font-size:0.9rem;color:var(--text-secondary);margin-top:0.5rem;">Which patterns to use, how to structure modules, what to build vs buy. The agent implements your decisions.</p>
+      </div>
+      <div class="card" style="border-top:3px solid var(--db-lava);">
+        <h3>Security Review</h3>
+        <p style="font-size:0.9rem;color:var(--text-secondary);margin-top:0.5rem;">Authentication flows, access control, data exposure. Always review security-sensitive code manually.</p>
+      </div>
+      <div class="card" style="border-top:3px solid var(--db-lava);">
+        <h3>Performance Strategy</h3>
+        <p style="font-size:0.9rem;color:var(--text-secondary);margin-top:0.5rem;">Query optimisation, caching, partitioning. The agent can implement, but you choose the approach.</p>
+      </div>
+      <div class="card" style="border-top:3px solid var(--db-teal);">
+        <h3>Business Logic</h3>
+        <p style="font-size:0.9rem;color:var(--text-secondary);margin-top:0.5rem;">Domain rules, edge cases unique to your business, regulatory requirements. Only you know the context.</p>
+      </div>
+      <div class="card" style="border-top:3px solid var(--db-teal);">
+        <h3>Edge Cases</h3>
+        <p style="font-size:0.9rem;color:var(--text-secondary);margin-top:0.5rem;">The agent handles what you test for. Write tests for cases it hasn't seen &mdash; that's your unique value.</p>
+      </div>
+      <div class="card" style="border-top:3px solid var(--db-teal);">
+        <h3>Code Review</h3>
+        <p style="font-size:0.9rem;color:var(--text-secondary);margin-top:0.5rem;">Read what the agent generated. You're responsible for production code, regardless of who wrote it.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SESSION 2: LIVE DEMO PREVIEW -->
+  <!-- ============================================================ -->
+  <section class="slide slide-light" aria-label="Live Demo Preview">
+    <div class="reveal section-num">Live Demo</div>
+    <h2 class="reveal">Live Demo: TDD in Action</h2>
+    <p class="reveal" style="color:var(--text-secondary);margin-bottom:1.5rem;">Watch the full cycle: write failing tests, let the agent implement, iterate to green.</p>
+    <div class="reveal step-flow">
+      <div class="step-item">
+        <div class="step-num" style="background:#dc2626;">1</div>
+        <div class="step-label">Write 3 Failing Tests</div>
+        <div class="step-desc">clean_data, join_tables, aggregate</div>
+      </div>
+      <div class="step-arrow">&#x2192;</div>
+      <div class="step-item">
+        <div class="step-num" style="background:var(--db-navy);">2</div>
+        <div class="step-label">Agent Implements</div>
+        <div class="step-desc">Watch it read tests, write code</div>
+      </div>
+      <div class="step-arrow">&#x2192;</div>
+      <div class="step-item">
+        <div class="step-num" style="background:var(--db-lava);">3</div>
+        <div class="step-label">Tests Fail, Agent Fixes</div>
+        <div class="step-desc">Reads errors, adjusts code</div>
+      </div>
+      <div class="step-arrow">&#x2192;</div>
+      <div class="step-item">
+        <div class="step-num" style="background:var(--db-green);">4</div>
+        <div class="step-label">All Green</div>
+        <div class="step-desc">Review the generated code</div>
+      </div>
+    </div>
+    <div class="reveal" style="margin-top:2rem;">
+      <h3 style="margin-bottom:1rem;">What to Watch For</h3>
+      <div class="card-grid" style="grid-template-columns:repeat(3, 1fr);">
+        <div class="card" style="text-align:center;">
+          <h3 style="color:var(--db-lava);">Agent Reads Tests</h3>
+          <p style="font-size:0.85rem;">It reads your test expectations before writing any code</p>
+        </div>
+        <div class="card" style="text-align:center;">
+          <h3 style="color:var(--db-teal);">Self-Corrects</h3>
+          <p style="font-size:0.85rem;">When tests fail, it reads the error and adjusts its approach</p>
+        </div>
+        <div class="card" style="text-align:center;">
+          <h3 style="color:var(--db-green);">Converges</h3>
+          <p style="font-size:0.85rem;">Within 2-5 iterations, all tests pass without manual intervention</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SECTION DIVIDER — LAB 1 -->
+  <!-- ============================================================ -->
+  <section class="slide slide-dark" aria-label="Section: Lab 1">
+    <div class="reveal section-num">Lab 1 &middot; 11:15 AM &middot; 75 Minutes</div>
+    <h1 class="reveal">Build a Data Pipeline</h1>
+    <p class="reveal subtitle">Hands-on: direct the agent to build, test, and deploy</p>
+    <div class="reveal accent-line" style="background:var(--db-lava-light);margin-top:1.5rem;"></div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SLIDE 14: LAB 1 BRIEFING -->
+  <!-- ============================================================ -->
+  <section class="slide slide-light" aria-label="Lab 1 Briefing">
+    <div class="reveal section-num">Lab 1</div>
+    <h2 class="reveal">Your Mission: Store Metrics Pipeline</h2>
+    <div class="reveal accent-line"></div>
+    <div class="reveal two-col">
+      <div>
+        <p style="margin-bottom:1rem;">Build a data pipeline from raw store transactions to a gold analytics table — using AI agents. You will <strong>not</strong> write the implementation code yourself.</p>
+        <div class="step-flow" style="flex-direction:column;gap:0.75rem;">
+          <div class="step-item" style="min-width:auto;">
+            <div class="step-num" style="font-size:1rem;">01</div>
+            <h3>Setup &middot; 10 min</h3>
+            <p>Create project, CLAUDE.md with data standards</p>
+          </div>
+          <div class="step-item" style="min-width:auto;">
+            <div class="step-num" style="font-size:1rem;">02</div>
+            <h3>Write Specs &middot; 15 min</h3>
+            <p>Tests first: clean, enrich, aggregate, validate</p>
+          </div>
+          <div class="step-item" style="min-width:auto;">
+            <div class="step-num" style="font-size:1rem;">03</div>
+            <h3>Build with Agent &middot; 35 min</h3>
+            <p>Agent implements, runs tests, iterates to green</p>
+          </div>
+          <div class="step-item" style="min-width:auto;">
+            <div class="step-num" style="font-size:1rem;">04</div>
+            <h3>Deploy &middot; 15 min</h3>
+            <p>Package as a scheduled Databricks Job via DABs</p>
+          </div>
+        </div>
+      </div>
+      <div class="diagram-box">
+        <h3 style="margin-bottom:1rem;color:var(--db-teal);">Pipeline Flow</h3>
+        <div class="arch-flow-vertical">
+          <div class="arch-node arch-node-navy" style="min-width:200px;">Raw Transactions<br><span style="font-size:0.7rem;opacity:0.7;">Unity Catalog</span></div>
+          <div class="arch-arrow-down">&rarr;</div>
+          <div class="arch-node" style="min-width:200px;">clean_transactions()</div>
+          <div class="arch-arrow-down">&rarr;</div>
+          <div class="arch-node" style="min-width:200px;">enrich_with_products()</div>
+          <div class="arch-arrow-down">&rarr;</div>
+          <div class="arch-node" style="min-width:200px;">compute_daily_aggs()</div>
+          <div class="arch-arrow-down">&rarr;</div>
+          <div class="arch-node arch-node-green" style="min-width:200px;">Gold Table<br><span style="font-size:0.7rem;opacity:0.7;">daily_store_metrics (MERGE)</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SLIDE 15: SECTION DIVIDER — SESSION 3 -->
+  <!-- ============================================================ -->
+  <section class="slide slide-dark" aria-label="Section: Session 3">
+    <div class="reveal section-num">Session 3 &middot; 1:30 PM</div>
+    <h1 class="reveal">The Human-AI<br>Partnership</h1>
+    <p class="reveal subtitle">When to steer vs. delegate — and advanced patterns</p>
+    <div class="reveal accent-line" style="background:var(--db-lava-light);margin-top:1.5rem;"></div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SLIDE 16: DELEGATION SPECTRUM -->
+  <!-- ============================================================ -->
+  <section class="slide slide-light" aria-label="Delegation Spectrum">
+    <div class="reveal section-num">Session 3</div>
+    <h2 class="reveal">The Delegation Spectrum</h2>
+    <div class="reveal accent-line"></div>
+    <div class="reveal" style="margin-top:1rem;">
+      <div class="spectrum">
+        <div class="spectrum-seg" style="background:var(--db-lava);">Full Delegate</div>
+        <div class="spectrum-seg" style="background:var(--db-lava-light);">Guided</div>
+        <div class="spectrum-seg" style="background:var(--db-teal);">Pair Coding</div>
+        <div class="spectrum-seg" style="background:var(--db-navy);">Review Mode</div>
+      </div>
+    </div>
+    <div class="reveal card-grid" style="margin-top:1.5rem;">
+      <div class="card">
+        <h3 style="color:var(--db-lava);">Full Delegation</h3>
+        <p>"Build me a REST API for X"</p>
+        <p style="font-size:0.85rem;color:var(--text-secondary);margin-top:0.5rem;">Best for: boilerplate, CRUD, standard patterns</p>
+      </div>
+      <div class="card">
+        <h3 style="color:var(--db-lava-light);">Guided Delegation</h3>
+        <p>"Build X, use FastAPI, follow this pattern"</p>
+        <p style="font-size:0.85rem;color:var(--text-secondary);margin-top:0.5rem;">Best for: most production work</p>
+      </div>
+      <div class="card">
+        <h3 style="color:var(--db-teal);">Pair Programming</h3>
+        <p>Side-by-side, reviewing each step</p>
+        <p style="font-size:0.85rem;color:var(--text-secondary);margin-top:0.5rem;">Best for: complex logic, security</p>
+      </div>
+      <div class="card">
+        <h3 style="color:var(--db-navy);">Review Mode</h3>
+        <p>Agent generates, human reviews</p>
+        <p style="font-size:0.85rem;color:var(--text-secondary);margin-top:0.5rem;">Best for: large refactors, migrations</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SLIDE 17: AI FOR DIFFERENT ACTIVITIES -->
+  <!-- ============================================================ -->
+  <section class="slide slide-white" aria-label="AI for Activities">
+    <div class="reveal section-num">Session 3</div>
+    <h2 class="reveal">AI for Different Activities</h2>
+    <div class="reveal accent-line"></div>
+    <div class="reveal" style="margin-top:1rem;">
+      <table class="clean-table">
+        <thead>
+          <tr>
+            <th>Activity</th>
+            <th>Best For</th>
+            <th>Human Still Needed</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Code Generation</strong></td>
+            <td>Boilerplate, CRUD, glue code, standard patterns</td>
+            <td>Architecture decisions</td>
+          </tr>
+          <tr>
+            <td><strong>Testing</strong></td>
+            <td>Write tests from specs, generate edge cases</td>
+            <td>Business logic validation</td>
+          </tr>
+          <tr>
+            <td><strong>Code Review</strong></td>
+            <td>Find bugs, check standards, suggest improvements</td>
+            <td>Security review</td>
+          </tr>
+          <tr>
+            <td><strong>Debugging</strong></td>
+            <td>Read logs, trace issues, suggest fixes</td>
+            <td>Root cause analysis</td>
+          </tr>
+          <tr>
+            <td><strong>Documentation</strong></td>
+            <td>Generate docs from code, keep in sync</td>
+            <td>Narrative & context</td>
+          </tr>
+          <tr>
+            <td><strong>Refactoring</strong></td>
+            <td>Mechanical refactors, pattern migrations</td>
+            <td>Performance strategy</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SLIDE 17A: STRUCTURING EFFECTIVE PROMPTS -->
+  <!-- ============================================================ -->
+  <section class="slide slide-white" aria-label="Structuring Effective Prompts">
+    <div class="reveal section-num">Session 3</div>
+    <h2 class="reveal">Structuring Effective Prompts</h2>
+    <div class="reveal accent-line"></div>
+    <div class="reveal card-grid" style="grid-template-columns:1fr 1fr;">
+      <div class="card">
+        <h3 style="color:var(--db-lava);">Full Delegation</h3>
+        <div class="code-block" style="margin-top:0.5rem;font-size:0.85rem;">
+          <span class="string">"Build me a REST API for<br>user management with CRUD<br>endpoints and auth."</span>
+        </div>
+        <p style="margin-top:0.5rem;font-size:0.9rem;color:var(--text-secondary);">Best for: boilerplate, standard patterns, well-understood domains</p>
+      </div>
+      <div class="card">
+        <h3 style="color:var(--db-teal);">Guided Delegation</h3>
+        <div class="code-block" style="margin-top:0.5rem;font-size:0.85rem;">
+          <span class="string">"Build X using FastAPI,<br>follow repository pattern,<br>use SQLAlchemy ORM."</span>
+        </div>
+        <p style="margin-top:0.5rem;font-size:0.9rem;color:var(--text-secondary);">Best for: team standards, specific tech stack, quality constraints</p>
+      </div>
+      <div class="card">
+        <h3 style="color:var(--db-green);">Pair Programming</h3>
+        <div class="code-block" style="margin-top:0.5rem;font-size:0.85rem;">
+          <span class="string">"Let's work on the auth<br>middleware together. Show me<br>each step before proceeding."</span>
+        </div>
+        <p style="margin-top:0.5rem;font-size:0.9rem;color:var(--text-secondary);">Best for: complex logic, learning new patterns, security-sensitive code</p>
+      </div>
+      <div class="card">
+        <h3 style="color:var(--db-navy);">Review Mode</h3>
+        <div class="code-block" style="margin-top:0.5rem;font-size:0.85rem;">
+          <span class="string">"Review this PR for bugs,<br>security issues, and adherence<br>to our coding standards."</span>
+        </div>
+        <p style="margin-top:0.5rem;font-size:0.9rem;color:var(--text-secondary);">Best for: code review, security audit, standards compliance</p>
+      </div>
+    </div>
+    <div class="reveal" style="margin-top:1.5rem;padding:1rem 1.5rem;background:rgba(255,54,33,0.06);border-radius:8px;border-left:3px solid var(--db-lava);">
+      <p><strong>Rule of thumb:</strong> Start with guided delegation. Move to full delegation as the agent proves it understands your patterns. Drop to pair programming for anything novel or risky.</p>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SLIDE 17B: KNOWING WHEN TO INTERVENE -->
+  <!-- ============================================================ -->
+  <section class="slide slide-light" aria-label="When to Intervene">
+    <div class="reveal section-num">Session 3</div>
+    <h2 class="reveal">Knowing When to Intervene</h2>
+    <div class="reveal accent-line"></div>
+    <div class="reveal" style="overflow-x:auto;">
+      <table class="clean-table" style="font-size:0.95rem;">
+        <thead>
+          <tr><th style="width:28%;">Signal</th><th style="width:36%;">What&rsquo;s Happening</th><th style="width:36%;">What to Do</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="tag tag-lava">Looping</span> Same error 3+ times</td>
+            <td>Agent lacks context or is stuck in a local minimum</td>
+            <td>Stop. Provide the missing context or take a different approach entirely.</td>
+          </tr>
+          <tr>
+            <td><span class="tag tag-lava">Hallucinating APIs</span></td>
+            <td>Agent invents functions or methods that don&rsquo;t exist</td>
+            <td>Paste the actual API docs or point to the correct import path.</td>
+          </tr>
+          <tr>
+            <td><span class="tag tag-teal">Over-engineering</span></td>
+            <td>Simple task gets abstraction layers, design patterns, factories</td>
+            <td>Redirect: &ldquo;Keep it simple. No abstractions needed.&rdquo;</td>
+          </tr>
+          <tr>
+            <td><span class="tag tag-teal">Wrong architecture</span></td>
+            <td>Correct code, wrong overall approach</td>
+            <td>Stop early. Restate the architectural constraint in CLAUDE.md.</td>
+          </tr>
+          <tr>
+            <td><span class="tag tag-green">Slow convergence</span></td>
+            <td>Tests pass but code quality is poor or non-idiomatic</td>
+            <td>Add style rules to CLAUDE.md. Review and ask for specific refactors.</td>
+          </tr>
+          <tr>
+            <td><span class="tag tag-green">Security blind spot</span></td>
+            <td>Agent doesn&rsquo;t consider auth, injection, or data leaks</td>
+            <td>Always review security-sensitive code yourself. Add security rules to CLAUDE.md.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="reveal" style="margin-top:1.5rem;padding:1rem 1.5rem;background:rgba(0,169,114,0.06);border-radius:8px;border-left:3px solid var(--db-green);">
+      <p><strong>The 3-strike rule:</strong> If the agent fails the same task 3 times, the problem is almost always in your prompt or missing context &mdash; not the model. Rewrite your instructions before trying again.</p>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SLIDE 17C: ADVANCED AGENTIC PATTERNS -->
+  <!-- ============================================================ -->
+  <section class="slide slide-white" aria-label="Advanced Patterns">
+    <div class="reveal section-num">Session 3</div>
+    <h2 class="reveal">Advanced Agentic Patterns</h2>
+    <div class="reveal accent-line"></div>
+    <div class="reveal card-grid" style="grid-template-columns:1fr 1fr;">
+      <div class="card">
+        <h3 style="color:var(--db-lava);">MCP Servers</h3>
+        <p style="font-size:0.9rem;color:var(--text-secondary);margin-top:0.25rem;">Model Context Protocol</p>
+        <ul class="bullet-list" style="margin-top:0.5rem;">
+          <li>Give agents access to external tools</li>
+          <li>Database queries, browser, Slack, JIRA</li>
+          <li>Agent decides when to use each tool</li>
+          <li>Extensible &mdash; build your own servers</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3 style="color:var(--db-teal);">Custom Skills</h3>
+        <p style="font-size:0.9rem;color:var(--text-secondary);margin-top:0.25rem;">Domain-specific knowledge</p>
+        <ul class="bullet-list" style="margin-top:0.5rem;">
+          <li>Encode expert workflows as reusable skills</li>
+          <li>Triggered by slash commands</li>
+          <li>Share across teams via marketplace</li>
+          <li>Databricks AI Dev Kit skills included</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3 style="color:var(--db-green);">Multi-Agent Workflows</h3>
+        <p style="font-size:0.9rem;color:var(--text-secondary);margin-top:0.25rem;">Divide and conquer</p>
+        <ul class="bullet-list" style="margin-top:0.5rem;">
+          <li>Spawn sub-agents for parallel tasks</li>
+          <li>Lead agent coordinates the team</li>
+          <li>Each agent has isolated context</li>
+          <li>Great for large refactors &amp; migrations</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3 style="color:var(--db-navy);">Workspace Sync</h3>
+        <p style="font-size:0.9rem;color:var(--text-secondary);margin-top:0.25rem;">Code &harr; Databricks</p>
+        <ul class="bullet-list" style="margin-top:0.5rem;">
+          <li>Write code locally or in browser</li>
+          <li>Deploy to Databricks via DABs</li>
+          <li>Agent manages the full cycle</li>
+          <li>Git-backed, version-controlled</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SLIDE 17C-2: MCP SERVERS ON DATABRICKS -->
+  <!-- ============================================================ -->
+  <section class="slide slide-light" aria-label="MCP on Databricks">
+    <div class="reveal section-num">Session 3</div>
+    <h2 class="reveal">MCP Servers on Databricks</h2>
+    <div class="reveal accent-line"></div>
+    <p class="reveal subtitle" style="margin-bottom:1.5rem;">Three flavours &mdash; all secured through Unity Catalog</p>
+    <div class="reveal card-grid" style="grid-template-columns:1fr 1fr 1fr;">
+      <div class="card" style="border-top:3px solid var(--db-lava);">
+        <span class="tag tag-lava">Built-in</span>
+        <h3 style="margin-top:0.5rem;">Managed</h3>
+        <p style="font-size:0.85rem;color:var(--text-secondary);margin:0.25rem 0 0.5rem;">Databricks-provided servers</p>
+        <ul class="bullet-list" style="font-size:0.85rem;">
+          <li>UC functions, tables &amp; volumes</li>
+          <li>Vector Search indexes</li>
+          <li>Genie spaces for NL&nbsp;&rarr;&nbsp;SQL</li>
+          <li>Zero config &mdash; works out of the box</li>
+        </ul>
+        <div class="code-block" style="font-size:0.7rem;margin-top:0.75rem;padding:0.5rem;">
+          /api/2.0/mcp/functions/{catalog}/{schema}
+        </div>
+      </div>
+      <div class="card" style="border-top:3px solid var(--db-teal);">
+        <span class="tag tag-teal">Proxy</span>
+        <h3 style="margin-top:0.5rem;">External</h3>
+        <p style="font-size:0.85rem;color:var(--text-secondary);margin:0.25rem 0 0.5rem;">Third-party services via Databricks</p>
+        <ul class="bullet-list" style="font-size:0.85rem;">
+          <li>GitHub, Slack, Glean, Jira &hellip;</li>
+          <li>Install from Marketplace or custom HTTP</li>
+          <li>UC Connections manage auth tokens</li>
+          <li>No credentials exposed to clients</li>
+        </ul>
+        <div class="code-block" style="font-size:0.7rem;margin-top:0.75rem;padding:0.5rem;">
+          /api/2.0/mcp/external/{connection_name}
+        </div>
+      </div>
+      <div class="card" style="border-top:3px solid var(--db-green);">
+        <span class="tag tag-green">Build Your Own</span>
+        <h3 style="margin-top:0.5rem;">Custom</h3>
+        <p style="font-size:0.85rem;color:var(--text-secondary);margin:0.25rem 0 0.5rem;">Organisation-specific tools</p>
+        <ul class="bullet-list" style="font-size:0.85rem;">
+          <li>Host on Databricks Apps</li>
+          <li>Wrap internal APIs &amp; workflows</li>
+          <li>OAuth authentication required</li>
+          <li>Full control over tool surface</li>
+        </ul>
+        <div class="code-block" style="font-size:0.7rem;margin-top:0.75rem;padding:0.5rem;">
+          Databricks Apps &rarr; your-mcp-server:8000
+        </div>
+      </div>
+    </div>
+    <p class="reveal" style="margin-top:1rem;font-size:0.85rem;color:var(--text-secondary);text-align:center;">
+      Clients: Claude&nbsp;(Connectors) &bull; Cursor &bull; Windsurf &bull; ChatGPT &bull; Replit &bull; MCP Inspector
+    </p>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SLIDE 17D: REAL-WORLD SA WORKFLOW -->
+  <!-- ============================================================ -->
+  <section class="slide slide-dark" aria-label="Real-World Workflow">
+    <div class="reveal section-num" style="color:var(--db-oat-medium);">Session 3</div>
+    <h2 class="reveal" style="color:var(--db-white);">Real-World: An SA&rsquo;s Daily Workflow</h2>
+    <div class="reveal accent-line" style="background:var(--db-lava-light);"></div>
+    <div class="reveal step-flow" style="margin-top:2rem;flex-wrap:wrap;justify-content:center;">
+      <div class="step-item">
+        <div style="font-size:0.8rem;color:var(--db-oat-dark);">8:30 AM</div>
+        <strong style="color:var(--db-lava-light);">Triage Emails</strong>
+        <div style="font-size:0.85rem;color:var(--db-oat-medium);margin-top:0.25rem;">Agent reads &amp; drafts replies</div>
+      </div>
+      <div class="arch-arrow" style="color:var(--db-oat-dark);">&rarr;</div>
+      <div class="step-item">
+        <div style="font-size:0.8rem;color:var(--db-oat-dark);">9:00 AM</div>
+        <strong style="color:var(--db-lava-light);">Research Question</strong>
+        <div style="font-size:0.85rem;color:var(--db-oat-medium);margin-top:0.25rem;">Search docs, Slack, Confluence</div>
+      </div>
+      <div class="arch-arrow" style="color:var(--db-oat-dark);">&rarr;</div>
+      <div class="step-item">
+        <div style="font-size:0.8rem;color:var(--db-oat-dark);">10:00 AM</div>
+        <strong style="color:var(--db-lava-light);">Build Demo</strong>
+        <div style="font-size:0.85rem;color:var(--db-oat-medium);margin-top:0.25rem;">Full-stack app in 30 min</div>
+      </div>
+      <div class="arch-arrow" style="color:var(--db-oat-dark);">&rarr;</div>
+      <div class="step-item">
+        <div style="font-size:0.8rem;color:var(--db-oat-dark);">11:00 AM</div>
+        <strong style="color:var(--db-lava-light);">Customer Call</strong>
+        <div style="font-size:0.85rem;color:var(--db-oat-medium);margin-top:0.25rem;">Live demo of what was built</div>
+      </div>
+      <div class="arch-arrow" style="color:var(--db-oat-dark);">&rarr;</div>
+      <div class="step-item">
+        <div style="font-size:0.8rem;color:var(--db-oat-dark);">1:00 PM</div>
+        <strong style="color:var(--db-lava-light);">Create Slides</strong>
+        <div style="font-size:0.85rem;color:var(--db-oat-medium);margin-top:0.25rem;">Agent generates deck from notes</div>
+      </div>
+      <div class="arch-arrow" style="color:var(--db-oat-dark);">&rarr;</div>
+      <div class="step-item">
+        <div style="font-size:0.8rem;color:var(--db-oat-dark);">3:00 PM</div>
+        <strong style="color:var(--db-lava-light);">File Expenses</strong>
+        <div style="font-size:0.85rem;color:var(--db-oat-medium);margin-top:0.25rem;">Agent processes receipts</div>
+      </div>
+    </div>
+    <div class="reveal" style="margin-top:2rem;padding:1rem 1.5rem;background:rgba(255,255,255,0.05);border-radius:8px;border-left:3px solid var(--db-lava-light);">
+      <p style="color:var(--db-oat);"><strong>Key insight:</strong> The agent doesn&rsquo;t replace any of these activities. It compresses each one from hours to minutes, freeing you for the work that actually requires human judgement.</p>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SLIDE 17E: DISCUSSION — YOUR USE CASES -->
+  <!-- ============================================================ -->
+  <section class="slide slide-light" aria-label="Discussion: Your Use Cases">
+    <div class="reveal section-num">Session 3</div>
+    <h2 class="reveal">Discussion: Your Agentic Use Cases</h2>
+    <div class="reveal accent-line"></div>
+    <p class="reveal" style="color:var(--text-secondary);margin-bottom:1.5rem;">Think about your daily work. Where could an AI agent save you the most time?</p>
+    <div class="reveal card-grid" style="grid-template-columns:1fr 1fr;">
+      <div class="card" style="border-top:3px solid var(--db-lava);">
+        <h3>Data Engineers</h3>
+        <ul class="bullet-list" style="margin-top:0.5rem;">
+          <li>Pipeline scaffolding &amp; boilerplate</li>
+          <li>Schema migration scripts</li>
+          <li>Data quality check generation</li>
+          <li>DABs config from scratch</li>
+        </ul>
+      </div>
+      <div class="card" style="border-top:3px solid var(--db-teal);">
+        <h3>Data Scientists</h3>
+        <ul class="bullet-list" style="margin-top:0.5rem;">
+          <li>EDA notebooks from dataset description</li>
+          <li>Feature engineering pipelines</li>
+          <li>Model evaluation &amp; comparison</li>
+          <li>MLflow experiment tracking setup</li>
+        </ul>
+      </div>
+      <div class="card" style="border-top:3px solid var(--db-green);">
+        <h3>Software Engineers</h3>
+        <ul class="bullet-list" style="margin-top:0.5rem;">
+          <li>API endpoint generation with tests</li>
+          <li>Frontend components from specs</li>
+          <li>Database migrations</li>
+          <li>CI/CD pipeline configuration</li>
+        </ul>
+      </div>
+      <div class="card" style="border-top:3px solid var(--db-navy);">
+        <h3>Analysts</h3>
+        <ul class="bullet-list" style="margin-top:0.5rem;">
+          <li>SQL query generation from questions</li>
+          <li>Dashboard &amp; report creation</li>
+          <li>Data documentation</li>
+          <li>Automated email summaries</li>
+        </ul>
+      </div>
+    </div>
+    <div class="reveal" style="margin-top:1.5rem;padding:1rem 1.5rem;background:rgba(27,81,98,0.06);border-radius:8px;border-left:3px solid var(--db-teal);">
+      <p><strong>Group exercise (5 min):</strong> Pick one task from your role. Write a 2-sentence prompt that would delegate it to an agent. Share with the group &mdash; we&rsquo;ll critique and improve each prompt together.</p>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SLIDE 18: SECTION DIVIDER — SESSION 4 -->
+  <!-- ============================================================ -->
+  <section class="slide slide-dark" aria-label="Section: Session 4">
+    <div class="reveal section-num">Session 4 &middot; 2:15 PM</div>
+    <h1 class="reveal">Production Patterns<br>& Governance</h1>
+    <p class="reveal subtitle">AI Gateway &middot; MLflow &middot; Unity Catalog &middot; DABs</p>
+    <div class="reveal accent-line" style="background:var(--db-lava-light);margin-top:1.5rem;"></div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SLIDE 19: AI GATEWAY ARCHITECTURE -->
+  <!-- ============================================================ -->
+  <section class="slide slide-light" aria-label="AI Gateway">
+    <div class="reveal section-num">Session 4</div>
+    <h2 class="reveal">AI Gateway: The Control Plane</h2>
+    <div class="reveal accent-line"></div>
+    <div class="reveal diagram-box">
+      <div class="arch-flow">
+        <div class="arch-node arch-node-accent" style="min-width:130px;">
+          Coding Agent<br><span style="font-size:0.7rem;opacity:0.7;">Claude Code</span>
+        </div>
+        <div class="arch-arrow">&rarr;</div>
+        <div style="display:flex;flex-direction:column;gap:0.5rem;align-items:center;">
+          <div class="arch-node arch-node-teal" style="min-width:200px;">
+            <strong>AI Gateway</strong><br>
+            <span style="font-size:0.7rem;opacity:0.7;">Route &middot; Rate Limit &middot; Audit</span>
+          </div>
+          <div style="display:flex;gap:0.5rem;flex-wrap:wrap;justify-content:center;">
+            <span class="tag tag-teal" style="font-size:0.65rem;">Model routing</span>
+            <span class="tag tag-teal" style="font-size:0.65rem;">Rate limits</span>
+            <span class="tag tag-teal" style="font-size:0.65rem;">Cost tracking</span>
+          </div>
+        </div>
+        <div class="arch-arrow">&rarr;</div>
+        <div style="display:flex;flex-direction:column;gap:0.5rem;">
+          <div class="arch-node" style="min-width:140px;">Claude Sonnet</div>
+          <div class="arch-node" style="min-width:140px;">GPT-4o</div>
+          <div class="arch-node" style="min-width:140px;">DBRX / Llama</div>
+        </div>
+      </div>
+    </div>
+    <div class="reveal card-grid" style="margin-top:1.5rem;">
+      <div class="card" style="text-align:center;">
+        <h3 style="color:var(--db-teal);">Model Routing</h3>
+        <p>Switch between models with zero code changes. Fallback chains.</p>
+      </div>
+      <div class="card" style="text-align:center;">
+        <h3 style="color:var(--db-lava);">Rate Limiting</h3>
+        <p>Per user, per team budgets. Prevent runaway costs.</p>
+      </div>
+      <div class="card" style="text-align:center;">
+        <h3 style="color:var(--db-green);">Audit Logging</h3>
+        <p>Every LLM call logged. Token usage, cost, latency.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SLIDE 20: OBSERVABILITY & GOVERNANCE -->
+  <!-- ============================================================ -->
+  <section class="slide slide-white" aria-label="Observability">
+    <div class="reveal section-num">Session 4</div>
+    <h2 class="reveal">Observability & Governance</h2>
+    <div class="reveal accent-line"></div>
+    <div class="reveal three-col">
+      <div class="card">
+        <div class="card-icon" style="color:var(--db-lava);">&#x1F4CA;</div>
+        <h3>MLflow Tracing</h3>
+        <ul class="bullet-list" style="margin-top:0.5rem;">
+          <li>Every agent session auto-traced</li>
+          <li>Debug agent behavior</li>
+          <li>Measure token usage & cost</li>
+          <li>Compare approaches</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-icon" style="color:var(--db-teal);">&#x1F512;</div>
+        <h3>Unity Catalog</h3>
+        <ul class="bullet-list" style="margin-top:0.5rem;">
+          <li>Agents respect data governance</li>
+          <li>Access controls on AI-generated code</li>
+          <li>Lineage tracking for AI pipelines</li>
+          <li>Fine-grained permissions</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-icon" style="color:var(--db-green);">&#x1F4E6;</div>
+        <h3>DABs CI/CD</h3>
+        <ul class="bullet-list" style="margin-top:0.5rem;">
+          <li>Agent generates code</li>
+          <li>Human reviews PR</li>
+          <li>DABs deploys reproducibly</li>
+          <li>Dev & prod targets</li>
+        </ul>
+      </div>
+    </div>
+    <div class="reveal" style="margin-top:1.5rem;padding:1rem 1.5rem;background:rgba(27,81,98,0.06);border-radius:8px;border-left:3px solid var(--db-teal);">
+      <p><strong>The governance promise:</strong> AI agents accelerate development, but Unity Catalog + AI Gateway + MLflow ensure you never lose control.</p>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SLIDE 20A: AI GATEWAY DEEP DIVE                             -->
+  <!-- ============================================================ -->
+  <section class="slide slide-light" aria-label="AI Gateway Deep Dive">
+    <h2 class="reveal">AI Gateway: Your LLM Control Plane</h2>
+    <p class="reveal" style="color:var(--text-secondary);max-width:700px;">Route every LLM call through a single managed endpoint — switch models, enforce limits, and track costs without changing application code.</p>
+    <div class="reveal code-block" style="margin-top:1.5rem;font-size:0.85rem;">
+      <pre><code># app.yaml — AI Gateway configuration
+env:
+  - name: AI_GATEWAY_ENDPOINT
+    value: "workshop-ai-gateway"
+
+# Gateway route definition
+{
+  "name": "workshop-ai-gateway",
+  "config": {
+    "served_entities": [{
+      "external_model": {
+        "name": "claude-sonnet-4-6",
+        "provider": "anthropic"
+      }
+    }],
+    "rate_limits": [
+      {"key": "user", "renewal_period": "minute", "calls": 20}
+    ]
+  }
+}</code></pre>
+    </div>
+    <div class="reveal card-grid" style="margin-top:1.5rem;">
+      <div class="card">
+        <h3>Model Routing</h3>
+        <p>Swap Claude ↔ GPT ↔ Llama without code changes. A/B test models in production.</p>
+      </div>
+      <div class="card">
+        <h3>Rate Limiting</h3>
+        <p>Per-user, per-team, per-endpoint. Prevent runaway costs from agent loops.</p>
+      </div>
+      <div class="card">
+        <h3>Cost Tracking</h3>
+        <p>Token-level usage by user and endpoint. Set budget alerts before overruns.</p>
+      </div>
+      <div class="card">
+        <h3>Audit Logging</h3>
+        <p>Every prompt/response logged. Required for regulated industries like retail banking.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SLIDE 20B: MLFLOW TRACING WALKTHROUGH                       -->
+  <!-- ============================================================ -->
+  <section class="slide slide-dark" aria-label="MLflow Tracing">
+    <h2 class="reveal">MLflow Tracing: Agent Observability</h2>
+    <p class="reveal subtitle">Every Claude Code session is auto-traced. Debug agent behavior, measure token usage, compare approaches.</p>
+    <div class="reveal arch-flow" style="margin-top:2rem;">
+      <div class="arch-node" style="background:var(--db-lava);">Claude Code<br><small>Agent Session</small></div>
+      <div class="arch-arrow">&rarr;</div>
+      <div class="arch-node" style="background:var(--db-teal);">AI Gateway<br><small>Route + Log</small></div>
+      <div class="arch-arrow">&rarr;</div>
+      <div class="arch-node" style="background:var(--db-green);">MLflow<br><small>Traces + Metrics</small></div>
+      <div class="arch-arrow">&rarr;</div>
+      <div class="arch-node" style="background:rgba(255,255,255,0.15);">Dashboard<br><small>Insights</small></div>
+    </div>
+    <div class="reveal card-grid" style="margin-top:2rem;">
+      <div class="card" style="background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.15);">
+        <h3 style="color:var(--db-lava-light);">Debugging</h3>
+        <ul class="bullet-list" style="color:rgba(255,255,255,0.85);">
+          <li>Why did the agent loop 5 times?</li>
+          <li>What prompt caused the hallucination?</li>
+          <li>Where did it deviate from the spec?</li>
+        </ul>
+      </div>
+      <div class="card" style="background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.15);">
+        <h3 style="color:var(--db-green);">Measurement</h3>
+        <ul class="bullet-list" style="color:rgba(255,255,255,0.85);">
+          <li>Tokens per task (cost optimization)</li>
+          <li>Success rate by task type</li>
+          <li>Time-to-completion trends</li>
+        </ul>
+      </div>
+      <div class="card" style="background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.15);">
+        <h3 style="color:var(--db-oat);">Comparison</h3>
+        <ul class="bullet-list" style="color:rgba(255,255,255,0.85);">
+          <li>Claude vs GPT on same tasks</li>
+          <li>Different prompt strategies</li>
+          <li>Before/after CLAUDE.md changes</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SLIDE 20C: CI/CD WITH DABS                                  -->
+  <!-- ============================================================ -->
+  <section class="slide slide-light" aria-label="CI/CD with DABs">
+    <h2 class="reveal">CI/CD: From Agent to Production</h2>
+    <p class="reveal" style="color:var(--text-secondary);max-width:700px;">Databricks Asset Bundles (DABs) give you reproducible, git-driven deployments with dev/staging/prod targets.</p>
+    <div class="reveal step-flow" style="margin-top:1.5rem;">
+      <div class="step-item">
+        <div class="step-num">1</div>
+        <div class="step-label">Agent writes code</div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">2</div>
+        <div class="step-label">Human reviews PR</div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">3</div>
+        <div class="step-label">CI runs tests</div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">4</div>
+        <div class="step-label">DABs deploys</div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">5</div>
+        <div class="step-label">Monitor & iterate</div>
+      </div>
+    </div>
+    <div class="reveal code-block" style="margin-top:1.5rem;font-size:0.82rem;">
+      <pre><code># databricks.yml — Asset Bundle definition
+bundle:
+  name: daily-store-metrics
+
+resources:
+  jobs:
+    daily_pipeline:
+      name: "Daily Store Metrics"
+      schedule:
+        quartz_cron_expression: "0 0 6 * * ?"  # 6 AM AEST
+        timezone_id: "Australia/Sydney"
+
+targets:
+  dev:
+    default: true
+    workspace:
+      host: https://coles-dev.cloud.databricks.com
+  prod:
+    workspace:
+      host: https://coles-prod.cloud.databricks.com</code></pre>
+    </div>
+    <div class="reveal" style="margin-top:1rem;display:flex;gap:1rem;">
+      <div style="flex:1;padding:0.75rem 1rem;background:rgba(0,169,114,0.08);border-radius:8px;border-left:3px solid var(--db-green);">
+        <strong>Idempotent</strong> — Same bundle, same result. No drift between environments.
+      </div>
+      <div style="flex:1;padding:0.75rem 1rem;background:rgba(0,169,114,0.08);border-radius:8px;border-left:3px solid var(--db-green);">
+        <strong>Git-native</strong> — Version controlled. Roll back with <code>git revert</code>.
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SLIDE 20D: TEAM ADOPTION PLAYBOOK                           -->
+  <!-- ============================================================ -->
+  <section class="slide slide-white" aria-label="Team Adoption Playbook">
+    <h2 class="reveal">Team Adoption Playbook</h2>
+    <p class="reveal" style="color:var(--text-secondary);max-width:700px;">A phased approach to rolling out agentic development across your engineering org.</p>
+    <div class="reveal timeline" style="margin-top:2rem;">
+      <div class="timeline-item">
+        <div class="timeline-marker" style="background:var(--db-lava);"></div>
+        <div class="timeline-content">
+          <h3>Phase 1: Champions <span class="tag tag-green" style="font-size:0.7rem;">Weeks 1–2</span></h3>
+          <p>The people in this room. Build confidence, establish patterns, create shared CLAUDE.md files. Start with low-risk tasks: tests, docs, boilerplate.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-marker" style="background:var(--db-teal);"></div>
+        <div class="timeline-content">
+          <h3>Phase 2: Team Workshop <span class="tag tag-blue" style="font-size:0.7rem;">Weeks 3–4</span></h3>
+          <p>Champions facilitate for their teams. Use today's materials. Each team customises CLAUDE.md for their domain (data eng, ML, analytics).</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-marker" style="background:var(--db-green);"></div>
+        <div class="timeline-content">
+          <h3>Phase 3: Skill Libraries <span class="tag tag-green" style="font-size:0.7rem;">Weeks 5–8</span></h3>
+          <p>Build shared skills for common patterns: data quality checks, UC table creation, DABs templates, NL-to-SQL. Encode tribal knowledge as reusable agent instructions.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-marker" style="background:var(--db-navy);"></div>
+        <div class="timeline-content">
+          <h3>Phase 4: Measure & Scale <span class="tag" style="font-size:0.7rem;">Ongoing</span></h3>
+          <p>Track metrics (next slide). Expand to adjacent teams. Monthly office hours. Continuous CLAUDE.md refinement based on what works.</p>
+        </div>
+      </div>
+    </div>
+    <div class="reveal" style="margin-top:1.5rem;padding:1rem 1.5rem;background:rgba(255,54,33,0.06);border-radius:8px;border-left:3px solid var(--db-lava);">
+      <p><strong>Internal champions:</strong> Farbod &amp; Swee Hoe — your go-to contacts for agentic development support. David available for follow-up sessions.</p>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SLIDE 20E: MEASURING SUCCESS                                -->
+  <!-- ============================================================ -->
+  <section class="slide slide-light" aria-label="Measuring Success">
+    <h2 class="reveal">Measuring Success</h2>
+    <p class="reveal" style="color:var(--text-secondary);max-width:700px;">What to track to know if agentic development is working for your team.</p>
+    <div class="reveal three-col" style="margin-top:2rem;">
+      <div>
+        <h3 style="color:var(--db-lava);">Velocity</h3>
+        <table class="clean-table" style="font-size:0.85rem;">
+          <tbody>
+            <tr><td>Time to first PR</td><td><strong>&darr; 40–60%</strong></td></tr>
+            <tr><td>Lines of code/week</td><td><strong>&uarr; 2–5x</strong></td></tr>
+            <tr><td>Pipeline setup time</td><td><strong>&darr; 70%</strong></td></tr>
+            <tr><td>Test coverage</td><td><strong>&uarr; 30–50%</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <h3 style="color:var(--db-green);">Quality</h3>
+        <table class="clean-table" style="font-size:0.85rem;">
+          <tbody>
+            <tr><td>Bugs per release</td><td><strong>&darr; 20–40%</strong></td></tr>
+            <tr><td>Code review cycles</td><td><strong>&darr; 30%</strong></td></tr>
+            <tr><td>Test pass rate</td><td><strong>&uarr; to 95%+</strong></td></tr>
+            <tr><td>Doc completeness</td><td><strong>&uarr; 60%</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <h3 style="color:var(--db-teal);">Experience</h3>
+        <table class="clean-table" style="font-size:0.85rem;">
+          <tbody>
+            <tr><td>Developer satisfaction</td><td><strong>&uarr; NPS</strong></td></tr>
+            <tr><td>Time on boilerplate</td><td><strong>&darr; 80%</strong></td></tr>
+            <tr><td>Onboarding speed</td><td><strong>&darr; 50%</strong></td></tr>
+            <tr><td>Context-switching</td><td><strong>&darr; 40%</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="reveal" style="margin-top:1.5rem;padding:1rem 1.5rem;background:rgba(27,81,98,0.06);border-radius:8px;border-left:3px solid var(--db-teal);">
+      <p><strong>How to measure:</strong> Use MLflow traces for token costs, Git analytics for velocity, and quarterly developer surveys for satisfaction. Start tracking from day one.</p>
+    </div>
+    <div class="reveal" style="margin-top:1rem;">
+      <p style="color:var(--text-secondary);font-size:0.9rem;"><strong>Discussion (5 min):</strong> Which metrics matter most for your team? What would convince your leadership that agentic development is worth investing in?</p>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SLIDE 21: SECTION DIVIDER — LAB 2 -->
+  <!-- ============================================================ -->
+  <section class="slide slide-dark" aria-label="Section: Lab 2">
+    <div class="reveal section-num">Lab 2 &middot; 3:15 PM &middot; 75 Minutes</div>
+    <h1 class="reveal">Build & Deploy<br>a Full-Stack App</h1>
+    <p class="reveal subtitle">The capstone challenge — from PRD to production</p>
+    <div class="reveal accent-line" style="background:var(--db-lava-light);margin-top:1.5rem;"></div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SLIDE 22: LAB 2 BRIEFING -->
+  <!-- ============================================================ -->
+  <section class="slide slide-light" aria-label="Lab 2 Briefing">
+    <div class="reveal section-num">Lab 2</div>
+    <h2 class="reveal">Store Performance Dashboard</h2>
+    <div class="reveal accent-line"></div>
+    <div class="reveal two-col">
+      <div>
+        <p style="margin-bottom:1rem;">Build a complete web app that reads from your Lab 1 pipeline and adds AI-powered natural language querying.</p>
+        <div class="step-flow" style="flex-direction:column;gap:0.75rem;">
+          <div class="step-item" style="min-width:auto;">
+            <div class="step-num" style="font-size:1rem;">01</div>
+            <h3>Design &middot; 10 min</h3>
+            <p>Write a PRD with endpoints and user stories</p>
+          </div>
+          <div class="step-item" style="min-width:auto;">
+            <div class="step-num" style="font-size:1rem;">02</div>
+            <h3>Build with TDD &middot; 45 min</h3>
+            <p>Tests first, then backend, frontend, wire together</p>
+          </div>
+          <div class="step-item" style="min-width:auto;">
+            <div class="step-num" style="font-size:1rem;">03</div>
+            <h3>Deploy &middot; 15 min</h3>
+            <p>Ship to Databricks Apps, accessible via browser</p>
+          </div>
+          <div class="step-item" style="min-width:auto;">
+            <div class="step-num" style="font-size:1rem;">04</div>
+            <h3>Share &middot; 5 min</h3>
+            <p>Demo to the group</p>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="diagram-box">
+          <h3 style="margin-bottom:1rem;color:var(--db-teal);">App Architecture</h3>
+          <div class="arch-flow-vertical">
+            <div class="arch-node arch-node-accent" style="min-width:220px;">HTML + Tailwind + htmx<br><span style="font-size:0.7rem;opacity:0.7;">Frontend (no npm needed)</span></div>
+            <div class="arch-arrow-down">&rarr;</div>
+            <div class="arch-node arch-node-teal" style="min-width:220px;">FastAPI Backend<br><span style="font-size:0.7rem;opacity:0.7;">REST API + static files</span></div>
+            <div class="arch-arrow-down" style="display:flex;gap:2rem;">&rarr;</div>
+            <div style="display:flex;gap:1rem;justify-content:center;">
+              <div class="arch-node arch-node-green" style="min-width:100px;">Unity Catalog<br><span style="font-size:0.7rem;opacity:0.7;">Gold table</span></div>
+              <div class="arch-node arch-node-accent" style="min-width:100px;">Foundation<br>Model API<br><span style="font-size:0.7rem;opacity:0.7;">NL &rarr; SQL</span></div>
+            </div>
+          </div>
+        </div>
+        <div style="display:flex;gap:0.5rem;margin-top:1rem;flex-wrap:wrap;">
+          <span class="tag tag-lava">FastAPI</span>
+          <span class="tag tag-teal">htmx</span>
+          <span class="tag tag-green">Tailwind CSS</span>
+          <span class="tag tag-navy">Foundation Models</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SLIDE 23: LAB 2 SUCCESS CRITERIA -->
+  <!-- ============================================================ -->
+  <section class="slide slide-white" aria-label="Lab 2 Success">
+    <div class="reveal section-num">Lab 2</div>
+    <h2 class="reveal">Success Criteria & Bonus</h2>
+    <div class="reveal accent-line"></div>
+    <div class="reveal two-col">
+      <div>
+        <h3 style="margin-bottom:0.75rem;">Must Have</h3>
+        <ul class="checklist">
+          <li>FastAPI backend with tested endpoints</li>
+          <li>HTML frontend with Tailwind + htmx</li>
+          <li>Natural language query feature</li>
+          <li>Data sourced from Lab 1 gold table</li>
+          <li>Deployed on Databricks Apps</li>
+          <li>All tests passing</li>
+        </ul>
+      </div>
+      <div>
+        <h3 style="margin-bottom:0.75rem;">Bonus Challenges</h3>
+        <div class="card-grid" style="grid-template-columns:1fr;gap:0.75rem;margin-top:0;">
+          <div class="card" style="padding:1rem;">
+            <h3 style="font-size:0.95rem;">&#x1F4C8; Add a Chart</h3>
+            <p style="font-size:0.85rem;">Revenue trend line with Chart.js (CDN)</p>
+          </div>
+          <div class="card" style="padding:1rem;">
+            <h3 style="font-size:0.95rem;">&#x1F512; Add Auth</h3>
+            <p style="font-size:0.85rem;">Databricks App built-in authentication</p>
+          </div>
+          <div class="card" style="padding:1rem;">
+            <h3 style="font-size:0.95rem;">&#x26A1; Add Caching</h3>
+            <p style="font-size:0.85rem;">Cache frequent queries for performance</p>
+          </div>
+          <div class="card" style="padding:1rem;">
+            <h3 style="font-size:0.95rem;">&#x1F4E5; Add Export</h3>
+            <p style="font-size:0.85rem;">CSV download of filtered data</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SLIDE 24: SECTION DIVIDER — WRAP UP -->
+  <!-- ============================================================ -->
+  <section class="slide slide-dark" aria-label="Section: Wrap Up">
+    <div class="reveal section-num">4:30 PM</div>
+    <h1 class="reveal">Key Takeaways<br>& Next Steps</h1>
+    <div class="reveal accent-line" style="background:var(--db-lava-light);margin-top:1.5rem;"></div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SLIDE 25: KEY TAKEAWAYS -->
+  <!-- ============================================================ -->
+  <section class="slide slide-light" aria-label="Key Takeaways">
+    <div class="reveal section-num">Takeaways</div>
+    <h2 class="reveal">What to Remember</h2>
+    <div class="reveal accent-line"></div>
+    <div class="reveal card-grid" style="grid-template-columns:repeat(2,1fr);">
+      <div class="card" style="border-left:4px solid var(--db-lava);">
+        <div class="big-number" style="font-size:2.5rem;">1</div>
+        <h3 style="margin-top:0.5rem;">Specs Are Your Leverage</h3>
+        <p>PRDs and CLAUDE.md multiply your output. Invest time in clear specifications — the agent amplifies them 10x.</p>
+      </div>
+      <div class="card" style="border-left:4px solid var(--db-teal);">
+        <div class="big-number" style="font-size:2.5rem;color:var(--db-teal);">2</div>
+        <h3 style="margin-top:0.5rem;">TDD + Agents = Deterministic</h3>
+        <p>Write the test. The agent converges on the right implementation. Tests are your guardrails.</p>
+      </div>
+      <div class="card" style="border-left:4px solid var(--db-green);">
+        <div class="big-number" style="font-size:2.5rem;color:var(--db-green);">3</div>
+        <h3 style="margin-top:0.5rem;">Know When to Steer</h3>
+        <p>Architecture, security, and business logic still need human judgment. Let the agent handle the mechanics.</p>
+      </div>
+      <div class="card" style="border-left:4px solid var(--db-navy);">
+        <div class="big-number" style="font-size:2.5rem;color:var(--db-navy);">4</div>
+        <h3 style="margin-top:0.5rem;">Start Small, Iterate</h3>
+        <p>One function. One test. One deploy. Build confidence, then scale the patterns across your team.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SLIDE 26: NEXT STEPS -->
+  <!-- ============================================================ -->
+  <section class="slide slide-white" aria-label="Next Steps">
+    <div class="reveal section-num">What's Next</div>
+    <h2 class="reveal">Next Steps</h2>
+    <div class="reveal accent-line"></div>
+    <div class="reveal two-col">
+      <div>
+        <h3 style="color:var(--db-teal);margin-bottom:1rem;">Immediate</h3>
+        <ul class="num-list">
+          <li><strong>Share learnings</strong> with your wider team</li>
+          <li><strong>Set up a team CLAUDE.md</strong> with your coding standards</li>
+          <li><strong>Try it on a real task</strong> — start with something small this week</li>
+        </ul>
+        <h3 style="color:var(--db-teal);margin-top:1.5rem;margin-bottom:1rem;">Coming Soon</h3>
+        <ul class="num-list">
+          <li><strong>Full team workshop</strong> — end of March / early April</li>
+          <li><strong>Shared skill libraries</strong> for common Coles patterns</li>
+          <li><strong>Monthly office hours</strong> for agentic development questions</li>
+        </ul>
+      </div>
+      <div>
+        <h3 style="color:var(--db-teal);margin-bottom:1rem;">Your Champions</h3>
+        <div class="card-grid" style="grid-template-columns:1fr;gap:0.75rem;margin-top:0;">
+          <div class="card" style="padding:1rem;display:flex;gap:1rem;align-items:center;">
+            <div style="font-size:2rem;">&#x1F9D1;&#x200D;&#x1F4BB;</div>
+            <div>
+              <h3 style="font-size:0.95rem;">Farbod & Swee Hoe</h3>
+              <p style="font-size:0.85rem;">Internal champions — your go-to for day-to-day questions</p>
+            </div>
+          </div>
+          <div class="card" style="padding:1rem;display:flex;gap:1rem;align-items:center;">
+            <div style="font-size:2rem;">&#x1F3E2;</div>
+            <div>
+              <h3 style="font-size:0.95rem;">David O'Keeffe</h3>
+              <p style="font-size:0.85rem;">Databricks SA — available for follow-up support</p>
+            </div>
+          </div>
+        </div>
+        <div style="margin-top:1.5rem;padding:1rem;background:var(--accent-glow);border-radius:8px;border-left:3px solid var(--db-lava);">
+          <p style="font-size:0.9rem;"><strong>Measure success:</strong> Developer velocity, code quality, and developer satisfaction.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SLIDE 27: CLOSING -->
+  <!-- ============================================================ -->
+  <section class="slide slide-dark" aria-label="Closing">
+    <div style="text-align:center;">
+      <div class="reveal">
+        <svg class="db-logo-large" viewBox="0 0 180 36" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Databricks" style="height:64px;">
+          <path d="M0 9l15 8.5L30 9l-15-8.5L0 9z" fill="var(--db-lava)"/>
+          <path d="M0 18l15 8.5L30 18l-15-8.5L0 18z" fill="var(--db-lava)" opacity="0.7"/>
+          <path d="M0 27l15 8.5L30 27l-15-8.5L0 27z" fill="var(--db-lava)" opacity="0.4"/>
+          <text x="38" y="25" font-family="'DM Sans', sans-serif" font-weight="700" font-size="20" fill="white">databricks</text>
+        </svg>
+      </div>
+      <h1 class="reveal" style="margin-top:2rem;">Thank You</h1>
+      <p class="reveal subtitle" style="margin-top:0.75rem;">The best engineers will be those who can<br>effectively direct AI agents.</p>
+      <div class="reveal" style="width:60px;height:4px;background:var(--db-lava);border-radius:2px;margin:2rem auto 0;"></div>
+      <div class="reveal meta" style="margin-top:1.5rem;">
+        david.okeeffe@databricks.com
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- JAVASCRIPT === -->
+  <!-- ============================================================ -->
+  <script>
+    /* === SLIDE PRESENTATION ENGINE === */
+    class SlidePresentation {
+      constructor() {
+        this.slides = document.querySelectorAll('.slide');
+        this.progressBar = document.querySelector('.progress-bar');
+        this.navDots = document.querySelector('.nav-dots');
+        this.slideNumber = document.querySelector('.slide-number');
+        this.currentSlide = 0;
+        this.init();
+      }
+      init() {
+        this.createNavDots();
+        this.setupIntersectionObserver();
+        this.setupKeyboardNav();
+        this.setupTouchNav();
+        this.setupWheelNav();
+        this.updateProgress();
+        this.updateSlideNumber();
+      }
+      createNavDots() {
+        this.slides.forEach((_, i) => {
+          const dot = document.createElement('button');
+          dot.className = 'nav-dot' + (i === 0 ? ' active' : '');
+          dot.setAttribute('aria-label', `Go to slide ${i + 1}`);
+          dot.addEventListener('click', () => this.goToSlide(i));
+          this.navDots.appendChild(dot);
+        });
+      }
+      setupIntersectionObserver() {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+              const index = [...this.slides].indexOf(entry.target);
+              this.currentSlide = index;
+              this.updateDots();
+              this.updateProgress();
+              this.updateSlideNumber();
+              this.updateNavDotsTheme(entry.target);
+            }
+          });
+        }, { threshold: 0.5 });
+        this.slides.forEach(slide => observer.observe(slide));
+      }
+      setupKeyboardNav() {
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'ArrowDown' || e.key === 'ArrowRight' || e.key === ' ') {
+            e.preventDefault(); this.goToSlide(this.currentSlide + 1);
+          } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+            e.preventDefault(); this.goToSlide(this.currentSlide - 1);
+          }
+        });
+      }
+      setupTouchNav() {
+        let startY = 0;
+        document.addEventListener('touchstart', (e) => { startY = e.touches[0].clientY; }, { passive: true });
+        document.addEventListener('touchend', (e) => {
+          const diff = startY - e.changedTouches[0].clientY;
+          if (Math.abs(diff) > 50) {
+            this.goToSlide(this.currentSlide + (diff > 0 ? 1 : -1));
+          }
+        }, { passive: true });
+      }
+      setupWheelNav() {
+        let lastScroll = 0;
+        document.addEventListener('wheel', (e) => {
+          const now = Date.now();
+          if (now - lastScroll < 800) return;
+          lastScroll = now;
+          this.goToSlide(this.currentSlide + (e.deltaY > 0 ? 1 : -1));
+        }, { passive: true });
+      }
+      goToSlide(index) {
+        const target = Math.max(0, Math.min(index, this.slides.length - 1));
+        this.slides[target].scrollIntoView({ behavior: 'smooth' });
+      }
+      updateDots() {
+        this.navDots.querySelectorAll('.nav-dot').forEach((dot, i) => {
+          dot.classList.toggle('active', i === this.currentSlide);
+        });
+      }
+      updateProgress() {
+        const pct = ((this.currentSlide + 1) / this.slides.length) * 100;
+        this.progressBar.style.width = pct + '%';
+        this.progressBar.setAttribute('aria-valuenow', Math.round(pct));
+      }
+      updateSlideNumber() {
+        this.slideNumber.textContent = `${this.currentSlide + 1} / ${this.slides.length}`;
+      }
+      updateNavDotsTheme(slide) {
+        const isDark = slide.classList.contains('slide-dark');
+        this.slideNumber.style.color = isDark ? 'rgba(255,255,255,0.4)' : 'var(--text-secondary)';
+        this.navDots.querySelectorAll('.nav-dot').forEach(dot => {
+          if (!dot.classList.contains('active')) {
+            dot.style.background = isDark ? 'rgba(255,255,255,0.2)' : 'var(--db-oat-medium)';
+          }
+        });
+      }
+    }
+
+    /* === COUNTER ANIMATION === */
+    function animateCounters() {
+      document.querySelectorAll('.big-number[data-target]').forEach(counter => {
+        const target = parseInt(counter.dataset.target);
+        const duration = 1500;
+        const start = Date.now();
+        const step = () => {
+          const elapsed = Date.now() - start;
+          const progress = Math.min(elapsed / duration, 1);
+          const eased = 1 - Math.pow(1 - progress, 3);
+          counter.textContent = Math.round(target * eased);
+          if (progress < 1) requestAnimationFrame(step);
+        };
+        step();
+      });
+    }
+
+    /* === INIT === */
+    new SlidePresentation();
+  </script>
+</body>
+</html>
