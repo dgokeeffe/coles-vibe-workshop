@@ -1077,6 +1077,137 @@ Use Python.
   </section>
 
   <!-- ============================================================ -->
+  <!-- SESSION 2: TEST PYRAMID FOR DATA ENGINEERING -->
+  <!-- ============================================================ -->
+  <section class="slide slide-light" aria-label="Test Pyramid for Data Engineering">
+    <div class="reveal section-num">Session 2</div>
+    <h2 class="reveal">The Test Pyramid for Data Engineering</h2>
+    <p class="reveal" style="color:var(--text-secondary);margin-bottom:1rem;">Traditional software has 3 testing levels. Data pipelines need <strong style="color:var(--db-lava);">5</strong>.</p>
+    <div class="reveal" style="display:flex;align-items:center;gap:2rem;">
+      <!-- Pyramid diagram -->
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;">
+        <div style="background:var(--db-navy);color:white;padding:0.5rem 1rem;border-radius:6px;width:40%;text-align:center;font-size:0.85rem;font-weight:500;">Full System + Client</div>
+        <div style="background:var(--db-teal);color:white;padding:0.5rem 1rem;border-radius:6px;width:55%;text-align:center;font-size:0.85rem;font-weight:500;">Pipeline (incl. Service)</div>
+        <div style="background:var(--db-lava);color:white;padding:0.5rem 1rem;border-radius:6px;width:70%;text-align:center;font-size:0.85rem;font-weight:500;">Multiple Jobs</div>
+        <div style="background:var(--db-green);color:white;padding:0.5rem 1rem;border-radius:6px;width:85%;text-align:center;font-size:0.85rem;font-weight:500;">Single Job</div>
+        <div style="background:var(--db-oat-dark);color:var(--db-ink);padding:0.5rem 1rem;border-radius:6px;width:100%;text-align:center;font-size:0.85rem;font-weight:500;">Unit / Component</div>
+        <div style="display:flex;justify-content:space-between;width:100%;margin-top:0.5rem;font-size:0.75rem;color:var(--text-secondary);">
+          <span>&uarr; Fewer, slower, more realistic</span>
+          <span>&darr; More, faster, more isolated</span>
+        </div>
+      </div>
+      <!-- Key insight -->
+      <div style="flex:1;">
+        <div class="card" style="border-left:4px solid var(--db-lava);margin-bottom:1rem;">
+          <h3 style="color:var(--db-lava);margin-bottom:0.5rem;">Key Insight</h3>
+          <p style="font-size:0.9rem;color:var(--text-secondary);">Traditional unit tests are <strong>fragile</strong> for data pipelines &mdash; the data changes rapidly, schemas evolve, and File I/O dominates the logic.</p>
+        </div>
+        <div class="card" style="border-left:4px solid var(--db-green);">
+          <h3 style="color:var(--db-green);margin-bottom:0.5rem;">Recommendation</h3>
+          <p style="font-size:0.9rem;color:var(--text-secondary);">Test at the <strong>job-to-pipeline level</strong> where each job functions as a self-contained black box. Don't unit test File I/O or DataFrame append operations.</p>
+        </div>
+        <div class="quote-block" style="margin-top:1rem;font-size:0.85rem;">
+          <p><em>&ldquo;I get paid for code that works, not for tests, so my philosophy is to test as little as possible to reach a given level of confidence.&rdquo;</em></p>
+          <p style="color:var(--text-secondary);font-size:0.8rem;margin-top:0.3rem;">&mdash; Kent Beck</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SESSION 2: DATA AS STATE -->
+  <!-- ============================================================ -->
+  <section class="slide slide-white" aria-label="Data as State">
+    <div class="reveal section-num">Session 2</div>
+    <h2 class="reveal">Data as State: Why Data Testing Is Different</h2>
+    <p class="reveal" style="color:var(--text-secondary);margin-bottom:1.5rem;">In software, tests run against code. In data engineering, you must also manage <strong>the data itself</strong> as test state.</p>
+    <div class="reveal" style="margin-bottom:1.5rem;">
+      <h3 style="margin-bottom:0.75rem;">The Three-Part Modification Burden</h3>
+      <div class="card-grid" style="grid-template-columns:repeat(3, 1fr);">
+        <div class="card" style="text-align:center;border-top:3px solid var(--db-lava);">
+          <div style="font-size:2rem;margin-bottom:0.5rem;">&#128196;</div>
+          <h3>Input Data</h3>
+          <p style="font-size:0.85rem;color:var(--text-secondary);margin-top:0.3rem;">Test data must be representative of production data &mdash; schema, volume, edge cases</p>
+        </div>
+        <div class="card" style="text-align:center;border-top:3px solid var(--db-navy);">
+          <div style="font-size:2rem;margin-bottom:0.5rem;">&#128187;</div>
+          <h3>Code</h3>
+          <p style="font-size:0.85rem;color:var(--text-secondary);margin-top:0.3rem;">Transformation logic, joins, aggregations &mdash; the part we traditionally test</p>
+        </div>
+        <div class="card" style="text-align:center;border-top:3px solid var(--db-green);">
+          <div style="font-size:2rem;margin-bottom:0.5rem;">&#128202;</div>
+          <h3>Output Data</h3>
+          <p style="font-size:0.85rem;color:var(--text-secondary);margin-top:0.3rem;">Expected results change whenever input data or code changes &mdash; triple the maintenance</p>
+        </div>
+      </div>
+    </div>
+    <div class="reveal">
+      <h3 style="margin-bottom:0.75rem;">Three Domain-Specific Complications</h3>
+      <div class="card-grid" style="grid-template-columns:repeat(3, 1fr);">
+        <div class="card" style="border-left:3px solid var(--db-lava);">
+          <h3 style="font-size:0.95rem;">Traditional Databases</h3>
+          <p style="font-size:0.8rem;color:var(--text-secondary);margin-top:0.3rem;">Monolithic pipelines, stateful tables, hard to replicate local test environments</p>
+        </div>
+        <div class="card" style="border-left:3px solid var(--db-teal);">
+          <h3 style="font-size:0.95rem;">Big Data Scale</h3>
+          <p style="font-size:0.8rem;color:var(--text-secondary);margin-top:0.3rem;">Full production duplication is infeasible &mdash; can't just clone 10TB to run a test</p>
+        </div>
+        <div class="card" style="border-left:3px solid var(--db-navy);">
+          <h3 style="font-size:0.95rem;">Security &amp; Obfuscation</h3>
+          <p style="font-size:0.8rem;color:var(--text-secondary);margin-top:0.3rem;">Encryption and masking hamper verification &mdash; can't inspect PII columns in tests</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SESSION 2: RUNTIME TEST DATA GENERATION -->
+  <!-- ============================================================ -->
+  <section class="slide slide-light" aria-label="Runtime Test Data Generation">
+    <div class="reveal section-num">Session 2</div>
+    <h2 class="reveal">The Solution: Runtime Test Data Generation</h2>
+    <p class="reveal" style="color:var(--text-secondary);margin-bottom:1.5rem;">Generate test data <strong>programmatically</strong> rather than copying from production.</p>
+    <div class="reveal two-col" style="gap:2rem;">
+      <div>
+        <div class="code-block" style="font-size:0.8rem;">
+          <div style="color:var(--db-oat-dark);margin-bottom:0.5rem;"># test_daily_aggregations.py</div>
+          <div><span style="color:#c792ea;">def</span> <span style="color:#82aaff;">create_test_transactions</span>():</div>
+          <div>&nbsp;&nbsp;<span style="color:#c3e88d;">"""Generate known test data at runtime"""</span></div>
+          <div>&nbsp;&nbsp;<span style="color:#c792ea;">return</span> spark.createDataFrame([</div>
+          <div>&nbsp;&nbsp;&nbsp;&nbsp;(<span style="color:#c3e88d;">"STORE_001"</span>, <span style="color:#c3e88d;">"2024-01-15"</span>, <span style="color:#f78c6c;">150.00</span>),</div>
+          <div>&nbsp;&nbsp;&nbsp;&nbsp;(<span style="color:#c3e88d;">"STORE_001"</span>, <span style="color:#c3e88d;">"2024-01-15"</span>, <span style="color:#f78c6c;">75.50</span>),</div>
+          <div>&nbsp;&nbsp;&nbsp;&nbsp;(<span style="color:#c3e88d;">"STORE_002"</span>, <span style="color:#c3e88d;">"2024-01-15"</span>, <span style="color:#f78c6c;">200.00</span>),</div>
+          <div>&nbsp;&nbsp;], [<span style="color:#c3e88d;">"store_id"</span>, <span style="color:#c3e88d;">"date"</span>, <span style="color:#c3e88d;">"amount"</span>])</div>
+          <br>
+          <div><span style="color:#c792ea;">def</span> <span style="color:#82aaff;">test_aggregation</span>():</div>
+          <div>&nbsp;&nbsp;df = create_test_transactions()</div>
+          <div>&nbsp;&nbsp;result = compute_daily_agg(df)</div>
+          <div>&nbsp;&nbsp;<span style="color:#c792ea;">assert</span> result.count() == <span style="color:#f78c6c;">2</span>  <span style="color:var(--db-oat-dark);"># 2 stores</span></div>
+          <div>&nbsp;&nbsp;<span style="color:#c792ea;">assert</span> get_revenue(<span style="color:#c3e88d;">"STORE_001"</span>) == <span style="color:#f78c6c;">225.50</span></div>
+        </div>
+      </div>
+      <div>
+        <h3 style="margin-bottom:0.75rem;color:var(--db-green);">Why This Works</h3>
+        <ul class="bullet-list" style="font-size:0.9rem;">
+          <li><strong>Easier refactoring</strong> &mdash; test data adapts with code changes</li>
+          <li><strong>No privacy concerns</strong> &mdash; no PII leaves production</li>
+          <li><strong>Scalable volumes</strong> &mdash; generate 10 rows or 10M rows</li>
+          <li><strong>Edge case coverage</strong> &mdash; craft nulls, duplicates, future dates on purpose</li>
+          <li><strong>Self-documenting</strong> &mdash; test data shows exactly what you're testing</li>
+        </ul>
+        <div class="card" style="margin-top:1rem;border-left:4px solid var(--db-teal);">
+          <h3 style="color:var(--db-teal);font-size:0.9rem;margin-bottom:0.3rem;">Use Language-Native Frameworks</h3>
+          <p style="font-size:0.8rem;color:var(--text-secondary);">pytest + PySpark for Python. ScalaTest for Scala. JUnit for Java. The agent already knows these &mdash; lean into them.</p>
+        </div>
+        <div class="card" style="margin-top:0.75rem;border-left:4px solid var(--db-lava);">
+          <h3 style="color:var(--db-lava);font-size:0.9rem;margin-bottom:0.3rem;">This Is What Lab 1 Uses</h3>
+          <p style="font-size:0.8rem;color:var(--text-secondary);">You'll generate small DataFrames (5&ndash;10 rows) in pytest fixtures to test each pipeline function.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
   <!-- SESSION 2: WHERE HUMANS ARE ESSENTIAL -->
   <!-- ============================================================ -->
   <section class="slide slide-white" aria-label="Where Humans Are Essential">
