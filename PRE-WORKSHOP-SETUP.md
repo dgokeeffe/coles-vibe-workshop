@@ -6,11 +6,11 @@
 
 Each workshop participant needs their own instance of the Coding Agents App.
 
-**Repository:** https://github.com/datasciencemonkey/coding-agents-databricks-apps
+**Repository:** https://github.com/dgokeeffe/coding-agents-databricks-apps
 
 ```bash
 # Clone the repo
-git clone https://github.com/datasciencemonkey/coding-agents-databricks-apps.git
+git clone https://github.com/dgokeeffe/coding-agents-databricks-apps.git
 cd coding-agents-databricks-apps
 
 # Follow docs/deployment.md for full instructions

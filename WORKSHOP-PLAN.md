@@ -32,7 +32,7 @@ Mixed engineering team (~145 total, 5-10 for pilot):
 
 | Tool | Purpose |
 |------|---------|
-| [Coding Agents Databricks App](https://github.com/datasciencemonkey/coding-agents-databricks-apps) | Browser-based terminal with Claude Code, OpenCode, Codex |
+| [Coding Agents Databricks App](https://github.com/dgokeeffe/coding-agents-databricks-apps) | Browser-based terminal with Claude Code, OpenCode, Codex |
 | Databricks AI Gateway | Routes all LLM calls, model switching, rate limits, cost tracking |
 | MLflow Tracing | Auto-traces every agent session for observability |
 | Unity Catalog | Data governance & access control |
