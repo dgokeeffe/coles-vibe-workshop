@@ -17,6 +17,32 @@ You built a data pipeline in Lab 1 that produces daily store metrics. Now you ne
 
 ---
 
+## Architecture
+
+```
+┌──────────────┐     HTTP      ┌──────────────────────┐
+│              │  (htmx calls) │                      │
+│   Browser    │──────────────▶│   FastAPI Backend     │
+│  (Tailwind   │◀──────────────│   (app.py)           │
+│   + htmx)    │  HTML / JSON  │                      │
+│              │               │  GET /api/metrics     │
+└──────────────┘               │  POST /api/ask        │
+                               │  GET /                │
+                               └──────┬───────┬───────┘
+                                      │       │
+                              SQL     │       │  LLM
+                              queries │       │  prompt
+                                      ▼       ▼
+                               ┌────────┐ ┌──────────┐
+                               │Databri-│ │Databricks│
+                               │cks SQL │ │AI Gateway│
+                               │Warehou-│ │(Found.   │
+                               │se      │ │Model API)│
+                               └────────┘ └──────────┘
+```
+
+---
+
 ## Step 1: Design (10 min)
 
 ### 1.1 Write your PRD
@@ -93,6 +119,42 @@ Write pytest tests for the FastAPI backend:
 Write ONLY the tests. Do NOT implement yet.
 ```
 
+### Example Test Reference
+
+If you're new to testing FastAPI with pytest, here's what a test looks like. Share this with the agent as a reference pattern:
+
+```python
+# tests/conftest.py
+import pytest
+from httpx import AsyncClient, ASGITransport
+from app import app
+
+@pytest.fixture
+async def client():
+    transport = ASGITransport(app=app)
+    async with AsyncClient(transport=transport, base_url="http://test") as ac:
+        yield ac
+
+# tests/test_api.py
+import pytest
+
+@pytest.mark.asyncio
+async def test_health_endpoint(client):
+    response = await client.get("/health")
+    assert response.status_code == 200
+    assert response.json() == {"status": "ok"}
+
+@pytest.mark.asyncio
+async def test_get_metrics_returns_records(client):
+    response = await client.get("/api/metrics?store_id=S001&start_date=2024-01-01&end_date=2024-01-31")
+    assert response.status_code == 200
+    data = response.json()
+    assert isinstance(data, list)
+    if len(data) > 0:
+        assert "store_id" in data[0]
+        assert "total_revenue" in data[0]
+```
+
 ### 2.2 Backend - Implementation
 
 ```
@@ -159,6 +221,19 @@ Run all tests one final time.
 
 ---
 
+## Pro Tips
+
+> **Steering the agent effectively:**
+>
+> - If the agent goes off track, say **"stop, let's go back to the test failures"** to refocus it.
+> - Use **"show me the test output"** to see exactly what's failing before the agent tries a fix.
+> - If the frontend looks wrong, say **"take a screenshot"** or describe what you see and ask the agent to fix it.
+> - For the AI query feature, test with simple questions first: *"what is the total revenue?"* before trying complex ones.
+> - If the agent writes raw SQL string concatenation, say **"parameterize the SQL queries to prevent injection"**.
+> - **If you're ahead of schedule**, try: *"add a Chart.js revenue trend line chart"* or *"add a CSV export button."*
+
+---
+
 ## Step 3: Deploy to Databricks (15 min)
 
 ### 3.1 Create Databricks App config
@@ -214,6 +289,20 @@ Give a 2-3 minute demo to the group:
 2. **Add authentication:** Use Databricks App built-in auth
 3. **Add caching:** Cache frequent queries to reduce database load
 4. **Add export:** CSV download of filtered data
+
+## Troubleshooting
+
+| Problem | Solution |
+|---------|----------|
+| **htmx not loading / dynamic elements not working** | Check the `<script>` tag in your HTML `<head>`. It should be: `<script src="https://unpkg.com/htmx.org@2.0.4"></script>`. Open browser DevTools (F12) and check the Console for load errors. |
+| **CORS errors in the browser console** | Ensure `CORSMiddleware` is added to your FastAPI app with `allow_origins=["*"]` (for dev). The agent sometimes forgets this — say **"add CORS middleware"**. |
+| **SQL injection risk in /api/ask endpoint** | The AI-generated SQL should never include user input directly. Tell the agent: **"review the generated SQL for injection risks and parameterize any user inputs"**. Add table schema to the LLM system prompt so it generates valid SQL. |
+| **App deploys but shows a blank page** | Check that static files are mounted correctly: `app.mount("/static", StaticFiles(directory="static"))`. Verify `index.html` exists at the expected path. Check Databricks App logs for errors. |
+| **AI generates invalid SQL or hallucinates columns** | Add the table schema and column names to the LLM system prompt. Include 2-3 example queries. Say: **"add the table schema to the system prompt for the LLM"**. |
+| **`databricks-sql-connector` import errors** | Ensure it's in `requirements.txt`. Run `uv pip install databricks-sql-connector`. On Apple Silicon, you may need: `uv pip install databricks-sql-connector --no-binary pyarrow`. |
+| **App works locally but fails when deployed** | Check that all environment variables are set in `app.yaml`. Databricks Apps run in a container — local file paths won't work. Use relative paths for static files. |
+
+---
 
 ## Reflection Questions
 

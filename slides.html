@@ -283,17 +283,85 @@
     .checklist { list-style: none; margin-top: 1rem; }
     .checklist li { padding: 0.5rem 0 0.5rem 2rem; position: relative; font-size: 1rem; }
     .checklist li::before { content: ''; position: absolute; left: 0; top: 0.65em; width: 16px; height: 16px; border: 2px solid var(--db-oat-dark); border-radius: 4px; }
+
+    /* === SPEAKER NOTES PANEL === */
+    .speaker-notes-panel {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      max-height: 35vh;
+      background: rgba(11, 32, 38, 0.92);
+      backdrop-filter: blur(12px);
+      color: var(--db-white);
+      font-family: var(--font-body);
+      z-index: 200;
+      transform: translateY(100%);
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      border-top: 3px solid var(--db-lava);
+      overflow-y: auto;
+    }
+    .speaker-notes-panel.visible { transform: translateY(0); }
+    .speaker-notes-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.75rem 1.5rem;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      position: sticky;
+      top: 0;
+      background: rgba(11, 32, 38, 0.95);
+    }
+    .speaker-notes-header h4 {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--db-lava-light);
+      margin: 0;
+    }
+    .speaker-notes-header .notes-slide-num {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.5);
+    }
+    .speaker-notes-content {
+      padding: 1rem 1.5rem 1.5rem;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: rgba(255,255,255,0.9);
+    }
+    .notes-hint {
+      position: fixed;
+      bottom: 1.5rem;
+      left: 2rem;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--text-secondary);
+      opacity: 0.5;
+      z-index: 100;
+      transition: opacity 0.3s ease;
+    }
+    .speaker-notes-panel.visible ~ .notes-hint { opacity: 0; }
   </style>
 </head>
 <body>
   <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
   <nav class="nav-dots" aria-label="Slide navigation"></nav>
   <div class="slide-number"></div>
+  <div class="notes-hint">N for notes</div>
+  <div class="speaker-notes-panel" id="speakerNotes">
+    <div class="speaker-notes-header">
+      <h4>Speaker Notes</h4>
+      <span class="notes-slide-num" id="notesSlideNum"></span>
+    </div>
+    <div class="speaker-notes-content" id="notesContent"></div>
+  </div>
 
   <!-- ============================================================ -->
   <!-- SLIDE 1: TITLE -->
   <!-- ============================================================ -->
-  <section class="slide slide-dark" aria-label="Title">
+  <section class="slide slide-dark" aria-label="Title" data-notes="Welcome everyone to the Vibe Coding Workshop. Introduce yourself: David O'Keeffe, Solutions Architect at Databricks. Thank the Coles Data &amp; AI Engineering team for hosting. Set the tone: today is hands-on, collaborative, and practical. You will leave with skills you can use on Monday. ~2 min. Transition: Let's look at what we'll cover today.">
     <div style="position:absolute;top:0;left:0;width:100%;height:100%;overflow:hidden;pointer-events:none;">
       <div style="position:absolute;right:-80px;top:-80px;width:400px;height:400px;border:2px solid rgba(255,54,33,0.08);border-radius:50%;"></div>
       <div style="position:absolute;right:-40px;top:-40px;width:320px;height:320px;border:2px solid rgba(255,54,33,0.05);border-radius:50%;"></div>
@@ -321,7 +389,7 @@
   <!-- ============================================================ -->
   <!-- SLIDE 2: AGENDA -->
   <!-- ============================================================ -->
-  <section class="slide slide-light" aria-label="Agenda">
+  <section class="slide slide-light" aria-label="Agenda" data-notes="Walk through the day structure. Morning is foundations: concepts, specs, TDD. Afternoon is building and shipping. Emphasise: two 75-min hands-on labs are the core of the day. Breaks are real breaks. Encourage questions throughout. ~2 min. Transition: Let's start with the paradigm shift that makes all of this possible.">
     <div class="reveal section-num">Full Day Workshop</div>
     <h2 class="reveal">Today's Agenda</h2>
     <div class="reveal accent-line"></div>
@@ -353,7 +421,7 @@
   <!-- ============================================================ -->
   <!-- SLIDE 3: SECTION DIVIDER — THE PARADIGM SHIFT -->
   <!-- ============================================================ -->
-  <section class="slide slide-dark" aria-label="Section: The Paradigm Shift">
+  <section class="slide slide-dark" aria-label="Section: The Paradigm Shift" data-notes="Section divider. Pause briefly. This is the big idea: software development is changing from writing code to directing agents. Ask the room: Who has used an AI coding tool? ChatGPT? Copilot? Claude? Get a sense of experience levels. ~1 min.">
     <div class="reveal section-num">9:00 AM</div>
     <h1 class="reveal">The Paradigm Shift</h1>
     <p class="reveal subtitle">From writing code to directing AI agents</p>
@@ -363,7 +431,7 @@
   <!-- ============================================================ -->
   <!-- SLIDE 4: WHAT IS VIBE CODING -->
   <!-- ============================================================ -->
-  <section class="slide slide-light" aria-label="What is Vibe Coding">
+  <section class="slide slide-light" aria-label="What is Vibe Coding" data-notes="Read the Karpathy quote aloud. Explain: vibe coding is the casual term, but what we're really talking about is agentic software development. Key contrast: traditional dev has humans writing every line; agentic dev has humans directing and agents implementing. Emphasise: this is amplification, not replacement. You still need to know what good code looks like. ~3 min. Transition: Let me show you the platform we'll be using today.">
     <div class="reveal section-num">The Shift</div>
     <h2 class="reveal">What is Vibe Coding?</h2>
     <div class="reveal accent-line"></div>
@@ -396,7 +464,7 @@
   <!-- ============================================================ -->
   <!-- SLIDE 5: THE PLATFORM — Coding Agents App Architecture -->
   <!-- ============================================================ -->
-  <section class="slide slide-white" aria-label="Platform Architecture">
+  <section class="slide slide-white" aria-label="Platform Architecture" data-notes="Walk through the architecture left to right. Browser terminal connects to a Databricks App running Flask. The app hosts AI agents (Claude Code / OpenCode). All LLM calls go through AI Gateway for routing, rate limiting, and tracing. Mention: 39 pre-built skills, MCP servers for tool access, MLflow for observability. This is what they will use in the labs. ~3 min. Transition: Here's what you'll learn by end of day.">
     <div class="reveal section-num">Your Environment</div>
     <h2 class="reveal">Coding Agents Databricks App</h2>
     <div class="reveal accent-line"></div>
@@ -436,7 +504,7 @@
   <!-- ============================================================ -->
   <!-- SLIDE 6: LEARNING OBJECTIVES -->
   <!-- ============================================================ -->
-  <section class="slide slide-light" aria-label="Learning Objectives">
+  <section class="slide slide-light" aria-label="Learning Objectives" data-notes="Six concrete outcomes. Don't read each one aloud -- let them scan. Highlight: PRDs and CLAUDE.md are your highest-leverage skills. TDD with agents is the secret weapon. By 4:30 PM you will have built and deployed a real app. ~2 min. Transition: Let's dive into Session 1 -- Thinking in Specs.">
     <div class="reveal section-num">By End of Day</div>
     <h2 class="reveal">What You'll Learn</h2>
     <div class="reveal accent-line"></div>
@@ -477,7 +545,7 @@
   <!-- ============================================================ -->
   <!-- SLIDE 7: SECTION DIVIDER — SESSION 1 -->
   <!-- ============================================================ -->
-  <section class="slide slide-dark" aria-label="Section: Session 1">
+  <section class="slide slide-dark" aria-label="Section: Session 1" data-notes="Section divider for Session 1. Key message: the skill that matters most with AI agents is your ability to specify what you want. The better your specs, the better the output. ~30 sec.">
     <div class="reveal section-num">Session 1 &middot; 9:30 AM</div>
     <h1 class="reveal">Thinking in Specs</h1>
     <p class="reveal subtitle">PRDs, CLAUDE.md, and the art of directing agents</p>
@@ -487,7 +555,7 @@
   <!-- ============================================================ -->
   <!-- SLIDE 8: WHY SPECS MATTER MORE -->
   <!-- ============================================================ -->
-  <section class="slide slide-light" aria-label="Why Specs Matter">
+  <section class="slide slide-light" aria-label="Why Specs Matter" data-notes="Key point: garbage in, garbage out -- but now at 100x speed. A vague prompt produces vague code, fast. A precise PRD produces precise code, fast. Walk through both cards. A good PRD has acceptance criteria, constraints, data contracts, examples. CLAUDE.md encodes standards, architecture, testing, and tool preferences. These four tags at bottom show scope levels. ~3 min. Transition: Let's see a real CLAUDE.md example.">
     <div class="reveal section-num">Session 1</div>
     <h2 class="reveal">Why Specs Matter <span class="text-lava">More</span> with AI</h2>
     <div class="reveal accent-line"></div>
@@ -523,7 +591,7 @@
   <!-- ============================================================ -->
   <!-- SLIDE 9: CLAUDE.MD EXAMPLE -->
   <!-- ============================================================ -->
-  <section class="slide slide-white" aria-label="CLAUDE.md Example">
+  <section class="slide slide-white" aria-label="CLAUDE.md Example" data-notes="Walk through the code example on the right. Show how a few lines shape every output: tech stack, data standards, testing approach. On the left, explain the three scope levels: repo, project, user. The exercise box at the bottom previews the upcoming hands-on exercise. Mention: add one rule, change all future output. This is the highest ROI activity. ~3 min. Transition: What makes a great PRD?">
     <div class="reveal section-num">Session 1</div>
     <h2 class="reveal">CLAUDE.md in Action</h2>
     <div class="reveal accent-line"></div>
@@ -565,7 +633,7 @@
   <!-- ============================================================ -->
   <!-- SESSION 1: ANATOMY OF A GREAT PRD -->
   <!-- ============================================================ -->
-  <section class="slide slide-white" aria-label="Anatomy of a Great PRD">
+  <section class="slide slide-white" aria-label="Anatomy of a Great PRD" data-notes="Four essential sections of every PRD for agentic dev. Acceptance criteria: the agent knows when to stop. Constraints: prevent wrong tech choices. Data contracts: schemas, interfaces, API shapes. Examples: concrete input/output pairs. Emphasise: the more examples you give, the better the agent performs. ~3 min. Transition: Let's see the difference between a bad and good PRD.">
     <div class="reveal section-num">Session 1</div>
     <h2 class="reveal">Anatomy of a Great PRD</h2>
     <p class="reveal" style="color:var(--text-secondary);margin-bottom:2rem;">Every effective PRD for agentic development has four essential sections.</p>
@@ -616,7 +684,7 @@
   <!-- ============================================================ -->
   <!-- SESSION 1: GOOD VS BAD PRD -->
   <!-- ============================================================ -->
-  <section class="slide slide-light" aria-label="Good vs Bad PRD">
+  <section class="slide slide-light" aria-label="Good vs Bad PRD" data-notes="Read the bad PRD aloud -- 'Build a dashboard that shows store metrics. Make it look nice.' Ask: what would the agent produce? Answer: something random. Then read the good PRD. Specific framework, data contracts, test requirements. The agent can actually deliver on this. ~3 min. Transition: Let's go deeper on CLAUDE.md scope levels.">
     <div class="reveal section-num">Session 1</div>
     <h2 class="reveal">Good vs Bad: PRD Comparison</h2>
     <p class="reveal" style="color:var(--text-secondary);margin-bottom:1.5rem;">Garbage in, garbage out &mdash; at 100x speed. Precision matters more than ever.</p>
@@ -661,7 +729,7 @@ Use Python.
   <!-- ============================================================ -->
   <!-- SESSION 1: CLAUDE.MD SCOPE LEVELS -->
   <!-- ============================================================ -->
-  <section class="slide slide-white" aria-label="CLAUDE.md Scope Levels">
+  <section class="slide slide-white" aria-label="CLAUDE.md Scope Levels" data-notes="Three levels cascade like CSS. User-level: personal prefs (git style, tool choices). Repo-level: team standards committed to git. Project-level: module-specific rules. More specific rules override general ones. Show the file paths on each card. Ask: what would you put at each level? ~2 min. Transition: What should you actually put in these files?">
     <div class="reveal section-num">Session 1</div>
     <h2 class="reveal">CLAUDE.md: Three Scope Levels</h2>
     <p class="reveal" style="color:var(--text-secondary);margin-bottom:1.5rem;">Instructions cascade from global to project-specific. More specific rules override general ones.</p>
@@ -704,7 +772,7 @@ Use Python.
   <!-- ============================================================ -->
   <!-- SESSION 1: WHAT TO PUT IN CLAUDE.MD -->
   <!-- ============================================================ -->
-  <section class="slide slide-light" aria-label="What to Put in CLAUDE.md">
+  <section class="slide slide-light" aria-label="What to Put in CLAUDE.md" data-notes="Two columns: Include vs Avoid. Highlight the green callout: if you've corrected the agent on the same thing twice, add it to CLAUDE.md. Walk through a few Include examples relevant to Coles: architecture decisions, data standards, deploy patterns. Avoid section: don't add vague rules like 'write clean code'. Don't add temporary context. ~3 min. Transition: CLAUDE.md evolves over time.">
     <div class="reveal section-num">Session 1</div>
     <h2 class="reveal">What to Put in Your CLAUDE.md</h2>
     <div class="reveal two-col" style="margin-top:1.5rem;gap:2rem;">
@@ -742,7 +810,7 @@ Use Python.
   <!-- ============================================================ -->
   <!-- SESSION 1: EVOLVING YOUR STANDARDS -->
   <!-- ============================================================ -->
-  <section class="slide slide-white" aria-label="Evolving Your Standards">
+  <section class="slide slide-white" aria-label="Evolving Your Standards" data-notes="Four-step evolution: Start Minimal, Observe, Add Rules, Prune. Key insight: your CLAUDE.md should be version-controlled and reviewed in PRs, just like code. It's institutional memory for AI collaboration. Tip callout: commit to git, review in PRs. ~2 min. Transition: Time for the exercise -- write your own CLAUDE.md.">
     <div class="reveal section-num">Session 1</div>
     <h2 class="reveal">Evolving CLAUDE.md Over Time</h2>
     <p class="reveal" style="color:var(--text-secondary);margin-bottom:1.5rem;">Your CLAUDE.md is a living document. It grows as you learn what works.</p>
@@ -779,7 +847,7 @@ Use Python.
   <!-- ============================================================ -->
   <!-- SESSION 1: EXERCISE -->
   <!-- ============================================================ -->
-  <section class="slide slide-light" aria-label="Exercise: Write Your CLAUDE.md">
+  <section class="slide slide-light" aria-label="Exercise: Write Your CLAUDE.md" data-notes="10-minute exercise. Everyone opens their Coding Agents terminal. Ask Claude Code to create a CLAUDE.md for a real project they work on. Walk around the room, help anyone stuck. Common stumbling point: people make rules too vague. Push for specificity. After 10 min, ask 2-3 people to share. Discussion questions on the right. ~12 min total. Transition: Now let's talk about the secret weapon -- TDD with agents.">
     <div class="reveal section-num">Exercise &middot; 10 Minutes</div>
     <h2 class="reveal">Exercise: Write Your CLAUDE.md</h2>
     <div class="reveal two-col" style="margin-top:1.5rem;gap:2rem;">
@@ -816,7 +884,7 @@ Use Python.
   <!-- ============================================================ -->
   <!-- SECTION DIVIDER — SESSION 2 -->
   <!-- ============================================================ -->
-  <section class="slide slide-dark" aria-label="Section: Session 2">
+  <section class="slide slide-dark" aria-label="Section: Session 2" data-notes="Section divider for Session 2. Key message: TDD is not just good practice -- it's exponentially more powerful with AI agents because tests are unambiguous specs. ~30 sec.">
     <div class="reveal section-num">Session 2 &middot; 10:30 AM</div>
     <h1 class="reveal">TDD + Agents</h1>
     <p class="reveal subtitle">The secret weapon for reliable AI code generation</p>
@@ -826,7 +894,7 @@ Use Python.
   <!-- ============================================================ -->
   <!-- SLIDE 11: TDD WORKFLOW -->
   <!-- ============================================================ -->
-  <section class="slide slide-light" aria-label="TDD Workflow">
+  <section class="slide slide-light" aria-label="TDD Workflow" data-notes="Walk through the 4-step flow: Human writes test, Agent implements, Run and iterate, Human reviews. The key insight: the test IS the spec. No ambiguity. The agent reads the test, writes code to pass it, runs the test, reads failures, fixes code. Tight feedback loop. ~3 min. Transition: Why is this so much more powerful than traditional TDD?">
     <div class="reveal section-num">Session 2</div>
     <h2 class="reveal">The TDD + Agent Workflow</h2>
     <div class="reveal accent-line"></div>
@@ -858,7 +926,7 @@ Use Python.
   <!-- ============================================================ -->
   <!-- SLIDE 12: WHY TDD WORKS -->
   <!-- ============================================================ -->
-  <section class="slide slide-white" aria-label="Why TDD Works with Agents">
+  <section class="slide slide-white" aria-label="Why TDD Works with Agents" data-notes="Three reasons TDD is exponentially better with agents. Unambiguous specs: no interpretation needed. Self-correcting loop: agent runs tests, reads failures, fixes code -- no human needed in between. Guardrails: tests prevent the agent from going off the rails. Pro tips callout: start small, descriptive names, pin critical behavior. ~3 min. Transition: Let's look at how to write tests that actually guide the agent well.">
     <div class="reveal section-num">Session 2</div>
     <h2 class="reveal">Why TDD is <span class="text-lava">Exponentially</span> More Powerful with Agents</h2>
     <div class="reveal accent-line"></div>
@@ -887,7 +955,7 @@ Use Python.
   <!-- ============================================================ -->
   <!-- SESSION 2: WRITING TESTS THAT GUIDE THE AGENT -->
   <!-- ============================================================ -->
-  <section class="slide slide-white" aria-label="Writing Tests That Guide">
+  <section class="slide slide-white" aria-label="Writing Tests That Guide" data-notes="Walk through the code example on the left. Show Given-When-Then structure. Highlight: concrete test data (10 rows, 2 invalid), specific assertions (count==8, no negatives). On the right, four principles: Given-When-Then structure, concrete values, descriptive names, multiple assertions. Ask: who currently writes tests? This is the same skill, just applied differently. ~3 min. Transition: The red-green-refactor cycle.">
     <div class="reveal section-num">Session 2</div>
     <h2 class="reveal">Writing Tests That Guide the Agent</h2>
     <p class="reveal" style="color:var(--text-secondary);margin-bottom:1.5rem;">Good tests are unambiguous specifications. They tell the agent exactly what "done" looks like.</p>
@@ -939,7 +1007,7 @@ Use Python.
   <!-- ============================================================ -->
   <!-- SESSION 2: THE ITERATIVE CYCLE -->
   <!-- ============================================================ -->
-  <section class="slide slide-light" aria-label="The Iterative Cycle">
+  <section class="slide slide-light" aria-label="The Iterative Cycle" data-notes="Walk through RED-GREEN-REFACTOR-REPEAT. Red: human writes failing test. Green: agent writes code to pass. Refactor: human reviews and improves. Repeat: add edge cases. Point to the numbers: 1-3 tests per iteration, 2-5 iterations typical, 90%+ success rate with good tests. ~2 min. Transition: How to improve your success rates even further.">
     <div class="reveal section-num">Session 2</div>
     <h2 class="reveal">The Red-Green-Refactor Cycle</h2>
     <p class="reveal" style="color:var(--text-secondary);margin-bottom:1.5rem;">TDD with an agent creates a tight, self-correcting feedback loop.</p>
@@ -983,7 +1051,7 @@ Use Python.
   <!-- ============================================================ -->
   <!-- SESSION 2: IMPROVING SUCCESS RATES -->
   <!-- ============================================================ -->
-  <section class="slide slide-white" aria-label="Improving Success Rates">
+  <section class="slide slide-white" aria-label="Improving Success Rates" data-notes="Five strategies. Highlight #1 (start small) and #5 (know when to break the loop). If the agent fails the same test 3+ times, the problem is usually your prompt, not the model. Add context, simplify the test, or take a different approach. ~2 min. Transition: Common pitfalls to avoid.">
     <div class="reveal section-num">Session 2</div>
     <h2 class="reveal">Strategies to Improve Success Rates</h2>
     <div class="reveal" style="display:flex;flex-direction:column;gap:1rem;margin-top:1.5rem;">
@@ -1028,7 +1096,7 @@ Use Python.
   <!-- ============================================================ -->
   <!-- SESSION 2: COMMON PITFALLS -->
   <!-- ============================================================ -->
-  <section class="slide slide-light" aria-label="Common Pitfalls">
+  <section class="slide slide-light" aria-label="Common Pitfalls" data-notes="Walk through the table. Don't read every row -- pick 2-3 that resonate. Common ones: tests too vague (agent passes but wrong), too many tests at once (agent confused), testing implementation not behaviour (tests break on valid refactors). Ask: which of these have you experienced? ~2 min. Transition: Let's look at the test pyramid for data engineering specifically.">
     <div class="reveal section-num">Session 2</div>
     <h2 class="reveal">Common TDD + Agent Pitfalls</h2>
     <div class="reveal" style="margin-top:1.5rem;">
@@ -1079,7 +1147,7 @@ Use Python.
   <!-- ============================================================ -->
   <!-- SESSION 2: TEST PYRAMID FOR DATA ENGINEERING -->
   <!-- ============================================================ -->
-  <section class="slide slide-light" aria-label="Test Pyramid for Data Engineering">
+  <section class="slide slide-light" aria-label="Test Pyramid for Data Engineering" data-notes="Data engineering needs 5 testing levels, not 3. Key insight: traditional unit tests are fragile for data pipelines because data changes rapidly and schemas evolve. Recommendation: test at the job-to-pipeline level where each job is a self-contained black box. Don't unit test file I/O or DataFrame append operations. Read the Kent Beck quote. ~3 min. Transition: Data as state -- why data testing is fundamentally different.">
     <div class="reveal section-num">Session 2</div>
     <h2 class="reveal">The Test Pyramid for Data Engineering</h2>
     <p class="reveal" style="color:var(--text-secondary);margin-bottom:1rem;">Traditional software has 3 testing levels. Data pipelines need <strong style="color:var(--db-lava);">5</strong>.</p>
@@ -1117,7 +1185,7 @@ Use Python.
   <!-- ============================================================ -->
   <!-- SESSION 2: DATA AS STATE -->
   <!-- ============================================================ -->
-  <section class="slide slide-white" aria-label="Data as State">
+  <section class="slide slide-white" aria-label="Data as State" data-notes="Three-part modification burden: when you change code, you also need to update input data and expected output data. Triple the maintenance. Three domain-specific complications: traditional databases are monolithic and stateful, big data scale makes duplication infeasible, security/obfuscation hampers verification. This is why data testing needs a different approach. ~3 min. Transition: The solution -- runtime test data generation.">
     <div class="reveal section-num">Session 2</div>
     <h2 class="reveal">Data as State: Why Data Testing Is Different</h2>
     <p class="reveal" style="color:var(--text-secondary);margin-bottom:1.5rem;">In software, tests run against code. In data engineering, you must also manage <strong>the data itself</strong> as test state.</p>
@@ -1163,7 +1231,7 @@ Use Python.
   <!-- ============================================================ -->
   <!-- SESSION 2: RUNTIME TEST DATA GENERATION -->
   <!-- ============================================================ -->
-  <section class="slide slide-light" aria-label="Runtime Test Data Generation">
+  <section class="slide slide-light" aria-label="Runtime Test Data Generation" data-notes="Walk through the code example. Generate test data programmatically with spark.createDataFrame. Known values, known expected outputs. Benefits: easier refactoring, no PII, scalable volumes, edge case coverage. Call out the red box: this is exactly what Lab 1 uses. You'll generate small DataFrames in pytest fixtures. ~3 min. Transition: Where human input is still essential.">
     <div class="reveal section-num">Session 2</div>
     <h2 class="reveal">The Solution: Runtime Test Data Generation</h2>
     <p class="reveal" style="color:var(--text-secondary);margin-bottom:1.5rem;">Generate test data <strong>programmatically</strong> rather than copying from production.</p>
@@ -1210,7 +1278,7 @@ Use Python.
   <!-- ============================================================ -->
   <!-- SESSION 2: WHERE HUMANS ARE ESSENTIAL -->
   <!-- ============================================================ -->
-  <section class="slide slide-white" aria-label="Where Humans Are Essential">
+  <section class="slide slide-white" aria-label="Where Humans Are Essential" data-notes="Six areas where human judgement is irreplaceable. Top row (red): architecture, security, performance -- these are design decisions. Bottom row (teal): business logic, edge cases, code review -- these require domain knowledge. Emphasise: you are responsible for production code regardless of who (or what) wrote it. ~2 min. Transition: Let me show you a live demo of TDD in action.">
     <div class="reveal section-num">Session 2</div>
     <h2 class="reveal">Where Human Input Is Essential</h2>
     <p class="reveal" style="color:var(--text-secondary);margin-bottom:1.5rem;">AI agents excel at implementation, but some decisions require human judgement.</p>
@@ -1245,7 +1313,7 @@ Use Python.
   <!-- ============================================================ -->
   <!-- SESSION 2: LIVE DEMO PREVIEW -->
   <!-- ============================================================ -->
-  <section class="slide slide-light" aria-label="Live Demo Preview">
+  <section class="slide slide-light" aria-label="Live Demo Preview" data-notes="DEMO SLIDE. Open Coding Agents terminal. Write 3 failing tests: clean_data, join_tables, aggregate. Ask Claude Code to implement. Watch the agent read tests, write code, run tests, see failures, fix code. Point out: agent reads test expectations BEFORE writing code. Self-corrects on failures. Converges in 2-5 iterations. Have backup recording ready in case of issues. ~10 min demo. Transition: Now it's your turn -- Lab 1.">
     <div class="reveal section-num">Live Demo</div>
     <h2 class="reveal">Live Demo: TDD in Action</h2>
     <p class="reveal" style="color:var(--text-secondary);margin-bottom:1.5rem;">Watch the full cycle: write failing tests, let the agent implement, iterate to green.</p>
@@ -1296,7 +1364,7 @@ Use Python.
   <!-- ============================================================ -->
   <!-- SECTION DIVIDER — LAB 1 -->
   <!-- ============================================================ -->
-  <section class="slide slide-dark" aria-label="Section: Lab 1">
+  <section class="slide slide-dark" aria-label="Section: Lab 1" data-notes="Lab 1 section divider. 75 minutes hands-on. Remind everyone to have their Coding Agents terminal ready. If anyone has access issues, flag them now. ~30 sec.">
     <div class="reveal section-num">Lab 1 &middot; 11:15 AM &middot; 75 Minutes</div>
     <h1 class="reveal">Build a Data Pipeline</h1>
     <p class="reveal subtitle">Hands-on: direct the agent to build, test, and deploy</p>
@@ -1306,7 +1374,7 @@ Use Python.
   <!-- ============================================================ -->
   <!-- SLIDE 14: LAB 1 BRIEFING -->
   <!-- ============================================================ -->
-  <section class="slide slide-light" aria-label="Lab 1 Briefing">
+  <section class="slide slide-light" aria-label="Lab 1 Briefing" data-notes="Walk through the four phases: Setup (10 min), Write Specs (15 min), Build with Agent (35 min), Deploy (15 min). Show the pipeline flow on the right: raw transactions through clean, enrich, aggregate to gold table. Key command to start: open the lab guide in your terminal. Common stumbling points: people try to write implementation code themselves -- redirect them to write tests first. Walk around the room during the lab. ~3 min briefing, then 75 min lab time. Transition after lab: lunch break.">
     <div class="reveal section-num">Lab 1</div>
     <h2 class="reveal">Your Mission: Store Metrics Pipeline</h2>
     <div class="reveal accent-line"></div>
@@ -1356,7 +1424,7 @@ Use Python.
   <!-- ============================================================ -->
   <!-- SLIDE 15: SECTION DIVIDER — SESSION 3 -->
   <!-- ============================================================ -->
-  <section class="slide slide-dark" aria-label="Section: Session 3">
+  <section class="slide slide-dark" aria-label="Section: Session 3" data-notes="Post-lunch session. Energy might be lower -- start with an interactive question. Ask: what worked well in Lab 1? What surprised you? Use their experiences to ground Session 3 concepts. ~1 min.">
     <div class="reveal section-num">Session 3 &middot; 1:30 PM</div>
     <h1 class="reveal">The Human-AI<br>Partnership</h1>
     <p class="reveal subtitle">When to steer vs. delegate — and advanced patterns</p>
@@ -1366,7 +1434,7 @@ Use Python.
   <!-- ============================================================ -->
   <!-- SLIDE 16: DELEGATION SPECTRUM -->
   <!-- ============================================================ -->
-  <section class="slide slide-light" aria-label="Delegation Spectrum">
+  <section class="slide slide-light" aria-label="Delegation Spectrum" data-notes="Four modes on the spectrum from full delegation to review mode. Walk through each card with examples. Full delegation: CRUD, boilerplate. Guided: most production work. Pair programming: complex logic, security. Review mode: large refactors. Most of your work should be in Guided Delegation mode. ~3 min. Transition: Let's see which activities map to which mode.">
     <div class="reveal section-num">Session 3</div>
     <h2 class="reveal">The Delegation Spectrum</h2>
     <div class="reveal accent-line"></div>
@@ -1405,7 +1473,7 @@ Use Python.
   <!-- ============================================================ -->
   <!-- SLIDE 17: AI FOR DIFFERENT ACTIVITIES -->
   <!-- ============================================================ -->
-  <section class="slide slide-white" aria-label="AI for Activities">
+  <section class="slide slide-white" aria-label="AI for Activities" data-notes="Table showing six common activities. For each: what AI is best for, and where humans are still needed. Don't read every row. Highlight code generation (boilerplate) and testing (write tests from specs). Ask: which of these do you spend the most time on? That's where you'll get the biggest ROI. ~2 min. Transition: How to structure your prompts for each mode.">
     <div class="reveal section-num">Session 3</div>
     <h2 class="reveal">AI for Different Activities</h2>
     <div class="reveal accent-line"></div>
@@ -1457,7 +1525,7 @@ Use Python.
   <!-- ============================================================ -->
   <!-- SLIDE 17A: STRUCTURING EFFECTIVE PROMPTS -->
   <!-- ============================================================ -->
-  <section class="slide slide-white" aria-label="Structuring Effective Prompts">
+  <section class="slide slide-white" aria-label="Structuring Effective Prompts" data-notes="Four prompt examples, one for each delegation mode. Read the Full Delegation example: short, trusting. Read the Guided Delegation example: specific tech choices. Pair Programming: step-by-step review. Review Mode: structured audit. Rule of thumb callout: start with guided delegation, graduate to full delegation for well-understood patterns. ~3 min. Transition: How to know when the agent needs your help.">
     <div class="reveal section-num">Session 3</div>
     <h2 class="reveal">Structuring Effective Prompts</h2>
     <div class="reveal accent-line"></div>
@@ -1499,7 +1567,7 @@ Use Python.
   <!-- ============================================================ -->
   <!-- SLIDE 17B: KNOWING WHEN TO INTERVENE -->
   <!-- ============================================================ -->
-  <section class="slide slide-light" aria-label="When to Intervene">
+  <section class="slide slide-light" aria-label="When to Intervene" data-notes="Six warning signals. Highlight looping (same error 3+ times) and hallucinating APIs (invents functions that don't exist). For each: what's happening and what to do. The 3-strike rule callout: if the agent fails 3 times, the problem is your prompt, not the model. Rewrite instructions before retrying. ~3 min. Transition: Advanced patterns for power users.">
     <div class="reveal section-num">Session 3</div>
     <h2 class="reveal">Knowing When to Intervene</h2>
     <div class="reveal accent-line"></div>
@@ -1550,7 +1618,7 @@ Use Python.
   <!-- ============================================================ -->
   <!-- SLIDE 17C: ADVANCED AGENTIC PATTERNS -->
   <!-- ============================================================ -->
-  <section class="slide slide-white" aria-label="Advanced Patterns">
+  <section class="slide slide-white" aria-label="Advanced Patterns" data-notes="Four advanced patterns. MCP Servers: give agents access to external tools (databases, Slack, JIRA). Custom Skills: encode expert workflows as reusable slash commands. Multi-Agent Workflows: spawn sub-agents for parallel tasks. Workspace Sync: write code locally, deploy via DABs. Don't go deep on each -- give the overview and mention we'll see MCP in more detail next. ~3 min. Transition: MCP Servers on Databricks specifically.">
     <div class="reveal section-num">Session 3</div>
     <h2 class="reveal">Advanced Agentic Patterns</h2>
     <div class="reveal accent-line"></div>
@@ -1601,7 +1669,7 @@ Use Python.
   <!-- ============================================================ -->
   <!-- SLIDE 17C-2: MCP SERVERS ON DATABRICKS -->
   <!-- ============================================================ -->
-  <section class="slide slide-light" aria-label="MCP on Databricks">
+  <section class="slide slide-light" aria-label="MCP on Databricks" data-notes="Three flavours of MCP servers on Databricks. Built-in/Managed: UC functions, tables, volumes, Vector Search, Genie -- zero config. Proxy/External: third-party services (GitHub, Slack, Glean) via UC Connections -- no credentials exposed. Custom: host your own on Databricks Apps. All secured through Unity Catalog. List of supported clients at bottom. ~3 min. Transition: Let me show you how I use these in my daily workflow.">
     <div class="reveal section-num">Session 3</div>
     <h2 class="reveal">MCP Servers on Databricks</h2>
     <div class="reveal accent-line"></div>
@@ -1658,7 +1726,7 @@ Use Python.
   <!-- ============================================================ -->
   <!-- SLIDE 17D: REAL-WORLD SA WORKFLOW -->
   <!-- ============================================================ -->
-  <section class="slide slide-dark" aria-label="Real-World Workflow">
+  <section class="slide slide-dark" aria-label="Real-World Workflow" data-notes="Personal story slide. Walk through your actual daily workflow. 8:30 AM triage emails, 9 AM research with MCP tools, 10 AM build a demo in 30 min, 11 AM show it to the customer, 1 PM create slides from notes, 3 PM file expenses. Key insight callout: agent doesn't replace activities, it compresses each from hours to minutes. This is relatable and aspirational. ~3 min. Transition: What are your use cases?">
     <div class="reveal section-num" style="color:var(--db-oat-medium);">Session 3</div>
     <h2 class="reveal" style="color:var(--db-white);">Real-World: An SA&rsquo;s Daily Workflow</h2>
     <div class="reveal accent-line" style="background:var(--db-lava-light);"></div>
@@ -1707,7 +1775,7 @@ Use Python.
   <!-- ============================================================ -->
   <!-- SLIDE 17E: DISCUSSION — YOUR USE CASES -->
   <!-- ============================================================ -->
-  <section class="slide slide-light" aria-label="Discussion: Your Use Cases">
+  <section class="slide slide-light" aria-label="Discussion: Your Use Cases" data-notes="Interactive discussion. Four role cards: Data Engineers, Data Scientists, Software Engineers, Analysts. Each has 4 example use cases. Group exercise (5 min): pick one task from your role, write a 2-sentence prompt to delegate it. Share with the group. Critique and improve prompts together. Watch for: prompts that are too vague, missing constraints, no acceptance criteria. ~8 min total. Transition: Session 4 -- production patterns and governance.">
     <div class="reveal section-num">Session 3</div>
     <h2 class="reveal">Discussion: Your Agentic Use Cases</h2>
     <div class="reveal accent-line"></div>
@@ -1758,7 +1826,7 @@ Use Python.
   <!-- ============================================================ -->
   <!-- SLIDE 18: SECTION DIVIDER — SESSION 4 -->
   <!-- ============================================================ -->
-  <section class="slide slide-dark" aria-label="Section: Session 4">
+  <section class="slide slide-dark" aria-label="Section: Session 4" data-notes="Session 4 section divider. This session covers how to take agentic development to production safely: AI Gateway for control, MLflow for observability, Unity Catalog for governance, DABs for deployment. ~30 sec.">
     <div class="reveal section-num">Session 4 &middot; 2:15 PM</div>
     <h1 class="reveal">Production Patterns<br>& Governance</h1>
     <p class="reveal subtitle">AI Gateway &middot; MLflow &middot; Unity Catalog &middot; DABs</p>
@@ -1768,7 +1836,7 @@ Use Python.
   <!-- ============================================================ -->
   <!-- SLIDE 19: AI GATEWAY ARCHITECTURE -->
   <!-- ============================================================ -->
-  <section class="slide slide-light" aria-label="AI Gateway">
+  <section class="slide slide-light" aria-label="AI Gateway" data-notes="Walk through the architecture diagram: coding agent calls AI Gateway, which routes to one of multiple models. Three capabilities: model routing (swap models with zero code changes), rate limiting (per user/team budgets), audit logging (every LLM call logged). This is what prevents runaway costs and ensures compliance. ~3 min. Transition: Observability and governance in more detail.">
     <div class="reveal section-num">Session 4</div>
     <h2 class="reveal">AI Gateway: The Control Plane</h2>
     <div class="reveal accent-line"></div>
@@ -1816,7 +1884,7 @@ Use Python.
   <!-- ============================================================ -->
   <!-- SLIDE 20: OBSERVABILITY & GOVERNANCE -->
   <!-- ============================================================ -->
-  <section class="slide slide-white" aria-label="Observability">
+  <section class="slide slide-white" aria-label="Observability" data-notes="Three pillars: MLflow Tracing (auto-traced sessions, debug agent behavior, measure costs), Unity Catalog (data governance, access controls, lineage), DABs CI/CD (agent generates code, human reviews PR, DABs deploys). The governance promise callout: AI accelerates development but you never lose control. ~3 min. Transition: AI Gateway deep dive.">
     <div class="reveal section-num">Session 4</div>
     <h2 class="reveal">Observability & Governance</h2>
     <div class="reveal accent-line"></div>
@@ -1860,7 +1928,7 @@ Use Python.
   <!-- ============================================================ -->
   <!-- SLIDE 20A: AI GATEWAY DEEP DIVE                             -->
   <!-- ============================================================ -->
-  <section class="slide slide-light" aria-label="AI Gateway Deep Dive">
+  <section class="slide slide-light" aria-label="AI Gateway Deep Dive" data-notes="Deep dive on AI Gateway. Show the YAML config example: endpoint name, model routing, rate limits. Four capability cards: model routing (swap Claude/GPT/Llama without code changes), rate limiting (per-user, per-team), cost tracking (token-level usage with budget alerts), audit logging (required for regulated industries). Relate to Coles: retail banking compliance needs this. ~3 min. Transition: MLflow tracing for agent observability.">
     <h2 class="reveal">AI Gateway: Your LLM Control Plane</h2>
     <p class="reveal" style="color:var(--text-secondary);max-width:700px;">Route every LLM call through a single managed endpoint — switch models, enforce limits, and track costs without changing application code.</p>
     <div class="reveal code-block" style="margin-top:1.5rem;font-size:0.85rem;">
@@ -1908,7 +1976,7 @@ env:
   <!-- ============================================================ -->
   <!-- SLIDE 20B: MLFLOW TRACING WALKTHROUGH                       -->
   <!-- ============================================================ -->
-  <section class="slide slide-dark" aria-label="MLflow Tracing">
+  <section class="slide slide-dark" aria-label="MLflow Tracing" data-notes="Dark slide -- architecture flow: Claude Code session through AI Gateway to MLflow traces to dashboard. Three use cases: Debugging (why did the agent loop 5 times?), Measurement (tokens per task, success rate), Comparison (Claude vs GPT, different prompt strategies). Every session is auto-traced -- no setup needed. ~3 min. Transition: CI/CD with DABs.">
     <h2 class="reveal">MLflow Tracing: Agent Observability</h2>
     <p class="reveal subtitle">Every Claude Code session is auto-traced. Debug agent behavior, measure token usage, compare approaches.</p>
     <div class="reveal arch-flow" style="margin-top:2rem;">
@@ -1951,7 +2019,7 @@ env:
   <!-- ============================================================ -->
   <!-- SLIDE 20C: CI/CD WITH DABS                                  -->
   <!-- ============================================================ -->
-  <section class="slide slide-light" aria-label="CI/CD with DABs">
+  <section class="slide slide-light" aria-label="CI/CD with DABs" data-notes="Five-step flow: agent writes code, human reviews PR, CI runs tests, DABs deploys, monitor and iterate. Show the databricks.yml example: bundle name, job schedule (6 AM AEST), dev/prod targets. Two callouts: idempotent (same bundle, same result) and git-native (roll back with git revert). This is what participants will do in Lab 1 deploy step. ~3 min. Transition: How to roll this out to your broader team.">
     <h2 class="reveal">CI/CD: From Agent to Production</h2>
     <p class="reveal" style="color:var(--text-secondary);max-width:700px;">Databricks Asset Bundles (DABs) give you reproducible, git-driven deployments with dev/staging/prod targets.</p>
     <div class="reveal step-flow" style="margin-top:1.5rem;">
@@ -2011,7 +2079,7 @@ targets:
   <!-- ============================================================ -->
   <!-- SLIDE 20D: TEAM ADOPTION PLAYBOOK                           -->
   <!-- ============================================================ -->
-  <section class="slide slide-white" aria-label="Team Adoption Playbook">
+  <section class="slide slide-white" aria-label="Team Adoption Playbook" data-notes="Four-phase adoption plan. Phase 1 (weeks 1-2): the people in this room become champions. Phase 2 (weeks 3-4): champions facilitate for their teams using today's materials. Phase 3 (weeks 5-8): build shared skill libraries for common patterns. Phase 4 (ongoing): measure and scale. Callout: Farbod and Swee Hoe are internal champions, David available for follow-up. ~3 min. Transition: How to measure success.">
     <h2 class="reveal">Team Adoption Playbook</h2>
     <p class="reveal" style="color:var(--text-secondary);max-width:700px;">A phased approach to rolling out agentic development across your engineering org.</p>
     <div class="reveal timeline" style="margin-top:2rem;">
@@ -2052,7 +2120,7 @@ targets:
   <!-- ============================================================ -->
   <!-- SLIDE 20E: MEASURING SUCCESS                                -->
   <!-- ============================================================ -->
-  <section class="slide slide-light" aria-label="Measuring Success">
+  <section class="slide slide-light" aria-label="Measuring Success" data-notes="Three metric categories: Velocity (time to first PR down 40-60%, lines of code up 2-5x), Quality (bugs per release down 20-40%, test pass rate up to 95%+), Experience (developer satisfaction up, boilerplate time down 80%). How to measure: MLflow traces for costs, Git analytics for velocity, quarterly surveys for satisfaction. Discussion (5 min): which metrics matter most for your team? ~5 min total. Transition: Time for Lab 2.">
     <h2 class="reveal">Measuring Success</h2>
     <p class="reveal" style="color:var(--text-secondary);max-width:700px;">What to track to know if agentic development is working for your team.</p>
     <div class="reveal three-col" style="margin-top:2rem;">
@@ -2101,7 +2169,7 @@ targets:
   <!-- ============================================================ -->
   <!-- SLIDE 21: SECTION DIVIDER — LAB 2 -->
   <!-- ============================================================ -->
-  <section class="slide slide-dark" aria-label="Section: Lab 2">
+  <section class="slide slide-dark" aria-label="Section: Lab 2" data-notes="Lab 2 section divider. This is the capstone challenge. 75 minutes to build a full-stack app from PRD to production. Remind everyone: use everything from today -- CLAUDE.md, TDD, delegation patterns. ~30 sec.">
     <div class="reveal section-num">Lab 2 &middot; 3:15 PM &middot; 75 Minutes</div>
     <h1 class="reveal">Build & Deploy<br>a Full-Stack App</h1>
     <p class="reveal subtitle">The capstone challenge — from PRD to production</p>
@@ -2111,7 +2179,7 @@ targets:
   <!-- ============================================================ -->
   <!-- SLIDE 22: LAB 2 BRIEFING -->
   <!-- ============================================================ -->
-  <section class="slide slide-light" aria-label="Lab 2 Briefing">
+  <section class="slide slide-light" aria-label="Lab 2 Briefing" data-notes="Walk through the four phases: Design (10 min PRD), Build with TDD (45 min), Deploy (15 min), Share (5 min demos). Show the architecture on the right: HTML+Tailwind+htmx frontend, FastAPI backend, Unity Catalog gold table, Foundation Model API for NL-to-SQL. Emphasise: they will build a real web app that reads from their Lab 1 pipeline. Common stumbling point: people skip the PRD step -- don't let them. ~3 min briefing. Transition: success criteria.">
     <div class="reveal section-num">Lab 2</div>
     <h2 class="reveal">Store Performance Dashboard</h2>
     <div class="reveal accent-line"></div>
@@ -2168,7 +2236,7 @@ targets:
   <!-- ============================================================ -->
   <!-- SLIDE 23: LAB 2 SUCCESS CRITERIA -->
   <!-- ============================================================ -->
-  <section class="slide slide-white" aria-label="Lab 2 Success">
+  <section class="slide slide-white" aria-label="Lab 2 Success" data-notes="Left column: must-haves (FastAPI, HTML frontend, NL query, data from Lab 1 gold table, deployed on Databricks Apps, all tests passing). Right column: bonus challenges for fast finishers (chart with Chart.js, auth, caching, CSV export). Set expectations: completing all must-haves is a great result. Bonus challenges are stretch goals. ~2 min then start the lab. Walk around and help during the 75 min.">
     <div class="reveal section-num">Lab 2</div>
     <h2 class="reveal">Success Criteria & Bonus</h2>
     <div class="reveal accent-line"></div>
@@ -2211,7 +2279,7 @@ targets:
   <!-- ============================================================ -->
   <!-- SLIDE 24: SECTION DIVIDER — WRAP UP -->
   <!-- ============================================================ -->
-  <section class="slide slide-dark" aria-label="Section: Wrap Up">
+  <section class="slide slide-dark" aria-label="Section: Wrap Up" data-notes="We are in the home stretch. This is the wind-down section -- bring the energy back up for the close. ~30 sec transition slide.">
     <div class="reveal section-num">4:30 PM</div>
     <h1 class="reveal">Key Takeaways<br>& Next Steps</h1>
     <div class="reveal accent-line" style="background:var(--db-lava-light);margin-top:1.5rem;"></div>
@@ -2220,7 +2288,7 @@ targets:
   <!-- ============================================================ -->
   <!-- SLIDE 25: KEY TAKEAWAYS -->
   <!-- ============================================================ -->
-  <section class="slide slide-light" aria-label="Key Takeaways">
+  <section class="slide slide-light" aria-label="Key Takeaways" data-notes="Four cards, four key messages. Walk through each one deliberately. 1) Specs are leverage -- reference what they learned in Session 1. 2) TDD + agents -- reference their Lab 1 and Lab 2 experience. 3) Know when to steer -- the human judgment piece from Session 3. 4) Start small -- the adoption advice from Session 4. Ask: which of these resonated most with you today? ~3 min.">
     <div class="reveal section-num">Takeaways</div>
     <h2 class="reveal">What to Remember</h2>
     <div class="reveal accent-line"></div>
@@ -2251,7 +2319,7 @@ targets:
   <!-- ============================================================ -->
   <!-- SLIDE 26: NEXT STEPS -->
   <!-- ============================================================ -->
-  <section class="slide slide-white" aria-label="Next Steps">
+  <section class="slide slide-white" aria-label="Next Steps" data-notes="Concrete actions they can take. Left column: immediate things this week (share learnings, set up CLAUDE.md, try on a real task). Coming soon: full team workshop, shared skill libraries, monthly office hours. Right column: champions -- Farbod and Swee Hoe internally, David from Databricks for follow-up. Emphasise they are not alone -- there is a support structure. ~3 min.">
     <div class="reveal section-num">What's Next</div>
     <h2 class="reveal">Next Steps</h2>
     <div class="reveal accent-line"></div>
@@ -2298,7 +2366,7 @@ targets:
   <!-- ============================================================ -->
   <!-- SLIDE 27: CLOSING -->
   <!-- ============================================================ -->
-  <section class="slide slide-dark" aria-label="Closing">
+  <section class="slide slide-dark" aria-label="Closing" data-notes="Final slide. Let the quote land: 'The best engineers will be those who can effectively direct AI agents.' Thank them for their time, energy, and willingness to experiment. Remind them of your email. Open the floor for any last questions. If no questions, close with: 'Go build something great this week.' ~2 min.">
     <div style="text-align:center;">
       <div class="reveal">
         <svg class="db-logo-large" viewBox="0 0 180 36" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Databricks" style="height:64px;">
@@ -2328,6 +2396,10 @@ targets:
         this.progressBar = document.querySelector('.progress-bar');
         this.navDots = document.querySelector('.nav-dots');
         this.slideNumber = document.querySelector('.slide-number');
+        this.notesPanel = document.getElementById('speakerNotes');
+        this.notesContent = document.getElementById('notesContent');
+        this.notesSlideNum = document.getElementById('notesSlideNum');
+        this.notesVisible = false;
         this.currentSlide = 0;
         this.init();
       }
@@ -2360,6 +2432,7 @@ targets:
               this.updateProgress();
               this.updateSlideNumber();
               this.updateNavDotsTheme(entry.target);
+              if (this.notesVisible) this.updateNotes();
             }
           });
         }, { threshold: 0.5 });
@@ -2367,7 +2440,9 @@ targets:
       }
       setupKeyboardNav() {
         document.addEventListener('keydown', (e) => {
-          if (e.key === 'ArrowDown' || e.key === 'ArrowRight' || e.key === ' ') {
+          if (e.key === 'n' || e.key === 'N') {
+            e.preventDefault(); this.toggleNotes();
+          } else if (e.key === 'ArrowDown' || e.key === 'ArrowRight' || e.key === ' ') {
             e.preventDefault(); this.goToSlide(this.currentSlide + 1);
           } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
             e.preventDefault(); this.goToSlide(this.currentSlide - 1);
@@ -2409,6 +2484,17 @@ targets:
       }
       updateSlideNumber() {
         this.slideNumber.textContent = `${this.currentSlide + 1} / ${this.slides.length}`;
+      }
+      toggleNotes() {
+        this.notesVisible = !this.notesVisible;
+        this.notesPanel.classList.toggle('visible', this.notesVisible);
+        if (this.notesVisible) this.updateNotes();
+      }
+      updateNotes() {
+        const slide = this.slides[this.currentSlide];
+        const notes = slide ? slide.getAttribute('data-notes') : '';
+        this.notesContent.textContent = notes || 'No notes for this slide.';
+        this.notesSlideNum.textContent = `Slide ${this.currentSlide + 1} / ${this.slides.length}`;
       }
       updateNavDotsTheme(slide) {
         const isDark = slide.classList.contains('slide-dark');

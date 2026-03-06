@@ -40,13 +40,15 @@ Mixed engineering team (~145 total, 5-10 for pilot):
 | Databricks Apps | Hosting the built applications |
 | [AI Dev Kit Skills](https://github.com/databricks-solutions/ai-dev-kit/tree/main/databricks-skills) | Pre-built Databricks-specific agent skills |
 
+> **Tool-Agnostic Note:** While this workshop uses Claude Code as the primary agentic tool, the patterns and methodology taught here -- PRDs, CLAUDE.md/agents.md, TDD-driven development, context management -- apply equally to Cursor, Windsurf, GitHub Copilot Workspace, and other agentic coding tools. The key differentiator is the methodology, not the tool. Teams should adopt whichever agent fits their workflow, but the discipline of specs, tests, and structured context transfers across all of them.
+
 ---
 
 ## Agenda
 
 ### Morning Block: Foundations (9:00 AM - 12:30 PM)
 
-#### 9:00 - 9:30 | Welcome & The Paradigm Shift (30 min)
+#### 9:00 - 9:25 | Welcome & The Paradigm Shift (25 min)
 
 **Content:**
 - Welcome, introductions, logistics
@@ -57,7 +59,7 @@ Mixed engineering team (~145 total, 5-10 for pilot):
 
 **Key Message:** This isn't about replacing developers. It's about amplifying them 10x. The best engineers will be those who can effectively direct AI agents.
 
-#### 9:30 - 10:15 | Session 1: Thinking in Specs (45 min)
+#### 9:25 - 10:00 | Session 1: Thinking in Specs (35 min)
 
 **Topic:** Creating PRDs, specifications, and the art of prompting for code
 
@@ -82,9 +84,9 @@ Mixed engineering team (~145 total, 5-10 for pilot):
 - Show a project-level CLAUDE.md with architecture decisions
 - Demo how adding a single line to CLAUDE.md changes agent behavior
 
-#### 10:15 - 10:30 | Break (15 min)
+#### 10:00 - 10:15 | Break (15 min)
 
-#### 10:30 - 11:15 | Session 2: TDD-Driven Agentic Development (45 min)
+#### 10:15 - 10:50 | Session 2: TDD-Driven Agentic Development (35 min)
 
 **Topic:** Test-Driven Development as the secret weapon for AI code generation
 
@@ -114,7 +116,37 @@ Mixed engineering team (~145 total, 5-10 for pilot):
 
 **Live Demo:** Write 3 failing tests, then let Claude Code implement the solution. Show the iterative cycle.
 
-#### 11:15 - 12:30 | Lab 1: Build a Data Pipeline with Vibe Coding (75 min)
+#### 10:50 - 11:05 | Session 2.5: Context & Trust (15 min)
+
+**Topic:** How agents use context, and how to calibrate your trust
+
+**Content:**
+- **Context management -- the hidden skill:**
+  - How agents use context windows: every message, file read, and tool result consumes tokens
+  - Why long conversations degrade: the agent "forgets" early instructions, contradicts itself, loses focus
+  - When to start fresh vs. continue: new task = new session; related follow-up = same session
+  - Rules of thumb for context health:
+    - Compact when the agent starts repeating itself or missing obvious things
+    - Use subagents for expensive research to protect the main context window
+    - Break large tasks into smaller pieces with clear handoff points
+    - One concern per session keeps quality high
+- **The trust spectrum:**
+  - **Verify everything** (new to agents): Read every line, run every test manually, approve every change
+  - **Trust but verify** (building confidence): Let the agent work, review diffs, run tests
+  - **Delegate and spot-check** (experienced): Give broad instructions, review outcomes not process
+  - **Full autonomy** (well-tested patterns): CI runs tests, agent handles the rest
+  - How to calibrate: trust more for boilerplate/CRUD, trust less for security/business logic/architecture
+  - The cost of over-verification vs. under-verification
+- **The core vibe coding loop:**
+  1. **Describe** -- Write a clear spec or PRD (what, not how)
+  2. **Generate** -- Let the agent implement
+  3. **Test** -- Run tests, review output, check behavior
+  4. **Refine** -- Provide feedback, add constraints, iterate
+  - This loop is the fundamental workflow regardless of tool or language
+
+**Key Message:** Context management is what separates productive agent users from frustrated ones. Learn to feel when the context is degrading and act on it.
+
+#### 11:05 - 12:30 | Lab 1: Build a Data Pipeline with Vibe Coding (85 min)
 
 **Hands-On Exercise:**
 
@@ -122,12 +154,12 @@ Each participant uses their Coding Agents App to build a data pipeline:
 
 1. **Setup** (10 min): Clone a starter repo, review the CLAUDE.md, understand the data schema
 2. **Write specs** (15 min): Create a PRD and tests for a data transformation pipeline
-3. **Build with agent** (35 min): Use Claude Code / OpenCode to implement:
+3. **Build with agent** (40 min): Use Claude Code / OpenCode to implement:
    - Read raw data from Unity Catalog
    - Apply transformations (cleaning, joins, aggregations)
    - Write to a silver/gold table
    - Add data quality checks (Great Expectations or custom)
-4. **Deploy** (15 min): Package as a Databricks Job using DABs
+4. **Deploy** (20 min): Package as a Databricks Job using DABs
 
 **Starter data:** Use a provided Coles-relevant synthetic dataset (e.g., store transactions, inventory movements) pre-loaded in Unity Catalog.
 
@@ -173,20 +205,31 @@ Each participant uses their Coding Agents App to build a data pipeline:
 **Topic:** Taking agentic development from experiments to production
 
 **Content:**
-- AI Gateway as the control plane:
-  - Model routing and fallback
+- **AI Gateway as the control plane:**
+  - The 3-tier MCP model:
+    - **Managed MCP:** Databricks-hosted connectors (Unity Catalog, DBSQL, Vector Search) -- zero config
+    - **External MCP:** Third-party services (Slack, JIRA, GitHub) -- configure endpoints and auth
+    - **Custom MCP:** Team-built servers for internal systems -- full flexibility
+  - Model routing with fallback chains: primary model (Claude Sonnet 4) -> fallback (GPT-4o) -> cost-optimized (Haiku) for different task types
+  - Guardrails configuration: input/output content filters, PII detection, topic restrictions, custom safety rules
+  - Pay-per-token vs. provisioned throughput: when to use each, cost modeling for team-wide adoption
   - Rate limiting per user/team
-  - Cost tracking and budgets
+  - Cost tracking and budgets with per-project attribution
   - Audit logging of all LLM interactions
-- MLflow tracing:
-  - Every Claude Code session auto-traced
-  - Debugging agent behavior
-  - Measuring token usage and cost
-  - Comparing different approaches
-- Unity Catalog integration:
-  - Agents respect data governance
-  - Access controls apply to AI-generated code
-  - Lineage tracking for AI-created pipelines
+- **MLflow Tracing:**
+  - Every Claude Code session auto-traced end-to-end
+  - MLflow 3 features for agent observability:
+    - Auto-tracing agent sessions with full tool call lineage
+    - Span-level metadata: latency, token counts, model used, cost per call
+    - Comparing token usage across approaches (e.g., TDD vs. freeform prompting)
+  - Debugging hallucinations via trace inspection: identify where the agent went wrong, what context it had, what it missed
+  - Building evaluation datasets from traced sessions
+  - Measuring and optimizing cost per task type
+- **Unity Catalog + Agents:**
+  - Agents respect UC permissions -- an agent can only access data the user can access
+  - Lineage tracking for AI-generated tables: trace which agent session created or modified a table
+  - Function-level governance: agent-callable functions registered in UC with access controls
+  - Data classification propagation: sensitivity labels flow through agent-created assets
 - CI/CD with DABs:
   - Agent generates code -> human reviews PR -> DABs deploy
   - Testing in the loop: agents run tests before PR
@@ -244,6 +287,36 @@ The capstone challenge - build and deploy a complete application:
   - Farbod & Swee Hoe as internal champions
   - David available for follow-up support
 - Q&A
+
+---
+
+## Day 2 (Optional): Going Deeper
+
+For teams that want to extend the workshop or schedule a follow-up session, the following topics build on Day 1 foundations.
+
+### CI/CD Integration (90 min)
+- PR review workflows with agents: automated code review on every pull request
+- Automated test generation in CI: agents write missing tests as a pipeline step
+- Branch-based agent workflows: agent opens PR, runs tests, requests review
+- DABs + GitHub Actions / Azure DevOps integration patterns
+
+### Production Readiness (90 min)
+- Security review checklist for agent-generated code: OWASP top 10, dependency scanning, secrets detection
+- Performance testing: load testing agent-built APIs, query optimization review
+- Monitoring and alerting: tracking agent-deployed services in production
+- Incident response: debugging production issues with agent assistance
+
+### Custom Skills & Plugins (90 min)
+- Building team-specific agent skills for Coles patterns (e.g., standard data pipeline templates, naming conventions)
+- Packaging skills for reuse across the team
+- Skill versioning and distribution via internal registries
+- Domain-specific skills: retail analytics, supply chain, inventory management
+
+### Advanced MCP (90 min)
+- Building custom MCP servers for internal Coles systems
+- Deploying MCP servers on Databricks Apps
+- Connecting agents to internal APIs, databases, and tools
+- Security considerations: authentication, authorization, audit trails for MCP connections
 
 ---
 
