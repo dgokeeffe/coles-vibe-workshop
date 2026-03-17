@@ -68,6 +68,44 @@ databricks api post /api/2.0/serving-endpoints \
   }'
 ```
 
+### 2b. Data Science Track Infrastructure
+
+The DS track needs additional permissions and infrastructure:
+
+**MLflow Permissions:**
+```sql
+-- Teams need to create experiments and log runs
+GRANT CREATE_EXPERIMENT ON WORKSPACE TO `workshop-participants`;
+-- Teams need to register models in Unity Catalog
+GRANT CREATE_MODEL ON SCHEMA workshop_vibe_coding.team_01 TO `team1-user1@coles.com.au`;
+-- Repeat for each team schema...
+```
+
+**Model Serving Permissions:**
+```sql
+-- Teams need to create serving endpoints
+-- This is typically a workspace-level permission
+-- Verify via: Workspace settings → Permissions → Model Serving
+```
+
+**Pre-loaded Gold Tables (Checkpoint 0):**
+All tracks depend on gold tables being available from minute one. Run the checkpoint loader to populate:
+```sql
+-- These must exist BEFORE the workshop
+-- DS and Analyst tracks read from these immediately
+-- DE track builds their own pipeline to produce the same tables
+SELECT COUNT(*) FROM workshop_vibe_coding.checkpoints.retail_summary;  -- should be > 0
+SELECT COUNT(*) FROM workshop_vibe_coding.checkpoints.food_inflation_yoy;  -- should be > 0
+```
+
+**DS Track Checkpoint Data:**
+```sql
+-- Pre-built feature table (Checkpoint DS-1B)
+CREATE TABLE IF NOT EXISTS workshop_vibe_coding.checkpoints.retail_features AS ...;
+-- Pre-trained model should be registered in MLflow (Checkpoint DS-2A)
+-- Pre-provisioned Model Serving endpoint (Checkpoint DS-2B) -- optional, takes time to spin up
+```
+
 ### 3. Unity Catalog Setup
 
 ```sql
@@ -168,6 +206,9 @@ Do this from the conference room WiFi on the day before:
 # 6. Test: Verify AI/BI dashboard creation works
 # 7. Test: Verify DABs deployment works:
 #    databricks bundle validate
+# 8. Test DS track: Verify MLflow experiment creation works
+# 9. Test DS track: Verify Model Serving endpoint creation works
+# 10. Test Analyst track: Verify Genie space creation works
 ```
 
 ### 8. Workshop Materials Checklist
@@ -178,6 +219,11 @@ Do this from the conference room WiFi on the day before:
 - [ ] Slides loaded and tested on projector
 - [ ] Backup demos on David's laptop (pre-recorded)
 - [ ] Post-workshop feedback survey prepared (3 questions, keep it short)
+- [ ] Three-track lab instructions printed/available (DE, DS, Analyst)
+- [ ] Starter-kit folder accessible from each terminal
+- [ ] Gold tables pre-loaded in checkpoints schema (Checkpoint 0)
+- [ ] MLflow permissions verified for DS track
+- [ ] Model Serving permissions verified for DS track
 
 ---
 

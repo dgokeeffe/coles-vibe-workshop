@@ -73,6 +73,46 @@ CREATE TABLE workshop_vibe_coding.TEAM_SCHEMA.food_inflation_yoy
   AS SELECT * FROM workshop_vibe_coding.checkpoints.food_inflation_yoy;
 ```
 
+## Data Science Track
+
+| Problem | Fix |
+|---------|-----|
+| **MLflow tracking URI error** | Check `DATABRICKS_HOST` env var: `echo $DATABRICKS_HOST` |
+| **MLflow experiment not found** | Set explicitly: `mlflow.set_experiment("/Users/.../name")` |
+| **Feature table write error** | Check UC schema: `workshop_vibe_coding.TEAM_SCHEMA` |
+| **Window function errors** | Verify `orderBy("month")` and `partitionBy("state", "industry")` |
+| **XGBoost not installed** | `pip install xgboost` |
+| **Model Serving 404** | Endpoint takes 5-10 min to provision. Check status in UI. |
+| **Model Serving auth error** | Check `DATABRICKS_TOKEN` env var |
+| **Low R² score** | Try XGBoost, add more features, or check for data leakage |
+
+### DS Useful Commands
+
+```bash
+# MLflow
+mlflow experiments list
+mlflow runs list --experiment-id <id>
+
+# Model Registry
+databricks unity-catalog models list --catalog workshop_vibe_coding --schema TEAM_SCHEMA
+
+# Model Serving
+databricks serving-endpoints list
+databricks serving-endpoints get grocery-forecast-TEAM_NAME
+```
+
+## Analyst Track
+
+| Problem | Fix |
+|---------|-----|
+| **Can't find Genie in sidebar** | Ask facilitator — may need to be enabled |
+| **Genie permission error** | Need CREATE GENIE SPACE on catalog |
+| **Genie gives wrong SQL** | Add column descriptions + example queries to instructions |
+| **Dashboard viz doesn't match** | Rephrase NL prompt or write SQL directly |
+| **Column comments not showing** | Use `ALTER TABLE t ALTER COLUMN c COMMENT 'desc'` |
+| **Dashboard slow** | Check SQL warehouse is running |
+| **Embedded dashboard blank** | Users need Databricks credentials to view |
+
 ## Steering Tips
 
 | When the agent... | Say this |

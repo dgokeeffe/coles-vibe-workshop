@@ -55,6 +55,8 @@ By end of day, participants will be able to:
 5. Connect agents to external tools via **MCP** (Model Context Protocol)
 6. Create **Genie spaces** and **AI/BI dashboards** for natural language analytics
 7. Ship a working end-to-end application on Databricks
+8. (DS) Track and compare experiments with MLflow, train and serve a model
+9. (Analyst) Create Genie spaces and AI/BI dashboards for business users
 
 ---
 
@@ -363,9 +365,11 @@ Short, punchy teaching → hands-on practice in teams → share learnings with t
 
 ### 10:35–11:30 | Lab 1: Build Your Data Pipeline (55 min)
 
-> **See [LAB-1-DATA-PIPELINE.md](LAB-1-DATA-PIPELINE.md) for full instructions.**
+> **See track-specific instructions:** [LAB-1-DE.md](LAB-1-DE.md) | [LAB-1-DS.md](LAB-1-DS.md) | [LAB-1-ANALYST.md](LAB-1-ANALYST.md)
+>
+> All teams start with [LAB-0-GETTING-STARTED.md](LAB-0-GETTING-STARTED.md), then fork into their chosen track.
 
-**Summary:** Teams build a Lakeflow Declarative Pipeline that ingests public Australian data through Bronze → Silver → Gold, with TDD and DABs deployment.
+**Summary:** Teams fork into their chosen track after completing LAB-0 setup. DE teams build a Lakeflow pipeline (Bronze→Silver→Gold). DS teams build feature tables and run MLflow experiments. Analyst teams create Genie spaces and AI/BI dashboards.
 
 **Time-boxed phases with parallel task assignments:**
 
@@ -471,9 +475,9 @@ Short, punchy teaching → hands-on practice in teams → share learnings with t
 
 ### 12:30–13:25 | Lab 2: Build Your App & Dashboard (55 min)
 
-> **See [LAB-2-APP-GENIE-DASHBOARD.md](LAB-2-APP-GENIE-DASHBOARD.md) for full instructions.**
+> **See track-specific instructions:** [LAB-2-DE.md](LAB-2-DE.md) | [LAB-2-DS.md](LAB-2-DS.md) | [LAB-2-ANALYST.md](LAB-2-ANALYST.md)
 
-**Summary:** Teams build a FastAPI web app on their pipeline data, set up a Genie space, and create an AI/BI dashboard. Skills and MCP are used throughout.
+**Summary:** Teams continue in their chosen track. DE teams add data quality, new sources, and scheduling. DS teams train models, deploy serving endpoints, and build a prediction app. Analyst teams build a FastAPI web app with embedded dashboards. Skills and MCP are used throughout.
 
 **Time-boxed phases with parallel task assignments:**
 
@@ -550,6 +554,29 @@ Short, punchy teaching → hands-on practice in teams → share learnings with t
 - Explore MCP for internal tools
 
 **David available for follow-up support.**
+
+---
+
+## Track System
+
+After the shared theory sessions, teams choose one of three tracks:
+
+| Track | Lab 1 Focus | Lab 2 Focus | Key Tools |
+|-------|------------|------------|-----------|
+| **Data Engineering** | Lakeflow pipeline (Bronze→Silver→Gold) | Data quality, new sources, scheduling | Lakeflow, DABs, @dp.expect |
+| **Data Science** | Feature engineering, MLflow experiments | Model training, serving, prediction app | MLflow, Model Serving, scikit-learn |
+| **Analyst** | Genie spaces, AI/BI dashboards | FastAPI web app with embedded dashboards | Genie, AI/BI, FastAPI + htmx |
+
+### Track Selection
+- Teams self-select based on interest during the Lab 1 briefing
+- Facilitator should recommend based on team composition (ML experience → DS, analyst background → Analyst)
+- All tracks share the same gold tables via Checkpoint 0
+
+### Track Files
+- Shared: `LAB-0-GETTING-STARTED.md` (all tracks do this first)
+- DE: `LAB-1-DE.md`, `LAB-2-DE.md`, `starter-kit/prompts/de/`
+- DS: `LAB-1-DS.md`, `LAB-2-DS.md`, `starter-kit/prompts/ds/`
+- Analyst: `LAB-1-ANALYST.md`, `LAB-2-ANALYST.md`, `starter-kit/prompts/analyst/`
 
 ---
 

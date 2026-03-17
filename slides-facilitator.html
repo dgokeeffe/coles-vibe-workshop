@@ -380,7 +380,7 @@
     }
     .speaker-notes-panel.visible ~ .notes-hint { opacity: 0; }
 
-    /* === FACILITATOR MODE STYLES === */
+/* === FACILITATOR MODE STYLES === */
 
     /* Adjust slide padding to make room for inline notes */
     .slide {
@@ -514,6 +514,7 @@
         transform: none !important;
       }
     }
+
 
   </style>
 </head>
@@ -1454,70 +1455,49 @@
   <!-- ============================================================ -->
   <!-- SLIDE 25: LAB 1 BRIEFING -->
   <!-- ============================================================ -->
-  <section class="slide slide-light" aria-label="Lab 1 Briefing" data-notes="Teams compete to build the best pipeline. Data is from the Australian Bureau of Statistics — real retail trade and food price data. Each phase has a checkpoint in Unity Catalog so no team gets stuck. Encourage TDD approach. PARALLEL TASKS: Person A (Terminal): explore data, build retail bronze, build silver retail, validate and deploy. Person B (Terminal): set up CLAUDE.md, build CPI bronze, build silver CPI, verify tables in UI. Person C (Databricks UI): review test stubs, verify UC schema, monitor tests and gold specs, query gold tables. Walk around and help. ~55 min lab time. ~3 min briefing. Transition after lab: Show and Tell.">
+  <section class="slide slide-light" aria-label="Lab 1 Briefing" data-notes="~3 min briefing. All teams start with LAB-0 (shared setup, 10 min) then fork into their chosen track. Gold tables are pre-loaded as Checkpoint 0 so DS and Analyst tracks can start immediately. Recommend tracks based on team composition: ML experience to DS, analyst background to Analyst, everyone else to DE. Each track has its own lab doc, prompts, and checkpoints. Person A/B/C parallel tasks are in each track's lab doc. Walk around and help during the 55-minute lab. Transition after lab: Show and Tell.">
     <div class="reveal section-num">Lab 1</div>
-    <h2 class="reveal">Your Mission: Grocery Intelligence Pipeline</h2>
+    <h2 class="reveal">Choose Your Track</h2>
     <div class="reveal accent-line"></div>
-    <div class="reveal two-col">
-      <div>
-        <p style="margin-bottom:1rem;">Build a Lakeflow Declarative Pipeline from public Australian data through Bronze &rarr; Silver &rarr; Gold &mdash; using AI agents and TDD.</p>
-        <div class="step-flow" style="flex-direction:column;gap:0.75rem;">
-          <div class="step-item" style="min-width:auto;">
-            <div class="step-num" style="font-size:1rem;">01</div>
-            <h3>Write Tests &middot; 10 min</h3>
-            <p>TDD-first with PySpark fixtures</p>
-          </div>
-          <div class="step-item" style="min-width:auto;">
-            <div class="step-num" style="font-size:1rem;">02</div>
-            <h3>Bronze Layer &middot; 15 min</h3>
-            <p>Ingest ABS Retail Trade + CPI Food APIs</p>
-          </div>
-          <div class="step-item" style="min-width:auto;">
-            <div class="step-num" style="font-size:1rem;">03</div>
-            <h3>Silver + Gold &middot; 20 min</h3>
-            <p>Decode, clean, aggregate with rolling averages</p>
-          </div>
-          <div class="step-item" style="min-width:auto;">
-            <div class="step-num" style="font-size:1rem;">04</div>
-            <h3>Deploy with DABs &middot; 10 min</h3>
-            <p><code>databricks bundle deploy</code></p>
-          </div>
-        </div>
-        <div style="margin-top:1rem;padding:0.75rem 1rem;background:rgba(27,81,98,0.06);border-radius:8px;border-left:3px solid var(--db-teal);">
-          <p style="font-size:0.85rem;"><strong>Stuck?</strong> Checkpoints at every phase &mdash; pre-loaded data in <code>workshop_vibe_coding.checkpoints</code></p>
-        </div>
+    <p class="reveal" style="text-align:center;color:var(--text-secondary);margin-bottom:1.5em;">All teams start with <code>LAB-0-GETTING-STARTED.md</code> (10 min), then fork into your track</p>
+    <div class="reveal" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.2em;max-width:950px;margin:0 auto;">
+      <div class="card" style="border-top:4px solid var(--db-lava);padding:1.2em;">
+        <h3 style="color:var(--db-lava);margin-bottom:0.5em;font-size:1.1em;">Data Engineering</h3>
+        <p style="font-size:0.8em;color:var(--text-secondary);margin-bottom:0.8em;">Build the data foundation</p>
+        <ul style="list-style:none;font-size:0.78em;line-height:1.8;">
+          <li>Lakeflow pipeline</li>
+          <li>Bronze &rarr; Silver &rarr; Gold</li>
+          <li>Data quality expectations</li>
+          <li>DABs deployment</li>
+        </ul>
+        <div style="margin-top:0.8em;font-size:0.75em;color:var(--db-lava);font-weight:600;">LAB-1-DE.md</div>
       </div>
-      <div>
-        <h3 style="color:var(--db-teal);margin-bottom:0.75rem;">Parallel Task Assignments</h3>
-        <div style="display:flex;flex-direction:column;gap:0.6rem;">
-          <div class="card" style="border-left:3px solid var(--db-lava);padding:0.75rem 1rem;">
-            <strong style="color:var(--db-lava);font-size:0.85rem;">Person A (Terminal)</strong>
-            <ul style="list-style:none;font-size:0.8rem;color:var(--text-secondary);margin-top:0.3rem;">
-              <li>1. Explore data sources</li>
-              <li>2. Build retail bronze table</li>
-              <li>3. Build silver retail</li>
-              <li>4. Validate + deploy</li>
-            </ul>
-          </div>
-          <div class="card" style="border-left:3px solid var(--db-teal);padding:0.75rem 1rem;">
-            <strong style="color:var(--db-teal);font-size:0.85rem;">Person B (Terminal)</strong>
-            <ul style="list-style:none;font-size:0.8rem;color:var(--text-secondary);margin-top:0.3rem;">
-              <li>1. Set up CLAUDE.md</li>
-              <li>2. Build CPI bronze table</li>
-              <li>3. Build silver CPI</li>
-              <li>4. Verify tables in UI</li>
-            </ul>
-          </div>
-          <div class="card" style="border-left:3px solid var(--db-green);padding:0.75rem 1rem;">
-            <strong style="color:var(--db-green);font-size:0.85rem;">Person C (Databricks UI)</strong>
-            <ul style="list-style:none;font-size:0.8rem;color:var(--text-secondary);margin-top:0.3rem;">
-              <li>1. Review test stubs</li>
-              <li>2. Verify UC schema</li>
-              <li>3. Monitor tests + gold specs</li>
-              <li>4. Query gold tables</li>
-            </ul>
-          </div>
-        </div>
+      <div class="card" style="border-top:4px solid var(--db-teal);padding:1.2em;">
+        <h3 style="color:var(--db-teal);margin-bottom:0.5em;font-size:1.1em;">Data Science</h3>
+        <p style="font-size:0.8em;color:var(--text-secondary);margin-bottom:0.8em;">Build ML models from the data</p>
+        <ul style="list-style:none;font-size:0.78em;line-height:1.8;">
+          <li>Feature engineering</li>
+          <li>MLflow experiment tracking</li>
+          <li>Correlation analysis</li>
+          <li>EDA visualizations</li>
+        </ul>
+        <div style="margin-top:0.8em;font-size:0.75em;color:var(--db-teal);font-weight:600;">LAB-1-DS.md</div>
+      </div>
+      <div class="card" style="border-top:4px solid var(--db-green);padding:1.2em;">
+        <h3 style="color:var(--db-green);margin-bottom:0.5em;font-size:1.1em;">Analyst</h3>
+        <p style="font-size:0.8em;color:var(--text-secondary);margin-bottom:0.8em;">Build interfaces for business users</p>
+        <ul style="list-style:none;font-size:0.78em;line-height:1.8;">
+          <li>Genie spaces (NL queries)</li>
+          <li>AI/BI dashboards</li>
+          <li>Column metadata tuning</li>
+          <li>Dashboard publishing</li>
+        </ul>
+        <div style="margin-top:0.8em;font-size:0.75em;color:var(--db-green);font-weight:600;">LAB-1-ANALYST.md</div>
+      </div>
+    </div>
+    <div class="reveal" style="text-align:center;margin-top:1.2em;">
+      <div style="display:inline-block;padding:0.6em 1.2em;background:rgba(27,81,98,0.06);border-radius:8px;border-left:3px solid var(--db-teal);font-size:0.85em;">
+        <strong>Checkpoints at every phase</strong> &mdash; pre-loaded data in <code>workshop_vibe_coding.checkpoints</code>. Nobody gets stuck.
       </div>
     </div>
   </section>
@@ -1827,97 +1807,49 @@ with food CPI overlay"</span>
   <!-- ============================================================ -->
   <!-- SLIDE 33: LAB 2 BRIEFING -->
   <!-- ============================================================ -->
-  <section class="slide slide-light" aria-label="Lab 2 Briefing" data-notes="IMPORTANT FRAMING: Tell teams 'Get as far as you can — not every team will finish everything, and that's fine. Pick your tier.' PARALLEL TASKS: Person A (Terminal): write PRD, build backend, deploy app. Person B (Terminal): write API tests, build frontend, test and polish. Person C (Databricks UI): create Genie space, create AI/BI dashboard, get embed URL. Push them to timebox: app gets 25 min max, then move on to Genie and dashboard. Genie space is the quickest win — 2 minutes to set up. Checkpoints available at every phase. ~3 min briefing then start the lab.">
+  <section class="slide slide-light" aria-label="Lab 2 Briefing" data-notes="~3 min briefing. Same track as Lab 1 — teams continue where they left off. DE adds data sources + quality + scheduling. DS trains a model, registers, serves, builds prediction app. Analyst builds FastAPI app with embedded dashboards. Framing: get as far as you can, checkpoints at every phase. Person A/B/C parallel tasks are in each track's lab doc. ~55 min lab time. Transition: demos.">
     <div class="reveal section-num">Lab 2</div>
-    <h2 class="reveal">Grocery Intelligence Platform</h2>
+    <h2 class="reveal">Continue Your Track</h2>
     <div class="reveal accent-line"></div>
-    <div class="reveal two-col">
-      <div>
-        <p style="margin-bottom:0.75rem;">Build a complete platform on your Lab 1 gold tables. <strong>Pick your tier:</strong></p>
-        <!-- Three tiers -->
-        <div style="display:flex;flex-direction:column;gap:0.6rem;margin-bottom:1rem;">
-          <div class="card" style="border-left:3px solid var(--db-green);padding:0.6rem 0.8rem;">
-            <div style="display:flex;justify-content:space-between;align-items:center;">
-              <strong style="color:var(--db-green);font-size:0.85rem;">Quick &mdash; Embed &amp; Ship</strong>
-              <span style="font-size:0.7rem;color:var(--text-secondary);">~20 min</span>
-            </div>
-            <p style="font-size:0.8rem;margin-top:0.2rem;">FastAPI backend + <strong>embedded AI/BI dashboard via iframe</strong>. Publish your dashboard, drop the embed URL into your app.</p>
-          </div>
-          <div class="card" style="border-left:3px solid var(--db-teal);padding:0.6rem 0.8rem;">
-            <div style="display:flex;justify-content:space-between;align-items:center;">
-              <strong style="color:var(--db-teal);font-size:0.85rem;">Medium &mdash; Custom Charts</strong>
-              <span style="font-size:0.7rem;color:var(--text-secondary);">~35 min</span>
-            </div>
-            <p style="font-size:0.8rem;margin-top:0.2rem;">FastAPI + React with <strong>Recharts</strong> or <strong>Observable Plot</strong>. Query gold tables via API, render interactive visualisations.</p>
-          </div>
-          <div class="card" style="border-left:3px solid var(--db-lava);padding:0.6rem 0.8rem;">
-            <div style="display:flex;justify-content:space-between;align-items:center;">
-              <strong style="color:var(--db-lava);font-size:0.85rem;">Stretch &mdash; Full Platform</strong>
-              <span style="font-size:0.7rem;color:var(--text-secondary);">~55 min</span>
-            </div>
-            <p style="font-size:0.8rem;margin-top:0.2rem;">Full React app with custom viz + <strong>embedded dashboard</strong> + Genie space + NL query feature.</p>
-          </div>
-        </div>
-        <!-- Phases -->
-        <div class="step-flow" style="flex-direction:column;gap:0.5rem;">
-          <div class="step-item" style="min-width:auto;padding:0.75rem;">
-            <div class="step-num" style="font-size:0.9rem;">01</div>
-            <h3 style="font-size:0.9rem;">PRD + Tests &middot; 10 min</h3>
-          </div>
-          <div class="step-item" style="min-width:auto;padding:0.75rem;">
-            <div class="step-num" style="font-size:0.9rem;">02</div>
-            <h3 style="font-size:0.9rem;">Backend + Frontend &middot; 25 min</h3>
-          </div>
-          <div class="step-item" style="min-width:auto;padding:0.75rem;">
-            <div class="step-num" style="font-size:0.9rem;">03</div>
-            <h3 style="font-size:0.9rem;">Genie + AI/BI Dashboard &middot; 15 min</h3>
-          </div>
-          <div class="step-item" style="min-width:auto;padding:0.75rem;">
-            <div class="step-num" style="font-size:0.9rem;">04</div>
-            <h3 style="font-size:0.9rem;">Demo Prep &middot; 5 min</h3>
-          </div>
-        </div>
+    <p class="reveal" style="text-align:center;color:var(--text-secondary);margin-bottom:1.5em;">Same track as Lab 1 &mdash; pick up where you left off</p>
+    <div class="reveal" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.2em;max-width:950px;margin:0 auto;">
+      <div class="card" style="border-top:4px solid var(--db-lava);padding:1.2em;">
+        <h3 style="color:var(--db-lava);margin-bottom:0.5em;font-size:1.1em;">Data Engineering</h3>
+        <p style="font-size:0.8em;color:var(--text-secondary);margin-bottom:0.8em;">Make it production-grade</p>
+        <ul style="list-style:none;font-size:0.78em;line-height:1.8;">
+          <li>Add FSANZ food recalls source</li>
+          <li>Data quality expectations</li>
+          <li>Cross-source gold view</li>
+          <li>Cron scheduling</li>
+        </ul>
+        <div style="margin-top:0.8em;font-size:0.75em;color:var(--db-lava);font-weight:600;">LAB-2-DE.md</div>
       </div>
-      <div>
-        <h3 style="color:var(--db-teal);margin-bottom:0.75rem;">Parallel Task Assignments</h3>
-        <div style="display:flex;flex-direction:column;gap:0.6rem;margin-bottom:1rem;">
-          <div class="card" style="border-left:3px solid var(--db-lava);padding:0.75rem 1rem;">
-            <strong style="color:var(--db-lava);font-size:0.85rem;">Person A (Terminal)</strong>
-            <ul style="list-style:none;font-size:0.8rem;color:var(--text-secondary);margin-top:0.3rem;">
-              <li>1. Write PRD</li>
-              <li>2. Build backend</li>
-              <li>3. Deploy app</li>
-            </ul>
-          </div>
-          <div class="card" style="border-left:3px solid var(--db-teal);padding:0.75rem 1rem;">
-            <strong style="color:var(--db-teal);font-size:0.85rem;">Person B (Terminal)</strong>
-            <ul style="list-style:none;font-size:0.8rem;color:var(--text-secondary);margin-top:0.3rem;">
-              <li>1. Write API tests</li>
-              <li>2. Build frontend</li>
-              <li>3. Test + polish</li>
-            </ul>
-          </div>
-          <div class="card" style="border-left:3px solid var(--db-green);padding:0.75rem 1rem;">
-            <strong style="color:var(--db-green);font-size:0.85rem;">Person C (Databricks UI)</strong>
-            <ul style="list-style:none;font-size:0.8rem;color:var(--text-secondary);margin-top:0.3rem;">
-              <li>1. Create Genie space</li>
-              <li>2. Create AI/BI dashboard</li>
-              <li>3. Get embed URL</li>
-            </ul>
-          </div>
-        </div>
-        <!-- Embedding callout -->
-        <div style="padding:0.6rem 0.8rem;background:rgba(27,81,98,0.06);border-radius:8px;border-left:3px solid var(--db-teal);">
-          <h3 style="font-size:0.8rem;color:var(--db-teal);margin-bottom:0.2rem;">Embed AI/BI Dashboards</h3>
-          <p style="font-size:0.75rem;color:var(--text-secondary);">Publish your dashboard &rarr; Share &rarr; Copy embed code &rarr; <code>&lt;iframe&gt;</code> in your app. Instant polished visualisations.</p>
-        </div>
-        <!-- Bonus -->
-        <div style="margin-top:0.5rem;padding:0.6rem 0.8rem;background:rgba(232,163,23,0.06);border-radius:8px;border-left:3px solid #E8A317;">
-          <p style="font-size:0.75rem;color:var(--text-secondary);"><strong style="color:#E8A317;">Bonus:</strong> Build an MCP server wrapping your retail analytics &mdash; let any agent query your data.</p>
-        </div>
-        <div style="margin-top:0.5rem;padding:0.6rem 0.8rem;background:rgba(27,81,98,0.06);border-radius:8px;border-left:3px solid var(--db-teal);">
-          <p style="font-size:0.75rem;"><strong>Stuck?</strong> Checkpoints at every phase &mdash; pre-loaded data in <code>workshop_vibe_coding.checkpoints</code></p>
-        </div>
+      <div class="card" style="border-top:4px solid var(--db-teal);padding:1.2em;">
+        <h3 style="color:var(--db-teal);margin-bottom:0.5em;font-size:1.1em;">Data Science</h3>
+        <p style="font-size:0.8em;color:var(--text-secondary);margin-bottom:0.8em;">Train, serve, and ship</p>
+        <ul style="list-style:none;font-size:0.78em;line-height:1.8;">
+          <li>Train forecasting model</li>
+          <li>Register in MLflow</li>
+          <li>Model Serving endpoint</li>
+          <li>Prediction web app</li>
+        </ul>
+        <div style="margin-top:0.8em;font-size:0.75em;color:var(--db-teal);font-weight:600;">LAB-2-DS.md</div>
+      </div>
+      <div class="card" style="border-top:4px solid var(--db-green);padding:1.2em;">
+        <h3 style="color:var(--db-green);margin-bottom:0.5em;font-size:1.1em;">Analyst</h3>
+        <p style="font-size:0.8em;color:var(--text-secondary);margin-bottom:0.8em;">Build the app layer</p>
+        <ul style="list-style:none;font-size:0.78em;line-height:1.8;">
+          <li>FastAPI + Tailwind app</li>
+          <li>Embedded AI/BI dashboards</li>
+          <li>NL query feature</li>
+          <li>Deploy to Databricks Apps</li>
+        </ul>
+        <div style="margin-top:0.8em;font-size:0.75em;color:var(--db-green);font-weight:600;">LAB-2-ANALYST.md</div>
+      </div>
+    </div>
+    <div class="reveal" style="text-align:center;margin-top:1.2em;">
+      <div style="display:inline-block;padding:0.6em 1.2em;background:rgba(27,81,98,0.06);border-radius:8px;border-left:3px solid var(--db-teal);font-size:0.85em;">
+        <strong>Get as far as you can</strong> &mdash; checkpoints at every phase. 55 minutes.
       </div>
     </div>
   </section>
@@ -2575,7 +2507,7 @@ manifest.json</span>
       });
     }
 
-    /* === FACILITATOR NOTES INJECTION === */
+/* === FACILITATOR NOTES INJECTION === */
     (function injectFacilitatorNotes() {
       const slides = document.querySelectorAll('.slide');
 
@@ -2657,7 +2589,7 @@ manifest.json</span>
       });
     })();
 
-    /* === INIT === */
+    /* === INIT ===
     new SlidePresentation();
   </script>
 </body>
