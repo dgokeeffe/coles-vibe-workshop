@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Vibe Coding Workshop — Databricks</title>
+  <title>Vibe Coding Workshop — Databricks (Facilitator)</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
@@ -379,6 +379,141 @@
       transition: opacity 0.3s ease;
     }
     .speaker-notes-panel.visible ~ .notes-hint { opacity: 0; }
+
+    /* === FACILITATOR MODE STYLES === */
+
+    /* Adjust slide padding to make room for inline notes */
+    .slide {
+      padding-bottom: clamp(2rem, 5vw, 4rem);
+    }
+
+    /* Notes panel pinned inside each slide */
+    .facilitator-notes {
+      position: relative;
+      width: 100%;
+      margin-top: auto;
+      background: rgba(11, 32, 38, 0.95);
+      border-radius: 8px;
+      max-height: 150px;
+      overflow-y: auto;
+      padding: 0;
+      flex-shrink: 0;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .facilitator-notes-label {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--db-lava);
+      padding: 0.5rem 0.75rem 0;
+      display: block;
+    }
+    .facilitator-notes-key {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--db-white);
+      padding: 0.35rem 0.75rem;
+      line-height: 1.4;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .facilitator-notes-body {
+      font-size: 0.75rem;
+      line-height: 1.5;
+      color: rgba(255, 255, 255, 0.85);
+      padding: 0.4rem 0.75rem 0.6rem;
+      font-family: var(--font-body);
+    }
+
+    /* Timing badge in top-right of slide */
+    .timing-badge {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: rgba(255, 54, 33, 0.15);
+      color: var(--db-lava);
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 0.25rem 0.65rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 54, 33, 0.3);
+      z-index: 10;
+      white-space: nowrap;
+    }
+    .slide-dark .timing-badge {
+      background: rgba(255, 95, 70, 0.2);
+      color: var(--db-lava-light);
+      border-color: rgba(255, 95, 70, 0.4);
+    }
+
+    /* Facilitation cue highlights */
+    .cue-ask {
+      background: rgba(0, 169, 114, 0.2);
+      color: #33D49A;
+      padding: 0.1rem 0.3rem;
+      border-radius: 3px;
+      font-weight: 600;
+    }
+    .cue-transition {
+      background: rgba(27, 81, 98, 0.25);
+      color: #5BB8D4;
+      padding: 0.1rem 0.3rem;
+      border-radius: 3px;
+      font-weight: 600;
+    }
+    .cue-demo {
+      background: rgba(255, 54, 33, 0.2);
+      color: var(--db-lava-light);
+      padding: 0.1rem 0.3rem;
+      border-radius: 3px;
+      font-weight: 600;
+    }
+    .cue-exercise {
+      background: rgba(232, 163, 23, 0.2);
+      color: #F0B840;
+      padding: 0.1rem 0.3rem;
+      border-radius: 3px;
+      font-weight: 600;
+    }
+
+    /* Print-friendly styles */
+    @media print {
+      html {
+        scroll-snap-type: none;
+        scroll-behavior: auto;
+      }
+      .slide {
+        scroll-snap-align: none;
+        min-height: auto;
+        page-break-after: always;
+        page-break-inside: avoid;
+        padding: 1.5rem;
+      }
+      .facilitator-notes {
+        max-height: none;
+        overflow-y: visible;
+        background: #0B2026;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      .timing-badge {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      .progress-bar,
+      .nav-dots,
+      .slide-number,
+      .notes-hint,
+      .speaker-notes-panel {
+        display: none !important;
+      }
+      .reveal {
+        opacity: 1 !important;
+        transform: none !important;
+      }
+    }
   </style>
 </head>
 <body>
@@ -431,41 +566,6 @@
     </div>
     <div class="reveal meta" style="margin-top:0.5rem;">
       David O'Keeffe &middot; Solutions Architect, Databricks
-    </div>
-  </section>
-
-  <!-- ============================================================ -->
-  <!-- SLIDE 1b: OPENING DEMO — MY WORKING SETUP -->
-  <!-- ============================================================ -->
-  <section class="slide slide-dark" aria-label="Opening Demo: Working Setup" data-notes="OPENING DEMO — ~5 min. This is the hook. Show YOUR actual working setup — not slides, not theory. This is a real SA's daily driver. Open Claude Code, show: (1) 7 MCP servers connected (Slack, JIRA, Confluence, Chrome DevTools, Databricks Docs, Glean, DeepWiki). (2) 150+ skills from the internal marketplace. (3) Hooks for safety guardrails. (4) CLAUDE.md with MCP routing and subagent orchestration. Then do something impressive: search Slack for a recent thread, check a JIRA ticket, query Databricks docs — all from one terminal, no context switching. Or ask it to build something quick. The point: this isn't a toy — it's a fully integrated development environment that connects to every system you use. By end of today, you'll understand every piece of this. ~5 min. Transition: Let's warm up with a quiz.">
-    <div class="reveal section-num">10:00 AM &middot; Live Demo</div>
-    <h2 class="reveal">This Is How I Work <span class="text-lava">Every Day</span></h2>
-    <div class="reveal accent-line" style="background:var(--db-lava-light);"></div>
-    <p class="reveal" style="color:rgba(255,255,255,0.8);margin-bottom:1.5rem;max-width:700px;">Before any slides &mdash; let me show you what a fully configured AI development environment looks like in practice.</p>
-    <div class="reveal" style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem;">
-      <div style="padding:1rem;background:rgba(255,255,255,0.06);border-radius:8px;border-top:3px solid var(--db-lava-light);text-align:center;">
-        <div style="font-family:var(--font-mono);font-size:2rem;font-weight:700;color:var(--db-lava-light);">7</div>
-        <p style="font-size:0.8rem;color:rgba(255,255,255,0.7);">MCP Servers</p>
-        <p style="font-size:0.7rem;color:rgba(255,255,255,0.45);margin-top:0.25rem;">Slack, JIRA, Confluence, Chrome DevTools, Databricks Docs, Glean, DeepWiki</p>
-      </div>
-      <div style="padding:1rem;background:rgba(255,255,255,0.06);border-radius:8px;border-top:3px solid #2D8DAD;text-align:center;">
-        <div style="font-family:var(--font-mono);font-size:2rem;font-weight:700;color:#5BB8D4;">150+</div>
-        <p style="font-size:0.8rem;color:rgba(255,255,255,0.7);">Skills</p>
-        <p style="font-size:0.7rem;color:rgba(255,255,255,0.45);margin-top:0.25rem;">Databricks, Salesforce, Google, account planning, expenses, demos&hellip;</p>
-      </div>
-      <div style="padding:1rem;background:rgba(255,255,255,0.06);border-radius:8px;border-top:3px solid var(--db-green);text-align:center;">
-        <div style="font-family:var(--font-mono);font-size:2rem;font-weight:700;color:#33D49A;">12</div>
-        <p style="font-size:0.8rem;color:rgba(255,255,255,0.7);">Plugins</p>
-        <p style="font-size:0.7rem;color:rgba(255,255,255,0.45);margin-top:0.25rem;">Internal marketplace, team-distributed, versioned</p>
-      </div>
-      <div style="padding:1rem;background:rgba(255,255,255,0.06);border-radius:8px;border-top:3px solid #E8A317;text-align:center;">
-        <div style="font-family:var(--font-mono);font-size:2rem;font-weight:700;color:#F0B840;">&#x1F6E1;</div>
-        <p style="font-size:0.8rem;color:rgba(255,255,255,0.7);">Hooks &amp; Guardrails</p>
-        <p style="font-size:0.7rem;color:rgba(255,255,255,0.45);margin-top:0.25rem;">Safety blocks, telemetry, auto-cleanup on stop</p>
-      </div>
-    </div>
-    <div class="reveal" style="padding:1rem 1.5rem;background:rgba(255,54,33,0.08);border-radius:8px;border-left:3px solid var(--db-lava-light);">
-      <p style="font-size:0.9rem;color:rgba(255,255,255,0.85);"><strong style="color:var(--db-lava-light);">Live demo:</strong> One terminal &rarr; search Slack, check JIRA, query Databricks docs, build something &mdash; no context switching. By end of today, you&rsquo;ll understand every piece of this.</p>
     </div>
   </section>
 
@@ -641,7 +741,7 @@
   <!-- ============================================================ -->
   <!-- SLIDE 7: PLATFORM ARCHITECTURE -->
   <!-- ============================================================ -->
-  <section class="slide slide-white" aria-label="Platform Architecture" data-notes="Walk through the architecture left to right. Browser terminal connects to a Databricks App running Flask. The app hosts AI agents (Claude Code / OpenCode). All LLM calls go through AI Gateway for routing, rate limiting, and tracing. Mention: 39 pre-built skills, MCP servers for tool access, MLflow for observability. This is what they will use in the labs. ~3 min. Transition: Here's what you'll learn by end of day. Ask: Has everyone been able to access their Coding Agents instance? Any issues? Troubleshoot NOW — do not let anyone reach the exercise with broken access. ~3 min.">
+  <section class="slide slide-white" aria-label="Platform Architecture" data-notes="Walk through the architecture left to right. Browser terminal connects to a Databricks App running Flask. The app hosts AI agents (Claude Code / OpenCode). All LLM calls go through AI Gateway for routing, rate limiting, and tracing. Mention: 39 pre-built skills, MCP servers for tool access, MLflow for observability. This is what they will use in the labs. ~3 min. Transition: Here's what you'll learn by end of day.">
     <div class="reveal section-num">Your Environment</div>
     <h2 class="reveal">Coding Agents Databricks App</h2>
     <div class="reveal accent-line"></div>
@@ -823,37 +923,33 @@
     <p class="reveal subtitle" style="margin-bottom:1.5rem;">One platform, two labs. The CLAUDE.md you write next will guide you through both.</p>
     <div class="reveal" style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;">
       <div class="card" style="border-top:3px solid var(--db-lava-light);">
-        <h3 style="color:var(--db-lava-light);margin-bottom:0.75rem;">Four Real Data Sources</h3>
-        <ul class="bullet-list" style="font-size:0.85rem;">
-          <li><strong>ABS Retail Trade</strong> &mdash; monthly turnover by state &amp; industry</li>
-          <li><strong>ABS CPI Food</strong> &mdash; quarterly food price indices</li>
-          <li><strong>FSANZ Food Recalls</strong> &mdash; safety recall notices with product details</li>
-          <li><strong>ACCC Grocery Reports</strong> &mdash; supermarket inquiry PDFs</li>
+        <h3 style="color:var(--db-lava-light);margin-bottom:0.75rem;">Real Data Sources</h3>
+        <ul class="bullet-list" style="font-size:0.9rem;">
+          <li><strong>ABS Retail Trade</strong> &mdash; monthly turnover by state and industry</li>
+          <li><strong>ABS CPI Food</strong> &mdash; food price indices over time</li>
         </ul>
-        <p style="font-size:0.75rem;color:rgba(255,255,255,0.45);margin-top:0.5rem;">Public APIs, web scraping &amp; PDF ingestion</p>
+        <p style="font-size:0.8rem;color:rgba(255,255,255,0.5);margin-top:0.75rem;">Australian Bureau of Statistics public APIs</p>
       </div>
       <div class="card" style="border-top:3px solid var(--db-teal);">
         <h3 style="color:#2D8DAD;margin-bottom:0.75rem;">Tech Stack</h3>
-        <ul class="bullet-list" style="font-size:0.85rem;">
+        <ul class="bullet-list" style="font-size:0.9rem;">
           <li><strong>PySpark</strong> + Lakeflow Declarative Pipelines</li>
           <li><strong>Unity Catalog</strong> &mdash; <code style="color:#4EC9B0;">workshop_vibe_coding.&lt;team&gt;</code></li>
-          <li><strong>UC Volumes</strong> for raw files (PDFs, JSON)</li>
-          <li><strong>FastAPI</strong> + React for the app</li>
-          <li><strong>Genie</strong> + <strong>AI/BI Dashboards</strong></li>
+          <li><strong>FastAPI</strong> + htmx for the app</li>
           <li><strong>DABs</strong> for deployment</li>
         </ul>
       </div>
       <div class="card" style="border-top:3px solid var(--db-green);">
         <h3 style="color:var(--db-green);margin-bottom:0.75rem;">What You'll Build</h3>
-        <div style="display:flex;flex-direction:column;gap:0.4rem;font-size:0.85rem;">
+        <div style="display:flex;flex-direction:column;gap:0.5rem;font-size:0.9rem;">
           <div style="padding:0.4rem 0.6rem;background:rgba(255,255,255,0.06);border-radius:6px;">
-            <strong>Lab 1:</strong> Medallion pipeline &mdash; APIs, scraping &amp; PDFs &rarr; Gold
+            <strong>Lab 1:</strong> Bronze &rarr; Silver &rarr; Gold data pipeline
           </div>
           <div style="padding:0.4rem 0.6rem;background:rgba(255,255,255,0.06);border-radius:6px;">
-            <strong>Lab 2:</strong> FastAPI + React app, Genie space &amp; AI/BI dashboard
+            <strong>Lab 2:</strong> App + Genie + AI/BI dashboards
           </div>
         </div>
-        <p style="font-size:0.75rem;color:rgba(255,255,255,0.45);margin-top:0.5rem;">Teams compete for best pipeline &amp; best insights</p>
+        <p style="font-size:0.8rem;color:rgba(255,255,255,0.5);margin-top:0.75rem;">Teams compete for best pipeline &amp; best insights</p>
       </div>
     </div>
   </section>
@@ -875,7 +971,7 @@
           <li>Edit and refine based on what's missing</li>
         </ol>
         <div style="margin-top:1.5rem;padding:1rem 1.25rem;background:rgba(255,54,33,0.06);border-radius:8px;border-left:3px solid var(--db-lava);">
-          <p style="font-size:0.9rem;"><strong>Prompt template:</strong> "Create a CLAUDE.md for a grocery intelligence platform. Tech stack: PySpark, Lakeflow Declarative Pipelines, FastAPI + React, DABs. Data sources: ABS SDMX APIs, FSANZ web scraping, ACCC PDF ingestion via UC Volumes. Unity Catalog namespace: workshop_vibe_coding.&lt;team_schema&gt;."</p>
+          <p style="font-size:0.9rem;"><strong>Prompt template:</strong> "Create a CLAUDE.md for a grocery intelligence platform that uses PySpark, Lakeflow Declarative Pipelines, FastAPI, Tailwind + htmx. Our Unity Catalog namespace is workshop_vibe_coding.&lt;team_schema&gt;."</p>
         </div>
       </div>
       <div>
@@ -1053,111 +1149,6 @@
     </div>
     <div class="reveal" style="margin-top:1.5rem;padding:0.75rem 1.25rem;background:rgba(27,81,98,0.06);border-radius:8px;text-align:center;">
       <p style="font-size:0.85rem;color:var(--text-secondary);font-style:italic;">&ldquo;Give Claude a way to verify its work. This is the single highest-leverage thing you can do.&rdquo; &mdash; Anthropic, Claude Code Best Practices</p>
-    </div>
-  </section>
-
-  <!-- ============================================================ -->
-  <!-- SLIDE 23c: SUBAGENTS VS AGENT TEAMS -->
-  <!-- ============================================================ -->
-  <section class="slide slide-white" aria-label="Subagents vs Agent Teams" data-notes="Key concept from the community (Akshay Pachaar). Most people reach for multi-agent the moment a task feels complex — that's almost always the wrong instinct. The right question: what kind of coordination does this task need? Two paradigms: subagents (fire-and-forget, isolated context, compression) vs teams (long-running, peer-to-peer comms, shared task list). Walk through the comparison table. The most important message is at the bottom: start with a single agent. Push it until it breaks. That failure point tells you what to add. For Lab 2: subagents for parallel frontend/backend is the sweet spot. Don't overcomplicate it. Specific warning: parallel agents writing code make incompatible assumptions — subagents should explore and answer questions, not write code simultaneously. ~4 min. Transition: Now let's talk about how agents connect to external tools — MCP.">
-    <div class="reveal section-num">Session 2</div>
-    <h2 class="reveal">Subagents vs <span class="text-lava">Agent Teams</span></h2>
-    <div class="reveal accent-line"></div>
-    <p class="reveal" style="color:var(--text-secondary);margin-bottom:1rem;">The right question isn&rsquo;t &ldquo;should I use multiple agents?&rdquo; &mdash; it&rsquo;s &ldquo;what kind of coordination does this task need?&rdquo;</p>
-    <div class="reveal two-col" style="gap:2rem;align-items:start;">
-      <!-- Left: Subagents -->
-      <div class="card" style="border-top:3px solid var(--db-teal);">
-        <h3 style="color:var(--db-teal);margin-bottom:0.5rem;">Subagents: Fire-and-Forget</h3>
-        <p style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:0.75rem;">Like delegating focused questions to researchers &mdash; they come back with distilled findings.</p>
-        <ul class="bullet-list" style="font-size:0.85rem;">
-          <li>Own isolated context window</li>
-          <li>One job, then result returns to parent</li>
-          <li>Can&rsquo;t talk to each other &mdash; <strong>by design</strong></li>
-          <li>Key benefit: <strong>compression</strong> &mdash; vast exploration distilled to clean signal</li>
-        </ul>
-        <div style="margin-top:0.75rem;padding:0.5rem 0.75rem;background:rgba(27,81,98,0.06);border-radius:6px;">
-          <p style="font-size:0.8rem;font-family:var(--font-mono);color:var(--db-teal);">Use when: embarrassingly parallel</p>
-          <p style="font-size:0.78rem;color:var(--text-secondary);">Independent research, codebase exploration, lookups where parent only needs the summary</p>
-        </div>
-      </div>
-      <!-- Right: Agent Teams -->
-      <div class="card" style="border-top:3px solid var(--db-lava);">
-        <h3 style="color:var(--db-lava);margin-bottom:0.5rem;">Agent Teams: Ongoing Coordination</h3>
-        <p style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:0.75rem;">Like assembling a team that works in the same room &mdash; they persist, communicate, and coordinate.</p>
-        <ul class="bullet-list" style="font-size:0.85rem;">
-          <li>Long-running instances with shared state</li>
-          <li>Peer-to-peer messaging between teammates</li>
-          <li>Shared task list with dependencies (<code>blockedBy</code>)</li>
-          <li>Key benefit: <strong>negotiation</strong> &mdash; discoveries in one thread change another</li>
-        </ul>
-        <div style="margin-top:0.75rem;padding:0.5rem 0.75rem;background:rgba(255,54,33,0.06);border-radius:6px;">
-          <p style="font-size:0.8rem;font-family:var(--font-mono);color:var(--db-lava);">Use when: ongoing negotiation</p>
-          <p style="font-size:0.78rem;color:var(--text-secondary);">Agents must reconcile outputs, or a discovery in one thread changes what another should do</p>
-        </div>
-      </div>
-    </div>
-    <!-- Bottom: Design Principle -->
-    <div class="reveal" style="margin-top:1.25rem;display:flex;gap:1.5rem;align-items:stretch;">
-      <div style="flex:1;padding:0.75rem 1rem;background:rgba(0,169,114,0.08);border-radius:8px;border-left:3px solid var(--db-green);">
-        <p style="font-size:0.85rem;"><strong>The #1 design principle:</strong> Start with a single agent. Push it until it breaks. That failure point tells you exactly what to add next. Design around <em>context boundaries</em>, not roles.</p>
-      </div>
-      <div style="flex:1;padding:0.75rem 1rem;background:rgba(255,54,33,0.06);border-radius:8px;border-left:3px solid var(--db-lava);">
-        <p style="font-size:0.85rem;"><strong>Warning for coding:</strong> Parallel agents writing code make incompatible assumptions. Subagents should <em>explore and answer questions</em>, not write code simultaneously with the main agent.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============================================================ -->
-  <!-- SLIDE 16d: WHAT ARE TOKENS? -->
-  <!-- ============================================================ -->
-  <section class="slide slide-light" aria-label="What Are Tokens" data-notes="Before talking about context windows, make sure everyone understands what a token is. Most people think 1 token = 1 word. It's closer to 3/4 of a word, or about 4 characters. A 200-line Python file is roughly 2-3K tokens. The key insight for the workshop: we're likely running through AI Gateway with a ~1M tokens per minute rate limit shared across all teams. That means if 5 teams are all asking the agent to read large files simultaneously, you'll hit throttling. Practical tips: keep requests focused, don't ask the agent to read entire directories, use subagents to parallelise but be aware of the shared limit. This directly motivates the context management strategies on the next slide. ~3 min. Transition: So how do we manage this finite resource?">
-    <div class="reveal section-num">Session 2</div>
-    <h2 class="reveal">What Are <span class="text-lava">Tokens</span>?</h2>
-    <div class="reveal accent-line"></div>
-    <p class="reveal" style="color:var(--text-secondary);margin-bottom:1.5rem;">Every interaction with the agent is measured in tokens. Understanding them helps you work faster.</p>
-    <div class="reveal two-col" style="gap:2.5rem;align-items:start;">
-      <div>
-        <h3 style="margin-bottom:0.75rem;">Tokens = the currency of AI</h3>
-        <p style="font-size:0.9rem;margin-bottom:1rem;">A token is roughly <strong>3/4 of a word</strong> or ~4 characters. Not exactly words, not exactly characters &mdash; somewhere in between.</p>
-        <div style="display:flex;flex-direction:column;gap:0.5rem;">
-          <div class="card" style="padding:0.6rem 0.8rem;display:flex;justify-content:space-between;align-items:center;">
-            <span style="font-size:0.85rem;">This sentence is about 8 tokens.</span>
-            <span style="font-family:var(--font-mono);font-size:0.8rem;color:var(--db-lava);font-weight:700;">~8 tokens</span>
-          </div>
-          <div class="card" style="padding:0.6rem 0.8rem;display:flex;justify-content:space-between;align-items:center;">
-            <span style="font-size:0.85rem;">A 200-line Python file</span>
-            <span style="font-family:var(--font-mono);font-size:0.8rem;color:var(--db-teal);font-weight:700;">~2-3K tokens</span>
-          </div>
-          <div class="card" style="padding:0.6rem 0.8rem;display:flex;justify-content:space-between;align-items:center;">
-            <span style="font-size:0.85rem;">A full README + 5 source files</span>
-            <span style="font-family:var(--font-mono);font-size:0.8rem;color:var(--db-green);font-weight:700;">~15-20K tokens</span>
-          </div>
-          <div class="card" style="padding:0.6rem 0.8rem;display:flex;justify-content:space-between;align-items:center;">
-            <span style="font-size:0.85rem;">Harry Potter and the Philosopher&rsquo;s Stone</span>
-            <span style="font-family:var(--font-mono);font-size:0.8rem;color:var(--db-navy);font-weight:700;">~110K tokens</span>
-          </div>
-        </div>
-      </div>
-      <div>
-        <h3 style="margin-bottom:0.75rem;">Two limits to know</h3>
-        <div class="card" style="border-left:3px solid var(--db-lava);margin-bottom:0.75rem;">
-          <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:0.4rem;">
-            <span style="font-family:var(--font-mono);font-size:1.5rem;font-weight:700;color:var(--db-lava);">200K</span>
-            <span style="font-size:0.85rem;font-weight:700;">Context window</span>
-          </div>
-          <p style="font-size:0.8rem;color:var(--text-secondary);">How much the agent can &ldquo;see&rdquo; at once &mdash; your conversation, files read, tool results, CLAUDE.md. When it fills up, older content gets compacted (forgotten).</p>
-        </div>
-        <div class="card" style="border-left:3px solid #E8A317;">
-          <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:0.4rem;">
-            <span style="font-family:var(--font-mono);font-size:1.5rem;font-weight:700;color:#E8A317;">~1M/min</span>
-            <span style="font-size:0.85rem;font-weight:700;">Rate limit (shared)</span>
-          </div>
-          <p style="font-size:0.8rem;color:var(--text-secondary);">Tokens per minute through AI Gateway &mdash; <strong>shared across all teams</strong>. If everyone reads large files at once, requests queue up. Keep requests focused.</p>
-        </div>
-        <div style="margin-top:0.75rem;padding:0.6rem 0.8rem;background:rgba(0,169,114,0.08);border-radius:8px;border-left:3px solid var(--db-green);">
-          <p style="font-size:0.8rem;"><strong>Practical tip:</strong> Don&rsquo;t ask the agent to &ldquo;read everything in this directory.&rdquo; Be specific. Smaller, focused requests = faster responses for everyone.</p>
-        </div>
-      </div>
     </div>
   </section>
 
@@ -1371,23 +1362,19 @@
       <div class="diagram-box">
         <h3 style="margin-bottom:1rem;color:var(--db-teal);">Pipeline Flow</h3>
         <div class="arch-flow-vertical">
-          <div style="display:flex;gap:0.5rem;justify-content:center;flex-wrap:wrap;">
-            <div class="arch-node arch-node-navy" style="min-width:120px;font-size:0.75rem;">ABS Retail Trade<br><span style="font-size:0.65rem;opacity:0.7;">SDMX API</span></div>
-            <div class="arch-node arch-node-navy" style="min-width:120px;font-size:0.75rem;">ABS CPI Food<br><span style="font-size:0.65rem;opacity:0.7;">SDMX API</span></div>
-            <div class="arch-node arch-node-navy" style="min-width:120px;font-size:0.75rem;">FSANZ Recalls<br><span style="font-size:0.65rem;opacity:0.7;">Web scraper</span></div>
-            <div class="arch-node arch-node-navy" style="min-width:120px;font-size:0.75rem;">ACCC Reports<br><span style="font-size:0.65rem;opacity:0.7;">PDF &rarr; UC Volume</span></div>
+          <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+            <div class="arch-node arch-node-navy" style="min-width:160px;">ABS Retail Trade API<br><span style="font-size:0.7rem;opacity:0.7;">@dp.table</span></div>
+            <div class="arch-node arch-node-navy" style="min-width:160px;">ABS CPI Food API<br><span style="font-size:0.7rem;opacity:0.7;">@dp.table</span></div>
           </div>
           <div class="arch-arrow-down">&rarr;</div>
-          <div style="display:flex;gap:0.5rem;justify-content:center;flex-wrap:wrap;">
-            <div class="arch-node" style="min-width:120px;font-size:0.75rem;">retail_turnover<br><span style="font-size:0.65rem;opacity:0.7;">Silver</span></div>
-            <div class="arch-node" style="min-width:120px;font-size:0.75rem;">food_price_index<br><span style="font-size:0.65rem;opacity:0.7;">Silver</span></div>
-            <div class="arch-node" style="min-width:120px;font-size:0.75rem;">food_recalls<br><span style="font-size:0.65rem;opacity:0.7;">Silver</span></div>
-            <div class="arch-node" style="min-width:120px;font-size:0.75rem;">grocery_documents<br><span style="font-size:0.65rem;opacity:0.7;">Silver &middot; PDF text</span></div>
+          <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+            <div class="arch-node" style="min-width:160px;">retail_turnover<br><span style="font-size:0.7rem;opacity:0.7;">Silver</span></div>
+            <div class="arch-node" style="min-width:160px;">food_price_index<br><span style="font-size:0.7rem;opacity:0.7;">Silver</span></div>
           </div>
           <div class="arch-arrow-down">&rarr;</div>
-          <div style="display:flex;gap:0.5rem;justify-content:center;flex-wrap:wrap;">
-            <div class="arch-node arch-node-green" style="min-width:120px;font-size:0.75rem;">retail_summary<br><span style="font-size:0.65rem;opacity:0.7;">Materialized view</span></div>
-            <div class="arch-node arch-node-green" style="min-width:120px;font-size:0.75rem;">food_inflation_yoy<br><span style="font-size:0.65rem;opacity:0.7;">Materialized view</span></div>
+          <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+            <div class="arch-node arch-node-green" style="min-width:160px;">retail_summary<br><span style="font-size:0.7rem;opacity:0.7;">@dp.materialized_view</span></div>
+            <div class="arch-node arch-node-green" style="min-width:160px;">food_inflation_yoy<br><span style="font-size:0.7rem;opacity:0.7;">@dp.materialized_view</span></div>
           </div>
         </div>
       </div>
@@ -1397,7 +1384,7 @@
   <!-- ============================================================ -->
   <!-- SLIDE 21: SHOW & TELL + ICE BREAKER REVEAL -->
   <!-- ============================================================ -->
-  <section class="slide slide-light" aria-label="Show and Tell" data-notes="7 minutes total. Quick demos from 3 volunteer teams (90 sec each): show their pipeline DAG, share one interesting insight from their Gold data. Not every team needs to present — pick 3 volunteers, save time for the prediction reveal. Then reveal the ice breaker answers using actual data from the pipelines they just built — 'Which state DOES have the highest food retail turnover?' This connects the ice breaker to the lab work. Score the prediction cards. Award bragging rights to the most accurate team.">
+  <section class="slide slide-light" aria-label="Show and Tell" data-notes="10 minutes total. Quick demos from each team (2 min each): show their pipeline DAG, share one interesting insight from their Gold data. Then reveal the ice breaker answers using actual data from the pipelines they just built — 'Which state DOES have the highest food retail turnover?' This connects the ice breaker to the lab work. Score the prediction cards. Award bragging rights to the most accurate team.">
     <div class="reveal section-num">12:25 PM &middot; 10 Minutes</div>
     <h2 class="reveal">Show &amp; Tell + Prediction Reveal</h2>
     <div class="reveal accent-line"></div>
@@ -1406,7 +1393,7 @@
         <h3 style="color:var(--db-teal);margin-bottom:1rem;">Show &amp; Tell</h3>
         <div class="card">
           <ul class="bullet-list">
-            <li>3 teams volunteer to show their pipeline DAG (90 sec each)</li>
+            <li>Each team shows their pipeline DAG (2 min each)</li>
             <li>Share one interesting insight from your Gold data</li>
             <li>What worked well? Where did TDD help?</li>
             <li>Where did the agent go off-rails?</li>
@@ -1572,6 +1559,57 @@ manifest.json</span>
   </section>
 
   <!-- ============================================================ -->
+  <!-- SLIDE 23c: SUBAGENTS VS AGENT TEAMS -->
+  <!-- ============================================================ -->
+  <section class="slide slide-white" aria-label="Subagents vs Agent Teams" data-notes="Key concept from the community (Akshay Pachaar). Most people reach for multi-agent the moment a task feels complex — that's almost always the wrong instinct. The right question: what kind of coordination does this task need? Two paradigms: subagents (fire-and-forget, isolated context, compression) vs teams (long-running, peer-to-peer comms, shared task list). Walk through the comparison table. The most important message is at the bottom: start with a single agent. Push it until it breaks. That failure point tells you what to add. For Lab 2: subagents for parallel frontend/backend is the sweet spot. Don't overcomplicate it. Specific warning: parallel agents writing code make incompatible assumptions — subagents should explore and answer questions, not write code simultaneously. ~4 min. Transition: Now let's talk about how agents connect to external tools — MCP.">
+    <div class="reveal section-num">Session 3</div>
+    <h2 class="reveal">Subagents vs <span class="text-lava">Agent Teams</span></h2>
+    <div class="reveal accent-line"></div>
+    <p class="reveal" style="color:var(--text-secondary);margin-bottom:1rem;">The right question isn&rsquo;t &ldquo;should I use multiple agents?&rdquo; &mdash; it&rsquo;s &ldquo;what kind of coordination does this task need?&rdquo;</p>
+    <div class="reveal two-col" style="gap:2rem;align-items:start;">
+      <!-- Left: Subagents -->
+      <div class="card" style="border-top:3px solid var(--db-teal);">
+        <h3 style="color:var(--db-teal);margin-bottom:0.5rem;">Subagents: Fire-and-Forget</h3>
+        <p style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:0.75rem;">Like delegating focused questions to researchers &mdash; they come back with distilled findings.</p>
+        <ul class="bullet-list" style="font-size:0.85rem;">
+          <li>Own isolated context window</li>
+          <li>One job, then result returns to parent</li>
+          <li>Can&rsquo;t talk to each other &mdash; <strong>by design</strong></li>
+          <li>Key benefit: <strong>compression</strong> &mdash; vast exploration distilled to clean signal</li>
+        </ul>
+        <div style="margin-top:0.75rem;padding:0.5rem 0.75rem;background:rgba(27,81,98,0.06);border-radius:6px;">
+          <p style="font-size:0.8rem;font-family:var(--font-mono);color:var(--db-teal);">Use when: embarrassingly parallel</p>
+          <p style="font-size:0.78rem;color:var(--text-secondary);">Independent research, codebase exploration, lookups where parent only needs the summary</p>
+        </div>
+      </div>
+      <!-- Right: Agent Teams -->
+      <div class="card" style="border-top:3px solid var(--db-lava);">
+        <h3 style="color:var(--db-lava);margin-bottom:0.5rem;">Agent Teams: Ongoing Coordination</h3>
+        <p style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:0.75rem;">Like assembling a team that works in the same room &mdash; they persist, communicate, and coordinate.</p>
+        <ul class="bullet-list" style="font-size:0.85rem;">
+          <li>Long-running instances with shared state</li>
+          <li>Peer-to-peer messaging between teammates</li>
+          <li>Shared task list with dependencies (<code>blockedBy</code>)</li>
+          <li>Key benefit: <strong>negotiation</strong> &mdash; discoveries in one thread change another</li>
+        </ul>
+        <div style="margin-top:0.75rem;padding:0.5rem 0.75rem;background:rgba(255,54,33,0.06);border-radius:6px;">
+          <p style="font-size:0.8rem;font-family:var(--font-mono);color:var(--db-lava);">Use when: ongoing negotiation</p>
+          <p style="font-size:0.78rem;color:var(--text-secondary);">Agents must reconcile outputs, or a discovery in one thread changes what another should do</p>
+        </div>
+      </div>
+    </div>
+    <!-- Bottom: Design Principle -->
+    <div class="reveal" style="margin-top:1.25rem;display:flex;gap:1.5rem;align-items:stretch;">
+      <div style="flex:1;padding:0.75rem 1rem;background:rgba(0,169,114,0.08);border-radius:8px;border-left:3px solid var(--db-green);">
+        <p style="font-size:0.85rem;"><strong>The #1 design principle:</strong> Start with a single agent. Push it until it breaks. That failure point tells you exactly what to add next. Design around <em>context boundaries</em>, not roles.</p>
+      </div>
+      <div style="flex:1;padding:0.75rem 1rem;background:rgba(255,54,33,0.06);border-radius:8px;border-left:3px solid var(--db-lava);">
+        <p style="font-size:0.85rem;"><strong>Warning for coding:</strong> Parallel agents writing code make incompatible assumptions. Subagents should <em>explore and answer questions</em>, not write code simultaneously with the main agent.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
   <!-- SLIDE 24: WHAT IS MCP? — THE PROBLEM -->
   <!-- ============================================================ -->
   <section class="slide slide-dark" aria-label="What is MCP" data-notes="Before MCP, every AI model needed custom integration code for every tool. 10 models × 10 tools = 100 custom connectors. This is the same problem USB had before USB-C — every device had a different cable. MCP is the USB-C of AI. Build the connector once, every agent can use it. Anthropic open-sourced MCP in late 2024 and it's become the industry standard. For Coles this matters because you have dozens of internal tools — without MCP you'd write custom code for each one. ~4 min.">
@@ -1653,6 +1691,42 @@ manifest.json</span>
   </section>
 
   <!-- ============================================================ -->
+  <!-- SLIDE 25: HOW MCP WORKS — ARCHITECTURE + WHY IT MATTERS -->
+  <!-- ============================================================ -->
+  <section class="slide slide-white" aria-label="How MCP Works" data-notes="Walk through the client-server architecture. Clients are AI agents (Claude Code, Cursor). Servers expose tool capabilities over JSON-RPC. Key insight from the blog: having MCP tools is not enough — you also need Skills (procedural knowledge) that tell agents WHEN and HOW to use tools. For Coles, an MCP server wrapping Unity Catalog means every agent in the org can query your tables without custom code. And a skill like /run-data-quality encodes your team's domain expertise. MCP handles wiring, skills handle knowledge, the agent orchestrates both. ~4 min. Transition: Now let's see what this looks like specifically on Databricks.">
+    <div class="reveal section-num">Session 3</div>
+    <h2 class="reveal">How MCP Works</h2>
+    <div class="reveal accent-line"></div>
+    <div class="reveal two-col" style="gap:3rem;align-items:start;">
+      <!-- Left: Architecture diagram image -->
+      <div>
+        <h3 style="color:var(--db-teal);margin-bottom:1rem;">Client &harr; Server Architecture</h3>
+        <img src="images/mcp-databricks-architecture-detail.png" alt="MCP client-server architecture showing agents connecting to MCP servers via JSON-RPC" style="width:100%;border-radius:10px;box-shadow:0 4px 16px rgba(0,0,0,0.06);border:1px solid var(--db-oat-medium);">
+        <p style="font-size:0.7rem;color:var(--text-secondary);margin-top:0.5rem;text-align:center;">Clients (agents) &harr; JSON-RPC &harr; Servers (tools)</p>
+      </div>
+      <!-- Right: Key concepts -->
+      <div>
+        <h3 style="color:var(--db-lava);margin-bottom:1rem;">Why This Matters</h3>
+        <div class="card" style="border-left:3px solid var(--db-lava);margin-bottom:1rem;">
+          <h3 style="font-size:0.95rem;">Build once, connect everywhere</h3>
+          <p style="font-size:0.85rem;color:var(--text-secondary);">A GitHub MCP server works with Claude, Cursor, ChatGPT &mdash; any client that speaks the protocol.</p>
+        </div>
+        <div class="card" style="border-left:3px solid var(--db-teal);margin-bottom:1rem;">
+          <h3 style="font-size:0.95rem;">Structured, not ad-hoc</h3>
+          <p style="font-size:0.85rem;color:var(--text-secondary);">Tools describe their capabilities in a schema. Agents discover what&rsquo;s available and call tools via JSON-RPC.</p>
+        </div>
+        <div class="card" style="border-left:3px solid var(--coles-red);">
+          <h3 style="font-size:0.95rem;">For Coles: one protocol, all your tools</h3>
+          <p style="font-size:0.85rem;color:var(--text-secondary);">Wrap Unity Catalog, internal APIs, and Genie behind MCP servers &mdash; every agent in the org gets access without custom glue code.</p>
+        </div>
+        <div style="margin-top:1rem;padding:0.75rem 1rem;background:var(--coles-red-glow);border-radius:8px;border-left:3px solid var(--coles-red);">
+          <p style="font-size:0.8rem;font-family:var(--font-mono);"><strong>MCP</strong> = tool connectivity &nbsp;&bull;&nbsp; <strong>Skills</strong> = procedural knowledge &nbsp;&bull;&nbsp; <strong>Agent</strong> = orchestrator</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
   <!-- SLIDE 26: MCP ON DATABRICKS -->
   <!-- ============================================================ -->
   <section class="slide slide-light" aria-label="MCP on Databricks" data-notes="Three flavours of MCP servers on Databricks. Built-in/Managed: UC functions, tables, volumes, Vector Search, Genie -- zero config. Proxy/External: third-party services (GitHub, Slack, Glean) via UC Connections -- no credentials exposed. Custom: host your own on Databricks Apps. All secured through Unity Catalog. List of supported clients at bottom. ~5 min. Transition: Genie and AI/BI Dashboards.">
@@ -1710,6 +1784,98 @@ manifest.json</span>
     <div class="reveal" style="margin-top:0.75rem;padding:0.6rem 1rem;background:var(--coles-red-glow);border-radius:8px;border-left:3px solid var(--coles-red);display:inline-flex;align-items:center;gap:0.5rem;">
       <span class="coles-badge" style="font-size:0.75rem;">Coles</span>
       <span style="font-size:0.8rem;color:var(--text-secondary);">In Lab 2, you&rsquo;ll connect your app to Genie via a managed MCP server &mdash; zero custom glue code.</span>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SLIDE 27: MCP ARCHITECTURE — FULL PICTURE -->
+  <!-- ============================================================ -->
+  <section class="slide slide-white" aria-label="MCP Architecture on Databricks" style="padding:clamp(1.5rem,3vw,2.5rem) clamp(2rem,5vw,4rem);" data-notes="Full architecture diagram. Walk through: Left side — Databricks-served agent with Orchestration Framework connects to three MCP server types (Custom on DB Apps, Managed for UC/Vector/Genie, and 3rd party). Right side — Externally-served agents (Claude Code, Cursor) connect to the same MCP servers. Bottom — AI Gateway routes to Model Serving (self-hosted LLM) or SaaS LLM (Anthropic, OpenAI). MLflow Tracing captures everything. Guardrails, cost control, rate limits handled by AI Gateway. Point out that Coles would be on the right side today — an external agent (Claude Code in the browser) connecting into Databricks via MCP. ~3 min.">
+    <div class="reveal section-num">Session 3</div>
+    <h2 class="reveal" style="font-size:clamp(1.5rem,2.5vw,2.2rem);">MCP Architecture on Databricks</h2>
+    <div class="reveal accent-line"></div>
+    <div class="reveal" style="margin-top:1rem;text-align:center;">
+      <img src="images/mcp-databricks-architecture-overview.png" alt="Databricks MCP Architecture — showing Databricks-served and externally-served agents connecting to Custom, Managed, and 3rd party MCP servers, with AI Gateway, MLflow Tracing, and Model Serving" style="max-width:100%;max-height:65vh;border-radius:12px;box-shadow:0 4px 24px rgba(0,0,0,0.08);border:1px solid var(--db-oat-medium);">
+    </div>
+    <p class="reveal" style="margin-top:0.75rem;font-size:0.8rem;color:var(--text-secondary);text-align:center;">
+      Databricks-served agents (left) and external agents like Claude Code (right) connect to the same MCP servers &mdash; secured by Unity Catalog and AI Gateway.
+    </p>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SLIDE 28: AI DEV KIT -->
+  <!-- ============================================================ -->
+  <section class="slide slide-dark" aria-label="AI Dev Kit" data-notes="This is the open-source toolkit from Databricks that packages everything we just discussed — skills, MCP server, Python tools, and a web-based builder app — into one installable kit. Four components: Skills layer has 25+ skill packs covering pipelines, dashboards, Unity Catalog, Genie, MLflow, and more — these are the knowledge layer. MCP Server exposes 50+ tools via the protocol we just learned about. Tools Core is the Python library underneath. Builder App is the web chat UI we deployed for this workshop. For Coles, you can fork this and add custom skills for your data patterns — /run-data-quality, /deploy-pipeline, etc. The AI Dev Kit is what we're using today. ~4 min. Transition: Genie and AI/BI.">
+    <div class="reveal section-num">Session 3</div>
+    <h2 class="reveal">AI Dev Kit</h2>
+    <div class="reveal accent-line" style="background:var(--db-lava-light);"></div>
+    <p class="reveal subtitle" style="margin-bottom:1.5rem;">The complete toolkit for AI-driven development on Databricks</p>
+    <div class="reveal" style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;">
+      <!-- Skills -->
+      <div class="card" style="border-top:3px solid var(--db-lava);">
+        <div style="font-size:1.5rem;margin-bottom:0.5rem;">&#x1F4DA;</div>
+        <h3 style="font-size:0.95rem;color:var(--db-lava-light);">Skills</h3>
+        <p style="font-size:0.8rem;color:rgba(255,255,255,0.6);margin:0.25rem 0 0.5rem;">Knowledge layer</p>
+        <ul style="list-style:none;font-size:0.75rem;color:rgba(255,255,255,0.75);">
+          <li style="margin-bottom:0.3rem;">&#x2022; 25+ skill packs</li>
+          <li style="margin-bottom:0.3rem;">&#x2022; Pipelines, DABs, Unity Catalog</li>
+          <li style="margin-bottom:0.3rem;">&#x2022; Genie, AI/BI, MLflow</li>
+          <li>&#x2022; Markdown docs AI reads before acting</li>
+        </ul>
+      </div>
+      <!-- MCP Server -->
+      <div class="card" style="border-top:3px solid var(--db-teal);">
+        <div style="font-size:1.5rem;margin-bottom:0.5rem;">&#x1F50C;</div>
+        <h3 style="font-size:0.95rem;color:#2D8DAD;">MCP Server</h3>
+        <p style="font-size:0.8rem;color:rgba(255,255,255,0.6);margin:0.25rem 0 0.5rem;">Action layer</p>
+        <ul style="list-style:none;font-size:0.75rem;color:rgba(255,255,255,0.75);">
+          <li style="margin-bottom:0.3rem;">&#x2022; 50+ tools via MCP protocol</li>
+          <li style="margin-bottom:0.3rem;">&#x2022; SQL, clusters, jobs, apps</li>
+          <li style="margin-bottom:0.3rem;">&#x2022; Genie, dashboards, MLflow</li>
+          <li>&#x2022; Works with any MCP client</li>
+        </ul>
+      </div>
+      <!-- Tools Core -->
+      <div class="card" style="border-top:3px solid var(--db-green);">
+        <div style="font-size:1.5rem;margin-bottom:0.5rem;">&#x2699;&#xFE0F;</div>
+        <h3 style="font-size:0.95rem;color:var(--db-green);">Tools Core</h3>
+        <p style="font-size:0.8rem;color:rgba(255,255,255,0.6);margin:0.25rem 0 0.5rem;">Python library</p>
+        <ul style="list-style:none;font-size:0.75rem;color:rgba(255,255,255,0.75);">
+          <li style="margin-bottom:0.3rem;">&#x2022; High-level Databricks functions</li>
+          <li style="margin-bottom:0.3rem;">&#x2022; Shared across MCP &amp; agents</li>
+          <li style="margin-bottom:0.3rem;">&#x2022; <code style="color:#4EC9B0;">pip install databricks-tools</code></li>
+          <li>&#x2022; Extend with custom tools</li>
+        </ul>
+      </div>
+      <!-- Builder App -->
+      <div class="card" style="border-top:3px solid var(--db-oat-dark);">
+        <div style="font-size:1.5rem;margin-bottom:0.5rem;">&#x1F4BB;</div>
+        <h3 style="font-size:0.95rem;color:var(--db-oat);">Builder App</h3>
+        <p style="font-size:0.8rem;color:rgba(255,255,255,0.6);margin:0.25rem 0 0.5rem;">Web interface</p>
+        <ul style="list-style:none;font-size:0.75rem;color:rgba(255,255,255,0.75);">
+          <li style="margin-bottom:0.3rem;">&#x2022; Chat-driven Databricks agent</li>
+          <li style="margin-bottom:0.3rem;">&#x2022; Runs as a Databricks App</li>
+          <li style="margin-bottom:0.3rem;">&#x2022; Browser-based &mdash; no install</li>
+          <li>&#x2022; What you&rsquo;re using today!</li>
+        </ul>
+      </div>
+    </div>
+    <!-- Architecture flow -->
+    <div class="reveal" style="margin-top:1.25rem;">
+      <div class="arch-flow" style="justify-content:center;gap:0.75rem;">
+        <div class="arch-node arch-node-accent" style="min-width:auto;padding:0.4rem 0.8rem;font-size:0.75rem;">You type a prompt</div>
+        <div class="arch-arrow">&rarr;</div>
+        <div class="arch-node" style="min-width:auto;padding:0.4rem 0.8rem;font-size:0.75rem;">Agent reads <strong>Skills</strong></div>
+        <div class="arch-arrow">&rarr;</div>
+        <div class="arch-node arch-node-teal" style="min-width:auto;padding:0.4rem 0.8rem;font-size:0.75rem;">Calls <strong>MCP tools</strong></div>
+        <div class="arch-arrow">&rarr;</div>
+        <div class="arch-node arch-node-green" style="min-width:auto;padding:0.4rem 0.8rem;font-size:0.75rem;">Databricks executes</div>
+      </div>
+    </div>
+    <!-- Coles callout -->
+    <div class="reveal" style="margin-top:1rem;padding:0.6rem 1rem;background:var(--coles-red-glow);border-radius:8px;border-left:3px solid var(--coles-red);display:inline-flex;align-items:center;gap:0.5rem;">
+      <span class="coles-badge" style="font-size:0.75rem;">Coles</span>
+      <span style="font-size:0.8rem;color:rgba(255,255,255,0.7);">Fork the AI Dev Kit and add custom skills for your team &mdash; <code style="font-size:0.75rem;color:#4EC9B0;">/run-data-quality</code>, <code style="font-size:0.75rem;color:#4EC9B0;">/deploy-pipeline</code>, <code style="font-size:0.75rem;color:#4EC9B0;">/check-lineage</code></span>
     </div>
   </section>
 
@@ -1850,16 +2016,6 @@ with food CPI overlay"</span>
   </section>
 
   <!-- ============================================================ -->
-  <!-- BREAK BEFORE LAB 2 -->
-  <!-- ============================================================ -->
-  <section class="slide slide-dark" aria-label="Break" data-notes="5-minute stretch break. Post-lunch energy dip is real. Get people standing, moving. Remind them: Lab 2 is the capstone — everything they've learned today comes together. ~5 min.">
-    <div class="reveal section-num">5-Minute Break</div>
-    <h1 class="reveal">Stretch Break</h1>
-    <p class="reveal subtitle">Stand up, grab a coffee, check your terminal &mdash; Lab 2 starts in 5</p>
-    <div class="reveal accent-line" style="background:var(--db-lava-light);margin-top:1.5rem;"></div>
-  </section>
-
-  <!-- ============================================================ -->
   <!-- SLIDE 31: SECTION DIVIDER — LAB 2 -->
   <!-- ============================================================ -->
   <section class="slide slide-dark" aria-label="Section: Lab 2" data-notes="Lab 2 section divider. This is the capstone challenge. 65 minutes to build an app, connect Genie, and create AI/BI dashboards. Remind everyone: use everything from today -- CLAUDE.md, TDD, subagents, MCP. ~30 sec.">
@@ -1872,89 +2028,72 @@ with food CPI overlay"</span>
   <!-- ============================================================ -->
   <!-- SLIDE 32: LAB 2 BRIEFING -->
   <!-- ============================================================ -->
-  <section class="slide slide-light" aria-label="Lab 2 Briefing" data-notes="IMPORTANT FRAMING: Tell teams 'Get as far as you can — not every team will finish everything, and that's fine. Pick your tier: Quick teams embed the AI/BI dashboard, medium teams add Recharts, stretch teams build the full platform.' Push them to timebox: app gets 25 min max, then move on to Genie and dashboard. Genie space is the quickest win — 2 minutes to set up. Checkpoints available at every phase. Encourage subagents: one on backend, one on frontend. ~3 min briefing then start the lab.">
+  <section class="slide slide-light" aria-label="Lab 2 Briefing" data-notes="This is where teams build the full app. They should use everything learned today: CLAUDE.md, TDD, subagents, MCP. Checkpoints available at every phase. Encourage subagents: one on backend, one on frontend. Use MCP to query gold tables directly. ~3 min briefing then start the lab.">
     <div class="reveal section-num">Lab 2</div>
     <h2 class="reveal">Grocery Intelligence Platform</h2>
     <div class="reveal accent-line"></div>
     <div class="reveal two-col">
       <div>
-        <p style="margin-bottom:0.75rem;">Build a complete platform on your Lab 1 gold tables. <strong>Pick your tier:</strong></p>
-        <!-- Three tiers -->
-        <div style="display:flex;flex-direction:column;gap:0.6rem;margin-bottom:1rem;">
-          <div class="card" style="border-left:3px solid var(--db-green);padding:0.6rem 0.8rem;">
-            <div style="display:flex;justify-content:space-between;align-items:center;">
-              <strong style="color:var(--db-green);font-size:0.85rem;">Quick &mdash; Embed &amp; Ship</strong>
-              <span style="font-size:0.7rem;color:var(--text-secondary);">~20 min</span>
-            </div>
-            <p style="font-size:0.8rem;margin-top:0.2rem;">FastAPI backend + <strong>embedded AI/BI dashboard via iframe</strong>. Publish your dashboard, drop the embed URL into your app. Polished result, minimal frontend code.</p>
+        <p style="margin-bottom:1rem;">Build a complete platform: web app, Genie space, and AI/BI dashboard &mdash; all powered by your Lab 1 pipeline data.</p>
+        <div class="step-flow" style="flex-direction:column;gap:0.75rem;">
+          <div class="step-item" style="min-width:auto;">
+            <div class="step-num" style="font-size:1rem;">01</div>
+            <h3>PRD + Tests &middot; 10 min</h3>
+            <p>Design the app, write API tests first</p>
           </div>
-          <div class="card" style="border-left:3px solid var(--db-teal);padding:0.6rem 0.8rem;">
-            <div style="display:flex;justify-content:space-between;align-items:center;">
-              <strong style="color:var(--db-teal);font-size:0.85rem;">Medium &mdash; Custom Charts</strong>
-              <span style="font-size:0.7rem;color:var(--text-secondary);">~35 min</span>
-            </div>
-            <p style="font-size:0.8rem;margin-top:0.2rem;">FastAPI + React with <strong>Recharts</strong> or <strong>Observable Plot</strong>. Query gold tables via API, render interactive visualisations in the browser.</p>
+          <div class="step-item" style="min-width:auto;">
+            <div class="step-num" style="font-size:1rem;">02</div>
+            <h3>Backend + Frontend &middot; 25 min</h3>
+            <p>FastAPI + Tailwind + htmx</p>
           </div>
-          <div class="card" style="border-left:3px solid var(--db-lava);padding:0.6rem 0.8rem;">
-            <div style="display:flex;justify-content:space-between;align-items:center;">
-              <strong style="color:var(--db-lava);font-size:0.85rem;">Stretch &mdash; Full Platform</strong>
-              <span style="font-size:0.7rem;color:var(--text-secondary);">~55 min</span>
-            </div>
-            <p style="font-size:0.8rem;margin-top:0.2rem;">Full React app with custom viz + <strong>embedded dashboard</strong> + Genie space + NL query feature. The whole enchilada.</p>
+          <div class="step-item" style="min-width:auto;">
+            <div class="step-num" style="font-size:1rem;">03</div>
+            <h3>Genie Space &middot; 10 min</h3>
+            <p>Natural language on gold tables</p>
+          </div>
+          <div class="step-item" style="min-width:auto;">
+            <div class="step-num" style="font-size:1rem;">04</div>
+            <h3>AI/BI Dashboard &middot; 10 min</h3>
+            <p>Auto-generated visualizations</p>
+          </div>
+          <div class="step-item" style="min-width:auto;">
+            <div class="step-num" style="font-size:1rem;">05</div>
+            <h3>Deploy + Polish &middot; 10 min</h3>
+            <p>Ship to Databricks Apps</p>
           </div>
         </div>
-        <!-- Phases -->
-        <div class="step-flow" style="flex-direction:column;gap:0.5rem;">
-          <div class="step-item" style="min-width:auto;padding:0.75rem;">
-            <div class="step-num" style="font-size:0.9rem;">01</div>
-            <h3 style="font-size:0.9rem;">PRD + Tests &middot; 10 min</h3>
-          </div>
-          <div class="step-item" style="min-width:auto;padding:0.75rem;">
-            <div class="step-num" style="font-size:0.9rem;">02</div>
-            <h3 style="font-size:0.9rem;">Backend + Frontend &middot; 25 min</h3>
-          </div>
-          <div class="step-item" style="min-width:auto;padding:0.75rem;">
-            <div class="step-num" style="font-size:0.9rem;">03</div>
-            <h3 style="font-size:0.9rem;">Genie + AI/BI Dashboard &middot; 15 min</h3>
-          </div>
-          <div class="step-item" style="min-width:auto;padding:0.75rem;">
-            <div class="step-num" style="font-size:0.9rem;">04</div>
-            <h3 style="font-size:0.9rem;">Demo Prep &middot; 5 min</h3>
-          </div>
+        <div style="margin-top:1rem;padding:0.75rem 1rem;background:rgba(255,54,33,0.06);border-radius:8px;border-left:3px solid var(--db-lava);">
+          <p style="font-size:0.85rem;"><strong>Use subagents for parallel work!</strong> One on backend, one on frontend. Use MCP to query your gold tables directly.</p>
         </div>
       </div>
       <div>
         <div class="diagram-box">
-          <h3 style="margin-bottom:0.75rem;color:var(--db-teal);font-size:0.95rem;">App Architecture</h3>
+          <h3 style="margin-bottom:1rem;color:var(--db-teal);">App Architecture</h3>
           <div class="arch-flow-vertical">
-            <div class="arch-node arch-node-accent" style="min-width:220px;">React / HTML + Tailwind<br><span style="font-size:0.65rem;opacity:0.7;">Recharts, Observable Plot, or embedded dashboard</span></div>
+            <div class="arch-node arch-node-accent" style="min-width:220px;">HTML + Tailwind + htmx<br><span style="font-size:0.7rem;opacity:0.7;">Frontend (no npm needed)</span></div>
             <div class="arch-arrow-down">&rarr;</div>
-            <div class="arch-node arch-node-teal" style="min-width:220px;">FastAPI Backend<br><span style="font-size:0.65rem;opacity:0.7;">REST API + static files</span></div>
+            <div class="arch-node arch-node-teal" style="min-width:220px;">FastAPI Backend<br><span style="font-size:0.7rem;opacity:0.7;">REST API + static files</span></div>
             <div class="arch-arrow-down">&rarr;</div>
-            <div style="display:flex;gap:0.75rem;justify-content:center;flex-wrap:wrap;">
-              <div class="arch-node arch-node-green" style="min-width:90px;font-size:0.8rem;">Gold Tables<br><span style="font-size:0.6rem;opacity:0.7;">UC</span></div>
-              <div class="arch-node arch-node-accent" style="min-width:90px;font-size:0.8rem;">Genie<br><span style="font-size:0.6rem;opacity:0.7;">NL &rarr; SQL</span></div>
-              <div class="arch-node arch-node-navy" style="min-width:90px;font-size:0.8rem;">AI/BI<br><span style="font-size:0.6rem;opacity:0.7;">Embed via iframe</span></div>
+            <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+              <div class="arch-node arch-node-green" style="min-width:100px;">Unity Catalog<br><span style="font-size:0.7rem;opacity:0.7;">Gold tables</span></div>
+              <div class="arch-node arch-node-accent" style="min-width:100px;">Genie Space<br><span style="font-size:0.7rem;opacity:0.7;">NL &rarr; SQL</span></div>
             </div>
+            <div class="arch-arrow-down">&rarr;</div>
+            <div class="arch-node arch-node-navy" style="min-width:220px;">AI/BI Dashboard<br><span style="font-size:0.7rem;opacity:0.7;">Auto visualization</span></div>
           </div>
         </div>
-        <!-- Embedding callout -->
-        <div style="margin-top:0.75rem;padding:0.6rem 0.8rem;background:rgba(27,81,98,0.06);border-radius:8px;border-left:3px solid var(--db-teal);">
-          <h3 style="font-size:0.8rem;color:var(--db-teal);margin-bottom:0.2rem;">Embed AI/BI Dashboards</h3>
-          <p style="font-size:0.75rem;color:var(--text-secondary);">Publish your dashboard &rarr; Share &rarr; Copy embed code &rarr; <code>&lt;iframe&gt;</code> in your app. Instant polished visualisations.</p>
+        <div style="display:flex;gap:0.5rem;margin-top:1rem;flex-wrap:wrap;">
+          <span class="tag tag-lava">FastAPI</span>
+          <span class="tag tag-teal">htmx</span>
+          <span class="tag tag-green">Genie</span>
+          <span class="tag tag-navy">AI/BI</span>
+          <span class="tag tag-lava">MCP</span>
+          <span class="tag tag-teal">Subagents</span>
         </div>
-        <!-- Viz libraries -->
-        <div style="margin-top:0.5rem;padding:0.6rem 0.8rem;background:rgba(0,169,114,0.06);border-radius:8px;border-left:3px solid var(--db-green);">
-          <h3 style="font-size:0.8rem;color:var(--db-green);margin-bottom:0.2rem;">Custom Charts (Medium/Stretch)</h3>
-          <p style="font-size:0.75rem;color:var(--text-secondary);"><strong>Recharts</strong> &mdash; React charting library, great for line/bar/area charts. <strong>Observable Plot</strong> &mdash; D3-based, declarative, works without React.</p>
-        </div>
-        <!-- Subagents tip -->
-        <div style="margin-top:0.5rem;padding:0.6rem 0.8rem;background:rgba(255,54,33,0.06);border-radius:8px;border-left:3px solid var(--db-lava);">
-          <p style="font-size:0.75rem;"><strong>Subagents:</strong> One on backend, one on frontend. Use MCP to query gold tables directly.</p>
-        </div>
-        <!-- Bonus -->
-        <div style="margin-top:0.5rem;padding:0.6rem 0.8rem;background:rgba(232,163,23,0.06);border-radius:8px;border-left:3px solid #E8A317;">
-          <p style="font-size:0.75rem;color:var(--text-secondary);"><strong style="color:#E8A317;">Bonus:</strong> Build an MCP server wrapping your retail analytics &mdash; let any agent query your data.</p>
+        <!-- Bonus challenge -->
+        <div style="margin-top:1rem;padding:0.75rem 1rem;background:rgba(232,163,23,0.08);border-radius:8px;border-left:3px solid #E8A317;">
+          <h3 style="font-size:0.85rem;color:#E8A317;margin-bottom:0.25rem;">Bonus Challenge: Build an MCP Server</h3>
+          <p style="font-size:0.8rem;color:var(--text-secondary);">Wrap your Retail Analytics App as an MCP server &mdash; let any AI agent query retail trends, food prices, and state comparisons through the protocol. Deploy on Databricks Apps.</p>
         </div>
       </div>
     </div>
@@ -2103,144 +2242,6 @@ with food CPI overlay"</span>
   </section>
 
   <!-- ============================================================ -->
-  <!-- APPENDIX -->
-  <!-- ============================================================ -->
-  <section class="slide slide-dark" aria-label="Appendix" data-notes="Appendix slides — reference material, not presented unless time allows or questions arise.">
-    <div class="reveal section-num">Appendix</div>
-    <h1 class="reveal">Appendix</h1>
-    <p class="reveal subtitle">Reference slides &mdash; available if time allows or questions arise</p>
-    <div class="reveal accent-line" style="background:var(--db-lava-light);margin-top:1.5rem;"></div>
-  </section>
-
-  <!-- ============================================================ -->
-  <!-- SLIDE 25: HOW MCP WORKS — ARCHITECTURE + WHY IT MATTERS -->
-  <!-- ============================================================ -->
-  <section class="slide slide-white" aria-label="How MCP Works" data-notes="Walk through the client-server architecture. Clients are AI agents (Claude Code, Cursor). Servers expose tool capabilities over JSON-RPC. Key insight from the blog: having MCP tools is not enough — you also need Skills (procedural knowledge) that tell agents WHEN and HOW to use tools. For Coles, an MCP server wrapping Unity Catalog means every agent in the org can query your tables without custom code. And a skill like /run-data-quality encodes your team's domain expertise. MCP handles wiring, skills handle knowledge, the agent orchestrates both. ~4 min. Transition: Now let's see what this looks like specifically on Databricks.">
-    <div class="reveal section-num">Session 3</div>
-    <h2 class="reveal">How MCP Works</h2>
-    <div class="reveal accent-line"></div>
-    <div class="reveal two-col" style="gap:3rem;align-items:start;">
-      <!-- Left: Architecture diagram image -->
-      <div>
-        <h3 style="color:var(--db-teal);margin-bottom:1rem;">Client &harr; Server Architecture</h3>
-        <img src="images/mcp-databricks-architecture-detail.png" alt="MCP client-server architecture showing agents connecting to MCP servers via JSON-RPC" style="width:100%;border-radius:10px;box-shadow:0 4px 16px rgba(0,0,0,0.06);border:1px solid var(--db-oat-medium);">
-        <p style="font-size:0.7rem;color:var(--text-secondary);margin-top:0.5rem;text-align:center;">Clients (agents) &harr; JSON-RPC &harr; Servers (tools)</p>
-      </div>
-      <!-- Right: Key concepts -->
-      <div>
-        <h3 style="color:var(--db-lava);margin-bottom:1rem;">Why This Matters</h3>
-        <div class="card" style="border-left:3px solid var(--db-lava);margin-bottom:1rem;">
-          <h3 style="font-size:0.95rem;">Build once, connect everywhere</h3>
-          <p style="font-size:0.85rem;color:var(--text-secondary);">A GitHub MCP server works with Claude, Cursor, ChatGPT &mdash; any client that speaks the protocol.</p>
-        </div>
-        <div class="card" style="border-left:3px solid var(--db-teal);margin-bottom:1rem;">
-          <h3 style="font-size:0.95rem;">Structured, not ad-hoc</h3>
-          <p style="font-size:0.85rem;color:var(--text-secondary);">Tools describe their capabilities in a schema. Agents discover what&rsquo;s available and call tools via JSON-RPC.</p>
-        </div>
-        <div class="card" style="border-left:3px solid var(--coles-red);">
-          <h3 style="font-size:0.95rem;">For Coles: one protocol, all your tools</h3>
-          <p style="font-size:0.85rem;color:var(--text-secondary);">Wrap Unity Catalog, internal APIs, and Genie behind MCP servers &mdash; every agent in the org gets access without custom glue code.</p>
-        </div>
-        <div style="margin-top:1rem;padding:0.75rem 1rem;background:var(--coles-red-glow);border-radius:8px;border-left:3px solid var(--coles-red);">
-          <p style="font-size:0.8rem;font-family:var(--font-mono);"><strong>MCP</strong> = tool connectivity &nbsp;&bull;&nbsp; <strong>Skills</strong> = procedural knowledge &nbsp;&bull;&nbsp; <strong>Agent</strong> = orchestrator</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============================================================ -->
-  <!-- SLIDE 27: MCP ARCHITECTURE — FULL PICTURE -->
-  <!-- ============================================================ -->
-  <section class="slide slide-white" aria-label="MCP Architecture on Databricks" style="padding:clamp(1.5rem,3vw,2.5rem) clamp(2rem,5vw,4rem);" data-notes="Full architecture diagram. Walk through: Left side — Databricks-served agent with Orchestration Framework connects to three MCP server types (Custom on DB Apps, Managed for UC/Vector/Genie, and 3rd party). Right side — Externally-served agents (Claude Code, Cursor) connect to the same MCP servers. Bottom — AI Gateway routes to Model Serving (self-hosted LLM) or SaaS LLM (Anthropic, OpenAI). MLflow Tracing captures everything. Guardrails, cost control, rate limits handled by AI Gateway. Point out that Coles would be on the right side today — an external agent (Claude Code in the browser) connecting into Databricks via MCP. ~3 min.">
-    <div class="reveal section-num">Session 3</div>
-    <h2 class="reveal" style="font-size:clamp(1.5rem,2.5vw,2.2rem);">MCP Architecture on Databricks</h2>
-    <div class="reveal accent-line"></div>
-    <div class="reveal" style="margin-top:1rem;text-align:center;">
-      <img src="images/mcp-databricks-architecture-overview.png" alt="Databricks MCP Architecture — showing Databricks-served and externally-served agents connecting to Custom, Managed, and 3rd party MCP servers, with AI Gateway, MLflow Tracing, and Model Serving" style="max-width:100%;max-height:65vh;border-radius:12px;box-shadow:0 4px 24px rgba(0,0,0,0.08);border:1px solid var(--db-oat-medium);">
-    </div>
-    <p class="reveal" style="margin-top:0.75rem;font-size:0.8rem;color:var(--text-secondary);text-align:center;">
-      Databricks-served agents (left) and external agents like Claude Code (right) connect to the same MCP servers &mdash; secured by Unity Catalog and AI Gateway.
-    </p>
-  </section>
-
-  <!-- ============================================================ -->
-  <!-- SLIDE 28: AI DEV KIT -->
-  <!-- ============================================================ -->
-  <section class="slide slide-dark" aria-label="AI Dev Kit" data-notes="This is the open-source toolkit from Databricks that packages everything we just discussed — skills, MCP server, Python tools, and a web-based builder app — into one installable kit. Four components: Skills layer has 25+ skill packs covering pipelines, dashboards, Unity Catalog, Genie, MLflow, and more — these are the knowledge layer. MCP Server exposes 50+ tools via the protocol we just learned about. Tools Core is the Python library underneath. Builder App is the web chat UI we deployed for this workshop. For Coles, you can fork this and add custom skills for your data patterns — /run-data-quality, /deploy-pipeline, etc. The AI Dev Kit is what we're using today. ~4 min. Transition: Genie and AI/BI.">
-    <div class="reveal section-num">Session 3</div>
-    <h2 class="reveal">AI Dev Kit</h2>
-    <div class="reveal accent-line" style="background:var(--db-lava-light);"></div>
-    <p class="reveal subtitle" style="margin-bottom:1.5rem;">The complete toolkit for AI-driven development on Databricks</p>
-    <div class="reveal" style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;">
-      <!-- Skills -->
-      <div class="card" style="border-top:3px solid var(--db-lava);">
-        <div style="font-size:1.5rem;margin-bottom:0.5rem;">&#x1F4DA;</div>
-        <h3 style="font-size:0.95rem;color:var(--db-lava-light);">Skills</h3>
-        <p style="font-size:0.8rem;color:rgba(255,255,255,0.6);margin:0.25rem 0 0.5rem;">Knowledge layer</p>
-        <ul style="list-style:none;font-size:0.75rem;color:rgba(255,255,255,0.75);">
-          <li style="margin-bottom:0.3rem;">&#x2022; 25+ skill packs</li>
-          <li style="margin-bottom:0.3rem;">&#x2022; Pipelines, DABs, Unity Catalog</li>
-          <li style="margin-bottom:0.3rem;">&#x2022; Genie, AI/BI, MLflow</li>
-          <li>&#x2022; Markdown docs AI reads before acting</li>
-        </ul>
-      </div>
-      <!-- MCP Server -->
-      <div class="card" style="border-top:3px solid var(--db-teal);">
-        <div style="font-size:1.5rem;margin-bottom:0.5rem;">&#x1F50C;</div>
-        <h3 style="font-size:0.95rem;color:#2D8DAD;">MCP Server</h3>
-        <p style="font-size:0.8rem;color:rgba(255,255,255,0.6);margin:0.25rem 0 0.5rem;">Action layer</p>
-        <ul style="list-style:none;font-size:0.75rem;color:rgba(255,255,255,0.75);">
-          <li style="margin-bottom:0.3rem;">&#x2022; 50+ tools via MCP protocol</li>
-          <li style="margin-bottom:0.3rem;">&#x2022; SQL, clusters, jobs, apps</li>
-          <li style="margin-bottom:0.3rem;">&#x2022; Genie, dashboards, MLflow</li>
-          <li>&#x2022; Works with any MCP client</li>
-        </ul>
-      </div>
-      <!-- Tools Core -->
-      <div class="card" style="border-top:3px solid var(--db-green);">
-        <div style="font-size:1.5rem;margin-bottom:0.5rem;">&#x2699;&#xFE0F;</div>
-        <h3 style="font-size:0.95rem;color:var(--db-green);">Tools Core</h3>
-        <p style="font-size:0.8rem;color:rgba(255,255,255,0.6);margin:0.25rem 0 0.5rem;">Python library</p>
-        <ul style="list-style:none;font-size:0.75rem;color:rgba(255,255,255,0.75);">
-          <li style="margin-bottom:0.3rem;">&#x2022; High-level Databricks functions</li>
-          <li style="margin-bottom:0.3rem;">&#x2022; Shared across MCP &amp; agents</li>
-          <li style="margin-bottom:0.3rem;">&#x2022; <code style="color:#4EC9B0;">pip install databricks-tools</code></li>
-          <li>&#x2022; Extend with custom tools</li>
-        </ul>
-      </div>
-      <!-- Builder App -->
-      <div class="card" style="border-top:3px solid var(--db-oat-dark);">
-        <div style="font-size:1.5rem;margin-bottom:0.5rem;">&#x1F4BB;</div>
-        <h3 style="font-size:0.95rem;color:var(--db-oat);">Builder App</h3>
-        <p style="font-size:0.8rem;color:rgba(255,255,255,0.6);margin:0.25rem 0 0.5rem;">Web interface</p>
-        <ul style="list-style:none;font-size:0.75rem;color:rgba(255,255,255,0.75);">
-          <li style="margin-bottom:0.3rem;">&#x2022; Chat-driven Databricks agent</li>
-          <li style="margin-bottom:0.3rem;">&#x2022; Runs as a Databricks App</li>
-          <li style="margin-bottom:0.3rem;">&#x2022; Browser-based &mdash; no install</li>
-          <li>&#x2022; What you&rsquo;re using today!</li>
-        </ul>
-      </div>
-    </div>
-    <!-- Architecture flow -->
-    <div class="reveal" style="margin-top:1.25rem;">
-      <div class="arch-flow" style="justify-content:center;gap:0.75rem;">
-        <div class="arch-node arch-node-accent" style="min-width:auto;padding:0.4rem 0.8rem;font-size:0.75rem;">You type a prompt</div>
-        <div class="arch-arrow">&rarr;</div>
-        <div class="arch-node" style="min-width:auto;padding:0.4rem 0.8rem;font-size:0.75rem;">Agent reads <strong>Skills</strong></div>
-        <div class="arch-arrow">&rarr;</div>
-        <div class="arch-node arch-node-teal" style="min-width:auto;padding:0.4rem 0.8rem;font-size:0.75rem;">Calls <strong>MCP tools</strong></div>
-        <div class="arch-arrow">&rarr;</div>
-        <div class="arch-node arch-node-green" style="min-width:auto;padding:0.4rem 0.8rem;font-size:0.75rem;">Databricks executes</div>
-      </div>
-    </div>
-    <!-- Coles callout -->
-    <div class="reveal" style="margin-top:1rem;padding:0.6rem 1rem;background:var(--coles-red-glow);border-radius:8px;border-left:3px solid var(--coles-red);display:inline-flex;align-items:center;gap:0.5rem;">
-      <span class="coles-badge" style="font-size:0.75rem;">Coles</span>
-      <span style="font-size:0.8rem;color:rgba(255,255,255,0.7);">Fork the AI Dev Kit and add custom skills for your team &mdash; <code style="font-size:0.75rem;color:#4EC9B0;">/run-data-quality</code>, <code style="font-size:0.75rem;color:#4EC9B0;">/deploy-pipeline</code>, <code style="font-size:0.75rem;color:#4EC9B0;">/check-lineage</code></span>
-    </div>
-  </section>
-
-  <!-- ============================================================ -->
   <!-- JAVASCRIPT === -->
   <!-- ============================================================ -->
   <script>
@@ -2378,6 +2379,99 @@ with food CPI overlay"</span>
         step();
       });
     }
+
+    /* === FACILITATOR NOTES INJECTION === */
+    (function injectFacilitatorNotes() {
+      const slides = document.querySelectorAll('.slide');
+
+      slides.forEach((slide) => {
+        const notesText = slide.getAttribute('data-notes');
+        if (!notesText) return;
+
+        // --- Extract timing info and add badge ---
+        const timingMatch = notesText.match(/~(\d+)\s*min/i);
+        if (timingMatch) {
+          const badge = document.createElement('div');
+          badge.className = 'timing-badge';
+          badge.textContent = '~' + timingMatch[1] + ' min';
+          slide.appendChild(badge);
+        }
+
+        // Also look for "X min total" patterns
+        if (!timingMatch) {
+          const totalMatch = notesText.match(/(\d+)\s*min(?:utes?)?\s*total/i);
+          if (totalMatch) {
+            const badge = document.createElement('div');
+            badge.className = 'timing-badge';
+            badge.textContent = '~' + totalMatch[1] + ' min';
+            slide.appendChild(badge);
+          }
+        }
+
+        // --- Extract key message (first sentence of notes) ---
+        // Split on sentence boundaries and take the first meaningful one
+        const sentences = notesText.split(/\.\s+/);
+        let keyMessage = '';
+        for (let i = 0; i < sentences.length && i < 2; i++) {
+          const s = sentences[i].trim();
+          // Skip very short fragments or timing-only sentences
+          if (s.length > 15 && !s.match(/^~?\d+\s*min/i)) {
+            keyMessage = s.replace(/\.$/, '') + '.';
+            break;
+          }
+        }
+
+        // --- Highlight facilitation cues ---
+        function highlightCues(text) {
+          // Highlight "Ask:" questions
+          text = text.replace(/\b(Ask\s*(?:the\s+room)?:?\s*[^.?!]*[.?!]?)/gi, function(match) {
+            return '<span class="cue-ask">' + match + '</span>';
+          });
+          // Highlight "Transition:" cues
+          text = text.replace(/(Transition:\s*[^.]*\.?)/gi, function(match) {
+            return '<span class="cue-transition">' + match + '</span>';
+          });
+          // Highlight "DEMO" and "Live Demo" and "demo" as standalone cues
+          text = text.replace(/\b((?:LIVE\s+)?DEMO(?:\s+SLIDE)?)\b/gi, function(match) {
+            return '<span class="cue-demo">' + match + '</span>';
+          });
+          // Highlight "Exercise" cues
+          text = text.replace(/\b(Exercise\b[^.]*\.?)/gi, function(match) {
+            // Don't double-wrap if already inside a span
+            if (match.includes('class="cue-')) return match;
+            return '<span class="cue-exercise">' + match + '</span>';
+          });
+          return text;
+        }
+
+        // --- Build the notes panel DOM ---
+        const panel = document.createElement('div');
+        panel.className = 'facilitator-notes';
+
+        // Label
+        const label = document.createElement('div');
+        label.className = 'facilitator-notes-label';
+        label.textContent = 'FACILITATOR NOTES';
+        panel.appendChild(label);
+
+        // Key message
+        if (keyMessage) {
+          const keyDiv = document.createElement('div');
+          keyDiv.className = 'facilitator-notes-key';
+          keyDiv.textContent = keyMessage;
+          panel.appendChild(keyDiv);
+        }
+
+        // Full notes body with highlighted cues
+        const body = document.createElement('div');
+        body.className = 'facilitator-notes-body';
+        body.innerHTML = highlightCues(notesText);
+        panel.appendChild(body);
+
+        // Append to slide
+        slide.appendChild(panel);
+      });
+    })();
 
     /* === INIT === */
     new SlidePresentation();
