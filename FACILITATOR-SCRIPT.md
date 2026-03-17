@@ -2,23 +2,24 @@
 
 **Facilitator:** David O'Keeffe, Solutions Architect, Databricks
 **Audience:** Coles Group — Data & AI Engineering Team
-**Duration:** 5 hours (10:00 AM - 3:00 PM)
+**Duration:** 5 hours (9:00 AM - 2:00 PM)
 
 ---
 
-## Before the Room Opens (9:30 AM)
+## Before the Room Opens (8:30 AM)
 
 - Slides loaded on the projector (slides.html, tested with keyboard nav)
 - Coding Agents App instances up and verified (one per participant)
 - Prediction cards printed (one per team)
 - Scoreboard ready (whiteboard or shared doc)
+- Starter-kit folder distributed to all teams (CLAUDE.md template, test stubs, prompts, cheatsheet, config)
 - Backup demo recordings on laptop (in case of live demo failures)
 - Lab guides open on your laptop: LAB-1-DATA-PIPELINE.md, LAB-2-APP-GENIE-DASHBOARD.md
 - Water bottle. You will be talking for five hours.
 
 ---
 
-## Slide 1: Title — 10:00 AM
+## Slide 1: Title | 9:00 | 2 min
 
 **[CLICK]**
 
@@ -27,11 +28,11 @@
 - Using real Australian public data, directing AI agents
 - "Skills you can use on Monday — literally Monday"
 
-**[TRANSITION]** "Before any more slides — let me show you what this actually looks like in practice."
+**Transition:** "Before any more slides — let me show you what this actually looks like in practice."
 
 ---
 
-## Slide 1b: Opening Demo — My Working Setup — 10:02 AM
+## Slide 2: Opening Demo — My Working Setup | 9:02 | 5 min
 
 **[CLICK to show the setup slide, then SWITCH to live Claude Code terminal]**
 
@@ -67,20 +68,20 @@ What tables are in the workshop_vibe_coding catalog? Show me the schema of the r
 
 **[PAUSE — let results land]**
 
-- "By end of today, you'll understand every piece of this: CLAUDE.md, skills, MCP, hooks, subagents"
-- "You won't have 150 skills by 5pm — but you'll have the patterns to build them"
+- "By end of today, you'll understand every piece of this: CLAUDE.md, skills, MCP, hooks"
+- "You won't have 150 skills by 2pm — but you'll have the patterns to build them"
 
 **[BACKUP: If demo fails — stay on the slide, walk through the 4 stat cards verbally, say "trust me, it's impressive when the WiFi cooperates"]**
 
-**[TRANSITION]** "Let's warm up with a quiz."
+**Transition:** "Let's warm up with a quiz."
 
 ---
 
-## Slide 2: Ice Breaker — Grocery Data Predictions — 10:07 AM
+## Slide 3: Ice Breaker — Grocery Data Predictions | 9:07 | 8 min
 
 **[CLICK]**
 
-**[ENERGY]** Form teams — 2 min. Mix of experience levels. Team names.
+**[ENERGY]** Form teams — 2 min. Mix of experience levels. Team names. Assign Person A/B/C roles.
 
 - 5 questions on screen, 30 seconds each, write on prediction cards
 - No phones, no Googling — gut instinct only
@@ -99,26 +100,26 @@ What tables are in the workshop_vibe_coding catalog? Show me the schema of the r
 - Write boldest predictions on the scoreboard
 - "The twist: Lab 1 builds the pipeline that ingests this exact data — we'll query your Gold tables for the real answers"
 
-**[TRANSITION]** "Let's look at the agenda."
+**Transition:** "Let's look at the agenda."
 
 ---
 
-## Slide 3: Agenda — 10:14 AM
+## Slide 4: Agenda | 9:14 | 1 min
 
 **[CLICK]**
 
-**[CHECKPOINT: Should be here by 10:15]**
+**[CHECKPOINT: Should be here by 9:15]**
 
-- Morning: fundamentals (specs, TDD) then Lab 1 (data pipeline)
-- Afternoon: advanced tools (MCP, subagents, Genie) then Lab 2 (full app)
+- Morning: specs, TDD, then Lab 1 (data pipeline)
+- After lunch: tools briefing, then Lab 2 (app + Genie + dashboards)
 - Finish with team demos and voting
-- Breaks are real breaks — ask questions anytime, don't save them
+- "Breaks are real breaks — ask questions anytime, don't save them"
 
-**[TRANSITION]** "Before techniques — let me set the scene on Databricks today."
+**Transition:** "Quick look at Databricks today."
 
 ---
 
-## Slide 4: Databricks Today — 10:15 AM
+## Slide 5: Databricks Today | 9:15 | 2 min
 
 **[CLICK]**
 
@@ -126,11 +127,15 @@ What tables are in the workshop_vibe_coding catalog? Show me the schema of the r
 - Call out MCP servers (glue connecting agents to platform) and AI Gateway (routing to Claude Opus 4.6)
 - "Today you'll touch almost every layer — Lakeflow, UC, Genie, AI/BI, Custom Apps, MCP"
 
-**[TRANSITION]** "Now the paradigm shift that makes this possible."
+**[ASK]** "Has everyone accessed their Coding Agents instance? Any issues?"
+
+- Troubleshoot NOW — do not let anyone reach the exercise with broken access
+
+**Transition:** "Now the paradigm shift that makes this possible."
 
 ---
 
-## Slide 5: Section — The Paradigm Shift — 10:18 AM
+## Slide 6: Section — The Paradigm Shift | 9:17 | 1 min
 
 **[CLICK]**
 
@@ -143,7 +148,7 @@ What tables are in the workshop_vibe_coding catalog? Show me the schema of the r
 
 ---
 
-## Slide 6: What is Vibe Coding — 10:19 AM
+## Slide 7: What is Vibe Coding | 9:18 | 3 min
 
 **[CLICK]**
 
@@ -154,49 +159,77 @@ What tables are in the workshop_vibe_coding catalog? Show me the schema of the r
 
 **[PEPPER]** "A brilliant intern joined your team — writes code at incredible speed but doesn't know your systems. How you onboard them determines how useful they are."
 
-**[TRANSITION]** "Let me show you the platform."
+**Transition:** "Let me show you the platform."
 
 ---
 
-## Slide 7: Coding Agents Databricks App — 10:22 AM
+## Slide 8: Platform Architecture | 9:20 | 2 min
 
 **[CLICK]**
 
 - Walk through architecture left-to-right: browser terminal, Flask app, AI agent, AI Gateway
 - 39 pre-built skills from AI Dev Kit, MCP for tool access, MLflow tracing for observability
 
-**[ASK]** "Has everyone accessed their Coding Agents instance? Any issues?"
-
-- Troubleshoot NOW — do not let anyone reach the exercise with broken access
-
-**[TRANSITION]** "Session 1 — the single most important skill."
+**Transition:** "Now let me show you where we're going today."
 
 ---
 
-## Slide 8: Section — Thinking in Specs — 10:24 AM
+## Slide 9: What We're Building — End State | 9:22 | 3 min
 
 **[CLICK]**
 
-**[CHECKPOINT: Should be 10:15-10:25 — on track]**
+- "Before I teach you any techniques — let me show you WHERE we're going"
+- Walk through the four quadrants:
+  - **Data Pipeline** — Lakeflow ingesting ABS retail and food price data, Bronze to Silver to Gold
+  - **Web Application** — FastAPI + Tailwind with dashboards, filters, AI-powered query feature
+  - **Genie Space** — Business users type questions in English, get instant answers
+  - **AI/BI Dashboard** — Auto-generated visualisations from your gold tables
+- Point at the flow at the bottom: Pipeline -> App -> Genie -> Dashboard = Grocery Intelligence Platform
+- **"By 2pm, every team will have all four of these running."**
+- "Now that you can see the destination, the techniques I'm about to teach you will make a lot more sense"
 
-- "The skill that matters most: your ability to specify what you want"
-- Better specs = better output, full stop
+**Transition:** "Let's look at the challenge details."
 
 ---
 
-## Slide 9: Why Specs Matter More with AI — 10:25 AM
+## Slide 10: Today's Challenge | 9:25 | 5 min
+
+**[CLICK]**
+
+- Real ABS data: retail trade + food price indices
+- Stack: PySpark, Lakeflow Declarative Pipelines, FastAPI + Tailwind + htmx, DABs
+- Lab 1 = pipeline (Bronze/Silver/Gold), Lab 2 = app + Genie + dashboard
+- Teams pick their angle (or invent their own)
+- Briefly show the starter-kit folder and what's inside
+- "The CLAUDE.md you write in the next 15 min will guide both labs — make it count"
+
+**Transition:** "The skill that matters most."
+
+---
+
+## Slide 11: Section — Specs & TDD | 9:30 | 30 sec
+
+**[CLICK]**
+
+- "The skill that matters most: your ability to specify what you want"
+- "In this section we cover both specs and TDD — two sides of the same coin"
+
+---
+
+## Slide 12: Why Specs Matter | 9:30 | 5 min
 
 **[CLICK]**
 
 - "Garbage in, garbage out — but now at 100x speed"
 - Anthropic mental model: "brilliant new employee who lacks context on your norms"
 - Two tools: PRD (acceptance criteria, constraints, data contracts, examples) and CLAUDE.md (coding standards, architecture, testing, tool preferences)
+- A good spec = clear acceptance criteria + constraints + example inputs/outputs
 
-**[TRANSITION]** "Let me show you a CLAUDE.md."
+**Transition:** "Let me show you a CLAUDE.md."
 
 ---
 
-## Slide 10: CLAUDE.md in Action — 10:27 AM
+## Slide 13: CLAUDE.md in Action | 9:35 | 3 min
 
 **[CLICK]**
 
@@ -208,7 +241,7 @@ What tables are in the workshop_vibe_coding catalog? Show me the schema of the r
 
 ---
 
-## Slide 11: CLAUDE.md Scope Levels — 10:29 AM
+## Slide 14: CLAUDE.md Scope Levels | 9:38 | 2 min
 
 **[CLICK]**
 
@@ -221,32 +254,22 @@ What tables are in the workshop_vibe_coding catalog? Show me the schema of the r
 
 - Take 2-3 quick answers — primes them for the exercise
 
----
-
-## Slide 12: Today's Challenge — Grocery Intelligence Platform — 10:31 AM
-
-**[CLICK]**
-
-- Real ABS data: retail trade + food price indices
-- Stack: PySpark, Lakeflow Declarative Pipelines, FastAPI + Tailwind + htmx, DABs
-- Lab 1 = pipeline (Bronze/Silver/Gold), Lab 2 = app + Genie + dashboard
-- "The CLAUDE.md you write in the next 15 min will guide both labs — make it count"
-
-**[TRANSITION]** "Open your terminals."
+**Transition:** "Time to write your own."
 
 ---
 
-## Slide 13: Exercise — Write Your CLAUDE.md — 10:33 AM
+## Slide 15: Exercise — Write Your CLAUDE.md | 9:40 | 15 min
 
 **[CLICK]**
 
 **[TIMER: 15 min]**
 
 - Open Coding Agents terminal as a team
-- Create project "grocery-intelligence"
-- Ask agent to create CLAUDE.md (tech stack, data standards, testing)
+- **Copy the starter-kit CLAUDE.md** into your project — customise it for your team angle
+- Ask agent to fill in: tech stack, data standards, testing preferences
 - Review output, add team-specific rules
-- Prompt template on screen — use as starting point
+
+> "Copy the starter-kit CLAUDE.md into our project. Customise it for our team: schema `workshop_vibe_coding.<team_schema>`, angle `<chosen_angle>`. Add our tech stack (PySpark, Lakeflow Declarative Pipelines, FastAPI, Tailwind CSS + htmx), our data standards (Unity Catalog, medallion architecture, date formats), and our testing standards (pytest, TDD, small test DataFrames)."
 
 **[WALK — Circulate full 15 min. Watch for:]**
 
@@ -261,35 +284,28 @@ What tables are in the workshop_vibe_coding catalog? Show me the schema of the r
 - Highlight patterns: specific tech choices, naming conventions, testing standards
 - Call out anti-patterns: vague rules, missing UC namespace
 
-**[CHECKPOINT: Should be ~10:50 AM. Break until 11:00 or 11:05.]**
+**[CHECKPOINT: Should be ~9:55 AM. Break at 10:00.]**
 
 ---
 
-*--- BREAK: 10 min ---*
+*--- BREAK: 10 min (10:00 - 10:10) ---*
 
 ---
 
-## Slide 14: Section — TDD + Agents — 11:05 AM
+## Slide 16: TDD Workflow | 10:10 | 3 min
 
 **[CLICK]**
 
-**[CHECKPOINT: Should be here by 11:05]**
+**[CHECKPOINT: Should be here by 10:10]**
 
 - "If you take one thing from today — write the tests first"
-
----
-
-## Slide 15: TDD Workflow — 11:06 AM
-
-**[CLICK]**
-
 - Four steps: human writes test, agent implements, run/iterate, human reviews + edge cases
 - Key insight: the test IS the spec — no ambiguity
 - Agent reads test, sees "correct", writes code, verifies own work — tight feedback loop
 
 ---
 
-## Slide 16: Why TDD is Exponentially More Powerful — 11:08 AM
+## Slide 17: Why TDD is Exponentially More Powerful | 10:13 | 3 min
 
 **[CLICK]**
 
@@ -301,7 +317,7 @@ What tables are in the workshop_vibe_coding catalog? Show me the schema of the r
 
 ---
 
-## Slide 17: Writing Tests That Guide the Agent — 11:10 AM
+## Slide 18: Writing Tests That Guide the Agent | 10:16 | 3 min
 
 **[CLICK]**
 
@@ -316,7 +332,7 @@ What tables are in the workshop_vibe_coding catalog? Show me the schema of the r
 
 ---
 
-## Slide 18: Anthropic's #1 Best Practice — 11:12 AM
+## Slide 19: Anthropic Best Practices | 10:19 | 2 min
 
 **[CLICK]**
 
@@ -326,11 +342,11 @@ What tables are in the workshop_vibe_coding catalog? Show me the schema of the r
 
 ---
 
-## Slide 18b: What Are Tokens — 11:11 AM
+## Slide 20: What Are Tokens | 10:21 | 2 min
 
 **[CLICK]**
 
-- Token ≈ 3/4 of a word, ~4 characters — not exactly words, not exactly characters
+- Token = 3/4 of a word, ~4 characters — not exactly words, not exactly characters
 - Walk through the examples: sentence (~8), Python file (~2-3K), Harry Potter (~110K)
 - **Two limits that matter today:**
   - **200K context window** — how much the agent can "see" at once. Fills up, older stuff gets forgotten.
@@ -338,11 +354,11 @@ What tables are in the workshop_vibe_coding catalog? Show me the schema of the r
 - **[PEPPER]** "If all 5 teams ask the agent to read every file in the repo at the same time, everyone slows down. Be specific."
 - Practical tip: small focused requests = faster responses for everyone
 
-**[TRANSITION]** "So how do we manage this finite resource?"
+**Transition:** "So how do we manage this finite resource?"
 
 ---
 
-## Slide 19: Managing Context Windows — 11:14 AM
+## Slide 21: Managing Context Windows | 10:23 | 2 min
 
 **[CLICK]**
 
@@ -353,15 +369,15 @@ What tables are in the workshop_vibe_coding catalog? Show me the schema of the r
 **[Four strategies:]**
 
 - Keep CLAUDE.md lean (~50 lines, loaded every turn)
-- Offload exploration to subagents (isolated context)
 - Plan before building (/plan)
 - Use team members for parallel work (each gets own context)
+- Start new conversations for new tasks
 
 **[PEPPER]** "Think of it like RAM. Manage it, or the OS starts swapping."
 
 ---
 
-## Slide 20: Live Demo — TDD in Action — 11:17 AM
+## Slide 22: Live Demo — TDD in Action | 10:25 | 5 min
 
 **[CLICK]**
 
@@ -397,47 +413,57 @@ Run the tests. They should fail. Then implement the functions to make them pass.
 
 - "That's the workflow for both labs: write test, agent implements, iterate to green"
 
+**Transition:** "Lab time."
+
 ---
 
-## Slide 21: Section — Lab 1 — 11:22 AM
+## Slide 23: Section — Lab 1 | 10:30 | 30 sec
 
 **[CLICK]**
 
-**[ENERGY]** "Lab 1! Sixty-five minutes. Make sure terminals are open — flag access issues now."
+**[ENERGY]** "Lab 1! Make sure terminals are open — flag access issues now."
 
 ---
 
-## Slide 22: Practical Tips for the Labs — 11:23 AM
+## Slide 24: Practical Tips | 10:30 | 2 min
 
 **[CLICK]**
 
 - **Overengineering:** Claude loves extra files/abstractions — add "Keep solutions minimal. Do not add features beyond what is requested" to CLAUDE.md
 - **Hallucinations:** Never trust claims about unread code — add "Never speculate about code you have not opened"
 - **Course-correct early:** Check in every 2-3 tool calls — "stop, let's rethink this approach"
+- **Use the starter-kit prompts** — they're copy-paste ready, no interpretation needed
 
 ---
 
-## Slide 23: Lab 1 Briefing — 11:25 AM
+## Slide 25: Lab 1 Briefing | 10:32 | 3 min
 
 **[CLICK]**
 
-**[TIMER: 65 min — Lab 1 starts now]**
+**[TIMER: 55 min — Lab 1 starts at 10:35]**
 
 - Mission: Lakeflow Declarative Pipeline, ABS data, Bronze/Silver/Gold, TDD
-- Phase 1: write tests (15 min)
-- Phase 2: bronze layer (15 min)
-- Phase 3: silver + gold (20 min)
-- Phase 4: deploy with DABs (10 min) + 5 min buffer
 - Two sources: ABS Retail Trade API, ABS CPI Food API
 - Silver decodes region/industry codes, parses dates; Gold adds rolling averages, YoY growth
+- "Your goal: Gold tables queryable by Show & Tell at 11:30"
 - Checkpoints available at every phase — no shame, goal is every team has data for Lab 2
+
+**[Read the parallel task assignments:]**
+
+> **Person A (Terminal):** Explore data sources, build retail bronze, build silver retail, validate + deploy
+>
+> **Person B (Terminal):** Set up CLAUDE.md from starter-kit, build CPI bronze, build silver CPI, verify tables in UC UI
+>
+> **Person C (Databricks UI):** Review test stubs and data source docs, verify UC schema, monitor tests + prepare gold specs, query gold tables for icebreaker answers
+>
+> **Teams of 2:** Combine Person B and C. Driver handles A, navigator handles B+C.
 
 **[WALK — Circulate every 10 min:]**
 
-- **15 min (11:40):** "Should have tests. If not, grab Checkpoint 1A, skip to silver."
-- **30 min (11:55):** "Bronze should work. If stuck, grab Checkpoint 1A."
-- **45 min (12:10):** "Gold tables should exist. If not, grab Checkpoint 1B."
-- **55 min (12:20):** "Five minutes. Start preparing Show and Tell."
+- **10:50 (15 min):** "Should have tests. If not, grab Checkpoint 1A, skip to silver."
+- **11:05 (30 min):** "Bronze should work. If stuck, grab Checkpoint 1A."
+- **11:15 (40 min):** "Gold tables should exist. If not, grab Checkpoint 1B."
+- **11:25 (50 min):** "Five minutes. Start preparing Show and Tell."
 
 **[Common issues:]**
 
@@ -448,7 +474,7 @@ Run the tests. They should fail. Then implement the functions to make them pass.
 
 ---
 
-## Slide 24: Show & Tell + Prediction Reveal — 12:25 PM (7 min)
+## Slide 26: Show & Tell + Prediction Reveal | 11:30 | 10 min
 
 **[CLICK]**
 
@@ -470,17 +496,17 @@ Run the tests. They should fail. Then implement the functions to make them pass.
 
 **[ASK]** "Where did TDD help the agent stay on track? Where did it go off the rails?"
 
-- Take 2-3 answers, reinforce Session 2 concepts
+- Take 2-3 answers, reinforce TDD concepts
 
-**[TRANSITION]** "Great work. Lunch — back at 1:05."
-
----
-
-*--- LUNCH: ~35-40 min ---*
+**Transition:** "Great work. Lunch — back at 12:10."
 
 ---
 
-## Slide 25: Section — Beyond the Basics — 1:05 PM
+*--- LUNCH: 30 min (11:40 - 12:10) ---*
+
+---
+
+## Slide 27: Section — Tools for Lab 2 | 12:10 | 1 min
 
 **[CLICK]**
 
@@ -489,125 +515,56 @@ Run the tests. They should fail. Then implement the functions to make them pass.
 **[ASK]** "What worked well in Lab 1? What surprised you?"
 
 - Take 3-4 answers
-- Ground Session 3 in their experiences ("agent went off track — subagents help", "context got heavy — we'll cover that")
-- "This session: MCP, subagents, skills, hooks, plugins, Genie, AI/BI dashboards"
+- Ground this session in their experiences ("agent went off track — we'll cover tools that help", "context got heavy — we talked about that")
+- "This is a focused tools briefing: Skills, MCP, Genie, AI/BI dashboards — everything you need for Lab 2"
 
 ---
 
-## Slide 26: Subagents, Skills, Hooks & Plugins — 1:08 PM
+## Slide 28: Skills & MCP — Practical Tools | 12:11 | 5 min
 
 **[CLICK]**
 
-- **Subagents:** parallel workers, isolated context — build frontend while you do backend
-- **Skills:** slash commands encoding domain knowledge (/commit, /review, custom /deploy-pipeline)
-- **Hooks:** event-driven guardrails — pre-commit linting, post-edit formatting — deterministic, not AI
-- **Plugins:** package skills + agents + hooks for your team — distributable, versioned
+- Two-column layout — walk through each side:
+
+**Skills (left column):**
+- Slash commands that encode domain knowledge
+- `/commit` — smart commit messages. `/test` — run and fix tests. `/review` — code review.
+- Databricks skills: `/deploy-dab` — validate + deploy bundle
+- "Type `/` in Claude Code to see what's available"
+- You can chain skills together and build custom ones for your team
+
+**MCP (right column):**
+- "USB-C for AI agents" — one protocol, every tool connects
+- Already in your terminal: Databricks Docs MCP server
+- "Ask Claude to search the docs for anything you need during the lab"
+- **"Without MCP, the agent guesses. With MCP, it knows."**
+
+**Transition:** "Let me show you MCP on Databricks specifically."
 
 ---
 
-## Slide 27: Skills in Action — TDD Skill Chain — 1:12 PM
+## Slide 29: MCP on Databricks | 12:16 | 3 min
 
 **[CLICK]**
 
-- /prd-writer: interviews you, generates PRD with machine-verifiable criteria
-- /test-generator: reads PRD, generates failing tests (one per criterion)
-- /implementer: writes code to make all tests pass
-- Key: skills generate tests from success criteria, not from code — define "done" before implementation
-
----
-
-## Slide 27b: Subagents vs Agent Teams — 1:14 PM
-
-**[CLICK]**
-
-- Most people reach for multi-agent the moment things feel complex — almost always wrong instinct
-- Right question: "what kind of coordination does this task need?"
-- **Subagents = fire-and-forget** — like delegating focused questions to researchers
-  - Isolated context, one job, result returns to parent
-  - Can't talk to each other — that's a feature, keeps it predictable
-  - Key benefit: **compression** — vast exploration → clean signal
-  - Use when: embarrassingly parallel (research, exploration, lookups)
-- **Agent Teams = ongoing coordination** — like a team in the same room
-  - Long-running, peer-to-peer messaging, shared task list with `blockedBy`
-  - Key benefit: **negotiation** — discovery in one thread changes another
-  - Use when: agents must reconcile outputs before proceeding
-- **[PEPPER]** "For Lab 2, subagents for parallel frontend/backend is the sweet spot. Don't overcomplicate it."
-- **Design principle:** Start with one agent. Push it until it breaks. That tells you what to add.
-- **Warning:** Parallel agents writing code make incompatible assumptions — subagents should explore, not write code simultaneously
-
-**[TRANSITION]** Now how do agents connect to external tools?
-
----
-
-## Slide 28: What is MCP — 1:18 PM
-
-**[CLICK]**
-
-- "The USB-C of AI agents"
-- Before: custom integration per model per tool (3x3 = 9 connectors, scales to 200)
-- After: one standard protocol — build once, every agent connects (Anthropic open-sourced late 2024)
-- For Coles: build the MCP server once, any agent (Claude, Cursor, ChatGPT) can connect
-
----
-
-## Slide 29: How MCP Works — 1:18 PM
-
-**[CLICK]**
-
-- Client-server: clients = AI agents, servers expose tools over JSON-RPC
-- Agent discovers available tools, calls via protocol, gets structured responses
-- Build once connect everywhere; structured not ad-hoc
-- For Coles: wrap UC, internal APIs, Genie behind MCP servers — every agent gets access
-- "MCP handles wiring. Skills handle knowledge. Agent orchestrates both."
-
----
-
-## Slide 30: MCP on Databricks — 1:21 PM
-
-**[CLICK]**
-
-- **Built-in:** managed by Databricks — UC functions, tables, volumes, Vector Search, Genie — zero config
-- **Proxy:** external services (GitHub, Slack, Glean, Jira) routed through Databricks — UC Connections manage auth
+- **Built-in/Managed:** UC functions, tables, volumes, Vector Search, Genie — zero config
+- **Proxy/External:** third-party services (GitHub, Slack, Glean, Jira) routed through Databricks — UC Connections manage auth
 - **Custom:** build your own, host on Databricks Apps — wrap internal APIs
 - All secured through Unity Catalog
+- "For Coles: wrap internal APIs, data tools, monitoring behind MCP servers — every agent gets access"
 
 ---
 
-## Slide 31: MCP Architecture on Databricks — 1:23 PM
+## Slide 30: Demo — Databricks Internal Claude Setup | 12:19 | 4 min
 
 **[CLICK]**
 
-- Left: Databricks-served agents connect to custom/managed/third-party MCP servers
-- Right: external agents (like your Claude Code today) connect to same servers
-- Bottom: AI Gateway routes to model serving
-- "Coles sits on the right today — external agent connecting via MCP, same security and governance"
-
----
-
-## Slide 32: AI Dev Kit — 1:25 PM
-
-**[CLICK]**
-
-- **Skills:** 25+ skill packs (pipelines, dashboards, UC, Genie, MLflow) — knowledge layer
-- **MCP Server:** 50+ tools (SQL, clusters, jobs, apps) — action layer
-- **Tools Core:** Python library underneath — extend with your own
-- **Builder App:** web chat UI — what you've been using today
-
-**[PEPPER]** "For Coles: fork this repo, add custom skills — /run-data-quality, /deploy-pipeline, /check-lineage"
-
----
-
-## Slide 33: How Databricks Uses Claude — LIVE DEMO — 1:28 PM
-
-**[CLICK]**
-
-**[DEMO — ~8 min]**
+**[DEMO — ~4 min]**
 
 - Walk through Databricks internal setup on screen:
   - CLAUDE.md with company-wide standards — approved patterns, forbidden actions
   - Hooks: pre-commit linting/security, post-edit formatting — deterministic guardrails
   - Skills + MCP: custom slash commands, UC/Genie/internal service connections
-  - settings.json: hooks config, MCP server config
 
 **[Switch to live terminal, type:]**
 
@@ -624,67 +581,69 @@ Search the Databricks docs for how to create a Genie space programmatically.
 
 ---
 
-## Slide 34: Genie + AI/BI Dashboards — 1:36 PM
+## Slide 31: Genie + AI/BI Dashboards | 12:23 | 2 min
 
 **[CLICK]**
 
 - **Genie:** natural language to SQL on UC tables — create space, point at gold tables, business users ask in plain English
 - **AI/BI Dashboards:** auto-generated visualisations — describe what you want, get interactive dashboard
+- Both connect to the gold tables from Lab 1
 
 **[PEPPER]** "Dashboards for recurring views execs check weekly. Genie for ad-hoc questions in a meeting."
 
-**[TRANSITION]** "Time to build."
+**Transition:** "Time to build."
 
 ---
 
-## Stretch Break — 1:37 PM
+## Slide 32: Section — Lab 2 | 12:25 | 30 sec
 
 **[CLICK]**
 
-- 5-min break — get people standing
-- Post-lunch energy dip is real
-- "Lab 2 is the capstone — everything you've learned comes together. Grab a coffee."
+**[ENERGY]** "Lab 2 — the capstone. App, Genie, AI/BI dashboards. Use everything from today — CLAUDE.md, TDD, skills, MCP. This is where it all comes together."
 
 ---
 
-## Slide 35: Section — Lab 2 — 1:42 PM
+## Slide 33: Lab 2 Briefing | 12:25 | 5 min
 
 **[CLICK]**
 
-**[ENERGY]** "Lab 2 — the capstone. Sixty-five minutes. App, Genie, AI/BI dashboards. Use everything from today — CLAUDE.md, TDD, subagents, MCP. This is where it all comes together."
+**[TIMER: 55 min — Lab 2 starts at 12:30]**
 
----
-
-## Slide 36: Lab 2 Briefing — 1:40 PM
-
-**[CLICK]**
-
-**[ENERGY]** "This is the capstone — everything comes together"
-
-- "Pick your tier — not every team needs to build the same thing"
-- **Quick (20 min):** FastAPI + embedded AI/BI dashboard via iframe — polished with minimal code
-- **Medium (35 min):** FastAPI + React with Recharts or Observable Plot — custom interactive charts
-- **Stretch (55 min):** Full React app + embedded dashboard + Genie + NL query — the works
+- "Get as far as you can — not every team will finish everything, and that's fine"
+- **Pick your tier:**
+  - **Quick (~20 min):** FastAPI + embedded AI/BI dashboard via iframe — polished with minimal code
+  - **Medium (~35 min):** FastAPI + React with Recharts or Observable Plot — custom interactive charts
+  - **Stretch (~55 min):** Full React app + embedded dashboard + Genie + NL query — the works
 - "If you're unsure, start with Quick — you can always upgrade"
 - Genie space is a 2-min win regardless of tier
+- "Your goal: app running, Genie answering questions, dashboard showing metrics by 13:25"
 
-**[TIMER: 55 min — Lab 2 starts now]**
-
-- Phase 1: PRD + tests (10 min)
-- Phase 2: backend + frontend (25 min) — pick your viz approach
-- Phase 3: Genie + AI/BI dashboard (15 min) — create, publish, embed
+**Phases:**
+- Phase 1: PRD + tests + start Genie (10 min)
+- Phase 2: backend + frontend + AI/BI dashboard (25 min)
+- Phase 3: wire up + polish + embed dashboard (15 min)
 - Phase 4: demo prep (5 min) — stop building, prepare pitch
-- Use subagents for parallel work — one backend, one frontend
-- **Embed tip:** Publish dashboard → Share → Embed → iframe in your app
-- Bonus: build an MCP server wrapping your retail analytics
+
+**[Read the parallel task assignments:]**
+
+> **Person A (Terminal):** Write PRD (use starter-kit template), build FastAPI backend, deploy app to Databricks Apps
+>
+> **Person B (Terminal):** Write API tests (use starter-kit test stubs), build frontend (HTML/Tailwind/htmx), test + polish
+>
+> **Person C (Databricks UI):** Create Genie space (select gold tables, add descriptions), create AI/BI dashboard (charts, filters, layout), get embed URL for the app
+>
+> **Teams of 2:** Person A handles backend + deployment. Person B handles frontend + Genie + dashboard (Genie and dashboard are UI tasks that run in parallel).
+
+**Embed tip:** Publish dashboard -> Share -> Copy embed code -> `<iframe>` in your app
+
+**Bonus:** Build an MCP server wrapping your retail analytics — let any agent query your data
 
 **[WALK — Circulate:]**
 
-- **10 min (1:50):** "PRD and tests done? Agent should be implementing."
-- **25 min (2:05):** "Backend working? Start Genie even if frontend isn't perfect."
-- **40 min (2:20):** "Genie created? Start AI/BI dashboard."
-- **50 min (2:30):** "Stop building! Spend last 5 min on your demo pitch."
-- **55 min (2:35):** "Start preparing your 3-min demo!"
+- **12:40 (10 min):** "PRD and tests done? Agent should be implementing."
+- **12:55 (25 min):** "Backend working? Start Genie even if frontend isn't perfect."
+- **13:10 (40 min):** "Genie created? Start AI/BI dashboard."
+- **13:20 (50 min):** "Stop building! Spend last 5 min on your demo pitch."
 
 **[Common issues:]**
 
@@ -695,11 +654,11 @@ Search the Databricks docs for how to create a Genie space programmatically.
 
 ---
 
-*--- BREAK: 10 min (2:30 - 2:40 PM) ---*
+*--- BREAK: 10 min (13:25 - 13:35) ---*
 
 ---
 
-## Slide 37: Team Demos & Voting — 2:40 PM
+## Slide 34: Team Demos & Voting | 13:35 | 20 min
 
 **[CLICK]**
 
@@ -731,20 +690,20 @@ Search the Databricks docs for how to create a Genie space programmatically.
 
 ---
 
-## Slide 38: Key Takeaways — 2:52 PM
+## Slide 35: Key Takeaways | 13:55 | 2 min
 
 **[CLICK]**
 
 - **Specs are your leverage** — PRDs + CLAUDE.md multiply output tenfold
 - **TDD + agents = deterministic outcomes** — write test, agent converges
-- **Subagents + MCP extend reach** — parallelise work, connect to external tools, Genie puts data in everyone's hands
+- **Skills + MCP extend reach** — connect to external tools, Genie puts data in everyone's hands
 - **Start small, iterate** — one function, one test, one deploy, then scale
 
 **[ASK]** "Which resonated most with you today?"
 
 ---
 
-## Slide 39: Next Steps — 2:55 PM
+## Slide 36: Next Steps | 13:57 | 2 min
 
 **[CLICK]**
 
@@ -754,7 +713,7 @@ Search the Databricks docs for how to create a Genie space programmatically.
 
 ---
 
-## Slide 40: Closing — 2:58 PM
+## Slide 37: Closing | 13:59 | 1 min
 
 **[CLICK]**
 
@@ -772,7 +731,47 @@ Search the Databricks docs for how to create a Genie space programmatically.
 
 *[If none:]* "Go build something great this week."
 
-**[END — 3:00 PM]**
+**[END — 14:00]**
+
+---
+
+## Appendix Slides (if time permits or questions arise)
+
+### Appendix A: Subagents, Skills, Hooks & Plugins
+
+- **Subagents:** parallel workers, isolated context — build frontend while you do backend
+- **Skills:** slash commands encoding domain knowledge (/commit, /review, custom /deploy-pipeline)
+- **Hooks:** event-driven guardrails — pre-commit linting, post-edit formatting — deterministic, not AI
+- **Plugins:** package skills + agents + hooks for your team — distributable, versioned
+
+### Appendix B: Skills in Action — TDD Skill Chain
+
+- /prd-writer: interviews you, generates PRD with machine-verifiable criteria
+- /test-generator: reads PRD, generates failing tests (one per criterion)
+- /implementer: writes code to make all tests pass
+- Key: skills generate tests from success criteria, not from code — define "done" before implementation
+
+### Appendix C: Subagents vs Agent Teams
+
+- **Subagents = fire-and-forget** — isolated context, one job, result returns to parent. Can't talk to each other — that's a feature. Key benefit: **compression** — vast exploration distilled to clean signal.
+- **Agent Teams = ongoing coordination** — long-running, peer-to-peer messaging, shared task list with `blockedBy`. Key benefit: **negotiation** — discovery in one thread changes another.
+- **Design principle:** Start with one agent. Push it until it breaks. That tells you what to add.
+- **Warning:** Parallel agents writing code make incompatible assumptions — subagents should explore, not write code simultaneously.
+
+### Appendix D: MCP Architecture Detail
+
+- Left: Databricks-served agents connect to custom/managed/third-party MCP servers
+- Right: external agents (like your Claude Code today) connect to same servers
+- Bottom: AI Gateway routes to model serving
+- "Coles sits on the right today — external agent connecting via MCP, same security and governance"
+
+### Appendix E: AI Dev Kit
+
+- **Skills:** 25+ skill packs (pipelines, dashboards, UC, Genie, MLflow) — knowledge layer
+- **MCP Server:** 50+ tools (SQL, clusters, jobs, apps) — action layer
+- **Tools Core:** Python library underneath — extend with your own
+- **Builder App:** web chat UI — what you've been using today
+- **For Coles:** fork this repo, add custom skills — /run-data-quality, /deploy-pipeline, /check-lineage
 
 ---
 
@@ -785,6 +784,6 @@ Search the Databricks docs for how to create a Genie space programmatically.
 | **Live demo fails** | "Live demos — always an adventure." Play the backup recording from your laptop. |
 | **A team falls way behind** | Walk them to the checkpoint. "Grab Checkpoint 1B, get your gold tables loaded, and focus on Lab 2." |
 | **One person dominates the team** | "Great energy — let's rotate the driver so everyone gets a turn." |
-| **Post-lunch energy crash** | Start Session 3 with the interactive question. Stand up, walk around. Move quickly to Lab 2 to get hands back on keyboards. |
-| **Running over time** | Compress Session 3 to 15 min. Cut Lab 2 to 55 min. Keep demos to 2 min each. |
+| **Post-lunch energy crash** | Start with the interactive question. Stand up, walk around. Move quickly to Lab 2 to get hands back on keyboards. |
+| **Running over time** | Compress Tools for Lab 2 to 10 min (cut Databricks internal demo). Cut Lab 2 to 50 min. Keep demos to 2 min each. |
 | **Running under time** | Extend Lab 2. Add the bonus MCP server challenge. Let teams polish their demos. |

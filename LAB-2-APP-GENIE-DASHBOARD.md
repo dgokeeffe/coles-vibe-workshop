@@ -1,6 +1,6 @@
 # Lab 2: Build Your App, Genie Space & Dashboard
 
-**Duration:** 65 minutes
+**Duration:** 55 minutes
 **Goal:** Build a web app with AI features, create a Genie space, and set up an AI/BI dashboard
 **Team Size:** 2–3 people
 
@@ -24,6 +24,27 @@ Full React app with custom viz + **embedded dashboard** + Genie space + NL query
 - **An AI/BI dashboard** — auto-generated visualisations (can be embedded in your app)
 
 All connect to the same gold tables from Lab 1. **You will direct the AI agent to build everything.**
+
+---
+
+## Getting Started (2 minutes)
+
+1. Create the app directory:
+   ```bash
+   mkdir -p app/static
+   ```
+
+2. Copy the app config template:
+   ```bash
+   cp starter-kit/app.yaml.template app/app.yaml
+   ```
+   Replace `REPLACE_WITH_SQL_WAREHOUSE_PATH` with your SQL warehouse path.
+
+3. Your CLAUDE.md from Lab 1 already has the project context. The PRD prompt will add app-specific rules.
+
+> All prompts for this lab are in `starter-kit/prompts/06-11`. Each is exact copy-paste.
+>
+> **Key insight:** Person C can start the Genie space and AI/BI dashboard immediately in the Databricks UI while Persons A and B work in terminals. This saves significant time.
 
 ---
 
@@ -59,6 +80,15 @@ All connect to the same gold tables from Lab 1. **You will direct the AI agent t
 ---
 
 ## Phase 1: Write PRD + Tests (10 min)
+
+> **Team Tasks for This Phase**
+> - **Person A (Terminal):** Run PRD prompt from `starter-kit/prompts/06-write-prd.md`
+> - **Person B (Terminal):** Run API test prompt from `starter-kit/prompts/07-write-app-tests.md`
+> - **Person C (Databricks UI):** Start creating Genie space NOW (follow `starter-kit/prompts/10-setup-genie.md`) — this is a UI task that doesn't need the terminal
+>
+> *Teams of 2: Person A takes Terminal tasks, Person B takes Terminal + UI tasks.*
+
+> **Starter Kit:** Copy-paste prompts in `starter-kit/prompts/06-write-prd.md` and `07-write-app-tests.md`. Genie setup steps in `10-setup-genie.md`.
 
 ### 1.1 Write your app PRD
 
@@ -125,9 +155,39 @@ Write ONLY the tests. Do NOT implement yet.
 Use httpx AsyncClient with ASGITransport for testing.
 ```
 
+### 1.3 Create your Genie space (Person C)
+
+Genie is Databricks' natural language Q&A interface. Business users type questions in plain English, Genie generates SQL, and returns results with visualizations. No code required.
+
+In the Databricks workspace UI (not the terminal):
+
+1. Navigate to **Genie** in the left sidebar
+2. Click **New Genie Space**
+3. Configure:
+   - **Name:** "Grocery Intelligence — Team [your_team]"
+   - **SQL Warehouse:** Select the workshop warehouse
+   - **Tables:** Add your gold tables:
+     - `workshop_vibe_coding.<team_schema>.retail_summary`
+     - `workshop_vibe_coding.<team_schema>.food_inflation_yoy`
+   - **Instructions** (optional but recommended): Add context like
+     "This data contains Australian retail trade and food price data.
+     States are Australian states. Turnover is in millions AUD."
+
+> **Stuck?** Grab **Checkpoint 2B**: step-by-step Genie setup instructions with
+> recommended table descriptions and sample questions.
+
 ---
 
 ## Phase 2: Build Backend + Frontend (25 min)
+
+> **Team Tasks for This Phase**
+> - **Person A (Terminal):** Build FastAPI backend using `starter-kit/prompts/08-build-backend.md`
+> - **Person B (Terminal):** Build frontend using `starter-kit/prompts/09-build-frontend.md`
+> - **Person C (Databricks UI):** Create AI/BI dashboard — this is another UI task. Navigate to Dashboards → Create → AI/BI Dashboard. Use gold tables.
+>
+> *Teams of 2: Person A takes Terminal tasks, Person B takes Terminal + UI tasks.*
+
+> **Starter Kit:** Copy-paste prompts in `starter-kit/prompts/08-build-backend.md` and `09-build-frontend.md`.
 
 ### 2.1 Implement the backend
 
@@ -168,7 +228,7 @@ Build a frontend in static/index.html with:
 ```
 
 To get the embed URL:
-1. Create and publish your AI/BI dashboard first (Phase 4)
+1. Person C creates and publishes the AI/BI dashboard during this phase (see 2.4 below)
 2. Click **Share** → **Embed** → copy the iframe code
 3. Paste the `<iframe>` into your app's HTML
 
@@ -226,65 +286,9 @@ Create requirements.txt with all dependencies.
 Run all tests one final time.
 ```
 
-> **Stuck at 25 minutes?** Grab **Checkpoint 2A**: a working app skeleton with
-> health endpoint, database connection, and basic structure. Focus your remaining
-> time on Genie + Dashboard.
-
----
-
-## Phase 3: Set Up Genie Space (10 min)
-
-### 3.1 What is Genie?
-
-Genie is Databricks' natural language Q&A interface. Business users type questions in plain English, Genie generates SQL, and returns results with visualizations. No code required.
-
-### 3.2 Create your Genie space
-
-In the Databricks workspace UI (not the terminal):
-
-1. Navigate to **Genie** in the left sidebar
-2. Click **New Genie Space**
-3. Configure:
-   - **Name:** "Grocery Intelligence — Team [your_team]"
-   - **SQL Warehouse:** Select the workshop warehouse
-   - **Tables:** Add your gold tables:
-     - `workshop_vibe_coding.<team_schema>.retail_summary`
-     - `workshop_vibe_coding.<team_schema>.food_inflation_yoy`
-   - **Instructions** (optional but recommended): Add context like
-     "This data contains Australian retail trade and food price data.
-     States are Australian states. Turnover is in millions AUD."
-
-### 3.3 Test your Genie space
-
-Ask these questions and verify the answers make sense:
-
-```
-Which state had the highest food retail turnover last month?
-```
-
-```
-Show me the year-over-year food price inflation trend for Victoria.
-```
-
-```
-Compare retail growth across all states for the last 12 months.
-```
-
-> **Tip:** If Genie generates incorrect SQL, add table descriptions and column
-> comments in Unity Catalog. The richer the metadata, the better Genie performs.
-
-> **Stuck?** Grab **Checkpoint 2B**: step-by-step Genie setup instructions with
-> recommended table descriptions and sample questions.
-
----
-
-## Phase 4: Create AI/BI Dashboard (10 min)
-
-### 4.1 What is AI/BI?
+### 2.4 Create AI/BI dashboard (Person C)
 
 AI/BI dashboards are auto-generated visualizations that understand your data. You describe what you want to see in natural language, and the dashboard creates the charts.
-
-### 4.2 Create your dashboard
 
 In the Databricks workspace UI:
 
@@ -309,15 +313,64 @@ Show a heatmap of food inflation by state and quarter
 Display the top 5 states by average monthly turnover as a horizontal bar chart
 ```
 
-5. Arrange the visualizations into a clean layout
-6. Add a title: "Grocery Intelligence Dashboard — Team [your_team]"
+> **Stuck?** Grab **Checkpoint 2C**: pre-written SQL queries for common
+> dashboard visualizations you can paste directly.
 
-### 4.3 Embed your dashboard in the app (Tier 1 fast path!)
+> **Stuck at 25 minutes?** Grab **Checkpoint 2A**: a working app skeleton with
+> health endpoint, database connection, and basic structure. Focus your remaining
+> time on Genie + Dashboard.
 
-1. Click **Publish** on your dashboard
-2. Click **Share** → **Embed**
-3. Copy the iframe embed code
-4. Paste into your app's HTML:
+---
+
+## Phase 3: Wire + Polish (15 min)
+
+> **Team Tasks for This Phase**
+> - **Person A (Terminal):** Wire together app.py, deploy to Databricks Apps using `starter-kit/prompts/11-deploy-app.md`
+> - **Person B (Databricks UI):** Test Genie space with sample questions, refine instructions
+> - **Person C (Databricks UI):** Polish AI/BI dashboard, get embed URL, share with Person A for iframe
+>
+> *Teams of 2: Person A takes Terminal tasks, Person B takes Terminal + UI tasks.*
+
+> **Starter Kit:** Deployment prompt in `starter-kit/prompts/11-deploy-app.md`. App config template at `starter-kit/app.yaml.template`.
+
+### 3.1 Deploy your app
+
+```
+Deploy the app to Databricks:
+
+databricks apps deploy --name grocery-app-<team_name> --source-code-path ./
+
+Show me the app URL when it's ready.
+```
+
+### 3.2 Test Genie space
+
+Person C should have created your Genie space during Phase 1. Now test it with these questions:
+
+```
+Which state had the highest food retail turnover last month?
+```
+
+```
+Show me the year-over-year food price inflation trend for Victoria.
+```
+
+```
+Compare retail growth across all states for the last 12 months.
+```
+
+> **Tip:** If Genie generates incorrect SQL, add table descriptions and column
+> comments in Unity Catalog. The richer the metadata, the better Genie performs.
+
+### 3.3 Polish AI/BI dashboard
+
+Person C should have created the dashboard during Phase 2. Now polish it:
+
+1. Arrange the visualizations into a clean layout
+2. Add a title: "Grocery Intelligence Dashboard — Team [your_team]"
+3. Click **Publish** on your dashboard
+4. Click **Share** → **Embed** → copy the iframe code
+5. Share the embed URL with Person A to add to the app:
 
 ```html
 <div style="width:100%;height:600px;">
@@ -332,29 +385,7 @@ Display the top 5 states by average monthly turnover as a horizontal bar chart
 
 > **Note:** Embedded dashboards display in light mode only. Users need Databricks credentials to view (or use service principal embedding for external users).
 
-### 4.4 Share your dashboard
-
-- Make it accessible to the workshop group
-- Copy the dashboard URL for your demo
-
-> **Stuck?** Grab **Checkpoint 2C**: pre-written SQL queries for common
-> dashboard visualizations you can paste directly.
-
----
-
-## Phase 5: Deploy + Polish (10 min)
-
-### 5.1 Deploy your app
-
-```
-Deploy the app to Databricks:
-
-databricks apps deploy --name grocery-app-<team_name> --source-code-path ./
-
-Show me the app URL when it's ready.
-```
-
-### 5.2 Verify everything works
+### 3.4 Verify everything works
 
 - [ ] App loads in browser with dashboard
 - [ ] Filters work (state, date range)
@@ -362,7 +393,19 @@ Show me the app URL when it's ready.
 - [ ] Genie space answers natural language questions
 - [ ] AI/BI dashboard shows your visualizations
 
-### 5.3 Prepare your demo
+> **Stuck?** Grab **Checkpoint 2B** (Genie setup), **Checkpoint 2C** (dashboard SQL),
+> or **Checkpoint 2D** (complete solution).
+
+---
+
+## Phase 4: Demo Prep (5 min)
+
+> **Team Tasks for This Phase**
+> - **All:** Prepare demo script, decide who presents what (pipeline, app, Genie, dashboard)
+>
+> *Teams of 2: Person A takes Terminal tasks, Person B takes Terminal + UI tasks.*
+
+### 4.1 Prepare your demo
 
 You have 3 minutes to show:
 1. Your pipeline (quick: show the DAG or table list)
@@ -384,10 +427,10 @@ MCP servers are available to help you build faster:
 Search the Databricks docs for how to create a Genie space programmatically.
 ```
 
-**Using subagents** — parallelize your work:
+**Using skills** — speed up common tasks:
 ```
-Use a subagent to research the FastAPI + htmx integration pattern
-while I continue working on the database layer.
+/commit    — commit with a good message
+/test      — run and fix failing tests
 ```
 
 **AI Dev Kit skills** — pre-built Databricks patterns:

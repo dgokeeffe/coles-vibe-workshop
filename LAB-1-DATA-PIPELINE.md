@@ -1,6 +1,6 @@
 # Lab 1: Build Your Data Pipeline
 
-**Duration:** 65 minutes
+**Duration:** 55 minutes
 **Goal:** Build, test, and deploy a Lakeflow Declarative Pipeline using an AI coding agent
 **Team Size:** 2–3 people
 
@@ -25,7 +25,41 @@ Both APIs return CSV data via the SDMX standard. The agent will handle the API c
 
 ---
 
+## Getting Started (2 minutes)
+
+Before you begin, set up your project:
+
+1. Copy the starter CLAUDE.md to your project root:
+   ```bash
+   cp starter-kit/CLAUDE.md ./CLAUDE.md
+   ```
+
+2. Edit CLAUDE.md — replace `TEAM_NAME` and `TEAM_SCHEMA` with your team's values
+
+3. Copy test fixtures:
+   ```bash
+   mkdir -p tests
+   cp starter-kit/conftest.py tests/
+   ```
+
+4. Copy the config template:
+   ```bash
+   cp starter-kit/databricks.yml.template ./databricks.yml
+   ```
+   Replace `TEAM_NAME` and `TEAM_SCHEMA` placeholders.
+
+> All prompts for this lab are in `starter-kit/prompts/01-05`. Each is exact copy-paste — no typing required.
+
+---
+
 ## Phase 1: Write Tests First (15 min)
+
+> **Team Tasks for This Phase**
+> - **Person A (Terminal):** Run data exploration prompt from `starter-kit/prompts/01-explore-data.md`
+> - **Person B (Terminal):** Copy `starter-kit/CLAUDE.md` to project root, customize team name/schema
+> - **Person C (Databricks UI):** Open workspace, verify Unity Catalog schema exists, check checkpoint tables are accessible
+>
+> *Teams of 2: Person A takes Terminal tasks, Person B takes Terminal + UI tasks.*
 
 > **Remember:** Tests are your spec. Write them BEFORE any implementation.
 
@@ -98,9 +132,18 @@ Read through the generated tests:
 
 Edit or ask the agent to adjust before moving on.
 
+> **Starter Kit:** Copy-paste prompts are in `starter-kit/prompts/01-explore-data.md` and `starter-kit/prompts/02-write-tests.md`
+
 ---
 
 ## Phase 2: Build Bronze Layer (15 min)
+
+> **Team Tasks for This Phase**
+> - **Person A (Terminal):** Build retail trade bronze table using `starter-kit/prompts/03-build-bronze.md`
+> - **Person B (Terminal):** Build CPI food bronze table (same prompt covers both)
+> - **Person C (Databricks UI):** Monitor Unity Catalog for new tables appearing, prepare checkpoint fallback if APIs fail
+>
+> *Teams of 2: Person A takes Terminal tasks, Person B takes Terminal + UI tasks.*
 
 ### 2.1 Create the pipeline structure
 
@@ -137,9 +180,18 @@ Watch the agent iterate: read test output → fix code → re-run → repeat unt
 > Tell the agent: "Use the pre-loaded tables in workshop_vibe_coding.checkpoints
 > instead of calling the API. Copy them to our schema."
 
+> **Starter Kit:** Copy-paste prompt in `starter-kit/prompts/03-build-bronze.md`
+
 ---
 
 ## Phase 3: Build Silver + Gold (20 min)
+
+> **Team Tasks for This Phase**
+> - **Person A (Terminal):** Build silver retail_turnover and gold retail_summary
+> - **Person B (Terminal):** Build silver food_price_index and gold food_inflation
+> - **Person C (Databricks UI):** Monitor test output, review gold table data as it appears, prepare icebreaker answers
+>
+> *Teams of 2: Person A takes Terminal tasks, Person B takes Terminal + UI tasks.*
 
 ### 3.1 Build silver transformations
 
@@ -187,6 +239,8 @@ Run ALL tests (bronze + silver + gold). Everything should be green.
 > **Stuck at 40 minutes?** Grab **Checkpoint 1B**: silver and gold tables
 > pre-loaded in your schema. This ensures you have data for Lab 2.
 
+> **Starter Kit:** Copy-paste prompt in `starter-kit/prompts/04-build-silver-gold.md`
+
 ### 3.3 Verify your data
 
 ```
@@ -200,7 +254,14 @@ Query the gold tables and show me:
 
 ---
 
-## Phase 4: Deploy with DABs (10 min)
+## Phase 4: Deploy with DABs (5 min)
+
+> **Team Tasks for This Phase**
+> - **Person A (Terminal):** Run `databricks bundle validate` and `databricks bundle deploy`
+> - **Person B (Databricks UI):** Verify pipeline appears in Workflows tab, tables visible in Unity Catalog
+> - **Person C:** Query gold tables to check icebreaker prediction answers
+>
+> *Teams of 2: Person A takes Terminal tasks, Person B takes Terminal + UI tasks.*
 
 ### 4.1 Create the pipeline definition
 
@@ -233,6 +294,8 @@ Open the Databricks workspace UI and confirm:
 - [ ] Data quality expectations are passing
 
 > **Stuck?** Grab **Checkpoint 1C**: complete pipeline code and databricks.yml.
+
+> **Starter Kit:** Copy-paste prompt in `starter-kit/prompts/05-deploy-pipeline.md`. Config template at `starter-kit/databricks.yml.template`.
 
 ---
 
