@@ -354,46 +354,35 @@
 <!-- ============================================================ -->
 <section class="slide page-slide" aria-label="Getting Started — Setup">
   <div class="page-header">
-    <h2>Getting Started: Project Setup</h2>
+    <h2>Getting Started: DS Track Setup</h2>
     <span class="track-badge">Data Science</span>
   </div>
   <div class="page-content">
-    <span class="phase-badge">Lab 0</span><span class="time-badge">10 min</span>
+    <span class="phase-badge">Post Lab 0</span><span class="time-badge">5 min</span>
+
+    <div class="tip-box" style="margin-top: 12px;">
+      <strong>You already completed Lab 0</strong> (guided hands-on) — you have a working <code>CLAUDE.md</code>, your environment is verified, and your bronze test passes. This slide gets you from there to the DS track.
+    </div>
 
     <div class="two-col" style="margin-top: 16px;">
       <div>
-        <h3>1. Set Up Your Project</h3>
-        <p>Open your Coding Agents terminal, then run:</p>
-<div class="code-block"><span class="comment"># Create project &amp; copy starter files</span>
-<span class="function">mkdir</span> -p grocery-intelligence && <span class="keyword">cd</span> grocery-intelligence
-<span class="function">cp</span> ~/starter-kit/CLAUDE.md ./CLAUDE.md</div>
+        <h3>1. Add DS Track Instructions</h3>
+        <p>From your <code>grocery-intelligence</code> project directory:</p>
 
-        <p>Edit <code>CLAUDE.md</code> — replace <code>TEAM_NAME</code> and <code>TEAM_SCHEMA</code> with your assigned values (e.g. <code>team_01</code>).</p>
-
-        <h4>Append DS track instructions:</h4>
+        <h4>Append DS track context to CLAUDE.md:</h4>
 <div class="code-block"><span class="function">cat</span> ~/starter-kit/CLAUDE-ds.md >> CLAUDE.md</div>
 
-        <h4>Copy test fixtures + stubs:</h4>
-<div class="code-block"><span class="function">mkdir</span> -p tests
-<span class="function">cp</span> ~/starter-kit/conftest.py tests/
+        <h4>Copy DS test fixtures + stubs:</h4>
+<div class="code-block"><span class="function">cp</span> ~/starter-kit/conftest.py tests/
 <span class="function">cp</span> ~/starter-kit/test_features.py tests/</div>
+
+        <div class="warning-box">
+          <strong>Don't skip this:</strong> The DS-specific CLAUDE.md section tells the agent to use PySpark (not pandas) and sets up MLflow conventions.
+        </div>
       </div>
 
       <div>
-        <h3>2. Verify Your Environment</h3>
-<div class="code-block"><span class="comment"># Check Claude Code is working</span>
-claude --version
-
-<span class="comment"># Check Databricks CLI</span>
-databricks auth status
-
-<span class="comment"># Check Unity Catalog access</span>
-databricks catalogs list | <span class="function">grep</span> workshop</div>
-        <div class="tip-box">
-          <strong>Tip:</strong> If any command fails, ask the facilitator for help before proceeding.
-        </div>
-
-        <h3>3. Explore the Data</h3>
+        <h3>2. Explore the Gold Tables</h3>
         <p>All tracks use the same gold tables. Paste this into Claude Code:</p>
         <div class="prompt-label">Paste into Claude Code</div>
 <div class="code-block">Query these tables and show me 5 rows from each:
@@ -402,6 +391,10 @@ databricks catalogs list | <span class="function">grep</span> workshop</div>
 
 Tell me: what columns are available, what date
 range is covered, and which states are included.</div>
+
+        <div class="tip-box">
+          <strong>Tip:</strong> Understanding the data shape now saves time in Phase 1. Note which columns you'll use for features.
+        </div>
       </div>
     </div>
   </div>
@@ -418,7 +411,7 @@ range is covered, and which states are included.</div>
   <div class="divider-badge">Lab 1</div>
   <h1>Features &amp; Experiments</h1>
   <p class="divider-sub">Build a feature engineering pipeline from gold tables and track experiments with MLflow</p>
-  <div class="divider-time">55 minutes &bull; 4 phases</div>
+  <div class="divider-time">12:00 PM / 60 Minutes &bull; 4 phases</div>
 </section>
 
 <!-- ============================================================ -->
@@ -775,7 +768,7 @@ Show me the MLflow experiment URL when done.</div>
   <div class="divider-badge">Lab 2</div>
   <h1>Train, Serve &amp; Deploy</h1>
   <p class="divider-sub">Train a forecasting model, register in MLflow, serve as an endpoint, and build a prediction app</p>
-  <div class="divider-time">55 minutes &bull; 4 phases</div>
+  <div class="divider-time">2:00 PM / 60 Minutes &bull; 4 phases</div>
 </section>
 
 <!-- ============================================================ -->

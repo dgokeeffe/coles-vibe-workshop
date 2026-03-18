@@ -356,31 +356,21 @@
 <!-- ===== SLIDE 2: GETTING STARTED (1 of 2) ===== -->
 <section class="slide page-slide" aria-label="Getting Started — Setup">
   <div class="page-header">
-    <h2>Getting Started &mdash; Project Setup</h2>
+    <h2>Getting Started &mdash; Analyst Track Setup</h2>
     <span class="track-badge">Analyst</span>
   </div>
   <div class="page-content">
-    <span class="phase-badge">Lab 0</span> <span class="time-badge">10 min</span>
+    <span class="phase-badge">Post Lab 0</span> <span class="time-badge">5 min</span>
 
-    <h3>Step 1: Open Your Terminal</h3>
-    <p>Your Coding Agents app gives you a browser-based terminal with Claude Code pre-installed. Open it now.</p>
+    <div class="tip-box"><strong>You already completed Lab 0</strong> (guided hands-on) with the whole group. You should have a working <code>CLAUDE.md</code>, a passing bronze test, and a verified Databricks connection. If not, ask the facilitator for help before continuing.</div>
 
-    <h3>Step 2: Set Up Your Project</h3>
-    <div class="step-row"><span class="step-number">1</span><p>Create your project directory:</p></div>
-    <div class="code-block"><span class="function">mkdir</span> -p grocery-intelligence && <span class="function">cd</span> grocery-intelligence</div>
+    <h3>Step 1: Add Analyst Track Context</h3>
+    <p>Append the Analyst track additions to your existing CLAUDE.md:</p>
+    <div class="code-block"><span class="function">cat</span> ~/starter-kit/CLAUDE-analyst.md >> CLAUDE.md</div>
 
-    <div class="step-row"><span class="step-number">2</span><p>Copy the starter CLAUDE.md and append Analyst track additions:</p></div>
-    <div class="code-block"><span class="function">cp</span> ~/starter-kit/CLAUDE.md ./CLAUDE.md
-<span class="function">cat</span> ~/starter-kit/CLAUDE-analyst.md >> CLAUDE.md</div>
-
-    <div class="step-row"><span class="step-number">3</span><p>Edit <code>CLAUDE.md</code> &mdash; replace <code>TEAM_NAME</code> and <code>TEAM_SCHEMA</code> with your assigned values (e.g. <code>team_01</code>).</p></div>
-
-    <h3>Step 3: Verify Your Environment</h3>
-    <div class="code-block"><span class="comment"># Check Claude Code is working</span>
-claude --version
-
-<span class="comment"># Check Databricks CLI</span>
-databricks auth status
+    <h3>Step 2: Verify Your Environment</h3>
+    <div class="code-block"><span class="comment"># Confirm your bronze test still passes</span>
+uv run pytest tests/ -x --no-header -q
 
 <span class="comment"># Check your Unity Catalog access</span>
 databricks catalogs list | grep workshop</div>
@@ -389,7 +379,7 @@ databricks catalogs list | grep workshop</div>
   </div>
   <div class="page-footer">
     <span>Coles &times; Databricks Vibe Coding Workshop</span>
-    <span>Lab 0: Getting Started</span>
+    <span>Getting Started: Analyst Track</span>
   </div>
 </section>
 
@@ -451,7 +441,7 @@ and which states are included.</div>
   <h2 style="opacity: 0.6; font-size: 1rem; letter-spacing: 2px; text-transform: uppercase;">Lab 1</h2>
   <h1>Genie &amp; AI/BI Dashboards</h1>
   <h2>Create natural language interfaces for business users</h2>
-  <div class="divider-timing">55 minutes</div>
+  <div class="divider-timing">12:00 PM / 60 Minutes</div>
 </section>
 
 <!-- ===== SLIDE 5: LAB 1 PHASE 1 — CREATE GENIE SPACE ===== -->
@@ -668,7 +658,7 @@ Turnover values are already in millions — do not multiply.</div>
   <h2 style="opacity: 0.6; font-size: 1rem; letter-spacing: 2px; text-transform: uppercase;">Lab 2</h2>
   <h1>Build Your App</h1>
   <h2>FastAPI backend &middot; HTML + Tailwind + htmx &middot; AI-powered queries</h2>
-  <div class="divider-timing">55 minutes</div>
+  <div class="divider-timing">2:00 PM / 60 Minutes</div>
 </section>
 
 <!-- ===== SLIDE 10: LAB 2 TIER OVERVIEW ===== -->
@@ -708,7 +698,7 @@ Turnover values are already in millions — do not multiply.</div>
       <div class="tier-card" style="border-top-color: var(--db-lava);">
         <div class="tier-label">Tier 3</div>
         <h4>Stretch &mdash; Full Platform</h4>
-        <p style="font-size: 0.78rem; color: #666; margin-bottom: 8px;">~55 minutes</p>
+        <p style="font-size: 0.78rem; color: #666; margin-bottom: 8px;">~60 minutes</p>
         <p>Full React app with custom viz + <strong>embedded dashboard</strong> + Genie + NL query feature. The whole enchilada.</p>
         <ul>
           <li>Tabbed navigation</li>

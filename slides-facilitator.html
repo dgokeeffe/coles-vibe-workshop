@@ -534,7 +534,7 @@
   <!-- ============================================================ -->
   <!-- SLIDE 1: TITLE -->
   <!-- ============================================================ -->
-  <section class="slide slide-dark" aria-label="Title" data-notes="Welcome everyone to The Great Grocery Data Challenge. Introduce yourself: David O'Keeffe, Solutions Architect at Databricks. Thank the Coles Data &amp; AI Engineering team for hosting. Set the tone: today is a 5-hour hackathon. Teams of 2-3 will compete to build the best Grocery Intelligence Platform using real Australian public data. You will leave with skills you can use on Monday. ~2 min. Transition: Let's warm up with a fun quiz.">
+  <section class="slide slide-dark" aria-label="Title" data-notes="Welcome everyone to The Great Grocery Data Challenge. Introduce yourself: David O'Keeffe, Solutions Architect at Databricks. Thank the Coles Data &amp; AI Engineering team for hosting. Set the tone: today is a full-day hackathon (9:30-4:00). Teams of 2-3 will compete to build the best Grocery Intelligence Platform using real Australian public data. You will leave with skills you can use on Monday. ~2 min. Transition: Let's warm up with a fun quiz.">
     <div style="position:absolute;top:0;left:0;width:100%;height:100%;overflow:hidden;pointer-events:none;">
       <div style="position:absolute;right:-80px;top:-80px;width:400px;height:400px;border:2px solid rgba(255,54,33,0.08);border-radius:50%;"></div>
       <div style="position:absolute;right:-40px;top:-40px;width:320px;height:320px;border:2px solid rgba(255,54,33,0.05);border-radius:50%;"></div>
@@ -564,7 +564,7 @@
     <div class="reveal" style="width:60px;height:4px;background:var(--db-lava);border-radius:2px;margin-top:1.5rem;"></div>
     <div class="reveal" style="margin-top:1.5rem;">
       <span class="coles-badge">Coles Group</span>
-      <span class="meta" style="margin-top:0;">&middot; Data &amp; AI Engineering Team &middot; 5-Hour Hackathon</span>
+      <span class="meta" style="margin-top:0;">&middot; Data &amp; AI Engineering Team &middot; Full-Day Hackathon</span>
     </div>
     <div class="reveal meta" style="margin-top:0.5rem;">
       David O'Keeffe &middot; Solutions Architect, Databricks
@@ -575,7 +575,7 @@
   <!-- SLIDE 2: OPENING DEMO — MY WORKING SETUP -->
   <!-- ============================================================ -->
   <section class="slide slide-dark" aria-label="Opening Demo: Working Setup" data-notes="OPENING DEMO — ~5 min. This is the hook. Show YOUR actual working setup — not slides, not theory. This is a real SA's daily driver. Open Claude Code, show: (1) 7 MCP servers connected (Slack, JIRA, Confluence, Chrome DevTools, Databricks Docs, Glean, DeepWiki). (2) 150+ skills from the internal marketplace. (3) Hooks for safety guardrails. (4) CLAUDE.md with MCP routing and subagent orchestration. Then do something impressive: search Slack for a recent thread, check a JIRA ticket, query Databricks docs — all from one terminal, no context switching. Or ask it to build something quick. The point: this isn't a toy — it's a fully integrated development environment that connects to every system you use. By end of today, you'll understand every piece of this. ~5 min. Transition: Let's warm up with a quiz.">
-    <div class="reveal section-num">10:00 AM &middot; Live Demo</div>
+    <div class="reveal section-num">Live Demo</div>
     <h2 class="reveal">This Is How I Work <span class="text-lava">Every Day</span></h2>
     <div class="reveal accent-line" style="background:var(--db-lava-light);"></div>
     <p class="reveal" style="color:rgba(255,255,255,0.8);margin-bottom:1.5rem;max-width:700px;">Before any slides &mdash; let me show you what a fully configured AI development environment looks like in practice.</p>
@@ -610,7 +610,7 @@
   <!-- SLIDE 3: ICE BREAKER — GROCERY DATA PREDICTIONS -->
   <!-- ============================================================ -->
   <section class="slide slide-dark" aria-label="Ice Breaker: Grocery Data Predictions" data-notes="Hand out prediction cards (one per team). Each team discusses and writes down their best guesses — 30 seconds per question. No phones, no Googling! These are about real Australian retail data from the ABS. The twist: in Lab 1 they'll build the pipeline that ingests this exact data, and during Show & Tell we'll query their Gold tables to reveal the actual answers. Teams get scored on accuracy. This connects the ice breaker directly to the lab work and makes the data personal. ~12 min total including team formation.">
-    <div class="reveal section-num">10:00 AM &middot; Ice Breaker</div>
+    <div class="reveal section-num">9:30 AM &middot; Ice Breaker</div>
     <h2 class="reveal" style="color:var(--db-white);">Grocery Data Predictions</h2>
     <p class="reveal subtitle">How well does your team know Australian retail? No phones &mdash; just gut instinct.</p>
     <div class="reveal accent-line" style="background:var(--db-lava-light);margin-top:1rem;"></div>
@@ -662,32 +662,32 @@
   <!-- ============================================================ -->
   <!-- SLIDE 4: AGENDA -->
   <!-- ============================================================ -->
-  <section class="slide slide-light" aria-label="Agenda" data-notes="Walk through the day structure. This is a 5-hour hackathon with 2 theory sessions and 2 hands-on labs. Teams of 2-3 compete to build the best Grocery Intelligence Platform. Morning: specs, TDD, and pipeline building. After lunch: tools briefing and app building. Breaks are real breaks. Encourage questions throughout. ~2 min. Transition: Let's start with the paradigm shift that makes all of this possible.">
+  <section class="slide slide-light" aria-label="Agenda" data-notes="Walk through the day structure. This is a 6.5-hour hackathon with theory, a guided Lab 0, and 2 hands-on labs across 3 tracks. Teams of 2-3 compete to build the best Grocery Intelligence Platform. Morning: theory, guided hands-on, then tools briefing and Lab 1. After lunch: Lab 2 and demos. Breaks are real breaks. Encourage questions throughout. ~2 min. Transition: Let's start with the paradigm shift that makes all of this possible.">
     <div class="reveal section-num">The Great Grocery Data Challenge</div>
     <h2 class="reveal">Today's Agenda</h2>
     <div class="reveal accent-line"></div>
     <div class="reveal two-col" style="margin-top:1rem;">
       <div>
-        <h3 style="color:var(--db-teal);margin-bottom:1rem;">Morning: Foundations &amp; Pipeline</h3>
+        <h3 style="color:var(--db-teal);margin-bottom:1rem;">Morning: Foundations &amp; Lab 1</h3>
         <ul class="timeline">
-          <li><span class="timeline-time">9:00 AM</span><div class="timeline-content"><h3>Welcome &amp; Icebreaker</h3><p>Form teams, Grocery Data Predictions</p></div></li>
-          <li><span class="timeline-time">9:15 AM</span><div class="timeline-content"><h3>What We're Building + Vibe Coding</h3><p>End state, platform architecture</p></div></li>
-          <li><span class="timeline-time">9:30 AM</span><div class="timeline-content"><h3>CLAUDE.md + TDD</h3><p>Specs, testing, context windows</p></div></li>
-          <li><span class="timeline-time">10:00 AM</span><div class="timeline-content"><h3 style="color:var(--text-secondary);">Break</h3><p>10 min</p></div></li>
-          <li><span class="timeline-time">10:10 AM</span><div class="timeline-content"><h3>TDD Continued + Lab 1 Briefing</h3><p>Best practices, live demo, lab prep</p></div></li>
-          <li><span class="timeline-time">10:35 AM</span><div class="timeline-content"><h3 style="color:var(--db-green);">Lab 1: Data Pipeline</h3><p>55 min hands-on build</p></div></li>
-          <li><span class="timeline-time">11:30 AM</span><div class="timeline-content"><h3>Show &amp; Tell + Prediction Reveal</h3><p>Pipeline demos, ice breaker answers</p></div></li>
+          <li><span class="timeline-time">9:30 AM</span><div class="timeline-content"><h3>Welcome &amp; Icebreaker</h3><p>Form teams, Grocery Data Predictions</p></div></li>
+          <li><span class="timeline-time">9:45 AM</span><div class="timeline-content"><h3>Theory: Vibe Coding, CLAUDE.md, TDD</h3><p>Specs, testing, context windows</p></div></li>
+          <li><span class="timeline-time">10:30 AM</span><div class="timeline-content"><h3 style="color:var(--text-secondary);">Break</h3><p>15 min</p></div></li>
+          <li><span class="timeline-time">10:45 AM</span><div class="timeline-content"><h3 style="color:var(--db-green);">Lab 0: Guided Hands-On</h3><p>CLAUDE.md, first test, bronze ingest (all together)</p></div></li>
+          <li><span class="timeline-time">11:30 AM</span><div class="timeline-content"><h3>Skills, MCP, Genie + AI/BI</h3><p>Practical tools for the labs</p></div></li>
+          <li><span class="timeline-time">11:50 AM</span><div class="timeline-content"><h3>Track Briefing</h3><p>Choose DE, DS, or Analyst track</p></div></li>
+          <li><span class="timeline-time">12:00 PM</span><div class="timeline-content"><h3 style="color:var(--db-green);">Lab 1</h3><p>60 min hands-on build</p></div></li>
         </ul>
       </div>
       <div>
-        <h3 style="color:var(--db-teal);margin-bottom:1rem;">Afternoon: Tools &amp; App</h3>
+        <h3 style="color:var(--db-teal);margin-bottom:1rem;">Afternoon: Lab 2 &amp; Demos</h3>
         <ul class="timeline">
-          <li><span class="timeline-time">11:40 AM</span><div class="timeline-content"><h3 style="color:var(--text-secondary);">Lunch</h3><p>30 min</p></div></li>
-          <li><span class="timeline-time">12:10 PM</span><div class="timeline-content"><h3>Skills, MCP, Genie + AI/BI</h3><p>Practical tools for Lab 2</p></div></li>
-          <li><span class="timeline-time">12:30 PM</span><div class="timeline-content"><h3 style="color:var(--db-green);">Lab 2: App + Dashboard</h3><p>55 min capstone challenge</p></div></li>
-          <li><span class="timeline-time">1:25 PM</span><div class="timeline-content"><h3 style="color:var(--text-secondary);">Break</h3><p>10 min</p></div></li>
-          <li><span class="timeline-time">1:35 PM</span><div class="timeline-content"><h3>Team Demos + Closing</h3><p>Present, vote, reflect</p></div></li>
-          <li><span class="timeline-time">2:00 PM</span><div class="timeline-content"><h3>End</h3><p>Go build something great</p></div></li>
+          <li><span class="timeline-time">1:00 PM</span><div class="timeline-content"><h3>Show &amp; Tell + Prediction Reveal</h3><p>Pipeline demos, ice breaker answers</p></div></li>
+          <li><span class="timeline-time">1:15 PM</span><div class="timeline-content"><h3 style="color:var(--text-secondary);">Lunch</h3><p>45 min</p></div></li>
+          <li><span class="timeline-time">2:00 PM</span><div class="timeline-content"><h3 style="color:var(--db-green);">Lab 2</h3><p>60 min capstone challenge</p></div></li>
+          <li><span class="timeline-time">3:00 PM</span><div class="timeline-content"><h3>Team Demos</h3><p>Present, vote, celebrate</p></div></li>
+          <li><span class="timeline-time">3:30 PM</span><div class="timeline-content"><h3>Takeaways + Close</h3><p>Reflect, next steps</p></div></li>
+          <li><span class="timeline-time">4:00 PM</span><div class="timeline-content"><h3>End</h3><p>Go build something great</p></div></li>
         </ul>
       </div>
     </div>
@@ -736,7 +736,7 @@
   <!-- SLIDE 6: SECTION DIVIDER — THE PARADIGM SHIFT -->
   <!-- ============================================================ -->
   <section class="slide slide-dark" aria-label="Section: The Paradigm Shift" data-notes="Section divider. Pause briefly. This is the big idea: software development is changing from writing code to directing agents. Ask the room: Who has used an AI coding tool? ChatGPT? Copilot? Claude? Get a sense of experience levels. ~1 min.">
-    <div class="reveal section-num">10:00 AM</div>
+    <div class="reveal section-num">9:45 AM</div>
     <h1 class="reveal">The Paradigm Shift</h1>
     <p class="reveal subtitle">From writing code to directing AI agents</p>
     <div class="reveal accent-line" style="background:var(--db-lava-light);margin-top:1.5rem;"></div>
@@ -908,7 +908,7 @@
   <!-- SLIDE 11: SECTION DIVIDER — SPECS & TDD -->
   <!-- ============================================================ -->
   <section class="slide slide-dark" aria-label="Section: Specs and TDD" data-notes="Section divider. Key message: the skill that matters most with AI agents is your ability to specify what you want. The better your specs, the better the output. In this section we cover both specs (CLAUDE.md, PRDs) and TDD — they're two sides of the same coin. ~30 sec.">
-    <div class="reveal section-num">9:30 AM</div>
+    <div class="reveal section-num">9:45 AM</div>
     <h1 class="reveal">Specs &amp; TDD</h1>
     <p class="reveal subtitle">PRDs, CLAUDE.md, and test-driven agentic development</p>
     <div class="reveal accent-line" style="background:var(--db-lava-light);margin-top:1.5rem;"></div>
@@ -1402,12 +1402,22 @@
   </section>
 
   <!-- ============================================================ -->
-  <!-- SLIDE 23: SECTION DIVIDER — LAB 1 -->
+  <!-- SLIDE 23: SECTION DIVIDER — LAB 0 -->
   <!-- ============================================================ -->
-  <section class="slide slide-dark" aria-label="Section: Lab 1" data-notes="Lab 1 section divider. 65 minutes hands-on. Remind everyone to have their Coding Agents terminal ready. If anyone has access issues, flag them now. ~30 sec.">
-    <div class="reveal section-num">Lab 1 &middot; 11:20 AM &middot; 65 Minutes</div>
+  <section class="slide slide-dark" aria-label="Section: Lab 0" data-notes="Lab 0 section divider. This is a guided hands-on session — everyone does the same thing together. 45 minutes. Walk the room through: writing a CLAUDE.md, writing their first test, and building a bronze ingest pipeline. This builds confidence before they split into tracks. ~30 sec.">
+    <div class="reveal section-num">Lab 0 &middot; 10:45 AM &middot; 45 Minutes</div>
+    <h1 class="reveal">Lab 0: Guided Hands-On</h1>
+    <p class="reveal subtitle">CLAUDE.md, first test, bronze ingest &mdash; all together</p>
+    <div class="reveal accent-line" style="background:var(--db-lava-light);margin-top:1.5rem;"></div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SECTION DIVIDER — LAB 1 -->
+  <!-- ============================================================ -->
+  <section class="slide slide-dark" aria-label="Section: Lab 1" data-notes="Lab 1 section divider. 60 minutes hands-on. Teams have chosen their track. Remind everyone to have their Coding Agents terminal ready. If anyone has access issues, flag them now. ~30 sec.">
+    <div class="reveal section-num">Lab 1 &middot; 12:00 PM &middot; 60 Minutes</div>
     <h1 class="reveal">The Great Grocery<br>Data Challenge &mdash; Phase 1</h1>
-    <p class="reveal subtitle">Build a Lakeflow Declarative Pipeline with real Australian data</p>
+    <p class="reveal subtitle">Build in your chosen track with real Australian data</p>
     <div class="reveal accent-line" style="background:var(--db-lava-light);margin-top:1.5rem;"></div>
   </section>
 
@@ -1455,7 +1465,7 @@
   <!-- ============================================================ -->
   <!-- SLIDE 25: LAB 1 BRIEFING -->
   <!-- ============================================================ -->
-  <section class="slide slide-light" aria-label="Lab 1 Briefing" data-notes="~3 min briefing. All teams start with LAB-0 (shared setup, 10 min) then fork into their chosen track. Gold tables are pre-loaded as Checkpoint 0 so DS and Analyst tracks can start immediately. Recommend tracks based on team composition: ML experience to DS, analyst background to Analyst, everyone else to DE. Each track has its own lab doc, prompts, and checkpoints. Person A/B/C parallel tasks are in each track's lab doc. Walk around and help during the 55-minute lab. Transition after lab: Show and Tell.">
+  <section class="slide slide-light" aria-label="Lab 1 Briefing" data-notes="~3 min briefing. Teams already completed Lab 0 together, so they have CLAUDE.md, first test, and bronze ingest working. Now fork into chosen track. Gold tables are pre-loaded as Checkpoint 0 so DS and Analyst tracks can start immediately. Recommend tracks based on team composition: ML experience to DS, analyst background to Analyst, everyone else to DE. Each track has its own lab doc, prompts, and checkpoints. Person A/B/C parallel tasks are in each track's lab doc. Walk around and help during the 60-minute lab. Transition after lab: Show and Tell.">
     <div class="reveal section-num">Lab 1</div>
     <h2 class="reveal">Choose Your Track</h2>
     <div class="reveal accent-line"></div>
@@ -1506,7 +1516,7 @@
   <!-- SLIDE 26: SHOW & TELL + ICE BREAKER REVEAL -->
   <!-- ============================================================ -->
   <section class="slide slide-light" aria-label="Show and Tell" data-notes="7 minutes total. Quick demos from 3 volunteer teams (90 sec each): show their pipeline DAG, share one interesting insight from their Gold data. Not every team needs to present — pick 3 volunteers, save time for the prediction reveal. Then reveal the ice breaker answers using actual data from the pipelines they just built — 'Which state DOES have the highest food retail turnover?' This connects the ice breaker to the lab work. Score the prediction cards. Award bragging rights to the most accurate team.">
-    <div class="reveal section-num">12:25 PM &middot; 10 Minutes</div>
+    <div class="reveal section-num">1:00 PM &middot; 15 Minutes</div>
     <h2 class="reveal">Show &amp; Tell + Prediction Reveal</h2>
     <div class="reveal accent-line"></div>
     <div class="reveal two-col" style="margin-top:1rem;">
@@ -1544,11 +1554,11 @@
   </section>
 
   <!-- ============================================================ -->
-  <!-- SLIDE 27: SECTION DIVIDER — TOOLS FOR LAB 2 -->
+  <!-- SLIDE 27: SECTION DIVIDER — TOOLS FOR THE LABS -->
   <!-- ============================================================ -->
-  <section class="slide slide-dark" aria-label="Section: Tools for Lab 2" data-notes="Post-lunch session. Energy might be lower — start with an interactive question. Ask: what worked well in Lab 1? What surprised you? Use their experiences to ground this session. This is a focused tools briefing: Skills, MCP, Genie, and AI/BI dashboards — everything they need for Lab 2. ~1 min.">
-    <div class="reveal section-num">12:10 PM</div>
-    <h1 class="reveal">Tools for Lab 2</h1>
+  <section class="slide slide-dark" aria-label="Section: Tools for the Labs" data-notes="Pre-lab tools briefing. This covers Skills, MCP, Genie, and AI/BI dashboards — everything they need for the labs. Keep it focused and practical. ~1 min.">
+    <div class="reveal section-num">11:30 AM</div>
+    <h1 class="reveal">Tools for the Labs</h1>
     <p class="reveal subtitle">Skills, MCP, Genie &amp; AI/BI Dashboards</p>
     <div class="reveal accent-line" style="background:var(--db-lava-light);margin-top:1.5rem;"></div>
   </section>
@@ -1556,9 +1566,9 @@
   <!-- ============================================================ -->
   <!-- SLIDE 28: SKILLS & MCP — PRACTICAL TOOLS -->
   <!-- ============================================================ -->
-  <section class="slide slide-white" aria-label="Skills and MCP" data-notes="These are two practical tools you'll use in Lab 2. Skills are slash commands that encode domain knowledge — type slash in Claude Code and you'll see what's available. The commit skill writes good commit messages. The deploy skill handles DABs deployment. You can chain them together. MCP is how agents connect to external systems. Think of it as USB-C for AI — one standard protocol, every tool connects the same way. The Databricks Docs MCP is already available in your terminal. Try asking Claude to search the docs for anything you need during the lab.">
+  <section class="slide slide-white" aria-label="Skills and MCP" data-notes="These are two practical tools you'll use in the labs. Skills are slash commands that encode domain knowledge — type slash in Claude Code and you'll see what's available. The commit skill writes good commit messages. The deploy skill handles DABs deployment. You can chain them together. MCP is how agents connect to external systems. Think of it as USB-C for AI — one standard protocol, every tool connects the same way. The Databricks Docs MCP is already available in your terminal. Try asking Claude to search the docs for anything you need during the lab.">
     <div class="reveal">
-      <h2 style="text-align:center;margin-bottom:1.5em;">Practical Tools for Lab 2</h2>
+      <h2 style="text-align:center;margin-bottom:1.5em;">Practical Tools for the Labs</h2>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:2em;max-width:900px;margin:0 auto;">
         <div>
           <h3 style="color:var(--db-lava);margin-bottom:0.8em;">Skills</h3>
@@ -1654,7 +1664,7 @@
     </p>
     <div class="reveal" style="margin-top:0.75rem;padding:0.6rem 1rem;background:var(--coles-red-glow);border-radius:8px;border-left:3px solid var(--coles-red);display:inline-flex;align-items:center;gap:0.5rem;">
       <span class="coles-badge" style="font-size:0.75rem;">Coles</span>
-      <span style="font-size:0.8rem;color:var(--text-secondary);">In Lab 2, you&rsquo;ll connect your app to Genie via a managed MCP server &mdash; zero custom glue code.</span>
+      <span style="font-size:0.8rem;color:var(--text-secondary);">In the labs, you&rsquo;ll connect your app to Genie via a managed MCP server &mdash; zero custom glue code.</span>
     </div>
   </section>
 
@@ -1739,7 +1749,7 @@
   <!-- ============================================================ -->
   <!-- SLIDE 31: GENIE + AI/BI DASHBOARDS -->
   <!-- ============================================================ -->
-  <section class="slide slide-white" aria-label="Genie and AI/BI Dashboards" data-notes="These are the intelligence layer you'll add in Lab 2. Genie lets business users query data in English — create a Genie space, point it at your gold tables, ask questions in plain English. No code needed. AI/BI dashboards auto-generate charts — point at tables, describe what you want, get interactive dashboards. Both connect to the gold tables from Lab 1. ~5 min. Transition: Lab 2.">
+  <section class="slide slide-white" aria-label="Genie and AI/BI Dashboards" data-notes="These are the intelligence layer you'll add in the labs. Genie lets business users query data in English — create a Genie space, point it at your gold tables, ask questions in plain English. No code needed. AI/BI dashboards auto-generate charts — point at tables, describe what you want, get interactive dashboards. Both connect to the gold tables you'll build. ~5 min. Transition: Track briefing.">
     <div class="reveal section-num">Session 3</div>
     <h2 class="reveal">Genie + AI/BI Dashboards</h2>
     <div class="reveal accent-line"></div>
@@ -1797,8 +1807,8 @@ with food CPI overlay"</span>
   <!-- ============================================================ -->
   <!-- SLIDE 32: SECTION DIVIDER — LAB 2 -->
   <!-- ============================================================ -->
-  <section class="slide slide-dark" aria-label="Section: Lab 2" data-notes="Lab 2 section divider. This is the capstone challenge. 65 minutes to build an app, connect Genie, and create AI/BI dashboards. Remind everyone: use everything from today -- CLAUDE.md, TDD, subagents, MCP. ~30 sec.">
-    <div class="reveal section-num">Lab 2 &middot; 1:25 PM &middot; 65 Minutes</div>
+  <section class="slide slide-dark" aria-label="Section: Lab 2" data-notes="Lab 2 section divider. This is the capstone challenge. 60 minutes to continue building in your track. Remind everyone: use everything from today -- CLAUDE.md, TDD, subagents, MCP. ~30 sec.">
+    <div class="reveal section-num">Lab 2 &middot; 2:00 PM &middot; 60 Minutes</div>
     <h1 class="reveal">The Great Grocery<br>Data Challenge &mdash; Phase 2</h1>
     <p class="reveal subtitle">Build an app, connect Genie, create AI/BI dashboards</p>
     <div class="reveal accent-line" style="background:var(--db-lava-light);margin-top:1.5rem;"></div>
@@ -1807,7 +1817,7 @@ with food CPI overlay"</span>
   <!-- ============================================================ -->
   <!-- SLIDE 33: LAB 2 BRIEFING -->
   <!-- ============================================================ -->
-  <section class="slide slide-light" aria-label="Lab 2 Briefing" data-notes="~3 min briefing. Same track as Lab 1 — teams continue where they left off. DE adds data sources + quality + scheduling. DS trains a model, registers, serves, builds prediction app. Analyst builds FastAPI app with embedded dashboards. Framing: get as far as you can, checkpoints at every phase. Person A/B/C parallel tasks are in each track's lab doc. ~55 min lab time. Transition: demos.">
+  <section class="slide slide-light" aria-label="Lab 2 Briefing" data-notes="~3 min briefing. Same track as Lab 1 — teams continue where they left off. DE adds data sources + quality + scheduling. DS trains a model, registers, serves, builds prediction app. Analyst builds FastAPI app with embedded dashboards. Framing: get as far as you can, checkpoints at every phase. Person A/B/C parallel tasks are in each track's lab doc. ~60 min lab time. Transition: demos.">
     <div class="reveal section-num">Lab 2</div>
     <h2 class="reveal">Continue Your Track</h2>
     <div class="reveal accent-line"></div>
@@ -1849,7 +1859,7 @@ with food CPI overlay"</span>
     </div>
     <div class="reveal" style="text-align:center;margin-top:1.2em;">
       <div style="display:inline-block;padding:0.6em 1.2em;background:rgba(27,81,98,0.06);border-radius:8px;border-left:3px solid var(--db-teal);font-size:0.85em;">
-        <strong>Get as far as you can</strong> &mdash; checkpoints at every phase. 55 minutes.
+        <strong>Get as far as you can</strong> &mdash; checkpoints at every phase. 60 minutes.
       </div>
     </div>
   </section>
@@ -1858,7 +1868,7 @@ with food CPI overlay"</span>
   <!-- SLIDE 34: TEAM DEMOS & VOTING -->
   <!-- ============================================================ -->
   <section class="slide slide-dark" aria-label="Team Demos and Voting" data-notes="Each team gets 3 minutes to demo their platform. Use a projected timer. After all demos, quick anonymous vote (show of hands or Google Form). Announce winners. Then 5-min retro: What worked? What would you do differently? What will you use on Monday? ~20 min total.">
-    <div class="reveal section-num">2:40 PM &middot; 20 Minutes</div>
+    <div class="reveal section-num">3:00 PM &middot; 30 Minutes</div>
     <h1 class="reveal">Demo Time!</h1>
     <p class="reveal subtitle">Each team presents their platform (3 min each)</p>
     <div class="reveal accent-line" style="background:var(--db-lava-light);margin-top:1.5rem;"></div>

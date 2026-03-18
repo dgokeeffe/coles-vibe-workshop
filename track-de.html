@@ -412,33 +412,19 @@
     <span class="track-badge">Data Engineering</span>
   </div>
   <div class="page-content">
-    <h3>Step 1: Set Up Your Project</h3>
-    <p>Your Coding Agents app gives you a browser-based terminal with Claude Code pre-installed. Open it now.</p>
-    <div class="code-block"><span class="comment"># Create project and copy starter files</span>
-<span class="function">mkdir</span> -p grocery-intelligence && <span class="keyword">cd</span> grocery-intelligence
-<span class="function">cp</span> ~/starter-kit/CLAUDE.md ./CLAUDE.md
-<span class="comment"># Edit CLAUDE.md — replace TEAM_NAME and TEAM_SCHEMA with your assigned values</span>
+    <div class="tip-box"><strong>You've already completed Lab 0</strong> — your CLAUDE.md and bronze test are ready. Your project is set up, environment is verified, and you've seen the agent pass its first test. Now extend into your track.</div>
+
+    <h3>Step 1: Add DE-Specific Instructions</h3>
+    <p>Append the Data Engineering track context to your existing CLAUDE.md:</p>
+    <div class="code-block"><span class="keyword">cd</span> grocery-intelligence
 
 <span class="comment"># Append DE-specific instructions</span>
 <span class="function">cat</span> ~/starter-kit/CLAUDE-de.md >> CLAUDE.md
 
-<span class="comment"># Copy test fixtures and test stubs</span>
-<span class="function">mkdir</span> -p tests
-<span class="function">cp</span> ~/starter-kit/conftest.py tests/
+<span class="comment"># Copy additional test stubs for full pipeline</span>
 <span class="function">cp</span> ~/starter-kit/test_pipeline.py tests/</div>
 
-    <h3>Step 2: Verify Your Environment</h3>
-    <div class="code-block"><span class="comment"># Check Claude Code is working</span>
-claude --version
-
-<span class="comment"># Check Databricks CLI</span>
-databricks auth status
-
-<span class="comment"># Check your Unity Catalog access</span>
-databricks catalogs list | grep workshop</div>
-    <div class="warning-box"><strong>If any of these fail,</strong> ask the facilitator for help before proceeding.</div>
-
-    <h3>Step 3: Explore the Data</h3>
+    <h3>Step 2: Explore the Data</h3>
     <p>All tracks use the same data. Paste this into Claude Code to get a feel for it:</p>
     <div class="prompt-block">Query these tables and show me 5 rows from each:
 - workshop_vibe_coding.checkpoints.retail_summary
@@ -520,7 +506,7 @@ Tell me: what columns are available, what date range is covered, and which state
   <div class="divider-number">01</div>
   <h1>Lab 1: Build Your Pipeline</h1>
   <p class="divider-subtitle">TDD &rarr; Bronze &rarr; Silver &rarr; Gold &rarr; Deploy</p>
-  <span class="divider-time">55 minutes</span>
+  <span class="divider-time">12:00 PM / 60 minutes</span>
 </section>
 
 <!-- ============================================================ -->
@@ -875,7 +861,7 @@ Run the pipeline: databricks bundle run grocery-intelligence-&lt;team_name&gt; -
   <div class="divider-number">02</div>
   <h1>Lab 2: Extend &amp; Harden</h1>
   <p class="divider-subtitle">New Data Sources &bull; Data Quality &bull; Scheduling</p>
-  <span class="divider-time">55 minutes</span>
+  <span class="divider-time">2:00 PM / 60 minutes</span>
 </section>
 
 <!-- ============================================================ -->
