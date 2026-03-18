@@ -1,0 +1,1316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Data Science Track — Coles Vibe Coding Workshop</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --db-lava: #FF3621;
+    --db-navy: #1B3139;
+    --db-teal: #00A972;
+    --db-green: #00A972;
+    --db-oat: #F9F7F4;
+    --coles-red: #E01A22;
+    --ds-purple: #7c3aed;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-snap-type: y mandatory; scroll-behavior: smooth; overflow-x: hidden; }
+  body { font-family: 'DM Sans', sans-serif; color: var(--db-navy); background: #1a1a2e; }
+
+  .slide {
+    width: 100vw; height: 100vh;
+    scroll-snap-align: start;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .page-slide {
+    background: white;
+    padding: 48px 80px 48px 80px;
+  }
+
+  .cover-slide {
+    background: linear-gradient(135deg, var(--db-navy) 0%, #0d1f26 100%);
+    color: white;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+
+  .divider-slide {
+    background: linear-gradient(135deg, var(--db-navy) 0%, #163a45 100%);
+    color: white;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+
+  /* Cover slide styling */
+  .cover-slide .cover-badge {
+    display: inline-block;
+    background: var(--ds-purple);
+    color: white;
+    padding: 8px 28px;
+    border-radius: 24px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 32px;
+  }
+  .cover-slide h1 {
+    font-size: 3.4rem;
+    font-weight: 700;
+    line-height: 1.15;
+    margin-bottom: 16px;
+    letter-spacing: -0.5px;
+  }
+  .cover-slide .subtitle {
+    font-size: 1.35rem;
+    font-weight: 400;
+    opacity: 0.85;
+    margin-bottom: 12px;
+  }
+  .cover-slide .tagline {
+    font-size: 1.05rem;
+    font-weight: 500;
+    opacity: 0.65;
+    margin-top: 8px;
+  }
+  .cover-slide .logos {
+    margin-top: 40px;
+    display: flex;
+    gap: 24px;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.7;
+    font-size: 0.9rem;
+    font-weight: 500;
+    letter-spacing: 1px;
+  }
+  .cover-slide .logos span { color: #aaa; }
+
+  /* Divider slide styling */
+  .divider-slide .divider-badge {
+    display: inline-block;
+    background: var(--ds-purple);
+    color: white;
+    padding: 6px 22px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+  .divider-slide h1 {
+    font-size: 2.8rem;
+    font-weight: 700;
+    margin-bottom: 16px;
+  }
+  .divider-slide .divider-sub {
+    font-size: 1.15rem;
+    opacity: 0.75;
+    max-width: 600px;
+    line-height: 1.5;
+  }
+  .divider-slide .divider-time {
+    margin-top: 28px;
+    display: inline-block;
+    background: rgba(255,255,255,0.12);
+    padding: 8px 24px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+
+  .page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 3px solid var(--ds-purple);
+    padding-bottom: 12px;
+    margin-bottom: 24px;
+    flex-shrink: 0;
+  }
+  .page-header h2 { font-size: 1.4rem; font-weight: 700; color: var(--db-navy); }
+  .page-header .track-badge {
+    background: #7c3aed;
+    color: white;
+    padding: 4px 16px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .page-content { flex: 1; overflow: hidden; }
+  .page-content h3 { font-size: 1.15rem; font-weight: 700; color: var(--ds-purple); margin: 16px 0 8px; }
+  .page-content h3:first-child { margin-top: 0; }
+  .page-content h4 { font-size: 1rem; font-weight: 600; color: var(--db-navy); margin: 12px 0 6px; }
+  .page-content p { font-size: 0.9rem; line-height: 1.5; margin-bottom: 8px; }
+  .page-content ul, .page-content ol { font-size: 0.9rem; line-height: 1.5; margin-left: 24px; margin-bottom: 8px; }
+  .page-content li { margin-bottom: 4px; }
+
+  .code-block {
+    background: #1e1e2e;
+    color: #cdd6f4;
+    border-radius: 8px;
+    padding: 14px 18px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.78rem;
+    line-height: 1.45;
+    white-space: pre;
+    overflow-x: auto;
+    margin: 10px 0;
+  }
+  .code-block .keyword { color: #cba6f7; }
+  .code-block .string { color: #a6e3a1; }
+  .code-block .comment { color: #6c7086; }
+  .code-block .function { color: #89b4fa; }
+  .code-block .type { color: #f9e2af; }
+  .code-block .decorator { color: #fab387; }
+
+  code {
+    background: #f0ede8;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.82rem;
+    color: #7c3aed;
+  }
+
+  .tip-box {
+    background: #e8f5e9;
+    border-left: 4px solid var(--db-green);
+    padding: 12px 16px;
+    border-radius: 0 8px 8px 0;
+    margin: 10px 0;
+    font-size: 0.85rem;
+  }
+  .tip-box strong { color: #2e7d32; }
+  .warning-box {
+    background: #fff3e0;
+    border-left: 4px solid #ff9800;
+    padding: 12px 16px;
+    border-radius: 0 8px 8px 0;
+    margin: 10px 0;
+    font-size: 0.85rem;
+  }
+  .warning-box strong { color: #e65100; }
+
+  .phase-badge {
+    display: inline-block;
+    background: var(--db-navy);
+    color: white;
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+  }
+
+  .time-badge {
+    display: inline-block;
+    background: var(--db-teal);
+    color: white;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    margin-left: 8px;
+  }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+
+  .three-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 18px;
+  }
+
+  .success-box {
+    background: #e8f5e9;
+    border: 2px solid var(--db-green);
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin: 10px 0;
+  }
+  .success-box h4 { color: var(--db-green); margin-top: 0; }
+
+  .task-card {
+    background: #f8f6ff;
+    border: 1px solid #e0d4ff;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin: 6px 0;
+  }
+  .task-card h4 { color: var(--ds-purple); margin: 0 0 4px; font-size: 0.85rem; }
+  .task-card p { font-size: 0.82rem; margin: 0; color: #555; }
+
+  .checkpoint-box {
+    background: #f3e8ff;
+    border: 2px dashed var(--ds-purple);
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin: 10px 0;
+    font-size: 0.85rem;
+  }
+  .checkpoint-box strong { color: var(--ds-purple); }
+
+  table.info-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.82rem;
+    margin: 8px 0;
+  }
+  table.info-table th {
+    background: var(--db-navy);
+    color: white;
+    padding: 8px 12px;
+    text-align: left;
+    font-weight: 600;
+  }
+  table.info-table td {
+    padding: 7px 12px;
+    border-bottom: 1px solid #e0e0e0;
+  }
+  table.info-table tr:nth-child(even) td { background: #f9f7f4; }
+
+  .page-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #e0e0e0;
+    padding-top: 8px;
+    margin-top: auto;
+    font-size: 0.7rem;
+    color: #999;
+    flex-shrink: 0;
+  }
+
+  .prompt-label {
+    display: inline-block;
+    background: var(--ds-purple);
+    color: white;
+    padding: 2px 10px;
+    border-radius: 4px 4px 0 0;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: 0;
+  }
+  .prompt-label + .code-block {
+    margin-top: 0;
+    border-radius: 0 8px 8px 8px;
+  }
+
+  .step-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    background: var(--ds-purple);
+    color: white;
+    border-radius: 50%;
+    font-size: 0.75rem;
+    font-weight: 700;
+    margin-right: 8px;
+    flex-shrink: 0;
+  }
+</style>
+</head>
+<body>
+
+<!-- ============================================================ -->
+<!-- SLIDE 1: COVER                                                -->
+<!-- ============================================================ -->
+<section class="slide cover-slide" aria-label="Cover">
+  <div class="cover-badge">Data Science Track</div>
+  <h1>Feature Engineering,<br>MLflow &amp; Model Serving</h1>
+  <p class="subtitle">Coles &times; Databricks Vibe Coding Workshop</p>
+  <p class="tagline">Build ML models from Australian retail data — directed entirely by AI agents</p>
+  <div class="logos">
+    <span>COLES GROUP</span>
+    <span>&bull;</span>
+    <span>DATABRICKS</span>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SLIDE 2: GETTING STARTED — SETUP                              -->
+<!-- ============================================================ -->
+<section class="slide page-slide" aria-label="Getting Started — Setup">
+  <div class="page-header">
+    <h2>Getting Started: Project Setup</h2>
+    <span class="track-badge">Data Science</span>
+  </div>
+  <div class="page-content">
+    <span class="phase-badge">Lab 0</span><span class="time-badge">10 min</span>
+
+    <div class="two-col" style="margin-top: 16px;">
+      <div>
+        <h3>1. Set Up Your Project</h3>
+        <p>Open your Coding Agents terminal, then run:</p>
+<div class="code-block"><span class="comment"># Create project &amp; copy starter files</span>
+<span class="function">mkdir</span> -p grocery-intelligence && <span class="keyword">cd</span> grocery-intelligence
+<span class="function">cp</span> ~/starter-kit/CLAUDE.md ./CLAUDE.md</div>
+
+        <p>Edit <code>CLAUDE.md</code> — replace <code>TEAM_NAME</code> and <code>TEAM_SCHEMA</code> with your assigned values (e.g. <code>team_01</code>).</p>
+
+        <h4>Append DS track instructions:</h4>
+<div class="code-block"><span class="function">cat</span> ~/starter-kit/CLAUDE-ds.md >> CLAUDE.md</div>
+
+        <h4>Copy test fixtures + stubs:</h4>
+<div class="code-block"><span class="function">mkdir</span> -p tests
+<span class="function">cp</span> ~/starter-kit/conftest.py tests/
+<span class="function">cp</span> ~/starter-kit/test_features.py tests/</div>
+      </div>
+
+      <div>
+        <h3>2. Verify Your Environment</h3>
+<div class="code-block"><span class="comment"># Check Claude Code is working</span>
+claude --version
+
+<span class="comment"># Check Databricks CLI</span>
+databricks auth status
+
+<span class="comment"># Check Unity Catalog access</span>
+databricks catalogs list | <span class="function">grep</span> workshop</div>
+        <div class="tip-box">
+          <strong>Tip:</strong> If any command fails, ask the facilitator for help before proceeding.
+        </div>
+
+        <h3>3. Explore the Data</h3>
+        <p>All tracks use the same gold tables. Paste this into Claude Code:</p>
+        <div class="prompt-label">Paste into Claude Code</div>
+<div class="code-block">Query these tables and show me 5 rows from each:
+- workshop_vibe_coding.checkpoints.retail_summary
+- workshop_vibe_coding.checkpoints.food_inflation_yoy
+
+Tell me: what columns are available, what date
+range is covered, and which states are included.</div>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer">
+    <span>Data Science Track — Coles Vibe Coding Workshop</span>
+    <span>Getting Started</span>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SLIDE 3: LAB 1 DIVIDER                                        -->
+<!-- ============================================================ -->
+<section class="slide divider-slide" aria-label="Lab 1 Divider">
+  <div class="divider-badge">Lab 1</div>
+  <h1>Features &amp; Experiments</h1>
+  <p class="divider-sub">Build a feature engineering pipeline from gold tables and track experiments with MLflow</p>
+  <div class="divider-time">55 minutes &bull; 4 phases</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SLIDE 4: LAB 1 PHASE 1 — EXPLORE DATA                        -->
+<!-- ============================================================ -->
+<section class="slide page-slide" aria-label="Lab 1 Phase 1 — Explore Data">
+  <div class="page-header">
+    <h2>Lab 1 / Phase 1: Explore Data + Write Tests</h2>
+    <span class="track-badge">Data Science</span>
+  </div>
+  <div class="page-content">
+    <span class="phase-badge">Phase 1</span><span class="time-badge">15 min</span>
+
+    <div class="three-col" style="margin-top: 12px; margin-bottom: 12px;">
+      <div class="task-card">
+        <h4>Person A (Terminal)</h4>
+        <p>Query gold tables, understand distributions and patterns</p>
+      </div>
+      <div class="task-card">
+        <h4>Person B (Terminal)</h4>
+        <p>Write pytest tests for feature engineering functions</p>
+      </div>
+      <div class="task-card">
+        <h4>Person C (Databricks UI)</h4>
+        <p>Create MLflow experiment, verify tracking works</p>
+      </div>
+    </div>
+
+    <h3>1.1 Explore the Gold Tables</h3>
+    <div class="prompt-label">Paste into Claude Code</div>
+<div class="code-block">Query these tables and show me a comprehensive analysis:
+
+1. workshop_vibe_coding.TEAM_SCHEMA.retail_summary:
+   - Row count, date range, distinct states, distinct industries
+   - Summary statistics for turnover_millions (min, max, mean, stddev)
+   - Top 5 state-industry combinations by average turnover
+
+2. workshop_vibe_coding.TEAM_SCHEMA.food_inflation_yoy:
+   - Row count, date range, distinct states
+   - Summary statistics for yoy_change_pct
+   - States with highest and lowest inflation
+
+Show me the results as tables.</div>
+  </div>
+  <div class="page-footer">
+    <span>Data Science Track — Coles Vibe Coding Workshop</span>
+    <span>Lab 1 &bull; Phase 1 (1/2)</span>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SLIDE 5: LAB 1 PHASE 1 — WRITE TESTS                         -->
+<!-- ============================================================ -->
+<section class="slide page-slide" aria-label="Lab 1 Phase 1 — Write Tests">
+  <div class="page-header">
+    <h2>Lab 1 / Phase 1: Write Feature Engineering Tests</h2>
+    <span class="track-badge">Data Science</span>
+  </div>
+  <div class="page-content">
+    <span class="phase-badge">Phase 1</span><span class="time-badge">15 min</span>
+
+    <h3>1.2 Write Tests First (TDD)</h3>
+    <div class="prompt-label">Paste into Claude Code</div>
+<div class="code-block">Create pytest tests for feature engineering in tests/test_features.py.
+Use the fixtures from tests/conftest.py.
+
+Write these tests:
+
+1. test_create_lag_features:
+   - Given 24 months of data for one state/industry
+   - Creates turnover_lag_1m, turnover_lag_3m, turnover_lag_6m, turnover_lag_12m
+   - lag_1m equals previous month's value
+   - First 12 rows have null lag_12m (expected)
+
+2. test_create_seasonal_features:
+   - Adds month_of_year (1-12), quarter (1-4), is_december (boolean), is_q4 (boolean)
+   - is_december is True only for month 12
+
+3. test_create_growth_features:
+   - Adds turnover_mom_growth and turnover_yoy_growth
+   - MoM growth = (current - previous) / previous * 100
+   - YoY growth = (current - 12m_ago) / 12m_ago * 100
+
+4. test_feature_table_schema:
+   - Output has all expected columns
+   - Key columns (state, industry, month, turnover_millions) have no nulls
+
+Write ONLY the tests. Do NOT implement the functions yet.
+Use PySpark test fixtures with small DataFrames.</div>
+
+    <div class="tip-box">
+      <strong>Starter Kit:</strong> Test stubs are pre-loaded at <code>tests/test_features.py</code>. Prompt files at <code>starter-kit/prompts/ds/01-explore-gold.md</code> and <code>ds/02-feature-engineering.md</code>.
+    </div>
+  </div>
+  <div class="page-footer">
+    <span>Data Science Track — Coles Vibe Coding Workshop</span>
+    <span>Lab 1 &bull; Phase 1 (2/2)</span>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SLIDE 6: LAB 1 PHASE 2 — FEATURE ENGINEERING                 -->
+<!-- ============================================================ -->
+<section class="slide page-slide" aria-label="Lab 1 Phase 2 — Feature Engineering">
+  <div class="page-header">
+    <h2>Lab 1 / Phase 2: Feature Engineering Pipeline</h2>
+    <span class="track-badge">Data Science</span>
+  </div>
+  <div class="page-content">
+    <span class="phase-badge">Phase 2</span><span class="time-badge">20 min</span>
+
+    <div class="three-col" style="margin-top: 8px; margin-bottom: 10px;">
+      <div class="task-card">
+        <h4>Person A (Terminal)</h4>
+        <p>Build lag and seasonal feature functions</p>
+      </div>
+      <div class="task-card">
+        <h4>Person B (Terminal)</h4>
+        <p>Build growth rate features, combine into feature table</p>
+      </div>
+      <div class="task-card">
+        <h4>Person C (Databricks UI)</h4>
+        <p>Run EDA: distributions, correlations, trends</p>
+      </div>
+    </div>
+
+    <h3>2.1 Build the Feature Pipeline</h3>
+    <div class="prompt-label">Paste into Claude Code</div>
+<div class="code-block">Create a feature engineering pipeline that reads from our gold tables
+and produces a feature table.
+
+1. Lag features from retail_summary:
+   - turnover_lag_1m, turnover_lag_3m, turnover_lag_6m, turnover_lag_12m
+   - Use PySpark Window functions partitioned by state + industry,
+     ordered by month
+
+2. Seasonal features:
+   - month_of_year (1-12), quarter (1-4), is_december (boolean),
+     is_q4 (boolean)
+   - Extract from the month date column
+
+3. Growth rate features:
+   - turnover_mom_growth: month-over-month growth percentage
+   - turnover_yoy_growth: year-over-year growth percentage
+   - cpi_yoy_change: join with food_inflation_yoy on state + quarter
+
+4. Write the combined feature table to:
+   workshop_vibe_coding.TEAM_SCHEMA.retail_features
+
+Run tests after implementation. Handle nulls in lag features
+(first N rows will be null — filter them out in the final table).</div>
+  </div>
+  <div class="page-footer">
+    <span>Data Science Track — Coles Vibe Coding Workshop</span>
+    <span>Lab 1 &bull; Phase 2</span>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SLIDE 7: LAB 1 PHASE 2 — FEATURE REFERENCE                   -->
+<!-- ============================================================ -->
+<section class="slide page-slide" aria-label="Lab 1 Phase 2 — Feature Reference">
+  <div class="page-header">
+    <h2>Lab 1 / Phase 2: Window Functions Reference</h2>
+    <span class="track-badge">Data Science</span>
+  </div>
+  <div class="page-content">
+    <div class="two-col">
+      <div>
+        <h3>Lag Features (PySpark Window)</h3>
+<div class="code-block"><span class="keyword">from</span> pyspark.sql <span class="keyword">import</span> Window
+<span class="keyword">from</span> pyspark.sql <span class="keyword">import</span> functions <span class="keyword">as</span> F
+
+window = Window.partitionBy(<span class="string">"state"</span>, <span class="string">"industry"</span>) \
+               .orderBy(<span class="string">"month"</span>)
+
+df = df.withColumn(
+    <span class="string">"turnover_lag_1m"</span>,
+    F.<span class="function">lag</span>(<span class="string">"turnover_millions"</span>, <span class="type">1</span>).over(window)
+).withColumn(
+    <span class="string">"turnover_lag_3m"</span>,
+    F.<span class="function">lag</span>(<span class="string">"turnover_millions"</span>, <span class="type">3</span>).over(window)
+).withColumn(
+    <span class="string">"turnover_lag_12m"</span>,
+    F.<span class="function">lag</span>(<span class="string">"turnover_millions"</span>, <span class="type">12</span>).over(window)
+)</div>
+
+        <h3>Seasonal Features</h3>
+<div class="code-block">df = df.withColumn(
+    <span class="string">"month_of_year"</span>, F.<span class="function">month</span>(<span class="string">"month"</span>)
+).withColumn(
+    <span class="string">"quarter"</span>, F.<span class="function">quarter</span>(<span class="string">"month"</span>)
+).withColumn(
+    <span class="string">"is_december"</span>,
+    F.<span class="function">month</span>(<span class="string">"month"</span>) == <span class="type">12</span>
+).withColumn(
+    <span class="string">"is_q4"</span>,
+    F.<span class="function">quarter</span>(<span class="string">"month"</span>) == <span class="type">4</span>
+)</div>
+      </div>
+
+      <div>
+        <h3>Growth Features</h3>
+<div class="code-block"><span class="comment"># Month-over-month growth</span>
+df = df.withColumn(
+    <span class="string">"turnover_mom_growth"</span>,
+    (F.<span class="function">col</span>(<span class="string">"turnover_millions"</span>)
+     - F.<span class="function">lag</span>(<span class="string">"turnover_millions"</span>, <span class="type">1</span>)
+          .over(window))
+    / F.<span class="function">lag</span>(<span class="string">"turnover_millions"</span>, <span class="type">1</span>)
+         .over(window) * <span class="type">100</span>
+)
+
+<span class="comment"># Year-over-year growth</span>
+df = df.withColumn(
+    <span class="string">"turnover_yoy_growth"</span>,
+    (F.<span class="function">col</span>(<span class="string">"turnover_millions"</span>)
+     - F.<span class="function">lag</span>(<span class="string">"turnover_millions"</span>, <span class="type">12</span>)
+          .over(window))
+    / F.<span class="function">lag</span>(<span class="string">"turnover_millions"</span>, <span class="type">12</span>)
+         .over(window) * <span class="type">100</span>
+)</div>
+
+        <div class="warning-box">
+          <strong>Common mistake:</strong> The agent may try to use pandas. If it does, say: <em>"Use PySpark Window functions, not pandas. Check CLAUDE.md."</em>
+        </div>
+
+        <div class="checkpoint-box">
+          <strong>Stuck at 35 minutes?</strong> Grab <strong>Checkpoint DS-1B</strong>: pre-built feature table in your schema.
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer">
+    <span>Data Science Track — Coles Vibe Coding Workshop</span>
+    <span>Lab 1 &bull; Phase 2 Reference</span>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SLIDE 8: LAB 1 PHASE 3 — MLFLOW EXPERIMENT TRACKING           -->
+<!-- ============================================================ -->
+<section class="slide page-slide" aria-label="Lab 1 Phase 3 — MLflow Tracking">
+  <div class="page-header">
+    <h2>Lab 1 / Phase 3: MLflow Experiment Tracking</h2>
+    <span class="track-badge">Data Science</span>
+  </div>
+  <div class="page-content">
+    <span class="phase-badge">Phase 3</span><span class="time-badge">15 min</span>
+
+    <div class="three-col" style="margin-top: 8px; margin-bottom: 10px;">
+      <div class="task-card">
+        <h4>Person A (Terminal)</h4>
+        <p>Log feature engineering run to MLflow with params, metrics, artifacts</p>
+      </div>
+      <div class="task-card">
+        <h4>Person B (Terminal)</h4>
+        <p>Create and log visualizations (correlation heatmap, trend plots)</p>
+      </div>
+      <div class="task-card">
+        <h4>Person C (Databricks UI)</h4>
+        <p>Review experiment in MLflow UI, compare runs, tag experiment</p>
+      </div>
+    </div>
+
+    <h3>3.1 Track Your Experiments</h3>
+    <div class="prompt-label">Paste into Claude Code</div>
+<div class="code-block">Set up MLflow experiment tracking for our feature engineering:
+
+1. Create an MLflow experiment named "grocery-features-TEAM_NAME"
+
+2. Log a run with:
+   - Parameters: number of features, date range, number of states
+   - Metrics: feature table row count, null percentage per feature
+   - Tags: team_name, track="data_science", phase="feature_engineering"
+   - Artifacts: save a feature summary CSV showing stats per state
+
+3. Create and log visualizations:
+   - A correlation heatmap of the numeric features (save as PNG)
+   - A time series plot of turnover trends for top 3 states (save as PNG)
+
+Use mlflow.log_param(), mlflow.log_metric(), mlflow.log_artifact().
+Show me the MLflow experiment URL when done.</div>
+
+    <div class="tip-box">
+      <strong>Starter Kit:</strong> Prompt file at <code>starter-kit/prompts/ds/03-mlflow-experiment.md</code>
+    </div>
+  </div>
+  <div class="page-footer">
+    <span>Data Science Track — Coles Vibe Coding Workshop</span>
+    <span>Lab 1 &bull; Phase 3</span>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SLIDE 9: LAB 1 PHASE 4 — VERIFY                              -->
+<!-- ============================================================ -->
+<section class="slide page-slide" aria-label="Lab 1 Phase 4 — Verify">
+  <div class="page-header">
+    <h2>Lab 1 / Phase 4: Verify + Prepare for Show &amp; Tell</h2>
+    <span class="track-badge">Data Science</span>
+  </div>
+  <div class="page-content">
+    <span class="phase-badge">Phase 4</span><span class="time-badge">5 min</span>
+
+    <div class="two-col" style="margin-top: 16px;">
+      <div>
+        <h3>Verification Checklist</h3>
+        <div class="success-box">
+          <h4>Before moving on, confirm:</h4>
+          <ul style="margin-top: 8px;">
+            <li>Feature table has lag, seasonal, and growth features</li>
+            <li>All feature engineering tests pass</li>
+            <li>MLflow experiment logged with parameters, metrics, artifacts</li>
+            <li>At least one visualization logged as artifact</li>
+            <li>Feature table accessible in Unity Catalog</li>
+          </ul>
+        </div>
+
+        <div class="warning-box">
+          <strong>Running behind?</strong> Grab <strong>Checkpoint DS-1C</strong> (feature table + MLflow experiment) and move to Lab 2.
+        </div>
+      </div>
+
+      <div>
+        <h3>Show &amp; Tell Prep</h3>
+        <p>Prepare to share with the group:</p>
+        <ol style="margin-top: 8px;">
+          <li><strong>Feature table</strong> — show in Unity Catalog browser</li>
+          <li><strong>MLflow experiment</strong> — show runs, metrics, artifacts</li>
+          <li><strong>Key insight</strong> — a pattern or surprise in the data</li>
+        </ol>
+
+        <h3 style="margin-top: 20px;">Reflection Questions</h3>
+        <ul>
+          <li>Which features do you think will be most predictive for forecasting?</li>
+          <li>How did MLflow help organize your experimentation?</li>
+          <li>What additional data sources would improve your features?</li>
+          <li>Were there any surprising patterns in the data?</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer">
+    <span>Data Science Track — Coles Vibe Coding Workshop</span>
+    <span>Lab 1 &bull; Phase 4</span>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SLIDE 10: LAB 2 DIVIDER                                       -->
+<!-- ============================================================ -->
+<section class="slide divider-slide" aria-label="Lab 2 Divider">
+  <div class="divider-badge">Lab 2</div>
+  <h1>Train, Serve &amp; Deploy</h1>
+  <p class="divider-sub">Train a forecasting model, register in MLflow, serve as an endpoint, and build a prediction app</p>
+  <div class="divider-time">55 minutes &bull; 4 phases</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SLIDE 11: LAB 2 PHASE 1 — WRITE MODEL TESTS                  -->
+<!-- ============================================================ -->
+<section class="slide page-slide" aria-label="Lab 2 Phase 1 — Write Model Tests">
+  <div class="page-header">
+    <h2>Lab 2 / Phase 1: Train Model + Write Tests</h2>
+    <span class="track-badge">Data Science</span>
+  </div>
+  <div class="page-content">
+    <span class="phase-badge">Phase 1</span><span class="time-badge">15 min</span>
+
+    <div class="three-col" style="margin-top: 8px; margin-bottom: 10px;">
+      <div class="task-card">
+        <h4>Person A (Terminal)</h4>
+        <p>Write tests: input schema, positive predictions, R&sup2; &gt; 0.5</p>
+      </div>
+      <div class="task-card">
+        <h4>Person B (Terminal)</h4>
+        <p>Implement training script: read features, train, log to MLflow</p>
+      </div>
+      <div class="task-card">
+        <h4>Person C (Databricks UI)</h4>
+        <p>Verify Model Serving permissions, check Model Registry</p>
+      </div>
+    </div>
+
+    <h3>1.1 Write Model Tests</h3>
+    <div class="prompt-label">Paste into Claude Code</div>
+<div class="code-block">Write pytest tests for model training in tests/test_model.py:
+
+1. test_model_predictions_positive:
+   all predictions are positive (turnover can't be negative)
+2. test_model_r2_score:
+   R² > 0.5 on test set
+3. test_model_logged_to_mlflow:
+   run has model artifact, R², MAE, RMSE metrics
+
+Write ONLY tests. Do NOT implement yet.</div>
+  </div>
+  <div class="page-footer">
+    <span>Data Science Track — Coles Vibe Coding Workshop</span>
+    <span>Lab 2 &bull; Phase 1 (1/2)</span>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SLIDE 12: LAB 2 PHASE 1 — TRAIN MODEL                        -->
+<!-- ============================================================ -->
+<section class="slide page-slide" aria-label="Lab 2 Phase 1 — Train Model">
+  <div class="page-header">
+    <h2>Lab 2 / Phase 1: Train the Model</h2>
+    <span class="track-badge">Data Science</span>
+  </div>
+  <div class="page-content">
+    <h3>1.2 Train a Retail Turnover Forecasting Model</h3>
+    <div class="prompt-label">Paste into Claude Code</div>
+<div class="code-block">Train a retail turnover forecasting model:
+
+1. Read feature table: workshop_vibe_coding.TEAM_SCHEMA.retail_features
+2. Target: turnover_millions
+3. Features: all lag, seasonal, and growth columns
+4. Split: 80% train / 20% test (split by date, not random)
+5. Try both RandomForestRegressor and XGBRegressor
+6. Use mlflow.sklearn.autolog() or mlflow.xgboost.autolog()
+7. Log both models, compare R², MAE, RMSE
+8. Print which model performed better
+
+Run tests after training.</div>
+
+    <div class="two-col" style="margin-top: 14px;">
+      <div>
+        <h4>Key Concepts</h4>
+        <ul>
+          <li><strong>Time-based split:</strong> Train on older data, test on recent — never random for time series</li>
+          <li><strong>autolog():</strong> Automatically captures parameters, metrics, and model artifacts</li>
+          <li><strong>Two models:</strong> RandomForest vs XGBoost — compare and pick the best</li>
+        </ul>
+      </div>
+      <div>
+        <div class="tip-box">
+          <strong>Tip:</strong> If R&sup2; is low, try adding more features or tuning hyperparameters. XGBoost often outperforms RandomForest on tabular data.
+        </div>
+        <div class="tip-box">
+          <strong>Starter Kit:</strong> Prompt file at <code>starter-kit/prompts/ds/04-train-model.md</code>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer">
+    <span>Data Science Track — Coles Vibe Coding Workshop</span>
+    <span>Lab 2 &bull; Phase 1 (2/2)</span>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SLIDE 13: LAB 2 PHASE 2 — REGISTER MODEL                     -->
+<!-- ============================================================ -->
+<section class="slide page-slide" aria-label="Lab 2 Phase 2 — Register Model">
+  <div class="page-header">
+    <h2>Lab 2 / Phase 2: Register + Serve</h2>
+    <span class="track-badge">Data Science</span>
+  </div>
+  <div class="page-content">
+    <span class="phase-badge">Phase 2</span><span class="time-badge">20 min</span>
+
+    <div class="three-col" style="margin-top: 8px; margin-bottom: 10px;">
+      <div class="task-card">
+        <h4>Person A (Terminal)</h4>
+        <p>Register best model in MLflow Model Registry</p>
+      </div>
+      <div class="task-card">
+        <h4>Person B (Terminal)</h4>
+        <p>Create Model Serving endpoint, test with sample request</p>
+      </div>
+      <div class="task-card">
+        <h4>Person C (Terminal)</h4>
+        <p>Write tests for serving endpoint response schema</p>
+      </div>
+    </div>
+
+    <h3>2.1 Register the Best Model</h3>
+    <div class="prompt-label">Paste into Claude Code</div>
+<div class="code-block">Register the best model from our experiment:
+
+1. Find the best run (highest R²) from our MLflow experiment
+2. Register as: workshop_vibe_coding.TEAM_SCHEMA.retail_forecast_model
+3. Add description: "Retail turnover forecasting model for Australian states"
+4. Set alias "production" on the latest version</div>
+  </div>
+  <div class="page-footer">
+    <span>Data Science Track — Coles Vibe Coding Workshop</span>
+    <span>Lab 2 &bull; Phase 2 (1/2)</span>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SLIDE 14: LAB 2 PHASE 2 — SERVE MODEL                        -->
+<!-- ============================================================ -->
+<section class="slide page-slide" aria-label="Lab 2 Phase 2 — Serve Model">
+  <div class="page-header">
+    <h2>Lab 2 / Phase 2: Create Serving Endpoint</h2>
+    <span class="track-badge">Data Science</span>
+  </div>
+  <div class="page-content">
+    <h3>2.2 Create a Model Serving Endpoint</h3>
+    <div class="prompt-label">Paste into Claude Code</div>
+<div class="code-block">Create a Model Serving endpoint:
+
+1. Name: grocery-forecast-TEAM_NAME
+2. Model: workshop_vibe_coding.TEAM_SCHEMA.retail_forecast_model
+   (production alias)
+3. Serverless endpoint
+4. Wait for it to be ready (may take 5-10 minutes)
+5. Test with a sample request:
+   {"dataframe_records": [{"turnover_lag_1m": 4500,
+     "turnover_lag_3m": 4400, "turnover_lag_12m": 4200,
+     "month_of_year": 3, "quarter": 1, "is_december": false,
+     "is_q4": false, "turnover_mom_growth": 2.3,
+     "turnover_yoy_growth": 7.1}]}
+
+Show me the prediction response.</div>
+
+    <div class="two-col" style="margin-top: 12px;">
+      <div>
+        <div class="warning-box">
+          <strong>Endpoint provisioning:</strong> Model Serving endpoints take 5-10 minutes to become ready. Start this early and work on something else while waiting.
+        </div>
+      </div>
+      <div>
+        <div class="checkpoint-box">
+          <strong>Stuck at 25 minutes?</strong> Grab <strong>Checkpoint DS-2B</strong>: pre-registered model + working endpoint.
+        </div>
+        <div class="tip-box">
+          <strong>Starter Kit:</strong> Prompts at <code>starter-kit/prompts/ds/05-register-model.md</code> and <code>ds/06-serve-model.md</code>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer">
+    <span>Data Science Track — Coles Vibe Coding Workshop</span>
+    <span>Lab 2 &bull; Phase 2 (2/2)</span>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SLIDE 15: LAB 2 PHASE 3 — BUILD APP                           -->
+<!-- ============================================================ -->
+<section class="slide page-slide" aria-label="Lab 2 Phase 3 — Build App">
+  <div class="page-header">
+    <h2>Lab 2 / Phase 3: Build Prediction App</h2>
+    <span class="track-badge">Data Science</span>
+  </div>
+  <div class="page-content">
+    <span class="phase-badge">Phase 3</span><span class="time-badge">15 min</span>
+
+    <div class="three-col" style="margin-top: 8px; margin-bottom: 10px;">
+      <div class="task-card">
+        <h4>Person A (Terminal)</h4>
+        <p>Build FastAPI backend with <code>/predict</code> endpoint</p>
+      </div>
+      <div class="task-card">
+        <h4>Person B (Terminal)</h4>
+        <p>Build HTML + Tailwind frontend with prediction form</p>
+      </div>
+      <div class="task-card">
+        <h4>Person C (Databricks UI)</h4>
+        <p>Test end-to-end flow, verify predictions</p>
+      </div>
+    </div>
+
+    <h3>3.1 Build the Prediction Web App</h3>
+    <div class="prompt-label">Paste into Claude Code</div>
+<div class="code-block">Build a prediction web app:
+
+1. FastAPI backend (app/app.py):
+   - GET /health -> {"status": "ok"}
+   - POST /predict:
+     Accepts: {"state": "New South Wales",
+               "industry": "Food retailing", "month": "2024-06"}
+     Looks up latest features for that state/industry
+     Calls our Model Serving endpoint
+     Returns: {"predicted_turnover": 4650.2,
+               "state": "New South Wales",
+               "industry": "Food retailing"}
+   - GET / -> serves the frontend
+
+2. Frontend (app/static/index.html):
+   - Tailwind CSS + htmx (CDN, no build step)
+   - Header: "Grocery Forecast — TEAM_NAME"
+   - Form: dropdowns for State, Industry, Month
+   - Submit -> calls POST /predict -> shows result card
+
+3. Create app/app.yaml and app/requirements.txt
+4. Deploy:
+   databricks apps deploy \
+     --name grocery-forecast-TEAM_NAME \
+     --source-code-path ./app/</div>
+  </div>
+  <div class="page-footer">
+    <span>Data Science Track — Coles Vibe Coding Workshop</span>
+    <span>Lab 2 &bull; Phase 3</span>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SLIDE 16: LAB 2 PHASE 4 — DEMO PREP                          -->
+<!-- ============================================================ -->
+<section class="slide page-slide" aria-label="Lab 2 Phase 4 — Demo Prep">
+  <div class="page-header">
+    <h2>Lab 2 / Phase 4: Demo Prep</h2>
+    <span class="track-badge">Data Science</span>
+  </div>
+  <div class="page-content">
+    <span class="phase-badge">Phase 4</span><span class="time-badge">5 min</span>
+
+    <div class="two-col" style="margin-top: 16px;">
+      <div>
+        <h3>Your 3-Minute Demo</h3>
+        <p>Show the group your end-to-end ML pipeline:</p>
+        <ol style="margin-top: 12px; font-size: 0.95rem; line-height: 1.8;">
+          <li><strong>Feature table</strong> — show in Unity Catalog browser</li>
+          <li><strong>MLflow experiment</strong> — show runs, metrics, artifacts</li>
+          <li><strong>Model</strong> — show registry + serving endpoint</li>
+          <li><strong>App</strong> — make a prediction live</li>
+          <li><strong>One thing that surprised you</strong></li>
+        </ol>
+
+        <div class="success-box" style="margin-top: 20px;">
+          <h4>Success Criteria</h4>
+          <ul style="margin-top: 8px;">
+            <li>Model trained with R&sup2; &gt; 0.5</li>
+            <li>Model registered in Unity Catalog Model Registry</li>
+            <li>Model Serving endpoint responding to requests</li>
+            <li>Prediction app deployed to Databricks Apps</li>
+            <li>End-to-end: form &rarr; API &rarr; Model Serving &rarr; response</li>
+            <li>All tests passing</li>
+          </ul>
+        </div>
+      </div>
+
+      <div>
+        <h3>Reflection Questions</h3>
+        <div style="background: #f8f6ff; border-radius: 8px; padding: 16px; margin-top: 8px;">
+          <ol style="font-size: 0.9rem; line-height: 1.7;">
+            <li>How accurate were your model's predictions?</li>
+            <li>What was the hardest part — training, serving, or building the app?</li>
+            <li>How would you improve the model for production use?</li>
+            <li>How does MLflow help with model lifecycle management?</li>
+          </ol>
+        </div>
+
+        <div class="warning-box" style="margin-top: 16px;">
+          <strong>Running out of time?</strong> Grab <strong>Checkpoint DS-2C</strong> (complete app) or <strong>DS-2D</strong> (complete solution).
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer">
+    <span>Data Science Track — Coles Vibe Coding Workshop</span>
+    <span>Lab 2 &bull; Phase 4</span>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SLIDE 17: CHEATSHEET — COMMON PROBLEMS                        -->
+<!-- ============================================================ -->
+<section class="slide page-slide" aria-label="Cheatsheet — Common Problems">
+  <div class="page-header">
+    <h2>Cheatsheet: DS Quick Fixes</h2>
+    <span class="track-badge">Data Science</span>
+  </div>
+  <div class="page-content">
+    <table class="info-table">
+      <thead>
+        <tr>
+          <th style="width: 35%;">Problem</th>
+          <th>Fix</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Agent uses pandas</strong></td>
+          <td>Add to CLAUDE.md: <code>Always use PySpark, never pandas</code>. Say: <em>"Rewrite using PySpark."</em></td>
+        </tr>
+        <tr>
+          <td><strong>MLflow tracking URI error</strong></td>
+          <td>Check <code>DATABRICKS_HOST</code> env var: <code>echo $DATABRICKS_HOST</code></td>
+        </tr>
+        <tr>
+          <td><strong>MLflow experiment not found</strong></td>
+          <td>Set explicitly: <code>mlflow.set_experiment("/Users/.../name")</code></td>
+        </tr>
+        <tr>
+          <td><strong>Window function errors</strong></td>
+          <td>Verify <code>orderBy("month")</code> and <code>partitionBy("state", "industry")</code></td>
+        </tr>
+        <tr>
+          <td><strong>Feature table write error</strong></td>
+          <td>Check UC schema: <code>workshop_vibe_coding.TEAM_SCHEMA</code></td>
+        </tr>
+        <tr>
+          <td><strong>SparkSession errors in tests</strong></td>
+          <td>Check <code>tests/conftest.py</code> has <code>SparkSession.builder.master("local[*]")</code></td>
+        </tr>
+        <tr>
+          <td><strong>XGBoost not installed</strong></td>
+          <td><code>pip install xgboost</code></td>
+        </tr>
+        <tr>
+          <td><strong>Low R&sup2; score</strong></td>
+          <td>Try XGBoost, add more features, or check for data leakage</td>
+        </tr>
+        <tr>
+          <td><strong>Model Serving 404</strong></td>
+          <td>Endpoint takes 5-10 min to provision. Check status in Databricks UI.</td>
+        </tr>
+        <tr>
+          <td><strong>Model Serving auth error</strong></td>
+          <td>Check <code>DATABRICKS_TOKEN</code> env var is set</td>
+        </tr>
+        <tr>
+          <td><strong>Model Registry permission error</strong></td>
+          <td>Check CREATE MODEL permission on catalog. Ask facilitator.</td>
+        </tr>
+        <tr>
+          <td><strong>mlflow.register_model fails</strong></td>
+          <td>Use full UC path: <code>models:/workshop_vibe_coding.TEAM_SCHEMA.model_name</code></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="page-footer">
+    <span>Data Science Track — Coles Vibe Coding Workshop</span>
+    <span>Cheatsheet (1/2)</span>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SLIDE 18: CHEATSHEET — COMMANDS & RECOVERY                    -->
+<!-- ============================================================ -->
+<section class="slide page-slide" aria-label="Cheatsheet — Commands & Recovery">
+  <div class="page-header">
+    <h2>Cheatsheet: Commands &amp; Checkpoint Recovery</h2>
+    <span class="track-badge">Data Science</span>
+  </div>
+  <div class="page-content">
+    <div class="two-col">
+      <div>
+        <h3>Useful Commands</h3>
+<div class="code-block"><span class="comment"># Run specific tests</span>
+pytest tests/test_features.py -x
+pytest tests/test_model.py -x
+
+<span class="comment"># Run all tests</span>
+pytest tests/ -x
+
+<span class="comment"># MLflow</span>
+mlflow experiments list
+mlflow runs list --experiment-id &lt;id&gt;
+
+<span class="comment"># Model Registry</span>
+databricks unity-catalog models list \
+  --catalog workshop_vibe_coding \
+  --schema TEAM_SCHEMA
+
+<span class="comment"># Model Serving</span>
+databricks serving-endpoints list
+databricks serving-endpoints get \
+  grocery-forecast-TEAM_NAME
+
+<span class="comment"># Deploy app</span>
+<span class="keyword">cd</span> app && databricks apps deploy \
+  --name grocery-forecast-TEAM_NAME \
+  --source-code-path ./
+
+<span class="comment"># Start app locally</span>
+<span class="keyword">cd</span> app && uvicorn app:app --reload --port 8000</div>
+      </div>
+
+      <div>
+        <h3>Checkpoint Recovery</h3>
+        <p>If you're stuck and need to catch up:</p>
+<div class="code-block"><span class="comment">-- Gold tables (if needed)</span>
+<span class="keyword">CREATE TABLE</span>
+  workshop_vibe_coding.TEAM_SCHEMA.retail_summary
+  <span class="keyword">AS SELECT</span> * <span class="keyword">FROM</span>
+  workshop_vibe_coding.checkpoints.retail_summary;
+
+<span class="keyword">CREATE TABLE</span>
+  workshop_vibe_coding.TEAM_SCHEMA.food_inflation_yoy
+  <span class="keyword">AS SELECT</span> * <span class="keyword">FROM</span>
+  workshop_vibe_coding.checkpoints.food_inflation_yoy;</div>
+
+        <h3>Agent Steering Tips</h3>
+        <table class="info-table">
+          <thead>
+            <tr><th>When the agent...</th><th>Say this</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Writes too much code</td>
+              <td><em>"Keep it simple. One function, minimal code."</em></td>
+            </tr>
+            <tr>
+              <td>Ignores your CLAUDE.md</td>
+              <td><em>"Read CLAUDE.md first, then try again."</em></td>
+            </tr>
+            <tr>
+              <td>Gets stuck in a loop</td>
+              <td><em>"Stop. Let's take a different approach."</em></td>
+            </tr>
+            <tr>
+              <td>Writes code before tests</td>
+              <td><em>"Stop. Write the tests first, then implement."</em></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer">
+    <span>Data Science Track — Coles Vibe Coding Workshop</span>
+    <span>Cheatsheet (2/2)</span>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SLIDE 19: OVERALL SUCCESS CRITERIA                             -->
+<!-- ============================================================ -->
+<section class="slide page-slide" aria-label="Success Criteria">
+  <div class="page-header">
+    <h2>Data Science Track: Full Success Criteria</h2>
+    <span class="track-badge">Data Science</span>
+  </div>
+  <div class="page-content">
+    <div class="two-col" style="margin-top: 12px;">
+      <div>
+        <h3>Lab 1: Features &amp; Experiments</h3>
+        <div class="success-box">
+          <ul style="font-size: 0.9rem; line-height: 1.8;">
+            <li>Feature table has lag, seasonal, and growth features</li>
+            <li>All feature engineering tests pass</li>
+            <li>MLflow experiment logged with parameters, metrics, artifacts</li>
+            <li>At least one visualization logged as artifact</li>
+            <li>Feature table accessible in Unity Catalog</li>
+          </ul>
+        </div>
+
+        <h3 style="margin-top: 20px;">What You Built</h3>
+        <div style="background: #f8f6ff; border-radius: 8px; padding: 16px;">
+          <p style="font-size: 0.85rem; line-height: 1.6; margin: 0;">
+            <strong>Gold Tables</strong> &rarr; <strong>Feature Engineering</strong> (lag, seasonal, growth)
+            &rarr; <strong>Feature Table</strong> in Unity Catalog
+            &rarr; <strong>MLflow Experiment</strong> with tracked runs, metrics &amp; visualizations
+            &rarr; <strong>Trained Model</strong> (RandomForest / XGBoost)
+            &rarr; <strong>Model Registry</strong>
+            &rarr; <strong>Model Serving Endpoint</strong>
+            &rarr; <strong>Prediction Web App</strong>
+          </p>
+        </div>
+      </div>
+
+      <div>
+        <h3>Lab 2: Train, Serve &amp; Deploy</h3>
+        <div class="success-box">
+          <ul style="font-size: 0.9rem; line-height: 1.8;">
+            <li>Model trained with R&sup2; &gt; 0.5</li>
+            <li>Model registered in Unity Catalog Model Registry</li>
+            <li>Model Serving endpoint responding to requests</li>
+            <li>Prediction app deployed to Databricks Apps</li>
+            <li>End-to-end: form &rarr; API &rarr; Model Serving &rarr; response</li>
+            <li>All tests passing</li>
+          </ul>
+        </div>
+
+        <h3 style="margin-top: 20px;">Key Takeaways</h3>
+        <div style="background: #f8f6ff; border-radius: 8px; padding: 16px;">
+          <ul style="font-size: 0.85rem; line-height: 1.7; margin-left: 16px;">
+            <li>AI agents can build ML pipelines when given clear specs</li>
+            <li>TDD keeps the agent focused and verifiable</li>
+            <li>MLflow tracks the full experiment lifecycle</li>
+            <li>Unity Catalog provides governance for models + data</li>
+            <li>Model Serving makes deployment a single API call</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer">
+    <span>Data Science Track — Coles Vibe Coding Workshop</span>
+    <span>Summary</span>
+  </div>
+</section>
+
+</body>
+</html>

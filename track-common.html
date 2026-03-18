@@ -1,0 +1,1518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vibe Coding Best Practices — Coles Vibe Coding Workshop</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --db-lava: #FF3621;
+    --db-navy: #1B3139;
+    --db-teal: #00A972;
+    --db-green: #00A972;
+    --db-oat: #F9F7F4;
+    --coles-red: #E01A22;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-snap-type: y mandatory; scroll-behavior: smooth; overflow-x: hidden; }
+  body { font-family: 'DM Sans', sans-serif; color: var(--db-navy); background: #1a1a2e; }
+
+  .slide {
+    width: 100vw; height: 100vh;
+    scroll-snap-align: start;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Document page style - white background with content */
+  .page-slide {
+    background: white;
+    padding: 48px 80px 48px 80px;
+  }
+
+  /* Cover slide - dark themed */
+  .cover-slide {
+    background: linear-gradient(135deg, var(--db-navy) 0%, #0d1f26 100%);
+    color: white;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+
+  /* Section divider slide */
+  .divider-slide {
+    background: linear-gradient(135deg, var(--db-navy) 0%, #163a45 100%);
+    color: white;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+
+  /* Cover styling */
+  .cover-slide h1 {
+    font-size: 3.2rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 16px;
+  }
+  .cover-slide .subtitle {
+    font-size: 1.35rem;
+    font-weight: 400;
+    opacity: 0.85;
+    margin-bottom: 32px;
+  }
+  .cover-slide .tagline {
+    font-size: 1.05rem;
+    font-weight: 500;
+    color: var(--db-green);
+    letter-spacing: 0.5px;
+  }
+  .cover-slide .cover-badge {
+    display: inline-block;
+    background: var(--db-green);
+    color: white;
+    padding: 8px 28px;
+    border-radius: 28px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 40px;
+  }
+  .cover-slide .cover-decoration {
+    position: absolute;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0,169,114,0.08) 0%, transparent 70%);
+    top: -200px; right: -200px;
+    pointer-events: none;
+  }
+  .cover-slide .cover-decoration-2 {
+    position: absolute;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0,169,114,0.06) 0%, transparent 70%);
+    bottom: -150px; left: -100px;
+    pointer-events: none;
+  }
+
+  /* Divider styling */
+  .divider-slide h1 {
+    font-size: 2.8rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 12px;
+  }
+  .divider-slide .divider-subtitle {
+    font-size: 1.15rem;
+    font-weight: 400;
+    opacity: 0.75;
+    margin-bottom: 20px;
+  }
+  .divider-slide .divider-time {
+    display: inline-block;
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.2);
+    padding: 6px 22px;
+    border-radius: 24px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+  }
+  .divider-slide .divider-number {
+    font-size: 6rem;
+    font-weight: 700;
+    color: rgba(255,255,255,0.06);
+    position: absolute;
+    top: 60px; left: 80px;
+    line-height: 1;
+  }
+
+  /* Page header bar */
+  .page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 3px solid var(--db-green);
+    padding-bottom: 12px;
+    margin-bottom: 24px;
+    flex-shrink: 0;
+  }
+  .page-header h2 { font-size: 1.4rem; font-weight: 700; color: var(--db-navy); }
+  .page-header .track-badge {
+    background: var(--db-green);
+    color: white;
+    padding: 4px 16px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  /* Content area */
+  .page-content { flex: 1; overflow: hidden; }
+  .page-content h3 { font-size: 1.15rem; font-weight: 700; color: var(--db-green); margin: 16px 0 8px; }
+  .page-content h3:first-child { margin-top: 0; }
+  .page-content h4 { font-size: 1rem; font-weight: 600; color: var(--db-navy); margin: 12px 0 6px; }
+  .page-content p { font-size: 0.88rem; line-height: 1.5; margin-bottom: 8px; }
+  .page-content ul, .page-content ol { font-size: 0.88rem; line-height: 1.5; margin-left: 24px; margin-bottom: 8px; }
+  .page-content li { margin-bottom: 3px; }
+
+  /* Code blocks */
+  .code-block {
+    background: #1e1e2e;
+    color: #cdd6f4;
+    border-radius: 8px;
+    padding: 14px 18px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.76rem;
+    line-height: 1.45;
+    white-space: pre;
+    overflow-x: auto;
+    margin: 10px 0;
+  }
+  .code-block .keyword { color: #cba6f7; }
+  .code-block .string { color: #a6e3a1; }
+  .code-block .comment { color: #6c7086; }
+  .code-block .function { color: #89b4fa; }
+  .code-block .type { color: #f9e2af; }
+  .code-block .decorator { color: #fab387; }
+  .code-block .label {
+    display: block;
+    color: #89b4fa;
+    font-weight: 500;
+    margin-bottom: 6px;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  /* Inline code */
+  code {
+    background: #f0ede8;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.82rem;
+    color: var(--db-green);
+  }
+
+  /* Info/tip boxes */
+  .tip-box {
+    background: #e8f5e9;
+    border-left: 4px solid var(--db-green);
+    padding: 10px 14px;
+    border-radius: 0 8px 8px 0;
+    margin: 10px 0;
+    font-size: 0.82rem;
+    line-height: 1.45;
+  }
+  .tip-box strong { color: #2e7d32; }
+  .warning-box {
+    background: #fff3e0;
+    border-left: 4px solid #ff9800;
+    padding: 10px 14px;
+    border-radius: 0 8px 8px 0;
+    margin: 10px 0;
+    font-size: 0.82rem;
+    line-height: 1.45;
+  }
+  .warning-box strong { color: #e65100; }
+
+  /* Phase badge */
+  .phase-badge {
+    display: inline-block;
+    background: var(--db-navy);
+    color: white;
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+  }
+
+  /* Time badge */
+  .time-badge {
+    display: inline-block;
+    background: var(--db-green);
+    color: white;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    margin-left: 8px;
+  }
+
+  /* Two column layout */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+
+  /* Three column layout */
+  .three-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 18px;
+  }
+
+  /* Four column layout */
+  .four-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 16px;
+  }
+
+  /* Success criteria box */
+  .success-box {
+    background: #e8f5e9;
+    border: 2px solid var(--db-green);
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin: 10px 0;
+  }
+  .success-box h4 { color: var(--db-green); margin-top: 0; }
+
+  /* Checkpoint box */
+  .checkpoint-box {
+    background: #e3f2fd;
+    border: 2px solid #1976d2;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin: 10px 0;
+    font-size: 0.82rem;
+    line-height: 1.45;
+  }
+  .checkpoint-box strong { color: #1565c0; }
+
+  /* Team task box */
+  .team-box {
+    background: #f3e5f5;
+    border-left: 4px solid #9c27b0;
+    padding: 10px 14px;
+    border-radius: 0 8px 8px 0;
+    margin: 10px 0;
+    font-size: 0.82rem;
+    line-height: 1.45;
+  }
+  .team-box strong { color: #7b1fa2; }
+
+  /* Table */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.82rem;
+    margin: 10px 0;
+  }
+  .data-table th {
+    background: var(--db-navy);
+    color: white;
+    padding: 8px 12px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.78rem;
+  }
+  .data-table td {
+    padding: 6px 12px;
+    border-bottom: 1px solid #e0e0e0;
+  }
+  .data-table tr:nth-child(even) td { background: #f8f8f8; }
+
+  /* Page footer */
+  .page-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #e0e0e0;
+    padding-top: 8px;
+    margin-top: auto;
+    font-size: 0.7rem;
+    color: #999;
+    flex-shrink: 0;
+  }
+
+  /* Prompt block — special emphasis */
+  .prompt-block {
+    background: #1a1a2e;
+    border: 2px solid var(--db-green);
+    border-radius: 8px;
+    padding: 14px 18px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.78rem;
+    line-height: 1.5;
+    color: #e0e0e0;
+    white-space: pre-wrap;
+    margin: 10px 0;
+    position: relative;
+  }
+  .prompt-block::before {
+    content: 'PASTE INTO CLAUDE CODE';
+    position: absolute;
+    top: -10px; left: 16px;
+    background: var(--db-green);
+    color: white;
+    font-size: 0.6rem;
+    font-weight: 700;
+    padding: 2px 10px;
+    border-radius: 4px;
+    letter-spacing: 1px;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  /* Pipeline diagram */
+  .pipeline-flow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin: 16px 0;
+    font-size: 0.82rem;
+    font-weight: 600;
+  }
+  .pipeline-flow .stage {
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-align: center;
+  }
+  .pipeline-flow .bronze { background: #CD7F32; color: white; }
+  .pipeline-flow .silver { background: #C0C0C0; color: var(--db-navy); }
+  .pipeline-flow .gold { background: #FFD700; color: var(--db-navy); }
+  .pipeline-flow .arrow { color: #999; font-size: 1.4rem; }
+
+  /* Checklist style */
+  .checklist { list-style: none; margin-left: 0; }
+  .checklist li { padding-left: 24px; position: relative; }
+  .checklist li::before {
+    content: '\2610';
+    position: absolute;
+    left: 0;
+    font-size: 0.9rem;
+  }
+
+  /* Blockquote for big quotes */
+  .big-quote {
+    font-size: 1.05rem;
+    font-style: italic;
+    border-left: 4px solid var(--db-green);
+    padding: 14px 20px;
+    margin: 12px 0;
+    background: #f4faf6;
+    line-height: 1.55;
+    color: #333;
+  }
+  .big-quote .attribution {
+    display: block;
+    font-style: normal;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--db-green);
+    margin-top: 8px;
+  }
+
+  /* Concept card for grid layouts */
+  .concept-card {
+    background: #f8f8f8;
+    border-radius: 8px;
+    padding: 14px 16px;
+    border-top: 3px solid var(--db-green);
+  }
+  .concept-card h4 { font-size: 0.92rem; font-weight: 700; color: var(--db-green); margin: 0 0 6px; }
+  .concept-card p { font-size: 0.8rem; line-height: 1.45; margin: 0; }
+
+  /* Numbered step */
+  .step-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: var(--db-green);
+    color: white;
+    font-size: 0.82rem;
+    font-weight: 700;
+    margin-right: 8px;
+    flex-shrink: 0;
+  }
+
+  /* Loop diagram */
+  .loop-diagram {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    margin: 14px 0;
+    font-size: 0.82rem;
+    font-weight: 600;
+  }
+  .loop-diagram .loop-step {
+    padding: 10px 16px;
+    border-radius: 8px;
+    text-align: center;
+    background: var(--db-navy);
+    color: white;
+    min-width: 140px;
+  }
+  .loop-diagram .loop-step.human { background: var(--db-green); }
+  .loop-diagram .loop-step.agent { background: #1976d2; }
+  .loop-diagram .loop-arrow { color: #999; font-size: 1.3rem; }
+
+  /* Scale bar for tokens */
+  .scale-bar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 6px 0;
+    font-size: 0.8rem;
+  }
+  .scale-bar .bar {
+    height: 14px;
+    border-radius: 7px;
+    background: var(--db-green);
+  }
+  .scale-bar .bar-label {
+    min-width: 200px;
+    font-weight: 500;
+    text-align: right;
+  }
+  .scale-bar .bar-value {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    color: #666;
+    min-width: 120px;
+  }
+
+  /* Insight box — green accent */
+  .insight-box {
+    background: #e8f5e9;
+    border: 2px solid var(--db-green);
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin: 10px 0;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    font-weight: 500;
+    text-align: center;
+    color: #1b5e20;
+  }
+
+  /* MCP type card */
+  .mcp-card {
+    background: #f8f8f8;
+    border-radius: 8px;
+    padding: 12px 14px;
+    border-left: 4px solid var(--db-green);
+  }
+  .mcp-card h4 { font-size: 0.88rem; font-weight: 700; color: var(--db-navy); margin: 0 0 4px; }
+  .mcp-card p { font-size: 0.78rem; line-height: 1.4; margin: 0; }
+  .mcp-card ul { font-size: 0.78rem; line-height: 1.4; margin: 4px 0 0 16px; }
+  .mcp-card li { margin-bottom: 2px; }
+</style>
+</head>
+<body>
+
+<!-- ============================================================ -->
+<!-- SLIDE 1: COVER                                                -->
+<!-- ============================================================ -->
+<section class="slide cover-slide" aria-label="Cover">
+  <div class="cover-decoration"></div>
+  <div class="cover-decoration-2"></div>
+  <div class="cover-badge">Best Practices</div>
+  <h1>Vibe Coding Best Practices</h1>
+  <p class="subtitle">Coles &times; Databricks Vibe Coding Workshop</p>
+  <p class="tagline">A Guide to Agentic Software Development with Claude</p>
+</section>
+
+<!-- ============================================================ -->
+<!-- SLIDE 2: WHAT IS VIBE CODING?                                 -->
+<!-- ============================================================ -->
+<section class="slide page-slide" aria-label="What is Vibe Coding?">
+  <div class="page-header">
+    <h2>What is Vibe Coding?</h2>
+    <span class="track-badge">Best Practices</span>
+  </div>
+  <div class="page-content">
+    <div class="big-quote">
+      "There's a new kind of coding I call 'vibe coding', where you fully give in to the vibes, embrace exponentials, and forget that the code even exists."
+      <span class="attribution">&mdash; Andrej Karpathy, February 2025</span>
+    </div>
+
+    <h3>Traditional vs Agentic Development</h3>
+    <div class="two-col">
+      <div class="concept-card" style="border-top-color: #999;">
+        <h4 style="color: #666;">Traditional Development</h4>
+        <p>Human writes every line of code</p>
+        <p>Human handles all implementation details</p>
+        <p>Human debugs, refactors, and iterates manually</p>
+        <p>Speed limited by typing and cognitive load</p>
+      </div>
+      <div class="concept-card">
+        <h4>Agentic Development</h4>
+        <p>Human specifies intent via tests, specs, and CLAUDE.md</p>
+        <p>Agent implements code to match the specification</p>
+        <p>Agent self-corrects by reading test failures</p>
+        <p>Speed limited by quality of direction, not typing</p>
+      </div>
+    </div>
+
+    <div class="insight-box">Your job shifts from WRITING code to DIRECTING an exceptionally capable engineer.</div>
+  </div>
+  <div class="page-footer">
+    <span>Coles Vibe Coding Workshop</span>
+    <span>Page 2</span>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SLIDE 3: THE BRILLIANT NEW EMPLOYEE                           -->
+<!-- ============================================================ -->
+<section class="slide page-slide" aria-label="The Brilliant New Employee">
+  <div class="page-header">
+    <h2>The "Brilliant New Employee" Mental Model</h2>
+    <span class="track-badge">Best Practices</span>
+  </div>
+  <div class="page-content">
+    <p>Think of Claude as a <strong>brilliant but brand-new employee</strong> who just joined your team today:</p>
+
+    <div class="two-col" style="margin-top: 12px;">
+      <div>
+        <h4><span class="step-num">1</span> Deep Technical Skills</h4>
+        <p>Knows Python, PySpark, SQL, FastAPI, React, and hundreds of frameworks &mdash; but has zero context on <em>your</em> norms, naming conventions, or architecture decisions.</p>
+
+        <h4 style="margin-top: 14px;"><span class="step-num">2</span> Excels With Clear Direction</h4>
+        <p>Given a precise spec, produces excellent code. Given a vague request, produces plausible-looking code that misses the mark.</p>
+      </div>
+      <div>
+        <h4><span class="step-num">3</span> Needs Explicit Context</h4>
+        <p>Won't infer your team's standards. Needs to be told: "Always PySpark, never pandas." "Snake_case for all columns." "Tests before code."</p>
+
+        <h4 style="margin-top: 14px;"><span class="step-num">4</span> Benefits From Guardrails</h4>
+        <p>Concrete examples, test cases, and constraints prevent the agent from over-engineering or going off-track.</p>
+      </div>
+    </div>
+
+    <div class="insight-box">Reframe: You are a TECH LEAD managing a talented engineer through specs, tests, and feedback. Invest time in specs upfront, not in writing code.</div>
+  </div>
+  <div class="page-footer">
+    <span>Coles Vibe Coding Workshop</span>
+    <span>Page 3</span>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SLIDE 4: WHY SPECS MATTER                                     -->
+<!-- ============================================================ -->
+<section class="slide page-slide" aria-label="Why Specs Matter">
+  <div class="page-header">
+    <h2>Why Specs Matter &mdash; "Garbage In, Garbage Out at 100x Speed"</h2>
+    <span class="track-badge">Best Practices</span>
+  </div>
+  <div class="page-content">
+    <p>With AI agents, ambiguous specs don't just waste time &mdash; they waste time at <strong>agent velocity</strong>. A vague requirement might be implemented 10 different ways in seconds, all wrong.</p>
+
+    <h3>What Makes a Good Spec</h3>
+    <div class="four-col">
+      <div class="concept-card">
+        <h4><span class="step-num">1</span> Acceptance Criteria</h4>
+        <p>What must be true when done? Exact expected outputs, not vague descriptions.</p>
+      </div>
+      <div class="concept-card">
+        <h4><span class="step-num">2</span> Constraints</h4>
+        <p>What can't be changed? What's off-limits? "Don't modify passing tests." "Use PySpark only."</p>
+      </div>
+      <div class="concept-card">
+        <h4><span class="step-num">3</span> Data Contracts</h4>
+        <p>Input/output shapes, types, and examples. Column names, date formats, value ranges.</p>
+      </div>
+      <div class="concept-card">
+        <h4><span class="step-num">4</span> Test Cases</h4>
+        <p>Concrete test cases with real values &mdash; not prose descriptions of expected behaviour.</p>
+      </div>
+    </div>
+
+    <div class="tip-box"><strong>Tip:</strong> A vague requirement might be implemented 10 different ways in seconds, all wrong. A precise spec produces the right answer on the first try.</div>
+  </div>
+  <div class="page-footer">
+    <span>Coles Vibe Coding Workshop</span>
+    <span>Page 4</span>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SLIDE 5: CLAUDE.MD — YOUR TEAM'S OPERATING MANUAL             -->
+<!-- ============================================================ -->
+<section class="slide page-slide" aria-label="CLAUDE.md — Your Team's Operating Manual">
+  <div class="page-header">
+    <h2>CLAUDE.md &mdash; Your Team's Operating Manual</h2>
+    <span class="track-badge">Best Practices</span>
+  </div>
+  <div class="page-content">
+    <p>CLAUDE.md is a <strong>persistent instruction file</strong> that encodes your team's standards. The agent reads it automatically at the start of every session &mdash; no need to repeat yourself.</p>
+
+    <h3>Three Scope Levels</h3>
+    <div class="three-col">
+      <div class="concept-card">
+        <h4>1. User-Level</h4>
+        <p><code style="font-size:0.72rem">~/.claude/CLAUDE.md</code></p>
+        <p>Personal preferences, coding style, editor habits. Applies to all your projects.</p>
+      </div>
+      <div class="concept-card">
+        <h4>2. Repo-Level</h4>
+        <p><code style="font-size:0.72rem">./CLAUDE.md</code></p>
+        <p>Team standards, tech stack, architecture decisions. Overrides user-level. Checked into git.</p>
+      </div>
+      <div class="concept-card">
+        <h4>3. Module-Level</h4>
+        <p><code style="font-size:0.72rem">./src/CLAUDE.md</code></p>
+        <p>Module-specific rules (e.g., "all files here use <code style="font-size:0.72rem">@dp.table</code>"). Overrides repo-level.</p>
+      </div>
+    </div>
+
+    <h3>Why It Works</h3>
+    <div class="two-col">
+      <ul>
+        <li><strong>Self-correcting:</strong> Agent re-reads it each session &mdash; no drift</li>
+        <li><strong>Searchable:</strong> Agent can reference specific sections on demand</li>
+      </ul>
+      <ul>
+        <li><strong>Maintainable:</strong> One file to update, entire team benefits</li>
+        <li><strong>Scoped:</strong> Different rules for different parts of the codebase</li>
+      </ul>
+    </div>
+  </div>
+  <div class="page-footer">
+    <span>Coles Vibe Coding Workshop</span>
+    <span>Page 5</span>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SLIDE 6: CLAUDE.MD — WHAT TO INCLUDE                          -->
+<!-- ============================================================ -->
+<section class="slide page-slide" aria-label="CLAUDE.md — What to Include">
+  <div class="page-header">
+    <h2>CLAUDE.md &mdash; What to Include</h2>
+    <span class="track-badge">Best Practices</span>
+  </div>
+  <div class="page-content">
+    <div class="two-col">
+      <div>
+        <h3>Template Structure</h3>
+        <div class="code-block" style="font-size:0.72rem"><span class="comment"># CLAUDE.md &mdash; Grocery Intelligence Platform</span>
+
+<span class="keyword">## Team</span>
+- Team Name: TEAM_NAME
+- Schema: workshop_vibe_coding.TEAM_SCHEMA
+
+<span class="keyword">## Project</span>
+A data platform that ingests Australian retail
+and food price data through a medallion architecture.
+
+<span class="keyword">## Tech Stack</span>
+- Data processing: PySpark (never pandas)
+- Pipeline: Lakeflow Declarative Pipelines
+- Web backend: FastAPI with Pydantic models
+- Deployment: Databricks Asset Bundles
+
+<span class="keyword">## Data Standards</span>
+- Architecture: Bronze &rarr; Silver &rarr; Gold
+- Date columns: YYYY-MM-DD, stored as DATE
+- Naming: snake_case for all tables/columns
+
+<span class="keyword">## Rules</span>
+- Always use PySpark, never pandas
+- Write tests BEFORE implementation
+- Keep solutions minimal
+
+<span class="keyword">## Project Structure</span>
+<span class="comment">(directory tree)</span>
+
+<span class="keyword">## Data Sources</span>
+<span class="comment">(table with API endpoints)</span>
+
+<span class="keyword">## Code Mappings</span>
+<span class="comment">(region codes, industry codes)</span></div>
+      </div>
+      <div>
+        <h3>Tips for Effective CLAUDE.md</h3>
+        <div class="tip-box"><strong>Keep it lean:</strong> Aim for ~50 lines. CLAUDE.md consumes context tokens &mdash; every line counts.</div>
+        <div class="tip-box"><strong>Be specific:</strong> "Always PySpark, never pandas" beats "Use appropriate tools." Concrete rules get followed.</div>
+        <div class="tip-box"><strong>Include code mappings:</strong> Region codes, industry codes, enum values &mdash; anything the agent needs for lookups.</div>
+
+        <div class="warning-box"><strong>Don't dump everything in.</strong> CLAUDE.md is not documentation. It's a set of standing orders. If a rule isn't referenced often, it belongs in a separate doc the agent can read on demand.</div>
+
+        <h3 style="margin-top: 14px;">What NOT to Include</h3>
+        <ul>
+          <li>Long explanations or tutorials</li>
+          <li>Full API documentation (link to it instead)</li>
+          <li>Implementation details that change frequently</li>
+          <li>Anything already in your test suite</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer">
+    <span>Coles Vibe Coding Workshop</span>
+    <span>Page 6</span>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SLIDE 7: CLAUDE.MD EXERCISE PROMPT                            -->
+<!-- ============================================================ -->
+<section class="slide page-slide" aria-label="CLAUDE.md Exercise">
+  <div class="page-header">
+    <h2>Exercise: Write Your Team's CLAUDE.md</h2>
+    <span class="track-badge">Best Practices</span>
+  </div>
+  <div class="page-content">
+    <p>Open your Coding Agents terminal and paste the prompt below. Replace <code>&lt;team_schema&gt;</code> with your assigned schema name.</p>
+
+    <div class="prompt-block">Create a CLAUDE.md for a grocery intelligence platform.
+
+Tech stack: PySpark, Lakeflow Declarative Pipelines, FastAPI + React,
+Databricks Asset Bundles (DABs).
+
+Data sources: ABS SDMX APIs, FSANZ web scraping, ACCC PDF ingestion
+via UC Volumes.
+
+Unity Catalog namespace: workshop_vibe_coding.&lt;team_schema&gt;.
+
+Include:
+- Team name and schema
+- Tech stack with explicit constraints (PySpark not pandas)
+- Data standards (medallion architecture, date formats, naming)
+- Rules (TDD, minimal solutions, don't change passing tests)
+- Project structure (src/bronze, src/silver, src/gold, tests/, app/)
+- Data sources table with API endpoints
+- Code mappings for region and industry codes</div>
+
+    <div class="insight-box">This is the most important 5 minutes of the workshop &mdash; everything else builds on this.</div>
+
+    <div class="tip-box"><strong>After generating:</strong> Read through the CLAUDE.md and edit anything that doesn't match your team's preferences. Add your team's chosen angle (Retail Performance, Food Inflation, etc.) to the Project section.</div>
+  </div>
+  <div class="page-footer">
+    <span>Coles Vibe Coding Workshop</span>
+    <span>Page 7</span>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SLIDE 8: DIVIDER — TDD WITH AGENTS                            -->
+<!-- ============================================================ -->
+<section class="slide divider-slide" aria-label="TDD with Agents Divider">
+  <h1>Test-Driven Development<br>with Agents</h1>
+  <p class="divider-subtitle">The Test IS the Spec. No Ambiguity.</p>
+</section>
+
+<!-- ============================================================ -->
+<!-- SLIDE 9: THE TDD LOOP                                         -->
+<!-- ============================================================ -->
+<section class="slide page-slide" aria-label="The TDD Loop">
+  <div class="page-header">
+    <h2>The TDD + Agent Workflow</h2>
+    <span class="track-badge">Best Practices</span>
+  </div>
+  <div class="page-content">
+    <div class="loop-diagram">
+      <div class="loop-step human"><span style="font-size:0.72rem;display:block;opacity:0.8">STEP 1</span>Human writes<br>the test</div>
+      <span class="loop-arrow">&rarr;</span>
+      <div class="loop-step agent"><span style="font-size:0.72rem;display:block;opacity:0.8">STEP 2</span>Agent implements<br>code to pass</div>
+      <span class="loop-arrow">&rarr;</span>
+      <div class="loop-step agent"><span style="font-size:0.72rem;display:block;opacity:0.8">STEP 3</span>Run &amp; iterate<br>(agent self-corrects)</div>
+      <span class="loop-arrow">&rarr;</span>
+      <div class="loop-step human"><span style="font-size:0.72rem;display:block;opacity:0.8">STEP 4</span>Human reviews<br>&amp; accepts</div>
+    </div>
+
+    <div class="insight-box">The Test IS the Spec. Unlike prose specs, a test is executable, unambiguous, and either passes or fails.</div>
+
+    <div class="two-col" style="margin-top: 14px;">
+      <div>
+        <h3>Why This Works</h3>
+        <ul>
+          <li><strong>Step 1 (Human writes test):</strong> You define "done" in code, not prose. No interpretation debate.</li>
+          <li><strong>Step 2 (Agent implements):</strong> Agent has a clear, unambiguous target to code against.</li>
+          <li><strong>Step 3 (Run &amp; iterate):</strong> Agent reads failure messages, fixes code, re-runs &mdash; no human review bottleneck.</li>
+          <li><strong>Step 4 (Human reviews):</strong> You review working, tested code &mdash; not speculative drafts.</li>
+        </ul>
+      </div>
+      <div>
+        <h3>The Compound Effect</h3>
+        <p>Each passing test <strong>constrains</strong> the next implementation. The agent can't break existing tests while adding new features.</p>
+        <p style="margin-top: 8px;">This creates a <strong>ratchet effect</strong>: quality only goes up, never down. Every green test is permanent progress.</p>
+        <div class="tip-box"><strong>If you take one thing from today:</strong> write the tests first. Always.</div>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer">
+    <span>Coles Vibe Coding Workshop</span>
+    <span>Page 9</span>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SLIDE 10: WHY TDD WORKS WITH AGENTS                           -->
+<!-- ============================================================ -->
+<section class="slide page-slide" aria-label="Why TDD Works With Agents">
+  <div class="page-header">
+    <h2>Why TDD Is Exponentially More Powerful With Agents</h2>
+    <span class="track-badge">Best Practices</span>
+  </div>
+  <div class="page-content">
+    <div class="two-col">
+      <div class="concept-card">
+        <h4><span class="step-num">1</span> Unambiguous Specifications</h4>
+        <p>A test says exactly what the code must do. No room for interpretation, no "I thought you meant..." The agent reads the assertion and knows the target.</p>
+      </div>
+      <div class="concept-card">
+        <h4><span class="step-num">2</span> Self-Correcting Loop</h4>
+        <p>The agent reads the failure message, understands what went wrong, and fixes it automatically. No waiting for human review on each iteration.</p>
+      </div>
+      <div class="concept-card">
+        <h4><span class="step-num">3</span> Guardrails</h4>
+        <p>Existing passing tests prevent the agent from accidentally rewriting working code. New code must pass new tests <em>without</em> breaking old ones.</p>
+      </div>
+      <div class="concept-card">
+        <h4><span class="step-num">4</span> Faster Iteration</h4>
+        <p>The agent can run tests, fix, and re-run in seconds. No human bottleneck for the first pass. You review working code, not speculative drafts.</p>
+      </div>
+    </div>
+
+    <div class="big-quote" style="margin-top: 16px;">
+      "Give Claude a way to verify its work."
+      <span class="attribution">&mdash; Anthropic's #1 Best Practice for Agentic Development</span>
+    </div>
+  </div>
+  <div class="page-footer">
+    <span>Coles Vibe Coding Workshop</span>
+    <span>Page 10</span>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SLIDE 11: WRITING TESTS THAT GUIDE                            -->
+<!-- ============================================================ -->
+<section class="slide page-slide" aria-label="Writing Tests That Guide">
+  <div class="page-header">
+    <h2>Writing Tests That Guide</h2>
+    <span class="track-badge">Best Practices</span>
+  </div>
+  <div class="page-content">
+    <div class="two-col">
+      <div>
+        <h3>Given &mdash; When &mdash; Then</h3>
+        <div class="code-block"><span class="keyword">def</span> <span class="function">test_clean_retail_data</span>(spark):
+    <span class="comment"># GIVEN: Raw data with 10 rows, 2 invalid</span>
+    raw_data = spark.createDataFrame([
+        (<span class="string">"2024-01-15"</span>, <span class="type">1000</span>, <span class="string">"NSW"</span>),
+        (<span class="string">"2024-01-16"</span>, <span class="type">None</span>, <span class="string">"VIC"</span>),
+        (<span class="string">"invalid"</span>,    <span class="type">2000</span>, <span class="string">"QLD"</span>),
+        (<span class="string">"2024-01-17"</span>, <span class="type">1500</span>, <span class="string">"NSW"</span>),
+        (<span class="string">"2024-01-18"</span>, <span class="type">900</span>,  <span class="string">"VIC"</span>),
+        (<span class="string">"2024-01-19"</span>, <span class="type">1100</span>, <span class="string">"QLD"</span>),
+        (<span class="string">"2024-01-20"</span>, <span class="type">1300</span>, <span class="string">"NSW"</span>),
+        (<span class="string">"2024-01-21"</span>, <span class="type">None</span>, <span class="string">"SA"</span>),
+        (<span class="string">"2024-01-22"</span>, <span class="type">800</span>,  <span class="string">"WA"</span>),
+        (<span class="string">"2024-01-23"</span>, <span class="type">1200</span>, <span class="string">"TAS"</span>),
+    ], [<span class="string">"date"</span>, <span class="string">"price"</span>, <span class="string">"state"</span>])
+
+    <span class="comment"># WHEN: Clean function applied</span>
+    result = clean_transactions(raw_data)
+
+    <span class="comment"># THEN: Invalid rows removed</span>
+    <span class="keyword">assert</span> result.count() == <span class="type">8</span>
+    <span class="keyword">assert</span> result.filter(
+        <span class="string">"price IS NULL"</span>
+    ).count() == <span class="type">0</span></div>
+      </div>
+      <div>
+        <h3>Key Principles</h3>
+        <div class="concept-card" style="margin-bottom: 10px;">
+          <h4>Concrete Values</h4>
+          <p>Use real data: actual state codes, valid dates, realistic dollar amounts. Not mocks or abstract placeholders.</p>
+        </div>
+        <div class="concept-card" style="margin-bottom: 10px;">
+          <h4>Small Datasets</h4>
+          <p>5-10 rows per test. Enough to cover happy path + edge cases. Easy to reason about.</p>
+        </div>
+        <div class="concept-card" style="margin-bottom: 10px;">
+          <h4>Descriptive Names</h4>
+          <p><code style="font-size:0.72rem">test_silver_decodes_region_codes</code> not <code style="font-size:0.72rem">test_transform</code>. The name tells the agent what to build.</p>
+        </div>
+        <div class="concept-card">
+          <h4>Multiple Assertions</h4>
+          <p>Check row count, column names, specific values, and null handling. Each assertion is a constraint.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer">
+    <span>Coles Vibe Coding Workshop</span>
+    <span>Page 11</span>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SLIDE 12: ANTHROPIC'S TWO CORE PRACTICES                      -->
+<!-- ============================================================ -->
+<section class="slide page-slide" aria-label="Anthropic's Two Core Practices">
+  <div class="page-header">
+    <h2>Anthropic's Two Core Practices</h2>
+    <span class="track-badge">Best Practices</span>
+  </div>
+  <div class="page-content">
+    <div class="two-col">
+      <div>
+        <h3>#1: Give Claude a Way to Verify Its Work</h3>
+        <p>The agent needs a <strong>feedback loop</strong> &mdash; a way to check if its output is correct without asking you.</p>
+        <ul>
+          <li><strong>Tests:</strong> pytest, unit tests, integration tests</li>
+          <li><strong>Screenshots:</strong> visual verification of UI changes</li>
+          <li><strong>Expected outputs:</strong> "this query should return 42"</li>
+          <li><strong>Diff comparisons:</strong> "output should match this template"</li>
+        </ul>
+        <div class="tip-box"><strong>Self-correcting:</strong> Agent reads failure, fixes, re-runs. Scales without human review bottleneck for each iteration.</div>
+      </div>
+      <div>
+        <h3>#2: Explore First, Plan, Then Code</h3>
+        <p>Don't ask the agent to implement immediately. Follow a three-phase approach:</p>
+        <ol>
+          <li style="margin-bottom: 6px;"><strong>Explore:</strong> Read relevant code, understand existing patterns, check what's already there</li>
+          <li style="margin-bottom: 6px;"><strong>Plan:</strong> Use <code>/plan</code> mode or <code>ultrathink</code> to align on approach before writing code</li>
+          <li style="margin-bottom: 6px;"><strong>Code:</strong> Implement with full context &mdash; agent knows what exists, what to change, what to preserve</li>
+        </ol>
+        <div class="tip-box"><strong>Why this works:</strong> Prevents over-engineering and hallucinations. The agent builds on what exists rather than speculating about what might exist.</div>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer">
+    <span>Coles Vibe Coding Workshop</span>
+    <span>Page 12</span>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SLIDE 13: DIVIDER — CONTEXT WINDOWS                           -->
+<!-- ============================================================ -->
+<section class="slide divider-slide" aria-label="Context Windows Divider">
+  <h1>Understanding<br>Context Windows</h1>
+  <p class="divider-subtitle">Context Window = RAM. When it fills up, older context gets evicted.</p>
+</section>
+
+<!-- ============================================================ -->
+<!-- SLIDE 14: WHAT ARE TOKENS?                                    -->
+<!-- ============================================================ -->
+<section class="slide page-slide" aria-label="What Are Tokens?">
+  <div class="page-header">
+    <h2>What Are Tokens?</h2>
+    <span class="track-badge">Best Practices</span>
+  </div>
+  <div class="page-content">
+    <p>A <strong>token</strong> is the basic unit of text for an LLM &mdash; roughly 3/4 of a word, or about 4 characters. Everything the agent reads and writes is measured in tokens.</p>
+
+    <h3>Token Scale</h3>
+    <div style="margin: 16px 0;">
+      <div class="scale-bar">
+        <span class="bar-label">One sentence</span>
+        <div class="bar" style="width: 8px;"></div>
+        <span class="bar-value">~8 tokens</span>
+      </div>
+      <div class="scale-bar">
+        <span class="bar-label">200-line Python file</span>
+        <div class="bar" style="width: 40px;"></div>
+        <span class="bar-value">~2,500 tokens</span>
+      </div>
+      <div class="scale-bar">
+        <span class="bar-label">Your CLAUDE.md (~50 lines)</span>
+        <div class="bar" style="width: 15px;"></div>
+        <span class="bar-value">~500 tokens</span>
+      </div>
+      <div class="scale-bar">
+        <span class="bar-label">Harry Potter series (all 7 books)</span>
+        <div class="bar" style="width: 280px;"></div>
+        <span class="bar-value">~1,100,000 tokens</span>
+      </div>
+      <div class="scale-bar">
+        <span class="bar-label">Claude's context window</span>
+        <div class="bar" style="width: 55px; background: var(--db-green);"></div>
+        <span class="bar-value">200,000 tokens</span>
+      </div>
+    </div>
+
+    <div class="insight-box">Context window = RAM. It holds everything the agent can "remember" in one session. When it fills up, older context gets evicted (compacted) and the agent may forget earlier decisions.</div>
+
+    <div class="tip-box"><strong>Mental model:</strong> If the Harry Potter series is ~1.1M tokens, Claude's context window holds roughly 1/5 of that &mdash; enough to hold the first two books. That's a lot, but it's not infinite. Every file read, every tool result, and every conversation turn consumes tokens.</div>
+  </div>
+  <div class="page-footer">
+    <span>Coles Vibe Coding Workshop</span>
+    <span>Page 14</span>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SLIDE 15: MANAGING YOUR CONTEXT WINDOW                        -->
+<!-- ============================================================ -->
+<section class="slide page-slide" aria-label="Managing Your Context Window">
+  <div class="page-header">
+    <h2>Managing Your Context Window</h2>
+    <span class="track-badge">Best Practices</span>
+  </div>
+  <div class="page-content">
+    <div class="two-col">
+      <div>
+        <h3>Context Budget Breakdown</h3>
+        <div style="margin: 10px 0;">
+          <div style="display:flex;align-items:center;margin-bottom:6px;">
+            <div style="width:180px;font-size:0.82rem;font-weight:500;">CLAUDE.md &amp; setup</div>
+            <div style="flex:1;background:#e8f5e9;height:22px;border-radius:4px;overflow:hidden;">
+              <div style="width:20%;height:100%;background:var(--db-green);border-radius:4px;display:flex;align-items:center;justify-content:center;color:white;font-size:0.72rem;font-weight:600;">20%</div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;margin-bottom:6px;">
+            <div style="width:180px;font-size:0.82rem;font-weight:500;">File reads &amp; tool results</div>
+            <div style="flex:1;background:#e3f2fd;height:22px;border-radius:4px;overflow:hidden;">
+              <div style="width:25%;height:100%;background:#1976d2;border-radius:4px;display:flex;align-items:center;justify-content:center;color:white;font-size:0.72rem;font-weight:600;">25%</div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;margin-bottom:6px;">
+            <div style="width:180px;font-size:0.82rem;font-weight:500;">Conversation turns</div>
+            <div style="flex:1;background:#fff3e0;height:22px;border-radius:4px;overflow:hidden;">
+              <div style="width:20%;height:100%;background:#ff9800;border-radius:4px;display:flex;align-items:center;justify-content:center;color:white;font-size:0.72rem;font-weight:600;">20%</div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;margin-bottom:6px;">
+            <div style="width:180px;font-size:0.82rem;font-weight:500;">Agent responses</div>
+            <div style="flex:1;background:#f3e5f5;height:22px;border-radius:4px;overflow:hidden;">
+              <div style="width:20%;height:100%;background:#9c27b0;border-radius:4px;display:flex;align-items:center;justify-content:center;color:white;font-size:0.72rem;font-weight:600;">20%</div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;margin-bottom:6px;">
+            <div style="width:180px;font-size:0.82rem;font-weight:500;">Safety margin</div>
+            <div style="flex:1;background:#f5f5f5;height:22px;border-radius:4px;overflow:hidden;">
+              <div style="width:15%;height:100%;background:#999;border-radius:4px;display:flex;align-items:center;justify-content:center;color:white;font-size:0.72rem;font-weight:600;">15%</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <h3>Four Strategies</h3>
+        <div class="concept-card" style="margin-bottom: 8px;">
+          <h4><span class="step-num">1</span> Keep CLAUDE.md Lean</h4>
+          <p>~50 lines. Every line consumes tokens every session. Put verbose docs elsewhere.</p>
+        </div>
+        <div class="concept-card" style="margin-bottom: 8px;">
+          <h4><span class="step-num">2</span> Be Specific</h4>
+          <p>"Fix the test in test_pipeline.py::test_silver" not "write some code." Target files, not vague asks.</p>
+        </div>
+        <div class="concept-card" style="margin-bottom: 8px;">
+          <h4><span class="step-num">3</span> Plan Before Building</h4>
+          <p>Use <code>/plan</code> mode. Alignment upfront prevents expensive rework that wastes context.</p>
+        </div>
+        <div class="concept-card">
+          <h4><span class="step-num">4</span> New Sessions for New Tasks</h4>
+          <p>Context is RAM. When switching tasks, start fresh with <code>/clear</code> or a new session.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer">
+    <span>Coles Vibe Coding Workshop</span>
+    <span>Page 15</span>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SLIDE 16: DIVIDER — SKILLS, MCP & BEYOND                     -->
+<!-- ============================================================ -->
+<section class="slide divider-slide" aria-label="Skills MCP Beyond Divider">
+  <h1>Skills, MCP &amp; Beyond</h1>
+  <p class="divider-subtitle">Extending agents from code generators to system operators</p>
+</section>
+
+<!-- ============================================================ -->
+<!-- SLIDE 17: SKILLS — SLASH COMMANDS FOR AGENTS                  -->
+<!-- ============================================================ -->
+<section class="slide page-slide" aria-label="Skills — Slash Commands for Agents">
+  <div class="page-header">
+    <h2>Skills &mdash; Slash Commands for Agents</h2>
+    <span class="track-badge">Best Practices</span>
+  </div>
+  <div class="page-content">
+    <p>Skills are <strong>reusable agent capabilities</strong> triggered by slash commands. They encode domain knowledge and multi-step workflows into a single invocation.</p>
+
+    <div class="two-col">
+      <div>
+        <h3>How Skills Work</h3>
+        <p>A skill is a Markdown file that defines a multi-step workflow. When you type <code>/commit</code>, the agent:</p>
+        <ol>
+          <li>Reads git status and diff</li>
+          <li>Analyzes changes and drafts a commit message</li>
+          <li>Stages files and creates the commit</li>
+          <li>Runs git status to verify success</li>
+        </ol>
+
+        <h3 style="margin-top: 12px;">Built-In Examples</h3>
+        <div class="code-block" style="font-size: 0.74rem;"><span class="comment"># Common skills</span>
+<span class="function">/commit</span>     <span class="comment"># Smart git commit with message</span>
+<span class="function">/review-pr</span>  <span class="comment"># Review a pull request</span>
+<span class="function">/test</span>       <span class="comment"># Run tests intelligently</span>
+
+<span class="comment"># Custom skills you can create</span>
+<span class="function">/deploy-dab</span> <span class="comment"># Validate + deploy DABs bundle</span>
+<span class="function">/check-data</span> <span class="comment"># Query tables, verify counts</span></div>
+      </div>
+      <div>
+        <h3>Why Skills Matter</h3>
+        <div class="concept-card" style="margin-bottom: 8px;">
+          <h4>Automate Repetitive Patterns</h4>
+          <p>Workflows you do 10x/day become one command. No re-explaining each time.</p>
+        </div>
+        <div class="concept-card" style="margin-bottom: 8px;">
+          <h4>Encode Team Conventions</h4>
+          <p>Your team's commit message format, deploy steps, and review checklist &mdash; codified once, used by everyone.</p>
+        </div>
+        <div class="concept-card">
+          <h4>Reduce Context Usage</h4>
+          <p>A skill runs a pre-defined workflow without you needing to type out multi-step instructions each time.</p>
+        </div>
+
+        <div class="tip-box"><strong>Workshop tip:</strong> You can create custom skills during the labs. Think about which multi-step workflows you repeat most often.</div>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer">
+    <span>Coles Vibe Coding Workshop</span>
+    <span>Page 17</span>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SLIDE 18: MCP — USB-C FOR AI                                  -->
+<!-- ============================================================ -->
+<section class="slide page-slide" aria-label="MCP — USB-C for AI">
+  <div class="page-header">
+    <h2>MCP &mdash; "USB-C for AI"</h2>
+    <span class="track-badge">Best Practices</span>
+  </div>
+  <div class="page-content">
+    <p><strong>Model Context Protocol (MCP)</strong> is a standard protocol for connecting AI agents to external tools and data sources. Instead of the agent guessing, it can call real APIs.</p>
+
+    <h3>Three Types of MCP Servers</h3>
+    <div class="three-col">
+      <div class="mcp-card">
+        <h4>Managed (Built-In)</h4>
+        <p>Pre-integrated with Databricks:</p>
+        <ul>
+          <li>Unity Catalog tables</li>
+          <li>Vector Search</li>
+          <li>Genie spaces</li>
+          <li>DBSQL warehouses</li>
+        </ul>
+      </div>
+      <div class="mcp-card">
+        <h4>External (via Proxies)</h4>
+        <p>Community-built integrations:</p>
+        <ul>
+          <li>GitHub (PRs, issues)</li>
+          <li>Slack (messages, channels)</li>
+          <li>Glean (internal search)</li>
+          <li>JIRA (tickets, sprints)</li>
+          <li>Databricks Docs</li>
+        </ul>
+      </div>
+      <div class="mcp-card">
+        <h4>Custom (Org-Specific)</h4>
+        <p>You build them for internal tools:</p>
+        <ul>
+          <li>Internal APIs</li>
+          <li>Data quality tools</li>
+          <li>Monitoring systems</li>
+          <li>Hosted on Databricks Apps</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="insight-box">Without MCP, the agent guesses. With MCP, it knows.</div>
+
+    <div class="tip-box"><strong>Key benefit:</strong> Agents access ANY tool through a standard protocol. Credentials stay secure in Unity Catalog &mdash; the agent never sees raw tokens or passwords.</div>
+  </div>
+  <div class="page-footer">
+    <span>Coles Vibe Coding Workshop</span>
+    <span>Page 18</span>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SLIDE 19: GENIE & AI/BI DASHBOARDS                            -->
+<!-- ============================================================ -->
+<section class="slide page-slide" aria-label="Genie and AI/BI Dashboards">
+  <div class="page-header">
+    <h2>Genie &amp; AI/BI Dashboards</h2>
+    <span class="track-badge">Best Practices</span>
+  </div>
+  <div class="page-content">
+    <div class="two-col">
+      <div>
+        <h3>Genie: Natural Language on Your Data</h3>
+        <p>Business users ask questions in plain English. Genie generates SQL, runs it, and returns results with visualizations.</p>
+        <div class="code-block" style="font-size: 0.74rem;"><span class="comment"># User asks:</span>
+<span class="string">"Which state had the highest food retail
+ turnover in 2024?"</span>
+
+<span class="comment"># Genie generates:</span>
+<span class="keyword">SELECT</span> state,
+       <span class="function">SUM</span>(turnover_millions) <span class="keyword">AS</span> total
+<span class="keyword">FROM</span> gold.retail_summary
+<span class="keyword">WHERE</span> year = <span class="type">2024</span>
+<span class="keyword">GROUP BY</span> state
+<span class="keyword">ORDER BY</span> total <span class="keyword">DESC</span>
+<span class="keyword">LIMIT</span> <span class="type">1</span></div>
+        <p><strong>How to set up:</strong> Point Genie at your gold tables, add column descriptions, and provide example queries in the instructions.</p>
+      </div>
+      <div>
+        <h3>AI/BI Dashboards</h3>
+        <p>Auto-generated dashboards that understand your data. Describe a visualization in natural language and it generates the chart.</p>
+        <ul>
+          <li>"Show monthly revenue by state as a line chart"</li>
+          <li>"Compare food CPI across states as a bar chart"</li>
+          <li>"Display year-over-year growth as a heatmap"</li>
+        </ul>
+        <div class="tip-box"><strong>How they complement each other:</strong><br>
+        <strong>Dashboards</strong> = recurring views, standard KPIs, shared with stakeholders<br>
+        <strong>Genie</strong> = ad-hoc questions, exploration, self-serve analytics</div>
+        <p style="margin-top: 8px;">Both feed from the same <strong>gold tables</strong> &mdash; the output of your data pipeline. Good gold tables = good Genie + dashboards.</p>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer">
+    <span>Coles Vibe Coding Workshop</span>
+    <span>Page 19</span>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SLIDE 20: PREVENTING COMMON PITFALLS                          -->
+<!-- ============================================================ -->
+<section class="slide page-slide" aria-label="Preventing Common Pitfalls">
+  <div class="page-header">
+    <h2>Practical Tips &mdash; Preventing Common Pitfalls</h2>
+    <span class="track-badge">Best Practices</span>
+  </div>
+  <div class="page-content">
+    <div class="three-col">
+      <div>
+        <h3>Overengineering</h3>
+        <p>Agent generates a framework when you asked for one function. Adds features you didn't request.</p>
+        <div class="warning-box"><strong>Symptom:</strong> "I asked for a function and got an entire module with abstract base classes."</div>
+        <div class="tip-box"><strong>Fix:</strong> "Keep it minimal. Do not add features beyond what is requested. One function, not a framework."</div>
+      </div>
+      <div>
+        <h3>Hallucinations</h3>
+        <p>Agent speculates about code it hasn't read. Invents API endpoints, column names, or function signatures.</p>
+        <div class="warning-box"><strong>Symptom:</strong> "The agent used a column name that doesn't exist in the data."</div>
+        <div class="tip-box"><strong>Fix:</strong> "Never speculate about code you have not opened. Read the file first, then make changes."</div>
+      </div>
+      <div>
+        <h3>Going Off-Rails</h3>
+        <p>Agent runs unchecked for 10 minutes, making changes you didn't approve. Rewrites working code.</p>
+        <div class="warning-box"><strong>Symptom:</strong> "I looked away for 5 minutes and the agent rewrote half the project."</div>
+        <div class="tip-box"><strong>Fix:</strong> Check in every 2-3 tool calls. Steer early. "Don't change functions that already pass tests."</div>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer">
+    <span>Coles Vibe Coding Workshop</span>
+    <span>Page 20</span>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SLIDE 21: AGENT STEERING PHRASES                              -->
+<!-- ============================================================ -->
+<section class="slide page-slide" aria-label="Agent Steering Phrases">
+  <div class="page-header">
+    <h2>Agent Steering Phrases (Cheatsheet)</h2>
+    <span class="track-badge">Best Practices</span>
+  </div>
+  <div class="page-content">
+    <table class="data-table">
+      <tr><th style="width:35%">When the agent...</th><th>Say this</th></tr>
+      <tr><td><strong>Uses pandas instead of PySpark</strong></td><td>"Rewrite this using PySpark. We never use pandas in this project."</td></tr>
+      <tr><td><strong>Ignores your CLAUDE.md</strong></td><td>"Read CLAUDE.md first, then try again."</td></tr>
+      <tr><td><strong>Rewrites working code</strong></td><td>"Don't change functions that already pass tests. Only fix the failing ones."</td></tr>
+      <tr><td><strong>Writes code before tests</strong></td><td>"Stop. Write the tests first, then implement."</td></tr>
+      <tr><td><strong>Generates something too complex</strong></td><td>"Simplify. I just need [specific thing]. No extra features."</td></tr>
+      <tr><td><strong>Gets stuck in a loop</strong></td><td>"Stop. Let's try a different approach. [describe what you want]"</td></tr>
+      <tr><td><strong>Speculates about code</strong></td><td>"Read the file first. Don't guess what's in it."</td></tr>
+      <tr><td><strong>Goes silent / takes too long</strong></td><td>"What are you working on? Show me your current approach."</td></tr>
+    </table>
+
+    <div class="insight-box">Healthy cadence: Agent makes 2-3 tool calls &rarr; You review output &rarr; Steer if needed &rarr; Continue</div>
+
+    <div class="tip-box"><strong>The key habit:</strong> Treat agent interaction like a code review conversation, not a fire-and-forget request. Short feedback loops produce better results than long unsupervised runs.</div>
+  </div>
+  <div class="page-footer">
+    <span>Coles Vibe Coding Workshop</span>
+    <span>Page 21</span>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SLIDE 22: THE MEDALLION ARCHITECTURE                          -->
+<!-- ============================================================ -->
+<section class="slide page-slide" aria-label="The Medallion Architecture">
+  <div class="page-header">
+    <h2>The Medallion Architecture</h2>
+    <span class="track-badge">Best Practices</span>
+  </div>
+  <div class="page-content">
+    <div class="pipeline-flow" style="margin: 20px 0;">
+      <div class="stage bronze" style="min-width: 200px;">Bronze<br><span style="font-size:0.78rem;font-weight:400">Raw Ingestion</span></div>
+      <span class="arrow">&rarr;</span>
+      <div class="stage silver" style="min-width: 200px;">Silver<br><span style="font-size:0.78rem;font-weight:400">Cleaned &amp; Enriched</span></div>
+      <span class="arrow">&rarr;</span>
+      <div class="stage gold" style="min-width: 200px;">Gold<br><span style="font-size:0.78rem;font-weight:400">Analytics-Ready</span></div>
+    </div>
+
+    <div class="three-col">
+      <div>
+        <h3 style="color: #CD7F32;">Bronze (Raw)</h3>
+        <ul>
+          <li>Ingest data as-is from APIs and files</li>
+          <li>No transformations applied</li>
+          <li>Preserves original column names and types</li>
+          <li>Acts as an immutable audit trail</li>
+          <li>Use <code style="color:#CD7F32">@dp.table</code> with data quality expectations</li>
+        </ul>
+      </div>
+      <div>
+        <h3 style="color: #808080;">Silver (Cleaned)</h3>
+        <ul>
+          <li>Decode codes to readable names</li>
+          <li>Handle nulls and invalid rows</li>
+          <li>Standardize date formats and types</li>
+          <li>Rename columns to snake_case</li>
+          <li>Use <code style="color:#808080">@dp.table</code> reading from bronze</li>
+        </ul>
+      </div>
+      <div>
+        <h3 style="color: #B8860B;">Gold (Aggregated)</h3>
+        <ul>
+          <li>Roll up and aggregate metrics</li>
+          <li>Join across data sources</li>
+          <li>Calculate KPIs (YoY growth, rolling averages)</li>
+          <li>Ready for Genie and AI/BI dashboards</li>
+          <li>Use <code style="color:#B8860B">@dp.materialized_view</code></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tip-box"><strong>Why medallion?</strong> Separation of concerns. Each layer has one job. Bugs are easy to trace. Silver and gold can be rebuilt from bronze at any time.</div>
+  </div>
+  <div class="page-footer">
+    <span>Coles Vibe Coding Workshop</span>
+    <span>Page 22</span>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SLIDE 23: WORKSHOP QUICK REFERENCE                            -->
+<!-- ============================================================ -->
+<section class="slide page-slide" aria-label="Workshop Quick Reference">
+  <div class="page-header">
+    <h2>Workshop Quick Reference</h2>
+    <span class="track-badge">Best Practices</span>
+  </div>
+  <div class="page-content">
+    <div class="two-col">
+      <div>
+        <h3>Key Commands</h3>
+        <div class="code-block" style="font-size: 0.74rem;"><span class="comment"># Check environment</span>
+databricks auth status
+claude --version
+
+<span class="comment"># Run tests (always use -x for fail-fast)</span>
+pytest tests/ -x
+pytest tests/test_pipeline.py -k <span class="string">"bronze"</span> -x
+pytest tests/test_pipeline.py -k <span class="string">"silver"</span> -x
+pytest tests/test_app.py -x
+
+<span class="comment"># Deploy with Databricks Asset Bundles</span>
+databricks bundle validate
+databricks bundle deploy -t dev
+databricks bundle run grocery-intelligence-TEAM -t dev
+
+<span class="comment"># Deploy web app</span>
+<span class="keyword">cd</span> app &amp;&amp; databricks apps deploy \
+  --name grocery-app-TEAM \
+  --source-code-path ./</div>
+      </div>
+      <div>
+        <h3>Key Files</h3>
+        <table class="data-table" style="font-size: 0.78rem;">
+          <tr><th>File</th><th>Purpose</th></tr>
+          <tr><td><code style="font-size:0.72rem">CLAUDE.md</code></td><td>Agent instructions (team standards)</td></tr>
+          <tr><td><code style="font-size:0.72rem">tests/conftest.py</code></td><td>PySpark test fixtures</td></tr>
+          <tr><td><code style="font-size:0.72rem">src/bronze/</code></td><td>Raw data ingestion</td></tr>
+          <tr><td><code style="font-size:0.72rem">src/silver/</code></td><td>Cleaned transformations</td></tr>
+          <tr><td><code style="font-size:0.72rem">src/gold/</code></td><td>Aggregated analytics</td></tr>
+          <tr><td><code style="font-size:0.72rem">app/app.py</code></td><td>FastAPI web application</td></tr>
+          <tr><td><code style="font-size:0.72rem">databricks.yml</code></td><td>DABs deployment config</td></tr>
+        </table>
+
+        <h3>Checkpoint Recovery</h3>
+        <div class="checkpoint-box">
+          <strong>No shame in using checkpoints &mdash; the goal is a working demo!</strong>
+          <p style="font-size:0.78rem; margin-top: 4px;">Tell the agent: "Copy the checkpoint tables from <code style="font-size:0.72rem">workshop_vibe_coding.checkpoints</code> into my schema <code style="font-size:0.72rem">workshop_vibe_coding.&lt;team_schema&gt;</code>"</p>
+        </div>
+
+        <div class="tip-box"><strong>Agent workflow:</strong> Explore data &rarr; Write tests &rarr; Implement &rarr; Run tests &rarr; Fix &rarr; Deploy. Never skip the test step.</div>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer">
+    <span>Coles Vibe Coding Workshop</span>
+    <span>Page 23</span>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SLIDE 24: KEY TAKEAWAYS                                       -->
+<!-- ============================================================ -->
+<section class="slide page-slide" aria-label="Key Takeaways">
+  <div class="page-header">
+    <h2>Key Takeaways</h2>
+    <span class="track-badge">Best Practices</span>
+  </div>
+  <div class="page-content">
+    <div class="success-box">
+      <h4>Success Criteria for Agentic Development</h4>
+      <ol style="font-size: 0.88rem; line-height: 1.7; margin-left: 24px;">
+        <li><strong>Write clear specs</strong> &mdash; CLAUDE.md, tests, and PRDs define what "done" looks like. The agent can only be as good as your specification.</li>
+        <li><strong>Use tests as executable specs (TDD)</strong> &mdash; Tests are unambiguous. They pass or they fail. No interpretation required. Write them first, always.</li>
+        <li><strong>Give agents verification mechanisms</strong> &mdash; Tests, screenshots, expected outputs. The agent needs a feedback loop to self-correct without human intervention.</li>
+        <li><strong>Manage context windows</strong> &mdash; Keep CLAUDE.md lean (~50 lines), be specific with requests, use new sessions for new tasks.</li>
+        <li><strong>Steer early and often</strong> &mdash; Review every 2-3 tool calls. Short feedback loops produce better results than long unsupervised runs.</li>
+      </ol>
+    </div>
+
+    <div class="insight-box" style="font-size: 1.05rem; margin-top: 20px;">Think of yourself as a director, not a typist.</div>
+
+    <div class="two-col" style="margin-top: 16px;">
+      <div class="tip-box"><strong>Monday morning action:</strong> Create a CLAUDE.md for your team's main repository. Start with tech stack, coding standards, and 5 rules. Iterate from there.</div>
+      <div class="tip-box"><strong>The discipline transfers:</strong> These practices work with Claude Code, Cursor, Windsurf, GitHub Copilot, and any agentic coding tool. The discipline is the differentiator, not the tool.</div>
+    </div>
+  </div>
+  <div class="page-footer">
+    <span>Coles Vibe Coding Workshop</span>
+    <span>Page 24</span>
+  </div>
+</section>
+
+</body>
+</html>

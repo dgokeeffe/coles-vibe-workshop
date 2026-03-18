@@ -1,0 +1,1262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Data Engineering Track — Coles Vibe Coding Workshop</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --db-lava: #FF3621;
+    --db-navy: #1B3139;
+    --db-teal: #00A972;
+    --db-green: #00A972;
+    --db-oat: #F9F7F4;
+    --coles-red: #E01A22;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-snap-type: y mandatory; scroll-behavior: smooth; overflow-x: hidden; }
+  body { font-family: 'DM Sans', sans-serif; color: var(--db-navy); background: #1a1a2e; }
+
+  .slide {
+    width: 100vw; height: 100vh;
+    scroll-snap-align: start;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Document page style - white background with content */
+  .page-slide {
+    background: white;
+    padding: 48px 80px 48px 80px;
+  }
+
+  /* Cover slide - dark themed */
+  .cover-slide {
+    background: linear-gradient(135deg, var(--db-navy) 0%, #0d1f26 100%);
+    color: white;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+
+  /* Section divider slide */
+  .divider-slide {
+    background: linear-gradient(135deg, var(--db-navy) 0%, #163a45 100%);
+    color: white;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+
+  /* Cover styling */
+  .cover-slide h1 {
+    font-size: 3.2rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 16px;
+  }
+  .cover-slide .subtitle {
+    font-size: 1.35rem;
+    font-weight: 400;
+    opacity: 0.85;
+    margin-bottom: 32px;
+  }
+  .cover-slide .tagline {
+    font-size: 1.05rem;
+    font-weight: 500;
+    color: var(--db-teal);
+    letter-spacing: 0.5px;
+  }
+  .cover-slide .cover-badge {
+    display: inline-block;
+    background: var(--db-lava);
+    color: white;
+    padding: 8px 28px;
+    border-radius: 28px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 40px;
+  }
+  .cover-slide .cover-decoration {
+    position: absolute;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0,169,114,0.08) 0%, transparent 70%);
+    top: -200px; right: -200px;
+    pointer-events: none;
+  }
+  .cover-slide .cover-decoration-2 {
+    position: absolute;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,54,33,0.06) 0%, transparent 70%);
+    bottom: -150px; left: -100px;
+    pointer-events: none;
+  }
+
+  /* Divider styling */
+  .divider-slide h1 {
+    font-size: 2.8rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 12px;
+  }
+  .divider-slide .divider-subtitle {
+    font-size: 1.15rem;
+    font-weight: 400;
+    opacity: 0.75;
+    margin-bottom: 20px;
+  }
+  .divider-slide .divider-time {
+    display: inline-block;
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.2);
+    padding: 6px 22px;
+    border-radius: 24px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+  }
+  .divider-slide .divider-number {
+    font-size: 6rem;
+    font-weight: 700;
+    color: rgba(255,255,255,0.06);
+    position: absolute;
+    top: 60px; left: 80px;
+    line-height: 1;
+  }
+
+  /* Page header bar */
+  .page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 3px solid var(--db-lava);
+    padding-bottom: 12px;
+    margin-bottom: 24px;
+    flex-shrink: 0;
+  }
+  .page-header h2 { font-size: 1.4rem; font-weight: 700; color: var(--db-navy); }
+  .page-header .track-badge {
+    background: var(--db-lava);
+    color: white;
+    padding: 4px 16px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  /* Content area */
+  .page-content { flex: 1; overflow: hidden; }
+  .page-content h3 { font-size: 1.15rem; font-weight: 700; color: var(--db-lava); margin: 16px 0 8px; }
+  .page-content h3:first-child { margin-top: 0; }
+  .page-content h4 { font-size: 1rem; font-weight: 600; color: var(--db-navy); margin: 12px 0 6px; }
+  .page-content p { font-size: 0.88rem; line-height: 1.5; margin-bottom: 8px; }
+  .page-content ul, .page-content ol { font-size: 0.88rem; line-height: 1.5; margin-left: 24px; margin-bottom: 8px; }
+  .page-content li { margin-bottom: 3px; }
+
+  /* Code blocks */
+  .code-block {
+    background: #1e1e2e;
+    color: #cdd6f4;
+    border-radius: 8px;
+    padding: 14px 18px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.76rem;
+    line-height: 1.45;
+    white-space: pre;
+    overflow-x: auto;
+    margin: 10px 0;
+  }
+  .code-block .keyword { color: #cba6f7; }
+  .code-block .string { color: #a6e3a1; }
+  .code-block .comment { color: #6c7086; }
+  .code-block .function { color: #89b4fa; }
+  .code-block .type { color: #f9e2af; }
+  .code-block .decorator { color: #fab387; }
+  .code-block .label {
+    display: block;
+    color: #89b4fa;
+    font-weight: 500;
+    margin-bottom: 6px;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  /* Inline code */
+  code {
+    background: #f0ede8;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.82rem;
+    color: var(--db-lava);
+  }
+
+  /* Info/tip boxes */
+  .tip-box {
+    background: #e8f5e9;
+    border-left: 4px solid var(--db-green);
+    padding: 10px 14px;
+    border-radius: 0 8px 8px 0;
+    margin: 10px 0;
+    font-size: 0.82rem;
+    line-height: 1.45;
+  }
+  .tip-box strong { color: #2e7d32; }
+  .warning-box {
+    background: #fff3e0;
+    border-left: 4px solid #ff9800;
+    padding: 10px 14px;
+    border-radius: 0 8px 8px 0;
+    margin: 10px 0;
+    font-size: 0.82rem;
+    line-height: 1.45;
+  }
+  .warning-box strong { color: #e65100; }
+
+  /* Phase badge */
+  .phase-badge {
+    display: inline-block;
+    background: var(--db-navy);
+    color: white;
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+  }
+
+  /* Time badge */
+  .time-badge {
+    display: inline-block;
+    background: var(--db-teal);
+    color: white;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    margin-left: 8px;
+  }
+
+  /* Two column layout */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+
+  /* Three column layout */
+  .three-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 18px;
+  }
+
+  /* Success criteria box */
+  .success-box {
+    background: #e8f5e9;
+    border: 2px solid var(--db-green);
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin: 10px 0;
+  }
+  .success-box h4 { color: var(--db-green); margin-top: 0; }
+
+  /* Checkpoint box */
+  .checkpoint-box {
+    background: #e3f2fd;
+    border: 2px solid #1976d2;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin: 10px 0;
+    font-size: 0.82rem;
+    line-height: 1.45;
+  }
+  .checkpoint-box strong { color: #1565c0; }
+
+  /* Team task box */
+  .team-box {
+    background: #f3e5f5;
+    border-left: 4px solid #9c27b0;
+    padding: 10px 14px;
+    border-radius: 0 8px 8px 0;
+    margin: 10px 0;
+    font-size: 0.82rem;
+    line-height: 1.45;
+  }
+  .team-box strong { color: #7b1fa2; }
+
+  /* Table */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.82rem;
+    margin: 10px 0;
+  }
+  .data-table th {
+    background: var(--db-navy);
+    color: white;
+    padding: 8px 12px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.78rem;
+  }
+  .data-table td {
+    padding: 6px 12px;
+    border-bottom: 1px solid #e0e0e0;
+  }
+  .data-table tr:nth-child(even) td { background: #f8f8f8; }
+
+  /* Page footer */
+  .page-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #e0e0e0;
+    padding-top: 8px;
+    margin-top: auto;
+    font-size: 0.7rem;
+    color: #999;
+    flex-shrink: 0;
+  }
+
+  /* Prompt block — special emphasis */
+  .prompt-block {
+    background: #1a1a2e;
+    border: 2px solid var(--db-lava);
+    border-radius: 8px;
+    padding: 14px 18px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.78rem;
+    line-height: 1.5;
+    color: #e0e0e0;
+    white-space: pre-wrap;
+    margin: 10px 0;
+    position: relative;
+  }
+  .prompt-block::before {
+    content: 'PASTE INTO CLAUDE CODE';
+    position: absolute;
+    top: -10px; left: 16px;
+    background: var(--db-lava);
+    color: white;
+    font-size: 0.6rem;
+    font-weight: 700;
+    padding: 2px 10px;
+    border-radius: 4px;
+    letter-spacing: 1px;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  /* Pipeline diagram */
+  .pipeline-flow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin: 16px 0;
+    font-size: 0.82rem;
+    font-weight: 600;
+  }
+  .pipeline-flow .stage {
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-align: center;
+  }
+  .pipeline-flow .bronze { background: #CD7F32; color: white; }
+  .pipeline-flow .silver { background: #C0C0C0; color: var(--db-navy); }
+  .pipeline-flow .gold { background: #FFD700; color: var(--db-navy); }
+  .pipeline-flow .arrow { color: #999; font-size: 1.4rem; }
+
+  /* Checklist style */
+  .checklist { list-style: none; margin-left: 0; }
+  .checklist li { padding-left: 24px; position: relative; }
+  .checklist li::before {
+    content: '☐';
+    position: absolute;
+    left: 0;
+    font-size: 0.9rem;
+  }
+</style>
+</head>
+<body>
+
+<!-- ============================================================ -->
+<!-- SLIDE 1: COVER                                                -->
+<!-- ============================================================ -->
+<section class="slide cover-slide" aria-label="Cover">
+  <div class="cover-decoration"></div>
+  <div class="cover-decoration-2"></div>
+  <div class="cover-badge">Data Engineering</div>
+  <h1>Data Engineering Track</h1>
+  <p class="subtitle">Coles &times; Databricks Vibe Coding Workshop</p>
+  <p class="tagline">Build a Lakeflow Declarative Pipeline with TDD</p>
+</section>
+
+<!-- ============================================================ -->
+<!-- SLIDE 2: GETTING STARTED (1/2)                                -->
+<!-- ============================================================ -->
+<section class="slide page-slide" aria-label="Getting Started">
+  <div class="page-header">
+    <h2>Getting Started</h2>
+    <span class="track-badge">Data Engineering</span>
+  </div>
+  <div class="page-content">
+    <h3>Step 1: Set Up Your Project</h3>
+    <p>Your Coding Agents app gives you a browser-based terminal with Claude Code pre-installed. Open it now.</p>
+    <div class="code-block"><span class="comment"># Create project and copy starter files</span>
+<span class="function">mkdir</span> -p grocery-intelligence && <span class="keyword">cd</span> grocery-intelligence
+<span class="function">cp</span> ~/starter-kit/CLAUDE.md ./CLAUDE.md
+<span class="comment"># Edit CLAUDE.md — replace TEAM_NAME and TEAM_SCHEMA with your assigned values</span>
+
+<span class="comment"># Append DE-specific instructions</span>
+<span class="function">cat</span> ~/starter-kit/CLAUDE-de.md >> CLAUDE.md
+
+<span class="comment"># Copy test fixtures and test stubs</span>
+<span class="function">mkdir</span> -p tests
+<span class="function">cp</span> ~/starter-kit/conftest.py tests/
+<span class="function">cp</span> ~/starter-kit/test_pipeline.py tests/</div>
+
+    <h3>Step 2: Verify Your Environment</h3>
+    <div class="code-block"><span class="comment"># Check Claude Code is working</span>
+claude --version
+
+<span class="comment"># Check Databricks CLI</span>
+databricks auth status
+
+<span class="comment"># Check your Unity Catalog access</span>
+databricks catalogs list | grep workshop</div>
+    <div class="warning-box"><strong>If any of these fail,</strong> ask the facilitator for help before proceeding.</div>
+
+    <h3>Step 3: Explore the Data</h3>
+    <p>All tracks use the same data. Paste this into Claude Code to get a feel for it:</p>
+    <div class="prompt-block">Query these tables and show me 5 rows from each:
+- workshop_vibe_coding.checkpoints.retail_summary
+- workshop_vibe_coding.checkpoints.food_inflation_yoy
+
+Tell me: what columns are available, what date range is covered, and which states are included.</div>
+  </div>
+  <div class="page-footer">
+    <span>Coles Vibe Coding Workshop</span>
+    <span>Page 2</span>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SLIDE 3: MISSION OVERVIEW                                     -->
+<!-- ============================================================ -->
+<section class="slide page-slide" aria-label="Mission Overview">
+  <div class="page-header">
+    <h2>Your Mission</h2>
+    <span class="track-badge">Data Engineering</span>
+  </div>
+  <div class="page-content">
+    <p>Build a data pipeline that ingests public Australian retail data, transforms it through a <strong>medallion architecture</strong>, and produces analytics-ready gold tables. You will direct an AI agent to build it using <strong>TDD</strong>.</p>
+
+    <div class="pipeline-flow">
+      <div class="stage bronze">Bronze<br><span style="font-size:0.72rem;font-weight:400">Raw API data</span></div>
+      <span class="arrow">&rarr;</span>
+      <div class="stage silver">Silver<br><span style="font-size:0.72rem;font-weight:400">Cleaned &amp; decoded</span></div>
+      <span class="arrow">&rarr;</span>
+      <div class="stage gold">Gold<br><span style="font-size:0.72rem;font-weight:400">Aggregated analytics</span></div>
+    </div>
+
+    <h3>Data Sources</h3>
+    <table class="data-table">
+      <tr><th>Source</th><th>API Endpoint</th><th>What It Contains</th></tr>
+      <tr><td><strong>ABS Retail Trade</strong></td><td><code style="font-size:0.7rem">data.api.abs.gov.au/data/ABS,RT,1.0.0/...</code></td><td>Monthly retail turnover by state &amp; industry since 2010</td></tr>
+      <tr><td><strong>ABS Consumer Price Index</strong></td><td><code style="font-size:0.7rem">data.api.abs.gov.au/data/ABS,CPI,2.0.0/...</code></td><td>Quarterly food price indices by state since 2010</td></tr>
+    </table>
+
+    <h3>Project Structure</h3>
+    <div class="two-col">
+      <div class="code-block" style="font-size:0.74rem"><span class="comment">grocery-intelligence/</span>
+├── CLAUDE.md
+├── databricks.yml
+├── src/
+│   ├── bronze/
+│   │   ├── abs_retail_trade.py
+│   │   └── abs_cpi_food.py
+│   ├── silver/
+│   │   ├── retail_turnover.py
+│   │   └── food_price_index.py
+│   └── gold/
+│       ├── retail_summary.py
+│       └── food_inflation.py
+├── resources/
+│   └── pipeline.yml
+└── tests/
+    ├── conftest.py
+    └── test_pipeline.py</div>
+      <div>
+        <h4>Code Mappings (Silver Layer)</h4>
+        <p style="font-size:0.8rem"><strong>Regions:</strong> 1=NSW, 2=VIC, 3=QLD, 4=SA, 5=WA, 6=TAS, 7=NT, 8=ACT</p>
+        <p style="font-size:0.8rem"><strong>Industries:</strong> 20=Food retailing, 41=Clothing, 42=Department stores, 43=Other, 44=Cafes/restaurants, 45=Household goods</p>
+        <p style="font-size:0.8rem"><strong>CPI Index:</strong> 10001=All groups CPI, 20001=Food &amp; non-alcoholic beverages</p>
+        <div class="tip-box"><strong>Key rule:</strong> Always use PySpark, never pandas. Add this to your CLAUDE.md if the agent forgets.</div>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer">
+    <span>Coles Vibe Coding Workshop</span>
+    <span>Page 3</span>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SLIDE 4: LAB 1 DIVIDER                                        -->
+<!-- ============================================================ -->
+<section class="slide divider-slide" aria-label="Lab 1 Divider">
+  <div class="divider-number">01</div>
+  <h1>Lab 1: Build Your Pipeline</h1>
+  <p class="divider-subtitle">TDD &rarr; Bronze &rarr; Silver &rarr; Gold &rarr; Deploy</p>
+  <span class="divider-time">55 minutes</span>
+</section>
+
+<!-- ============================================================ -->
+<!-- SLIDE 5: LAB 1 PHASE 1 — EXPLORE DATA                        -->
+<!-- ============================================================ -->
+<section class="slide page-slide" aria-label="Lab 1 Phase 1 — Explore Data">
+  <div class="page-header">
+    <h2>Phase 1: Write Tests First <span class="time-badge">15 min</span></h2>
+    <span class="track-badge">Data Engineering</span>
+  </div>
+  <div class="page-content">
+    <span class="phase-badge">Step 1.1 &mdash; Explore the Data</span>
+
+    <div class="team-box">
+      <strong>Team Tasks:</strong>
+      <strong>Person A</strong> (Terminal) &mdash; Run data exploration prompt below &nbsp;|&nbsp;
+      <strong>Person B</strong> (Terminal) &mdash; Set up CLAUDE.md with team name/schema &nbsp;|&nbsp;
+      <strong>Person C</strong> (Databricks UI) &mdash; Verify Unity Catalog schema, check checkpoint tables
+    </div>
+
+    <p>Understanding the raw data structure is critical before writing tests. Paste this into Claude Code:</p>
+
+    <div class="prompt-block">Fetch a sample of the ABS Retail Trade API:
+https://data.api.abs.gov.au/data/ABS,RT,1.0.0/M1.20+41+42+43+44+45.20.1+2+3+4+5+6+7+8.M?format=csv&amp;startPeriod=2024-01&amp;endPeriod=2024-03
+
+Show me the columns, data types, and a few sample rows.
+Also fetch a sample of the ABS CPI Food API:
+https://data.api.abs.gov.au/data/ABS,CPI,2.0.0/1.10001+20001.10.1+2+3+4+5+6+7+8.Q?format=csv&amp;startPeriod=2024-Q1&amp;endPeriod=2024-Q4
+
+Show me the same for this one.</div>
+
+    <div class="tip-box"><strong>Why explore first?</strong> The agent needs to see the actual column names, data types, and value formats before you can write meaningful tests. This 2-minute step saves 10 minutes of debugging later.</div>
+  </div>
+  <div class="page-footer">
+    <span>Coles Vibe Coding Workshop</span>
+    <span>Page 5</span>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SLIDE 6: LAB 1 PHASE 1 — WRITE TESTS                         -->
+<!-- ============================================================ -->
+<section class="slide page-slide" aria-label="Lab 1 Phase 1 — Write Tests">
+  <div class="page-header">
+    <h2>Phase 1: Write Tests First <span class="time-badge">15 min</span></h2>
+    <span class="track-badge">Data Engineering</span>
+  </div>
+  <div class="page-content">
+    <span class="phase-badge">Step 1.2 &mdash; Write Pipeline Tests</span>
+    <p>Tell the agent to write tests covering every layer. <strong>Do NOT implement anything yet.</strong></p>
+
+    <div class="prompt-block">Create pytest tests for a Lakeflow Declarative Pipeline with these transformations:
+
+1. test_bronze_retail_trade:
+   - Raw CSV data is ingested with all original columns
+   - Non-null TIME_PERIOD and OBS_VALUE columns
+   - Test: given sample CSV rows, bronze table has correct schema
+
+2. test_silver_retail_turnover:
+   - REGION codes decoded to state names (1=NSW, 2=VIC, 3=QLD, etc.)
+   - INDUSTRY codes decoded to readable names (20=Food retailing, etc.)
+   - TIME_PERIOD parsed to proper date column
+   - OBS_VALUE renamed to turnover_millions
+   - Test: given bronze rows with codes, silver rows have readable names
+
+3. test_gold_retail_summary:
+   - Adds 3-month and 12-month rolling averages
+   - Adds year-over-year growth percentage
+   - Test: given 24 months of silver data, gold has correct rolling averages
+
+4. test_bronze_cpi_food:
+   - Raw CPI CSV data ingested with all columns
+   - Non-null TIME_PERIOD and OBS_VALUE
+   - Test: correct schema
+
+5. test_silver_food_price_index:
+   - REGION codes decoded to state names
+   - INDEX codes decoded (10001=All groups CPI, 20001=Food and non-alcoholic beverages)
+   - OBS_VALUE renamed to cpi_index
+   - Test: codes correctly decoded
+
+6. test_gold_food_inflation:
+   - Calculates year-over-year CPI change percentage
+   - Test: given 8 quarters of data, YoY change is correct
+
+Write ONLY the tests. Do NOT implement the functions yet.
+Use PySpark test fixtures with small DataFrames (5-10 rows each).</div>
+  </div>
+  <div class="page-footer">
+    <span>Coles Vibe Coding Workshop</span>
+    <span>Page 6</span>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SLIDE 7: LAB 1 PHASE 1 — REVIEW TESTS                        -->
+<!-- ============================================================ -->
+<section class="slide page-slide" aria-label="Lab 1 Phase 1 — Review Tests">
+  <div class="page-header">
+    <h2>Phase 1: Review &amp; Refine Tests <span class="time-badge">15 min</span></h2>
+    <span class="track-badge">Data Engineering</span>
+  </div>
+  <div class="page-content">
+    <span class="phase-badge">Step 1.3 &mdash; Review Before Moving On</span>
+
+    <p>Read through the generated tests and verify:</p>
+    <ul>
+      <li>Do they capture your transformation logic?</li>
+      <li>Are the test data realistic (real state codes, valid date formats)?</li>
+      <li>Are edge cases covered (nulls, missing periods)?</li>
+    </ul>
+
+    <div class="tip-box"><strong>Edit or ask the agent to adjust</strong> before moving on. Tests are your spec &mdash; the agent will use them as its target.</div>
+
+    <h3>What Good Tests Look Like</h3>
+    <div class="two-col">
+      <div>
+        <h4>Bronze Test Example</h4>
+        <div class="code-block"><span class="keyword">def</span> <span class="function">test_bronze_retail_trade</span>(spark):
+    <span class="comment"># Given: raw CSV rows</span>
+    raw = spark.createDataFrame([
+        (<span class="string">"M1"</span>, <span class="string">"20"</span>, <span class="string">"1"</span>,
+         <span class="string">"2024-01"</span>, <span class="type">1234.5</span>),
+    ], [<span class="string">"MEASURE"</span>, <span class="string">"INDUSTRY"</span>,
+        <span class="string">"REGION"</span>, <span class="string">"TIME_PERIOD"</span>,
+        <span class="string">"OBS_VALUE"</span>])
+
+    <span class="comment"># Then: schema matches expected</span>
+    <span class="keyword">assert</span> <span class="string">"TIME_PERIOD"</span> <span class="keyword">in</span> raw.columns
+    <span class="keyword">assert</span> <span class="string">"OBS_VALUE"</span> <span class="keyword">in</span> raw.columns
+    <span class="keyword">assert</span> raw.filter(
+        <span class="string">"TIME_PERIOD IS NULL"</span>
+    ).count() == <span class="type">0</span></div>
+      </div>
+      <div>
+        <h4>Silver Test Example</h4>
+        <div class="code-block"><span class="keyword">def</span> <span class="function">test_silver_retail_turnover</span>(spark):
+    <span class="comment"># Given: bronze with codes</span>
+    bronze = spark.createDataFrame([
+        (<span class="string">"1"</span>, <span class="string">"20"</span>,
+         <span class="string">"2024-01"</span>, <span class="type">1234.5</span>),
+    ], [<span class="string">"REGION"</span>, <span class="string">"INDUSTRY"</span>,
+        <span class="string">"TIME_PERIOD"</span>, <span class="string">"OBS_VALUE"</span>])
+
+    <span class="comment"># When: transform applied</span>
+    result = transform_retail(bronze)
+
+    <span class="comment"># Then: codes decoded</span>
+    row = result.first()
+    <span class="keyword">assert</span> row[<span class="string">"state"</span>] == \
+        <span class="string">"New South Wales"</span>
+    <span class="keyword">assert</span> row[<span class="string">"industry"</span>] == \
+        <span class="string">"Food retailing"</span>
+    <span class="keyword">assert</span> <span class="string">"turnover_millions"</span> \
+        <span class="keyword">in</span> result.columns</div>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer">
+    <span>Coles Vibe Coding Workshop</span>
+    <span>Page 7</span>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SLIDE 8: LAB 1 PHASE 2 — BUILD BRONZE                        -->
+<!-- ============================================================ -->
+<section class="slide page-slide" aria-label="Lab 1 Phase 2 — Build Bronze">
+  <div class="page-header">
+    <h2>Phase 2: Build Bronze Layer <span class="time-badge">15 min</span></h2>
+    <span class="track-badge">Data Engineering</span>
+  </div>
+  <div class="page-content">
+    <div class="team-box">
+      <strong>Person A:</strong> Build retail trade bronze table &nbsp;|&nbsp;
+      <strong>Person B:</strong> Build CPI food bronze table &nbsp;|&nbsp;
+      <strong>Person C:</strong> Monitor Unity Catalog for new tables, prepare checkpoint fallback
+    </div>
+
+    <span class="phase-badge">Step 2.1 &mdash; Create Pipeline Structure</span>
+
+    <div class="prompt-block">Create a Lakeflow Declarative Pipeline project with:
+- src/bronze/abs_retail_trade.py - Ingest ABS Retail Trade API to bronze table
+- src/bronze/abs_cpi_food.py - Ingest ABS CPI Food API to bronze table
+- src/silver/ (empty for now)
+- src/gold/ (empty for now)
+- resources/pipeline.yml - Lakeflow pipeline definition
+- databricks.yml - DABs deployment config
+- tests/ (our tests from Phase 1)
+
+For bronze tables, use @dp.table decorator with data quality expectations:
+- @dp.expect("valid_time_period", "TIME_PERIOD IS NOT NULL")
+- @dp.expect("valid_obs_value", "OBS_VALUE IS NOT NULL")
+
+Use spark.read.csv() to fetch from the API URLs.
+Unity Catalog target: workshop_vibe_coding.&lt;team_schema&gt;</div>
+
+    <span class="phase-badge">Step 2.2 &mdash; Run Bronze Tests</span>
+    <div class="code-block"><span class="comment"># Tell the agent:</span>
+Run the bronze tests. Fix any failures.</div>
+    <p>Watch the agent iterate: read test output &rarr; fix code &rarr; re-run &rarr; repeat until green.</p>
+
+    <div class="warning-box"><strong>Stuck?</strong> If API calls are failing, grab <strong>Checkpoint 1A</strong>: pre-loaded bronze tables. Tell the agent: <em>"Use the pre-loaded tables in workshop_vibe_coding.checkpoints instead of calling the API. Copy them to our schema."</em></div>
+  </div>
+  <div class="page-footer">
+    <span>Coles Vibe Coding Workshop</span>
+    <span>Page 8</span>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SLIDE 9: LAB 1 PHASE 3 — SILVER                               -->
+<!-- ============================================================ -->
+<section class="slide page-slide" aria-label="Lab 1 Phase 3 — Silver">
+  <div class="page-header">
+    <h2>Phase 3: Build Silver + Gold <span class="time-badge">20 min</span></h2>
+    <span class="track-badge">Data Engineering</span>
+  </div>
+  <div class="page-content">
+    <div class="team-box">
+      <strong>Person A:</strong> Build silver retail_turnover + gold retail_summary &nbsp;|&nbsp;
+      <strong>Person B:</strong> Build silver food_price_index + gold food_inflation &nbsp;|&nbsp;
+      <strong>Person C:</strong> Monitor tests, review gold data as it appears
+    </div>
+
+    <span class="phase-badge">Step 3.1 &mdash; Build Silver Transformations</span>
+
+    <div class="prompt-block">Implement the silver layer to make the silver tests pass:
+
+1. src/silver/retail_turnover.py
+   - @dp.table that reads from bronze retail trade
+   - Decode REGION codes to state names: 1=New South Wales, 2=Victoria,
+     3=Queensland, 4=South Australia, 5=Western Australia, 6=Tasmania,
+     7=Northern Territory, 8=Australian Capital Territory
+   - Decode INDUSTRY codes: 20=Food retailing, 41=Clothing/footwear/personal,
+     42=Department stores, 43=Other retailing, 44=Cafes/restaurants/takeaway,
+     45=Household goods retailing
+   - Parse TIME_PERIOD to date, extract month/year/quarter
+   - Rename OBS_VALUE to turnover_millions
+
+2. src/silver/food_price_index.py
+   - @dp.table that reads from bronze CPI
+   - Decode REGION and INDEX codes
+   - Rename OBS_VALUE to cpi_index
+
+Run the silver tests after implementation.</div>
+  </div>
+  <div class="page-footer">
+    <span>Coles Vibe Coding Workshop</span>
+    <span>Page 9</span>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SLIDE 10: LAB 1 PHASE 3 — GOLD                                -->
+<!-- ============================================================ -->
+<section class="slide page-slide" aria-label="Lab 1 Phase 3 — Gold">
+  <div class="page-header">
+    <h2>Phase 3: Build Silver + Gold (cont.) <span class="time-badge">20 min</span></h2>
+    <span class="track-badge">Data Engineering</span>
+  </div>
+  <div class="page-content">
+    <span class="phase-badge">Step 3.2 &mdash; Build Gold Materialized Views</span>
+
+    <div class="prompt-block">Implement the gold layer to make the gold tests pass:
+
+1. src/gold/retail_summary.py
+   - @dp.materialized_view
+   - Join with silver retail_turnover
+   - Add 3-month rolling average (turnover_3m_avg)
+   - Add 12-month rolling average (turnover_12m_avg)
+   - Add year-over-year growth percentage (yoy_growth_pct)
+
+2. src/gold/food_inflation.py
+   - @dp.materialized_view
+   - Calculate year-over-year CPI change percentage (yoy_change_pct)
+
+Run ALL tests (bronze + silver + gold). Everything should be green.</div>
+
+    <span class="phase-badge">Step 3.3 &mdash; Verify Your Data</span>
+    <div class="prompt-block">Query the gold tables and show me:
+1. Top 5 states by food retail turnover (latest month)
+2. Year-over-year food price inflation by state (latest quarter)
+3. The state with the highest retail growth rate</div>
+
+    <p><strong>This is where you check your ice breaker predictions!</strong></p>
+
+    <div class="warning-box"><strong>Stuck at 40 minutes?</strong> Grab <strong>Checkpoint 1B</strong>: silver and gold tables pre-loaded in your schema. This ensures you have data for Lab 2.</div>
+  </div>
+  <div class="page-footer">
+    <span>Coles Vibe Coding Workshop</span>
+    <span>Page 10</span>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SLIDE 11: LAB 1 PHASE 4 — DEPLOY WITH DABS                   -->
+<!-- ============================================================ -->
+<section class="slide page-slide" aria-label="Lab 1 Phase 4 — Deploy">
+  <div class="page-header">
+    <h2>Phase 4: Deploy with DABs <span class="time-badge">5 min</span></h2>
+    <span class="track-badge">Data Engineering</span>
+  </div>
+  <div class="page-content">
+    <div class="team-box">
+      <strong>Person A:</strong> Run validate and deploy &nbsp;|&nbsp;
+      <strong>Person B:</strong> Verify pipeline in Workflows tab &nbsp;|&nbsp;
+      <strong>Person C:</strong> Query gold tables to check icebreaker predictions
+    </div>
+
+    <div class="two-col">
+      <div>
+        <span class="phase-badge">Step 4.1 &mdash; Create Pipeline Definition</span>
+        <div class="prompt-block">Create resources/pipeline.yml that defines a Lakeflow Declarative Pipeline:
+- Pipeline name: grocery-intelligence-&lt;team_name&gt;
+- Serverless: true
+- Libraries: all our src/ notebooks
+- Catalog: workshop_vibe_coding
+- Schema: &lt;team_schema&gt;
+
+And update databricks.yml with:
+- Dev target using our workshop catalog/schema
+- The pipeline resource</div>
+      </div>
+      <div>
+        <span class="phase-badge">Step 4.2 &mdash; Validate &amp; Deploy</span>
+        <div class="prompt-block">Validate the bundle: databricks bundle validate
+Deploy to dev: databricks bundle deploy -t dev
+Run the pipeline: databricks bundle run grocery-intelligence-&lt;team_name&gt; -t dev</div>
+
+        <span class="phase-badge">Step 4.3 &mdash; Verify in Workspace</span>
+        <ul class="checklist">
+          <li>Pipeline appears in the Workflows tab</li>
+          <li>Tables are visible in Unity Catalog</li>
+          <li>Data quality expectations are passing</li>
+        </ul>
+
+        <div class="warning-box"><strong>Stuck?</strong> Grab <strong>Checkpoint 1C</strong>: complete pipeline code and databricks.yml.</div>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer">
+    <span>Coles Vibe Coding Workshop</span>
+    <span>Page 11</span>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SLIDE 12: LAB 2 DIVIDER                                       -->
+<!-- ============================================================ -->
+<section class="slide divider-slide" aria-label="Lab 2 Divider">
+  <div class="divider-number">02</div>
+  <h1>Lab 2: Extend &amp; Harden</h1>
+  <p class="divider-subtitle">New Data Sources &bull; Data Quality &bull; Scheduling</p>
+  <span class="divider-time">55 minutes</span>
+</section>
+
+<!-- ============================================================ -->
+<!-- SLIDE 13: LAB 2 PHASE 1 — FSANZ                               -->
+<!-- ============================================================ -->
+<section class="slide page-slide" aria-label="Lab 2 Phase 1 — FSANZ Food Recalls">
+  <div class="page-header">
+    <h2>Phase 1: Add FSANZ Food Recalls <span class="time-badge">20 min</span></h2>
+    <span class="track-badge">Data Engineering</span>
+  </div>
+  <div class="page-content">
+    <div class="team-box">
+      <strong>Person A:</strong> Write tests for FSANZ ingestion &nbsp;|&nbsp;
+      <strong>Person B:</strong> Build bronze + silver tables &nbsp;|&nbsp;
+      <strong>Person C:</strong> Monitor pipeline, verify new tables in Unity Catalog
+    </div>
+
+    <span class="phase-badge">Step 1.1 &mdash; Write Tests + Build Tables</span>
+
+    <div class="prompt-block">Add a new data source — FSANZ food recalls:
+
+1. Write tests first:
+   - test_bronze_food_recalls_schema: has columns (product, category, issue, date, state, url)
+   - test_bronze_food_recalls_not_null: product and date are never null
+   - test_silver_food_recalls_dates: date strings parsed to proper DATE type
+   - test_silver_food_recalls_states: state names normalized to match our state list
+
+2. Build the tables:
+   - src/bronze/fsanz_food_recalls.py: @dp.table ingesting FSANZ data
+   - src/silver/food_recalls.py: @dp.table with cleaned dates, normalized states
+   - Data source: https://www.foodstandards.gov.au/food-recalls/recalls
+   - If website is blocked, read from: workshop_vibe_coding.checkpoints.fsanz_food_recalls
+
+3. Run tests after implementation.</div>
+
+    <div class="warning-box"><strong>Stuck?</strong> Grab <strong>Checkpoint DE-2A</strong>: FSANZ bronze + silver tables pre-loaded. If the website is blocked, use the checkpoint table as a source.</div>
+  </div>
+  <div class="page-footer">
+    <span>Coles Vibe Coding Workshop</span>
+    <span>Page 13</span>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SLIDE 14: LAB 2 PHASE 2 — DATA QUALITY (1/2)                 -->
+<!-- ============================================================ -->
+<section class="slide page-slide" aria-label="Lab 2 Phase 2 — Data Quality Rules">
+  <div class="page-header">
+    <h2>Phase 2: Data Quality Rules <span class="time-badge">20 min</span></h2>
+    <span class="track-badge">Data Engineering</span>
+  </div>
+  <div class="page-content">
+    <div class="team-box">
+      <strong>Person A:</strong> Add data quality expectations across all tables &nbsp;|&nbsp;
+      <strong>Person B:</strong> Build cross-source gold view &nbsp;|&nbsp;
+      <strong>Person C:</strong> Verify expectations in pipeline UI, check quality metrics
+    </div>
+
+    <span class="phase-badge">Step 2.1 &mdash; Add Quality Expectations</span>
+
+    <div class="prompt-block">Add data quality expectations across all pipeline tables:
+
+Bronze tables:
+- @dp.expect("valid_time_period", "TIME_PERIOD IS NOT NULL")
+- @dp.expect("valid_obs_value", "OBS_VALUE IS NOT NULL")
+- @dp.expect("valid_date_range", "TIME_PERIOD >= '2010-01'")
+
+Silver tables:
+- @dp.expect_or_fail("valid_state", "state IN ('New South Wales','Victoria','Queensland','South Australia','Western Australia','Tasmania','Northern Territory','Australian Capital Territory')")
+- @dp.expect("valid_turnover", "turnover_millions > 0")
+
+Gold tables:
+- @dp.expect("valid_yoy", "yoy_growth_pct BETWEEN -100 AND 500")
+- @dp.expect("valid_rolling_avg", "turnover_3m_avg > 0")
+
+Run all tests to verify nothing breaks.</div>
+
+    <div class="tip-box"><strong>Tip:</strong> Use <code>@dp.expect</code> (warn only) first. Upgrade to <code>@dp.expect_or_fail</code> (hard fail) once you are confident the data is clean.</div>
+  </div>
+  <div class="page-footer">
+    <span>Coles Vibe Coding Workshop</span>
+    <span>Page 14</span>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SLIDE 15: LAB 2 PHASE 2 — CROSS-SOURCE VIEW                  -->
+<!-- ============================================================ -->
+<section class="slide page-slide" aria-label="Lab 2 Phase 2 — Cross-Source View">
+  <div class="page-header">
+    <h2>Phase 2: Cross-Source Gold View <span class="time-badge">20 min</span></h2>
+    <span class="track-badge">Data Engineering</span>
+  </div>
+  <div class="page-content">
+    <span class="phase-badge">Step 2.2 &mdash; Build Cross-Source Analysis View</span>
+
+    <div class="prompt-block">Create a cross-source analysis view:
+- src/gold/grocery_insights.py: @dp.materialized_view
+- Joins retail_summary + food_inflation_yoy + food_recalls (if available)
+- Columns: state, month, turnover_millions, yoy_growth_pct, cpi_yoy_change, recall_count
+- Join retail (monthly) with CPI (quarterly) on state + quarter
+- Left join recalls on state + month (recall_count may be 0)</div>
+
+    <h3>Expected Pipeline DAG</h3>
+    <div style="display:flex; flex-direction:column; gap:6px; margin: 12px 0;">
+      <div class="pipeline-flow">
+        <div class="stage bronze" style="min-width:160px">abs_retail_trade</div>
+        <span class="arrow">&rarr;</span>
+        <div class="stage silver" style="min-width:160px">retail_turnover</div>
+        <span class="arrow">&rarr;</span>
+        <div class="stage gold" style="min-width:160px">retail_summary</div>
+        <span class="arrow" style="font-size:1rem">&searr;</span>
+      </div>
+      <div class="pipeline-flow">
+        <div class="stage bronze" style="min-width:160px">abs_cpi_food</div>
+        <span class="arrow">&rarr;</span>
+        <div class="stage silver" style="min-width:160px">food_price_index</div>
+        <span class="arrow">&rarr;</span>
+        <div class="stage gold" style="min-width:160px">food_inflation</div>
+        <span class="arrow">&rarr;</span>
+        <div class="stage gold" style="min-width:200px; background:linear-gradient(135deg, #FFD700, #FFA000);">grocery_insights</div>
+      </div>
+      <div class="pipeline-flow">
+        <div class="stage bronze" style="min-width:160px">fsanz_food_recalls</div>
+        <span class="arrow">&rarr;</span>
+        <div class="stage silver" style="min-width:160px">food_recalls</div>
+        <span class="arrow" style="font-size:1rem">&nearr;</span>
+      </div>
+    </div>
+
+    <div class="tip-box"><strong>Join strategy:</strong> CPI is quarterly, retail is monthly. Join on state + quarter (derive quarter from month). Left join recalls since recall_count may be 0 for most state/month combos.</div>
+  </div>
+  <div class="page-footer">
+    <span>Coles Vibe Coding Workshop</span>
+    <span>Page 15</span>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SLIDE 16: LAB 2 PHASE 3 — SCHEDULING + DEPLOY                -->
+<!-- ============================================================ -->
+<section class="slide page-slide" aria-label="Lab 2 Phase 3 — Scheduling">
+  <div class="page-header">
+    <h2>Phase 3: Scheduling + Deploy <span class="time-badge">10 min</span></h2>
+    <span class="track-badge">Data Engineering</span>
+  </div>
+  <div class="page-content">
+    <div class="team-box">
+      <strong>Person A:</strong> Add cron scheduling, validate, deploy &nbsp;|&nbsp;
+      <strong>Person B:</strong> Verify pipeline schedule in Workflows tab &nbsp;|&nbsp;
+      <strong>Person C:</strong> Test full pipeline end-to-end
+    </div>
+
+    <div class="two-col">
+      <div>
+        <span class="phase-badge">Step 3.1 &mdash; Add Scheduling</span>
+        <div class="prompt-block">Add cron scheduling to our pipeline:
+
+1. Update databricks.yml — add trigger:
+   trigger:
+     cron:
+       quartz_cron_expression: "0 0 6 * * ?"
+       timezone_id: "Australia/Sydney"
+
+2. Validate: databricks bundle validate
+3. Deploy: databricks bundle deploy -t dev
+4. Show me the pipeline schedule.</div>
+      </div>
+      <div>
+        <span class="phase-badge">Phase 4 &mdash; Verify + Prepare (5 min)</span>
+        <ul class="checklist" style="margin-top:8px;">
+          <li>Full pipeline runs with all three sources</li>
+          <li>Data quality expectations visible and passing in UI</li>
+          <li>Cross-source <code>grocery_insights</code> view has data</li>
+          <li>Pipeline schedule is configured</li>
+        </ul>
+
+        <h4 style="margin-top:16px;">Prepare Your Demo</h4>
+        <p>For Show &amp; Tell, be ready to show:</p>
+        <ol>
+          <li>Pipeline DAG in Databricks Workflows UI</li>
+          <li>Data quality metrics and expectations</li>
+          <li>Cross-source gold view query results</li>
+          <li>Your scheduling configuration</li>
+          <li>An interesting data insight you discovered</li>
+        </ol>
+
+        <div class="warning-box"><strong>Running out of time?</strong> Grab <strong>Checkpoint DE-2C</strong> (complete pipeline) or <strong>DE-2D</strong> (full solution).</div>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer">
+    <span>Coles Vibe Coding Workshop</span>
+    <span>Page 16</span>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SLIDE 17: CHEATSHEET (1/2)                                    -->
+<!-- ============================================================ -->
+<section class="slide page-slide" aria-label="Cheatsheet — Commands">
+  <div class="page-header">
+    <h2>Cheatsheet: Commands &amp; Troubleshooting</h2>
+    <span class="track-badge">Data Engineering</span>
+  </div>
+  <div class="page-content">
+    <div class="two-col">
+      <div>
+        <h3>Useful Commands</h3>
+        <div class="code-block"><span class="comment"># Check Databricks connection</span>
+databricks auth status
+
+<span class="comment"># Run specific test groups</span>
+pytest tests/test_pipeline.py -k <span class="string">"bronze"</span> -x
+pytest tests/test_pipeline.py -k <span class="string">"silver"</span> -x
+pytest tests/test_pipeline.py -k <span class="string">"gold"</span> -x
+
+<span class="comment"># Run all tests</span>
+pytest tests/ -x
+
+<span class="comment"># Validate DABs bundle</span>
+databricks bundle validate
+
+<span class="comment"># Deploy pipeline</span>
+databricks bundle deploy -t dev
+databricks bundle run \
+  grocery-intelligence-TEAM_NAME -t dev</div>
+      </div>
+      <div>
+        <h3>Common Problems</h3>
+        <table class="data-table">
+          <tr><th>Problem</th><th>Fix</th></tr>
+          <tr><td>Agent uses pandas</td><td>Add to CLAUDE.md: <code>Always use PySpark, never pandas</code></td></tr>
+          <tr><td>SparkSession errors</td><td>Check <code>conftest.py</code> has <code>SparkSession.builder.master("local[*]")</code></td></tr>
+          <tr><td>ABS API timeout</td><td>Use checkpoint tables instead of API</td></tr>
+          <tr><td><code>@dp.table</code> not found</td><td>Use <code>import databricks.declarative_pipelines as dp</code></td></tr>
+          <tr><td>Can't write to UC</td><td>Check schema: <code>workshop_vibe_coding.&lt;team&gt;</code></td></tr>
+          <tr><td>Deploy fails</td><td>Run <code>databricks bundle validate</code> first</td></tr>
+          <tr><td>Agent rewrites working code</td><td>Say: "Don't change passing tests"</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer">
+    <span>Coles Vibe Coding Workshop</span>
+    <span>Page 17</span>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SLIDE 18: CHEATSHEET (2/2) — CHECKPOINTS + STEERING           -->
+<!-- ============================================================ -->
+<section class="slide page-slide" aria-label="Cheatsheet — Checkpoints">
+  <div class="page-header">
+    <h2>Cheatsheet: Checkpoints &amp; Agent Steering</h2>
+    <span class="track-badge">Data Engineering</span>
+  </div>
+  <div class="page-content">
+    <div class="two-col">
+      <div>
+        <h3>Checkpoint Recovery</h3>
+        <p>If you are stuck and need to catch up, copy from checkpoint tables:</p>
+        <div class="code-block"><span class="comment">-- Checkpoint 1A: Bronze tables</span>
+<span class="keyword">CREATE TABLE</span> workshop_vibe_coding.TEAM_SCHEMA
+  .abs_retail_trade_bronze
+  <span class="keyword">AS SELECT</span> * <span class="keyword">FROM</span>
+  workshop_vibe_coding.checkpoints
+  .abs_retail_trade_bronze;
+
+<span class="keyword">CREATE TABLE</span> workshop_vibe_coding.TEAM_SCHEMA
+  .abs_cpi_food_bronze
+  <span class="keyword">AS SELECT</span> * <span class="keyword">FROM</span>
+  workshop_vibe_coding.checkpoints
+  .abs_cpi_food_bronze;
+
+<span class="comment">-- Checkpoint 1B: Silver + Gold</span>
+<span class="keyword">CREATE TABLE</span> workshop_vibe_coding.TEAM_SCHEMA
+  .retail_turnover
+  <span class="keyword">AS SELECT</span> * <span class="keyword">FROM</span>
+  workshop_vibe_coding.checkpoints
+  .retail_turnover;
+
+<span class="keyword">CREATE TABLE</span> workshop_vibe_coding.TEAM_SCHEMA
+  .retail_summary
+  <span class="keyword">AS SELECT</span> * <span class="keyword">FROM</span>
+  workshop_vibe_coding.checkpoints
+  .retail_summary;
+
+<span class="comment">-- (same pattern for food_price_index,
+--  food_inflation_yoy)</span></div>
+      </div>
+      <div>
+        <h3>Steering the Agent</h3>
+        <table class="data-table">
+          <tr><th>When the agent...</th><th>Say this</th></tr>
+          <tr><td>Writes too much code</td><td>"Keep it simple. One function, minimal code."</td></tr>
+          <tr><td>Ignores CLAUDE.md</td><td>"Read CLAUDE.md first, then try again."</td></tr>
+          <tr><td>Gets stuck in a loop</td><td>"Stop. Let's take a different approach."</td></tr>
+          <tr><td>Makes it overly complex</td><td>"Simplify. I just need [specific thing]."</td></tr>
+          <tr><td>Writes code before tests</td><td>"Stop. Write the tests first."</td></tr>
+          <tr><td>Goes off track</td><td>"Stop, let's go back to the failing tests."</td></tr>
+        </table>
+
+        <h3 style="margin-top: 16px;">Pro Tips</h3>
+        <ul>
+          <li><strong>Rotate the driver</strong> every 20 min so everyone gets hands-on time</li>
+          <li>Use <code>/commit</code> skill to commit with good messages</li>
+          <li>Say <strong>"show me the test output"</strong> to see exactly what is failing</li>
+          <li>Say <strong>"explain what this function does"</strong> to verify agent logic</li>
+          <li>If agent uses pandas: say <strong>"use PySpark, not pandas"</strong> and add it to CLAUDE.md</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer">
+    <span>Coles Vibe Coding Workshop</span>
+    <span>Page 18</span>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SLIDE 19: SUCCESS CRITERIA / DEMO PREP                        -->
+<!-- ============================================================ -->
+<section class="slide page-slide" aria-label="Success Criteria">
+  <div class="page-header">
+    <h2>Success Criteria &amp; Demo Prep</h2>
+    <span class="track-badge">Data Engineering</span>
+  </div>
+  <div class="page-content">
+    <div class="two-col">
+      <div>
+        <div class="success-box">
+          <h4>Lab 1 Success Criteria</h4>
+          <ul class="checklist">
+            <li>Tests written BEFORE implementation</li>
+            <li>All tests pass (bronze, silver, gold)</li>
+            <li>Pipeline uses <code>@dp.table</code> and <code>@dp.materialized_view</code></li>
+            <li>Data quality expectations with <code>@dp.expect()</code></li>
+            <li>Gold tables have rolling averages and YoY metrics</li>
+            <li>Deployed as a Lakeflow pipeline via DABs</li>
+            <li>Can answer ice breaker predictions from the data</li>
+          </ul>
+        </div>
+
+        <div class="success-box">
+          <h4>Lab 2 Success Criteria</h4>
+          <ul class="checklist">
+            <li>FSANZ food recalls ingested (bronze + silver)</li>
+            <li>Data quality expectations on all tables</li>
+            <li>Cross-source gold view joining retail + CPI + recalls</li>
+            <li>Pipeline scheduled with cron trigger</li>
+            <li>All tests pass including new data source</li>
+            <li>Ready for 3-minute demo</li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <h3>Show &amp; Tell: What to Demo (3 min)</h3>
+        <ol style="margin-top:8px;">
+          <li><strong>Pipeline DAG</strong> &mdash; Show the full pipeline graph in Databricks Workflows with all three data sources flowing through bronze &rarr; silver &rarr; gold</li>
+          <li><strong>Data Quality</strong> &mdash; Show expectations passing in the pipeline UI. Highlight any <code>@dp.expect_or_fail</code> rules</li>
+          <li><strong>Cross-Source Insights</strong> &mdash; Query <code>grocery_insights</code> and show how retail turnover, CPI inflation, and food recalls connect</li>
+          <li><strong>A Data Insight</strong> &mdash; Share the most interesting thing you found (e.g., which state has highest inflation, retail growth trends)</li>
+        </ol>
+
+        <h3 style="margin-top:16px;">Reflection Questions</h3>
+        <ol>
+          <li>How much code did you write vs. the agent?</li>
+          <li>Where did TDD help the most?</li>
+          <li>What was your most interesting data insight?</li>
+          <li>How do data quality expectations change your confidence?</li>
+          <li>Were your ice breaker predictions right?</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer">
+    <span>Coles Vibe Coding Workshop</span>
+    <span>Page 19</span>
+  </div>
+</section>
+
+</body>
+</html>
