@@ -503,15 +503,78 @@
 
   /* MCP type card */
   .mcp-card {
-    background: #f8f8f8;
-    border-radius: 8px;
-    padding: 12px 14px;
-    border-left: 4px solid var(--db-green);
+    background: white;
+    border-radius: 12px;
+    padding: 20px 22px;
+    border: 1px solid #e0e0e0;
+    border-top: 4px solid var(--db-green);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    position: relative;
   }
-  .mcp-card h4 { font-size: 0.88rem; font-weight: 700; color: var(--db-navy); margin: 0 0 4px; }
-  .mcp-card p { font-size: 0.78rem; line-height: 1.4; margin: 0; }
-  .mcp-card ul { font-size: 0.78rem; line-height: 1.4; margin: 4px 0 0 16px; }
-  .mcp-card li { margin-bottom: 2px; }
+  .mcp-card.managed { border-top-color: var(--db-green); }
+  .mcp-card.external { border-top-color: #7c3aed; }
+  .mcp-card.custom { border-top-color: #f59e0b; }
+  .mcp-card .card-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+  }
+  .mcp-card.managed .card-icon { background: #e8f5e9; }
+  .mcp-card.external .card-icon { background: #ede9fe; }
+  .mcp-card.custom .card-icon { background: #fef3c7; }
+  .mcp-card h4 { font-size: 0.95rem; font-weight: 700; color: var(--db-navy); margin: 0 0 6px; }
+  .mcp-card .card-subtitle { font-size: 0.78rem; color: #6b7a80; margin: 0 0 10px; font-style: italic; }
+  .mcp-card ul { font-size: 0.82rem; line-height: 1.55; margin: 0 0 0 18px; color: #333; }
+  .mcp-card li { margin-bottom: 3px; }
+
+  /* MCP diagram */
+  .mcp-diagram {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    margin: 18px 0 14px;
+    padding: 16px 24px;
+    background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 50%, #f0fdf4 100%);
+    border-radius: 12px;
+    border: 1px solid #d1fae5;
+  }
+  .mcp-diagram .mcp-node {
+    text-align: center;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 0.82rem;
+    font-weight: 600;
+  }
+  .mcp-diagram .mcp-agent {
+    background: var(--db-navy);
+    color: white;
+    min-width: 120px;
+  }
+  .mcp-diagram .mcp-protocol {
+    background: var(--db-green);
+    color: white;
+    min-width: 160px;
+    padding: 12px 24px;
+    font-size: 0.9rem;
+  }
+  .mcp-diagram .mcp-tools {
+    background: white;
+    border: 2px solid var(--db-green);
+    color: var(--db-navy);
+    min-width: 120px;
+  }
+  .mcp-diagram .mcp-arrow {
+    font-size: 1.3rem;
+    color: var(--db-green);
+    padding: 0 10px;
+    font-weight: 700;
+  }
 </style>
 </head>
 <body>
@@ -1200,46 +1263,55 @@ Include:
     <span class="track-badge">Best Practices</span>
   </div>
   <div class="page-content">
-    <p><strong>Model Context Protocol (MCP)</strong> is a standard protocol for connecting AI agents to external tools and data sources. Instead of the agent guessing, it can call real APIs.</p>
+    <p><strong>Model Context Protocol (MCP)</strong> is a standard protocol for connecting AI agents to external tools and data sources. One protocol, every tool connects &mdash; like USB-C for AI.</p>
+
+    <div class="mcp-diagram">
+      <div class="mcp-node mcp-agent">Claude Agent</div>
+      <div class="mcp-arrow">&harr;</div>
+      <div class="mcp-node mcp-protocol">MCP Protocol</div>
+      <div class="mcp-arrow">&harr;</div>
+      <div class="mcp-node mcp-tools">Any Tool</div>
+    </div>
 
     <h3>Three Types of MCP Servers</h3>
-    <div class="three-col">
-      <div class="mcp-card">
+    <div class="three-col" style="margin-top: 10px;">
+      <div class="mcp-card managed">
+        <div class="card-icon">&#x1f3e0;</div>
         <h4>Managed (Built-In)</h4>
-        <p>Pre-integrated with Databricks:</p>
+        <div class="card-subtitle">Zero config &mdash; pre-integrated with Databricks</div>
         <ul>
-          <li>Unity Catalog tables</li>
-          <li>Vector Search</li>
-          <li>Genie spaces</li>
+          <li>Unity Catalog tables &amp; volumes</li>
+          <li>Vector Search indexes</li>
+          <li>Genie spaces (NL &rarr; SQL)</li>
           <li>DBSQL warehouses</li>
         </ul>
       </div>
-      <div class="mcp-card">
+      <div class="mcp-card external">
+        <div class="card-icon">&#x1f50c;</div>
         <h4>External (via Proxies)</h4>
-        <p>Community-built integrations:</p>
+        <div class="card-subtitle">Community &amp; vendor integrations</div>
         <ul>
-          <li>GitHub (PRs, issues)</li>
+          <li>GitHub (PRs, issues, repos)</li>
           <li>Slack (messages, channels)</li>
           <li>Glean (internal search)</li>
           <li>JIRA (tickets, sprints)</li>
           <li>Databricks Docs</li>
         </ul>
       </div>
-      <div class="mcp-card">
+      <div class="mcp-card custom">
+        <div class="card-icon">&#x1f527;</div>
         <h4>Custom (Org-Specific)</h4>
-        <p>You build them for internal tools:</p>
+        <div class="card-subtitle">Build your own for internal tools</div>
         <ul>
-          <li>Internal APIs</li>
-          <li>Data quality tools</li>
-          <li>Monitoring systems</li>
-          <li>Hosted on Databricks Apps</li>
+          <li>Wrap internal REST APIs</li>
+          <li>Data quality workflows</li>
+          <li>Monitoring &amp; alerting</li>
+          <li>Host on Databricks Apps</li>
         </ul>
       </div>
     </div>
 
-    <div class="insight-box">Without MCP, the agent guesses. With MCP, it knows.</div>
-
-    <div class="tip-box"><strong>Key benefit:</strong> Agents access ANY tool through a standard protocol. Credentials stay secure in Unity Catalog &mdash; the agent never sees raw tokens or passwords.</div>
+    <div class="tip-box" style="margin-top: 14px;"><strong>Key benefit:</strong> Agents access ANY tool through a standard protocol. Credentials stay secure in Unity Catalog &mdash; the agent never sees raw tokens or passwords.</div>
   </div>
   <div class="page-footer">
     <span>Coles Vibe Coding Workshop</span>
