@@ -6,19 +6,28 @@
 <title>Data Science Track — Coles Vibe Coding Workshop</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
+  /* === THEME VARIABLES === */
   :root {
-    --db-lava: #FF3621;
-    --db-navy: #1B3139;
-    --db-teal: #00A972;
-    --db-green: #00A972;
-    --db-oat: #F9F7F4;
-    --coles-red: #E01A22;
-    --ds-purple: #7c3aed;
+    --db-lava:       #FF3621;
+    --db-lava-light: #FF5F46;
+    --db-navy:       #1B3139;
+    --db-ink:        #0B2026;
+    --db-teal:       #00A972;
+    --db-green:      #00A972;
+    --db-oat:        #F9F7F4;
+    --db-oat-medium: #EEEDE9;
+    --db-oat-dark:   #DBD7CE;
+    --db-white:      #FFFFFF;
+    --coles-red:     #ED1C24;
+    --ds-purple:     #7c3aed;
   }
+
+  /* === BASE RESET === */
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html { scroll-snap-type: y mandatory; scroll-behavior: smooth; overflow-x: hidden; }
-  body { font-family: 'DM Sans', sans-serif; color: var(--db-navy); background: #1a1a2e; }
+  body { font-family: 'DM Sans', sans-serif; color: var(--db-navy); background: var(--db-oat); }
 
+  /* === SLIDES === */
   .slide {
     width: 100vw; height: 100vh;
     scroll-snap-align: start;
@@ -28,46 +37,50 @@
     flex-direction: column;
   }
 
+  /* --- Page slide: warm oat background --- */
   .page-slide {
-    background: white;
+    background: var(--db-oat);
     padding: 48px 80px 48px 80px;
   }
 
+  /* --- Cover slide: deep branded gradient --- */
   .cover-slide {
-    background: linear-gradient(135deg, var(--db-navy) 0%, #0d1f26 100%);
+    background: linear-gradient(135deg, var(--db-navy) 0%, var(--db-ink) 60%, #10141a 100%);
     color: white;
     justify-content: center;
     align-items: center;
     text-align: center;
   }
 
+  /* --- Divider slide: navy → ink gradient --- */
   .divider-slide {
-    background: linear-gradient(135deg, var(--db-navy) 0%, #163a45 100%);
+    background: linear-gradient(135deg, var(--db-navy) 0%, var(--db-ink) 100%);
     color: white;
     justify-content: center;
     align-items: center;
     text-align: center;
   }
 
-  /* Cover slide styling */
+  /* === COVER SLIDE STYLING === */
   .cover-slide .cover-badge {
     display: inline-block;
     background: var(--ds-purple);
     color: white;
-    padding: 8px 28px;
-    border-radius: 24px;
-    font-size: 0.9rem;
+    padding: 10px 32px;
+    border-radius: 28px;
+    font-size: 0.95rem;
     font-weight: 600;
     letter-spacing: 2px;
     text-transform: uppercase;
-    margin-bottom: 32px;
+    margin-bottom: 36px;
+    box-shadow: 0 4px 20px rgba(124, 58, 237, 0.3);
   }
   .cover-slide h1 {
     font-size: 3.4rem;
     font-weight: 700;
     line-height: 1.15;
     margin-bottom: 16px;
-    letter-spacing: -0.5px;
+    letter-spacing: -0.02em;
   }
   .cover-slide .subtitle {
     font-size: 1.35rem;
@@ -87,29 +100,31 @@
     gap: 24px;
     align-items: center;
     justify-content: center;
-    opacity: 0.7;
+    opacity: 0.55;
     font-size: 0.9rem;
     font-weight: 500;
     letter-spacing: 1px;
   }
-  .cover-slide .logos span { color: #aaa; }
+  .cover-slide .logos span { color: rgba(255,255,255,0.6); }
 
-  /* Divider slide styling */
+  /* === DIVIDER SLIDE STYLING === */
   .divider-slide .divider-badge {
     display: inline-block;
     background: var(--ds-purple);
     color: white;
-    padding: 6px 22px;
-    border-radius: 20px;
-    font-size: 0.8rem;
+    padding: 8px 26px;
+    border-radius: 24px;
+    font-size: 0.85rem;
     font-weight: 600;
     letter-spacing: 1.5px;
     text-transform: uppercase;
-    margin-bottom: 24px;
+    margin-bottom: 28px;
+    box-shadow: 0 4px 16px rgba(124, 58, 237, 0.25);
   }
   .divider-slide h1 {
     font-size: 2.8rem;
     font-weight: 700;
+    letter-spacing: -0.02em;
     margin-bottom: 16px;
   }
   .divider-slide .divider-sub {
@@ -121,46 +136,63 @@
   .divider-slide .divider-time {
     margin-top: 28px;
     display: inline-block;
-    background: rgba(255,255,255,0.12);
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.18);
     padding: 8px 24px;
-    border-radius: 20px;
+    border-radius: 24px;
     font-size: 0.9rem;
     font-weight: 600;
   }
 
+  /* === PAGE HEADER === */
   .page-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 3px solid var(--ds-purple);
+    border-bottom: 4px solid #7c3aed;
     padding-bottom: 12px;
     margin-bottom: 24px;
     flex-shrink: 0;
   }
-  .page-header h2 { font-size: 1.4rem; font-weight: 700; color: var(--db-navy); }
+  .page-header h2 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--db-navy);
+    letter-spacing: -0.02em;
+  }
   .page-header .track-badge {
     background: #7c3aed;
     color: white;
-    padding: 4px 16px;
-    border-radius: 20px;
-    font-size: 0.8rem;
-    font-weight: 600;
-    letter-spacing: 1px;
+    padding: 6px 20px;
+    border-radius: 24px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
     text-transform: uppercase;
+    box-shadow: 0 2px 8px rgba(124, 58, 237, 0.2);
   }
 
+  /* === PAGE CONTENT === */
   .page-content { flex: 1; overflow: hidden; }
-  .page-content h3 { font-size: 1.15rem; font-weight: 700; color: var(--ds-purple); margin: 16px 0 8px; }
+  .page-content h3 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--ds-purple);
+    margin: 16px 0 8px;
+    letter-spacing: -0.02em;
+  }
   .page-content h3:first-child { margin-top: 0; }
   .page-content h4 { font-size: 1rem; font-weight: 600; color: var(--db-navy); margin: 12px 0 6px; }
   .page-content p { font-size: 0.9rem; line-height: 1.5; margin-bottom: 8px; }
   .page-content ul, .page-content ol { font-size: 0.9rem; line-height: 1.5; margin-left: 24px; margin-bottom: 8px; }
   .page-content li { margin-bottom: 4px; }
 
+  /* === CODE BLOCKS — dark theme, purple top border === */
   .code-block {
     background: #1e1e2e;
     color: #cdd6f4;
-    border-radius: 8px;
+    border-radius: 12px;
+    border-top: 3px solid #7c3aed;
     padding: 14px 18px;
     font-family: 'DM Mono', monospace;
     font-size: 0.78rem;
@@ -168,6 +200,7 @@
     white-space: pre;
     overflow-x: auto;
     margin: 10px 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
   }
   .code-block .keyword { color: #cba6f7; }
   .code-block .string { color: #a6e3a1; }
@@ -176,8 +209,9 @@
   .code-block .type { color: #f9e2af; }
   .code-block .decorator { color: #fab387; }
 
+  /* === INLINE CODE === */
   code {
-    background: #f0ede8;
+    background: var(--db-oat-medium);
     padding: 2px 6px;
     border-radius: 4px;
     font-family: 'DM Mono', monospace;
@@ -185,25 +219,29 @@
     color: #7c3aed;
   }
 
+  /* === TIP / WARNING / SUCCESS BOXES — white cards, colored left borders === */
   .tip-box {
-    background: #e8f5e9;
+    background: var(--db-white);
     border-left: 4px solid var(--db-green);
     padding: 12px 16px;
-    border-radius: 0 8px 8px 0;
+    border-radius: 12px;
     margin: 10px 0;
     font-size: 0.85rem;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
   }
   .tip-box strong { color: #2e7d32; }
   .warning-box {
-    background: #fff3e0;
+    background: var(--db-white);
     border-left: 4px solid #ff9800;
     padding: 12px 16px;
-    border-radius: 0 8px 8px 0;
+    border-radius: 12px;
     margin: 10px 0;
     font-size: 0.85rem;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
   }
   .warning-box strong { color: #e65100; }
 
+  /* === BADGES === */
   .phase-badge {
     display: inline-block;
     background: var(--db-navy);
@@ -215,7 +253,6 @@
     letter-spacing: 0.5px;
     margin-bottom: 8px;
   }
-
   .time-badge {
     display: inline-block;
     background: var(--db-teal);
@@ -227,52 +264,62 @@
     margin-left: 8px;
   }
 
+  /* === LAYOUT GRIDS === */
   .two-col {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 24px;
   }
-
   .three-col {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     gap: 18px;
   }
 
+  /* === SUCCESS BOX — white card, green left border === */
   .success-box {
-    background: #e8f5e9;
-    border: 2px solid var(--db-green);
-    border-radius: 8px;
+    background: var(--db-white);
+    border: 1px solid var(--db-oat-medium);
+    border-left: 4px solid var(--db-green);
+    border-radius: 12px;
     padding: 14px 18px;
     margin: 10px 0;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
   }
   .success-box h4 { color: var(--db-green); margin-top: 0; }
 
+  /* === TASK CARDS — white bg, branded border === */
   .task-card {
-    background: #f8f6ff;
-    border: 1px solid #e0d4ff;
-    border-radius: 8px;
+    background: var(--db-white);
+    border: 1px solid var(--db-oat-medium);
+    border-radius: 12px;
     padding: 12px 16px;
     margin: 6px 0;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
   }
   .task-card h4 { color: var(--ds-purple); margin: 0 0 4px; font-size: 0.85rem; }
   .task-card p { font-size: 0.82rem; margin: 0; color: #555; }
 
+  /* === CHECKPOINT BOX — purple accent === */
   .checkpoint-box {
-    background: #f3e8ff;
+    background: var(--db-white);
     border: 2px dashed var(--ds-purple);
-    border-radius: 8px;
+    border-radius: 12px;
     padding: 12px 16px;
     margin: 10px 0;
     font-size: 0.85rem;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
   }
   .checkpoint-box strong { color: var(--ds-purple); }
 
+  /* === TABLES — alternating oat rows === */
   table.info-table {
     width: 100%;
     border-collapse: collapse;
     font-size: 0.82rem;
     margin: 8px 0;
+    border-radius: 12px;
+    overflow: hidden;
   }
   table.info-table th {
     background: var(--db-navy);
@@ -283,15 +330,17 @@
   }
   table.info-table td {
     padding: 7px 12px;
-    border-bottom: 1px solid #e0e0e0;
+    border-bottom: 1px solid var(--db-oat-medium);
   }
-  table.info-table tr:nth-child(even) td { background: #f9f7f4; }
+  table.info-table tr:nth-child(even) td { background: var(--db-oat); }
+  table.info-table tr:nth-child(odd) td { background: var(--db-white); }
 
+  /* === PAGE FOOTER === */
   .page-footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-top: 1px solid #e0e0e0;
+    border-top: 1px solid var(--db-oat-medium);
     padding-top: 8px;
     margin-top: auto;
     font-size: 0.7rem;
@@ -299,23 +348,26 @@
     flex-shrink: 0;
   }
 
+  /* === PROMPT LABEL + CODE BLOCK — dark bg, purple top border === */
   .prompt-label {
     display: inline-block;
     background: var(--ds-purple);
     color: white;
-    padding: 2px 10px;
-    border-radius: 4px 4px 0 0;
-    font-size: 0.7rem;
-    font-weight: 600;
+    padding: 4px 14px;
+    border-radius: 6px 6px 0 0;
+    font-size: 0.72rem;
+    font-weight: 700;
     letter-spacing: 0.5px;
     text-transform: uppercase;
     margin-bottom: 0;
   }
   .prompt-label + .code-block {
     margin-top: 0;
-    border-radius: 0 8px 8px 8px;
+    border-top: 3px solid #7c3aed;
+    border-radius: 0 12px 12px 12px;
   }
 
+  /* === STEP NUMBER === */
   .step-num {
     display: inline-flex;
     align-items: center;

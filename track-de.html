@@ -6,17 +6,25 @@
 <title>Data Engineering Track — Coles Vibe Coding Workshop</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
+  /* === THEME VARIABLES (Databricks / Coles branded) === */
   :root {
-    --db-lava: #FF3621;
-    --db-navy: #1B3139;
-    --db-teal: #00A972;
-    --db-green: #00A972;
-    --db-oat: #F9F7F4;
-    --coles-red: #E01A22;
+    --db-lava:       #FF3621;
+    --db-lava-light: #FF5F46;
+    --db-navy:       #1B3139;
+    --db-ink:        #0B2026;
+    --db-teal:       #1B5162;
+    --db-green:      #00A972;
+    --db-oat:        #F9F7F4;
+    --db-oat-medium: #EEEDE9;
+    --db-oat-dark:   #DBD7CE;
+    --db-white:      #FFFFFF;
+    --coles-red:     #ED1C24;
   }
+
+  /* === BASE RESET === */
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html { scroll-snap-type: y mandatory; scroll-behavior: smooth; overflow-x: hidden; }
-  body { font-family: 'DM Sans', sans-serif; color: var(--db-navy); background: #1a1a2e; }
+  body { font-family: 'DM Sans', sans-serif; color: var(--db-navy); background: var(--db-ink); }
 
   .slide {
     width: 100vw; height: 100vh;
@@ -27,79 +35,89 @@
     flex-direction: column;
   }
 
-  /* Document page style - white background with content */
+  /* === PAGE SLIDES — warm oat background === */
   .page-slide {
-    background: white;
+    background: var(--db-oat);
     padding: 48px 80px 48px 80px;
   }
 
-  /* Cover slide - dark themed */
+  /* === COVER SLIDE — deep immersive gradient === */
   .cover-slide {
-    background: linear-gradient(135deg, var(--db-navy) 0%, #0d1f26 100%);
+    background: linear-gradient(135deg, var(--db-navy) 0%, var(--db-ink) 60%, #061418 100%);
     color: white;
     justify-content: center;
     align-items: center;
     text-align: center;
   }
 
-  /* Section divider slide */
+  /* === SECTION DIVIDER SLIDE — navy→ink with lava accent === */
   .divider-slide {
-    background: linear-gradient(135deg, var(--db-navy) 0%, #163a45 100%);
+    background: linear-gradient(135deg, var(--db-navy) 0%, var(--db-ink) 100%);
     color: white;
     justify-content: center;
     align-items: center;
     text-align: center;
   }
+  .divider-slide::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 4px;
+    background: var(--db-lava);
+  }
 
-  /* Cover styling */
+  /* === COVER STYLING === */
   .cover-slide h1 {
-    font-size: 3.2rem;
+    font-size: 3.6rem;
     font-weight: 700;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
     margin-bottom: 16px;
   }
   .cover-slide .subtitle {
-    font-size: 1.35rem;
+    font-size: 1.4rem;
     font-weight: 400;
-    opacity: 0.85;
+    opacity: 0.8;
     margin-bottom: 32px;
+    letter-spacing: -0.01em;
   }
   .cover-slide .tagline {
-    font-size: 1.05rem;
+    font-size: 1.1rem;
     font-weight: 500;
-    color: var(--db-teal);
+    color: var(--db-green);
     letter-spacing: 0.5px;
   }
   .cover-slide .cover-badge {
     display: inline-block;
     background: var(--db-lava);
     color: white;
-    padding: 8px 28px;
+    padding: 10px 32px;
     border-radius: 28px;
-    font-size: 0.9rem;
-    font-weight: 600;
-    letter-spacing: 1.5px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 2px;
     text-transform: uppercase;
-    margin-bottom: 40px;
+    margin-bottom: 44px;
+    box-shadow: 0 4px 20px rgba(255, 54, 33, 0.35);
   }
   .cover-slide .cover-decoration {
     position: absolute;
-    width: 600px; height: 600px;
+    width: 700px; height: 700px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(0,169,114,0.08) 0%, transparent 70%);
-    top: -200px; right: -200px;
+    background: radial-gradient(circle, rgba(0,169,114,0.1) 0%, transparent 70%);
+    top: -250px; right: -250px;
     pointer-events: none;
   }
   .cover-slide .cover-decoration-2 {
     position: absolute;
-    width: 400px; height: 400px;
+    width: 500px; height: 500px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(255,54,33,0.06) 0%, transparent 70%);
-    bottom: -150px; left: -100px;
+    background: radial-gradient(circle, rgba(255,54,33,0.08) 0%, transparent 70%);
+    bottom: -200px; left: -150px;
     pointer-events: none;
   }
 
-  /* Divider styling */
+  /* === DIVIDER STYLING === */
   .divider-slide h1 {
     font-size: 2.8rem;
     font-weight: 700;
@@ -114,8 +132,8 @@
   }
   .divider-slide .divider-time {
     display: inline-block;
-    background: rgba(255,255,255,0.12);
-    border: 1px solid rgba(255,255,255,0.2);
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.18);
     padding: 6px 22px;
     border-radius: 24px;
     font-size: 0.9rem;
@@ -125,48 +143,76 @@
   .divider-slide .divider-number {
     font-size: 6rem;
     font-weight: 700;
-    color: rgba(255,255,255,0.06);
+    color: rgba(255,255,255,0.05);
     position: absolute;
     top: 60px; left: 80px;
     line-height: 1;
   }
 
-  /* Page header bar */
+  /* === PAGE HEADER — lava accent line below === */
   .page-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 3px solid var(--db-lava);
-    padding-bottom: 12px;
+    border-bottom: none;
+    padding-bottom: 16px;
     margin-bottom: 24px;
     flex-shrink: 0;
+    position: relative;
   }
-  .page-header h2 { font-size: 1.4rem; font-weight: 700; color: var(--db-navy); }
+  .page-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 60px; height: 4px;
+    background: var(--db-lava);
+    border-radius: 2px;
+  }
+  .page-header h2 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--db-navy);
+    letter-spacing: -0.02em;
+  }
   .page-header .track-badge {
     background: var(--db-lava);
     color: white;
-    padding: 4px 16px;
+    padding: 6px 20px;
     border-radius: 20px;
-    font-size: 0.8rem;
-    font-weight: 600;
-    letter-spacing: 1px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 1.2px;
     text-transform: uppercase;
+    box-shadow: 0 2px 8px rgba(255, 54, 33, 0.25);
   }
 
-  /* Content area */
+  /* === CONTENT AREA === */
   .page-content { flex: 1; overflow: hidden; }
-  .page-content h3 { font-size: 1.15rem; font-weight: 700; color: var(--db-lava); margin: 16px 0 8px; }
+  .page-content h3 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--db-lava);
+    margin: 16px 0 8px;
+    letter-spacing: -0.02em;
+  }
   .page-content h3:first-child { margin-top: 0; }
-  .page-content h4 { font-size: 1rem; font-weight: 600; color: var(--db-navy); margin: 12px 0 6px; }
-  .page-content p { font-size: 0.88rem; line-height: 1.5; margin-bottom: 8px; }
-  .page-content ul, .page-content ol { font-size: 0.88rem; line-height: 1.5; margin-left: 24px; margin-bottom: 8px; }
+  .page-content h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--db-navy);
+    margin: 12px 0 6px;
+    letter-spacing: -0.02em;
+  }
+  .page-content p { font-size: 0.88rem; line-height: 1.55; margin-bottom: 8px; }
+  .page-content ul, .page-content ol { font-size: 0.88rem; line-height: 1.55; margin-left: 24px; margin-bottom: 8px; }
   .page-content li { margin-bottom: 3px; }
 
-  /* Code blocks */
+  /* === CODE BLOCKS — dark with lava accent top === */
   .code-block {
-    background: #1e1e2e;
+    background: var(--db-ink);
     color: #cdd6f4;
-    border-radius: 8px;
+    border-radius: 12px;
+    border-top: 3px solid var(--db-lava);
     padding: 14px 18px;
     font-family: 'DM Mono', monospace;
     font-size: 0.76rem;
@@ -191,9 +237,9 @@
     letter-spacing: 0.5px;
   }
 
-  /* Inline code */
+  /* === INLINE CODE === */
   code {
-    background: #f0ede8;
+    background: var(--db-oat-medium);
     padding: 2px 6px;
     border-radius: 4px;
     font-family: 'DM Mono', monospace;
@@ -201,29 +247,31 @@
     color: var(--db-lava);
   }
 
-  /* Info/tip boxes */
+  /* === TIP / WARNING BOXES — white card, colored left border === */
   .tip-box {
-    background: #e8f5e9;
+    background: var(--db-white);
     border-left: 4px solid var(--db-green);
-    padding: 10px 14px;
-    border-radius: 0 8px 8px 0;
+    padding: 12px 16px;
+    border-radius: 0 12px 12px 0;
     margin: 10px 0;
     font-size: 0.82rem;
     line-height: 1.45;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
   }
-  .tip-box strong { color: #2e7d32; }
+  .tip-box strong { color: #1a7a42; }
   .warning-box {
-    background: #fff3e0;
+    background: var(--db-white);
     border-left: 4px solid #ff9800;
-    padding: 10px 14px;
-    border-radius: 0 8px 8px 0;
+    padding: 12px 16px;
+    border-radius: 0 12px 12px 0;
     margin: 10px 0;
     font-size: 0.82rem;
     line-height: 1.45;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
   }
   .warning-box strong { color: #e65100; }
 
-  /* Phase badge */
+  /* === PHASE BADGE === */
   .phase-badge {
     display: inline-block;
     background: var(--db-navy);
@@ -236,7 +284,7 @@
     margin-bottom: 8px;
   }
 
-  /* Time badge */
+  /* === TIME BADGE === */
   .time-badge {
     display: inline-block;
     background: var(--db-teal);
@@ -248,117 +296,141 @@
     margin-left: 8px;
   }
 
-  /* Two column layout */
+  /* === TWO COLUMN LAYOUT === */
   .two-col {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 24px;
   }
 
-  /* Three column layout */
+  /* === THREE COLUMN LAYOUT === */
   .three-col {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     gap: 18px;
   }
 
-  /* Success criteria box */
+  /* === SUCCESS BOX — white card, green left border === */
   .success-box {
-    background: #e8f5e9;
-    border: 2px solid var(--db-green);
-    border-radius: 8px;
+    background: var(--db-white);
+    border: none;
+    border-left: 4px solid var(--db-green);
+    border-radius: 0 12px 12px 0;
     padding: 14px 18px;
     margin: 10px 0;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
   }
   .success-box h4 { color: var(--db-green); margin-top: 0; }
 
-  /* Checkpoint box */
+  /* === CHECKPOINT BOX — white card, blue left border === */
   .checkpoint-box {
-    background: #e3f2fd;
-    border: 2px solid #1976d2;
-    border-radius: 8px;
+    background: var(--db-white);
+    border: none;
+    border-left: 4px solid #1976d2;
+    border-radius: 0 12px 12px 0;
     padding: 12px 16px;
     margin: 10px 0;
     font-size: 0.82rem;
     line-height: 1.45;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
   }
   .checkpoint-box strong { color: #1565c0; }
 
-  /* Team task box */
+  /* === TEAM TASK BOX — white card, purple left border === */
   .team-box {
-    background: #f3e5f5;
+    background: var(--db-white);
     border-left: 4px solid #9c27b0;
-    padding: 10px 14px;
-    border-radius: 0 8px 8px 0;
+    padding: 12px 16px;
+    border-radius: 0 12px 12px 0;
     margin: 10px 0;
     font-size: 0.82rem;
     line-height: 1.45;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
   }
   .team-box strong { color: #7b1fa2; }
 
-  /* Table */
+  /* === TABLE — alternating oat rows === */
   .data-table {
     width: 100%;
     border-collapse: collapse;
     font-size: 0.82rem;
     margin: 10px 0;
+    border-radius: 12px;
+    overflow: hidden;
   }
   .data-table th {
     background: var(--db-navy);
     color: white;
-    padding: 8px 12px;
+    padding: 10px 14px;
     text-align: left;
     font-weight: 600;
     font-size: 0.78rem;
   }
   .data-table td {
-    padding: 6px 12px;
-    border-bottom: 1px solid #e0e0e0;
+    padding: 8px 14px;
+    border-bottom: 1px solid var(--db-oat-medium);
   }
-  .data-table tr:nth-child(even) td { background: #f8f8f8; }
+  .data-table tr:nth-child(even) td { background: var(--db-oat); }
+  .data-table tr:nth-child(odd) td { background: var(--db-white); }
 
-  /* Page footer */
+  /* === PAGE FOOTER — subtle oat divider === */
   .page-footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-top: 1px solid #e0e0e0;
-    padding-top: 8px;
+    border-top: 1px solid var(--db-oat-medium);
+    padding-top: 10px;
     margin-top: auto;
     font-size: 0.7rem;
-    color: #999;
+    color: var(--db-oat-dark);
     flex-shrink: 0;
   }
 
-  /* Prompt block — special emphasis */
+  /* === PROMPT BLOCK — dark bg, lava accent top, prominent label === */
   .prompt-block {
-    background: #1a1a2e;
-    border: 2px solid var(--db-lava);
-    border-radius: 8px;
-    padding: 14px 18px;
+    background: var(--db-ink);
+    border: none;
+    border-top: 3px solid var(--db-lava);
+    border-radius: 12px;
+    padding: 20px 18px 14px 18px;
     font-family: 'DM Mono', monospace;
     font-size: 0.78rem;
     line-height: 1.5;
     color: #e0e0e0;
     white-space: pre-wrap;
-    margin: 10px 0;
+    margin: 14px 0;
     position: relative;
   }
   .prompt-block::before {
     content: 'PASTE INTO CLAUDE CODE';
     position: absolute;
-    top: -10px; left: 16px;
+    top: -12px; left: 16px;
     background: var(--db-lava);
     color: white;
-    font-size: 0.6rem;
+    font-size: 0.62rem;
     font-weight: 700;
-    padding: 2px 10px;
-    border-radius: 4px;
-    letter-spacing: 1px;
+    padding: 3px 14px;
+    border-radius: 6px;
+    letter-spacing: 1.5px;
     font-family: 'DM Sans', sans-serif;
+    box-shadow: 0 2px 8px rgba(255, 54, 33, 0.3);
   }
 
-  /* Pipeline diagram */
+  /* === INSIGHT BOXES — dark navy callout, lava left border === */
+  .insight-box {
+    background: var(--db-navy);
+    color: var(--db-white);
+    border-left: 4px solid var(--db-lava);
+    padding: 12px 16px;
+    border-radius: 0 12px 12px 0;
+    margin: 10px 0;
+    font-size: 0.82rem;
+    line-height: 1.45;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  }
+  .insight-box strong { color: var(--db-lava-light); }
+
+  /* === PIPELINE DIAGRAM === */
   .pipeline-flow {
     display: flex;
     align-items: center;
@@ -370,15 +442,16 @@
   }
   .pipeline-flow .stage {
     padding: 10px 20px;
-    border-radius: 8px;
+    border-radius: 12px;
     text-align: center;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
   }
   .pipeline-flow .bronze { background: #CD7F32; color: white; }
   .pipeline-flow .silver { background: #C0C0C0; color: var(--db-navy); }
   .pipeline-flow .gold { background: #FFD700; color: var(--db-navy); }
-  .pipeline-flow .arrow { color: #999; font-size: 1.4rem; }
+  .pipeline-flow .arrow { color: var(--db-oat-dark); font-size: 1.4rem; }
 
-  /* Checklist style */
+  /* === CHECKLIST === */
   .checklist { list-style: none; margin-left: 0; }
   .checklist li { padding-left: 24px; position: relative; }
   .checklist li::before {

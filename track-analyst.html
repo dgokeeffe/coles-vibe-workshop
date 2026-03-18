@@ -6,19 +6,43 @@
 <title>Analyst Track — Coles Vibe Coding Workshop</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
+  /* === THEME VARIABLES (full Databricks/Coles brand set) === */
   :root {
-    --db-lava: #FF3621;
-    --db-navy: #1B3139;
-    --db-teal: #00A972;
-    --db-green: #00A972;
-    --db-oat: #F9F7F4;
-    --coles-red: #E01A22;
-    --track-cyan: #0891b2;
+    --db-lava:       #FF3621;
+    --db-lava-light: #FF5F46;
+    --db-navy:       #1B3139;
+    --db-ink:        #0B2026;
+    --db-teal:       #1B5162;
+    --db-green:      #00A972;
+    --db-oat:        #F9F7F4;
+    --db-oat-medium: #EEEDE9;
+    --db-oat-dark:   #DBD7CE;
+    --db-white:      #FFFFFF;
+
+    --coles-red:     #ED1C24;
+    --coles-red-glow: rgba(237, 28, 36, 0.12);
+
+    --track-cyan:    #0891b2;
+    --track-cyan-glow: rgba(8, 145, 178, 0.12);
+
+    --bg-primary:    var(--db-oat);
+    --bg-secondary:  var(--db-white);
+    --bg-dark:       var(--db-navy);
+    --text-primary:  var(--db-ink);
+    --text-secondary: #4A5E68;
+    --text-on-dark:  var(--db-white);
+
+    --font-display: 'DM Sans', sans-serif;
+    --font-body:    'DM Sans', sans-serif;
+    --font-mono:    'DM Mono', monospace;
   }
+
+  /* === BASE RESET === */
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html { scroll-snap-type: y mandatory; scroll-behavior: smooth; overflow-x: hidden; }
-  body { font-family: 'DM Sans', sans-serif; color: var(--db-navy); background: #1a1a2e; }
+  body { font-family: var(--font-body); color: var(--text-primary); background: var(--db-ink); }
 
+  /* === SLIDE CONTAINER === */
   .slide {
     width: 100vw; height: 100vh;
     scroll-snap-align: start;
@@ -28,32 +52,36 @@
     flex-direction: column;
   }
 
+  /* === PAGE SLIDES — warm oat background === */
   .page-slide {
-    background: white;
+    background: var(--db-oat);
     padding: 48px 80px 48px 80px;
   }
 
+  /* === COVER SLIDE — deep branded gradient === */
   .cover-slide {
-    background: linear-gradient(135deg, var(--db-navy) 0%, #0d1f26 100%);
+    background: linear-gradient(135deg, var(--db-navy) 0%, var(--db-ink) 60%, #0c2a32 100%);
     color: white;
     justify-content: center;
     align-items: center;
     text-align: center;
   }
 
+  /* === DIVIDER SLIDES — navy-to-ink gradient === */
   .divider-slide {
-    background: linear-gradient(135deg, var(--db-navy) 0%, #163a45 100%);
+    background: linear-gradient(135deg, var(--db-navy) 0%, var(--db-ink) 100%);
     color: white;
     justify-content: center;
     align-items: center;
     text-align: center;
   }
 
+  /* === COVER SLIDE TYPOGRAPHY === */
   .cover-slide h1 {
     font-size: 3.5rem;
     font-weight: 700;
     margin-bottom: 16px;
-    letter-spacing: -1px;
+    letter-spacing: -0.02em;
   }
   .cover-slide h2 {
     font-size: 1.4rem;
@@ -73,13 +101,14 @@
     display: inline-block;
     background: var(--track-cyan);
     color: white;
-    padding: 8px 28px;
+    padding: 10px 32px;
     border-radius: 28px;
     font-size: 0.95rem;
-    font-weight: 600;
+    font-weight: 700;
     letter-spacing: 2px;
     text-transform: uppercase;
     margin-bottom: 32px;
+    box-shadow: 0 4px 20px rgba(8, 145, 178, 0.3);
   }
   .cover-slide .cover-logos {
     margin-top: 32px;
@@ -87,9 +116,11 @@
     opacity: 0.6;
   }
 
+  /* === DIVIDER SLIDE TYPOGRAPHY === */
   .divider-slide h1 {
     font-size: 2.8rem;
     font-weight: 700;
+    letter-spacing: -0.02em;
     margin-bottom: 12px;
   }
   .divider-slide h2 {
@@ -100,92 +131,115 @@
   }
   .divider-slide .divider-timing {
     display: inline-block;
-    background: var(--track-cyan);
+    background: rgba(255,255,255,0.10);
+    border: 1px solid rgba(255,255,255,0.18);
     color: white;
     padding: 6px 24px;
     border-radius: 24px;
     font-size: 0.9rem;
-    font-weight: 600;
+    font-weight: 500;
     margin-top: 20px;
+    letter-spacing: 0.5px;
   }
 
+  /* === PAGE HEADER — cyan accent line === */
   .page-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 3px solid var(--db-lava);
+    border-bottom: 4px solid var(--track-cyan);
     padding-bottom: 12px;
     margin-bottom: 24px;
     flex-shrink: 0;
   }
-  .page-header h2 { font-size: 1.4rem; font-weight: 700; color: var(--db-navy); }
+  .page-header h2 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--db-navy);
+    letter-spacing: -0.02em;
+  }
   .page-header .track-badge {
     background: var(--track-cyan);
     color: white;
-    padding: 4px 16px;
+    padding: 6px 20px;
     border-radius: 20px;
     font-size: 0.8rem;
-    font-weight: 600;
-    letter-spacing: 1px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
     text-transform: uppercase;
+    box-shadow: 0 2px 8px rgba(8, 145, 178, 0.25);
   }
 
+  /* === PAGE CONTENT === */
   .page-content { flex: 1; overflow: hidden; }
   .page-content h3 { font-size: 1.15rem; font-weight: 700; color: var(--track-cyan); margin: 16px 0 8px; }
   .page-content h3:first-child { margin-top: 0; }
   .page-content h4 { font-size: 1rem; font-weight: 600; color: var(--db-navy); margin: 12px 0 6px; }
-  .page-content p { font-size: 0.9rem; line-height: 1.5; margin-bottom: 8px; }
+  .page-content p { font-size: 0.9rem; line-height: 1.5; margin-bottom: 8px; color: var(--text-primary); }
   .page-content ul, .page-content ol { font-size: 0.9rem; line-height: 1.5; margin-left: 24px; margin-bottom: 8px; }
   .page-content li { margin-bottom: 4px; }
 
+  /* === CODE BLOCKS — dark theme, cyan top border === */
   .code-block {
-    background: #1e1e2e;
-    color: #cdd6f4;
-    border-radius: 8px;
+    background: var(--db-navy);
+    color: #E0E0E0;
+    border-radius: 12px;
+    border-top: 3px solid var(--track-cyan);
     padding: 14px 18px;
-    font-family: 'DM Mono', monospace;
+    font-family: var(--font-mono);
     font-size: 0.78rem;
     line-height: 1.45;
     white-space: pre;
     overflow-x: auto;
     margin: 10px 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
   }
-  .code-block .keyword { color: #cba6f7; }
-  .code-block .string { color: #a6e3a1; }
-  .code-block .comment { color: #6c7086; }
-  .code-block .function { color: #89b4fa; }
-  .code-block .type { color: #f9e2af; }
+  .code-block .keyword { color: #569CD6; }
+  .code-block .string { color: #CE9178; }
+  .code-block .comment { color: #6A9955; }
+  .code-block .function { color: #DCDCAA; }
+  .code-block .type { color: #4EC9B0; }
   .code-block .decorator { color: #fab387; }
 
+  /* === INLINE CODE === */
   code {
-    background: #f0ede8;
+    background: var(--db-oat-medium);
     padding: 2px 6px;
     border-radius: 4px;
-    font-family: 'DM Mono', monospace;
+    font-family: var(--font-mono);
     font-size: 0.82rem;
     color: var(--track-cyan);
   }
 
+  /* === TIP BOX — white card, green left border === */
   .tip-box {
-    background: #e8f5e9;
+    background: var(--db-white);
     border-left: 4px solid var(--db-green);
     padding: 12px 16px;
-    border-radius: 0 8px 8px 0;
+    border-radius: 12px;
     margin: 10px 0;
     font-size: 0.85rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    border: 1px solid var(--db-oat-medium);
+    border-left: 4px solid var(--db-green);
   }
   .tip-box strong { color: var(--db-green); }
 
+  /* === WARNING BOX — white card, orange left border === */
   .warning-box {
-    background: #fff3e0;
+    background: var(--db-white);
     border-left: 4px solid #ff9800;
     padding: 12px 16px;
-    border-radius: 0 8px 8px 0;
+    border-radius: 12px;
     margin: 10px 0;
     font-size: 0.85rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    border: 1px solid var(--db-oat-medium);
+    border-left: 4px solid #ff9800;
   }
   .warning-box strong { color: #e65100; }
 
+  /* === PHASE BADGE === */
   .phase-badge {
     display: inline-block;
     background: var(--db-navy);
@@ -198,6 +252,7 @@
     margin-bottom: 8px;
   }
 
+  /* === TIME BADGE === */
   .time-badge {
     display: inline-block;
     background: var(--db-teal);
@@ -209,91 +264,130 @@
     margin-left: 8px;
   }
 
+  /* === TWO COLUMN LAYOUT === */
   .two-col {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 24px;
   }
 
+  /* === THREE COLUMN LAYOUT === */
   .three-col {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     gap: 16px;
   }
 
+  /* === TIER CARDS — premium white on oat, colored top border, shadow === */
   .tier-card {
-    background: var(--db-oat);
-    border-radius: 8px;
+    background: var(--db-white);
+    border-radius: 12px;
     padding: 16px;
     border-top: 3px solid var(--track-cyan);
+    border: 1px solid var(--db-oat-medium);
+    border-top: 3px solid var(--track-cyan);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .tier-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.10);
   }
   .tier-card h4 { color: var(--track-cyan); margin-top: 0; }
-  .tier-card p { font-size: 0.85rem; line-height: 1.45; }
+  .tier-card p { font-size: 0.85rem; line-height: 1.45; color: var(--text-primary); }
   .tier-card ul { font-size: 0.82rem; margin-left: 18px; }
   .tier-card li { margin-bottom: 3px; }
   .tier-card .tier-label {
     font-size: 0.7rem;
-    font-weight: 600;
+    font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 1px;
-    color: #666;
+    color: var(--text-secondary);
     margin-bottom: 4px;
   }
 
+  /* === SUCCESS BOX — white card, green border === */
   .success-box {
-    background: #e8f5e9;
+    background: var(--db-white);
     border: 2px solid var(--db-green);
-    border-radius: 8px;
+    border-radius: 12px;
     padding: 14px 18px;
     margin: 10px 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
   }
   .success-box h4 { color: var(--db-green); margin-top: 0; }
 
+  /* === PAGE FOOTER — oat-medium top border === */
   .page-footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-top: 1px solid #e0e0e0;
+    border-top: 1px solid var(--db-oat-medium);
     padding-top: 8px;
     margin-top: auto;
     font-size: 0.7rem;
-    color: #999;
+    color: var(--text-secondary);
     flex-shrink: 0;
   }
 
+  /* === TABLES — alternating oat rows === */
   table.info-table {
     width: 100%;
     border-collapse: collapse;
     font-size: 0.85rem;
     margin: 10px 0;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
   }
   table.info-table th {
-    background: var(--db-oat);
+    background: var(--db-navy);
+    color: var(--db-white);
     text-align: left;
-    padding: 8px 12px;
+    padding: 10px 12px;
     font-weight: 600;
-    border-bottom: 2px solid #ddd;
+    font-size: 0.82rem;
+    border-bottom: none;
   }
   table.info-table td {
     padding: 8px 12px;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid var(--db-oat-medium);
     vertical-align: top;
+    background: var(--db-white);
   }
+  table.info-table tr:nth-child(even) td { background: var(--db-oat); }
   table.info-table tr:last-child td { border-bottom: none; }
 
+  /* === PROMPT BLOCKS — dark bg, cyan top border === */
   .prompt-block {
-    background: #f0f7ff;
-    border: 1px solid #b3d4fc;
-    border-radius: 8px;
-    padding: 12px 16px;
-    font-family: 'DM Mono', monospace;
+    background: var(--db-navy);
+    border-top: 3px solid var(--track-cyan);
+    border-radius: 12px;
+    padding: 14px 18px;
+    font-family: var(--font-mono);
     font-size: 0.78rem;
     line-height: 1.5;
-    margin: 8px 0;
+    margin: 10px 0;
     white-space: pre-wrap;
-    color: #1a3a5c;
+    color: #E0E0E0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    position: relative;
+  }
+  .prompt-block::before {
+    content: 'PASTE INTO CLAUDE CODE';
+    position: absolute;
+    top: -10px; left: 16px;
+    background: var(--track-cyan);
+    color: white;
+    font-size: 0.6rem;
+    font-weight: 700;
+    padding: 2px 10px;
+    border-radius: 4px;
+    letter-spacing: 1px;
+    font-family: var(--font-body);
   }
 
+  /* === STEP NUMBER === */
   .step-number {
     display: inline-flex;
     align-items: center;
@@ -307,8 +401,10 @@
     font-weight: 700;
     margin-right: 8px;
     flex-shrink: 0;
+    box-shadow: 0 2px 6px rgba(8, 145, 178, 0.25);
   }
 
+  /* === STEP ROW === */
   .step-row {
     display: flex;
     align-items: flex-start;
@@ -316,18 +412,36 @@
   }
   .step-row p { margin-bottom: 0; }
 
+  /* === ARCHITECTURE BOX — dark navy, cyan top border === */
   .architecture-box {
-    background: #1e1e2e;
-    color: #cdd6f4;
-    border-radius: 8px;
+    background: var(--db-navy);
+    color: #E0E0E0;
+    border-radius: 12px;
+    border-top: 3px solid var(--track-cyan);
     padding: 16px 20px;
-    font-family: 'DM Mono', monospace;
+    font-family: var(--font-mono);
     font-size: 0.72rem;
     line-height: 1.4;
     white-space: pre;
     margin: 10px 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
   }
 
+  /* === INSIGHT BOXES — dark navy bg, white text, cyan left border === */
+  .insight-box {
+    background: var(--db-navy);
+    color: var(--db-white);
+    border-left: 4px solid var(--track-cyan);
+    border-radius: 0 12px 12px 0;
+    padding: 12px 16px;
+    margin: 10px 0;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  }
+  .insight-box strong { color: var(--track-cyan); }
+
+  /* === CHECKLIST === */
   .checklist { list-style: none; margin-left: 0; }
   .checklist li { padding-left: 28px; position: relative; margin-bottom: 6px; }
   .checklist li::before {
@@ -337,7 +451,7 @@
     top: 3px;
     width: 18px;
     height: 18px;
-    border: 2px solid #ccc;
+    border: 2px solid var(--db-oat-dark);
     border-radius: 4px;
   }
 </style>
