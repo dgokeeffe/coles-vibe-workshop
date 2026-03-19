@@ -172,7 +172,161 @@ the test            code to pass         (agent self-        & accepts
 
 ---
 
-## 6. Context Windows -- Your Agent's RAM
+## 6. Validation Patterns -- Proving the Work is Done
+
+### 6.1 The Core Principle
+
+Anthropic's #1 best practice: **"Include tests, screenshots, or expected outputs so Claude can check itself. This is the single highest-leverage thing you can do."**
+
+There is a critical difference between an agent that *thinks* it did the work and one that *proves* it did. Every prompt you write should include a way for the agent to verify its own output. If there is no verification step, the agent is guessing -- and you will not know until much later.
+
+### 6.2 Separate Tests from Implementation
+
+Never ask Claude to write tests AND code in the same prompt. When both are generated together, the agent writes tests that match the implementation rather than the requirements. The tests become a mirror of the code, not an independent check.
+
+**Do this -- two separate prompts:**
+
+```text
+Prompt 1:
+"Write tests for a function that decodes ABS region codes to state names.
+Test: 1→NSW, 2→VIC, 99→ValueError. Do NOT implement the function."
+
+Prompt 2:
+"Now implement decode_region() to make these tests pass.
+Run pytest after implementation."
+```
+
+**Not this -- one combined prompt:**
+
+```text
+"Write a function that decodes region codes and write tests for it."
+```
+
+When the test exists before the code, it acts as a genuine constraint. When both are written together, the test becomes a rubber stamp.
+
+### 6.3 Data Quality Expectations (Declarative Validation)
+
+For Lakeflow pipelines, embed validation directly in the table definition using `@dp.expect`. These checks run automatically every time the pipeline executes -- not a separate manual step.
+
+```python
+import dlt as dp
+
+@dp.table
+@dp.expect("turnover_not_null", "turnover IS NOT NULL")
+@dp.expect_or_fail("no_negative_values", "turnover >= 0")
+@dp.expect("valid_state_code", "state_code BETWEEN 1 AND 8")
+def bronze_retail_trade():
+    return (
+        spark.read.format("json")
+        .load("/Volumes/workshop/raw/abs_retail/")
+    )
+```
+
+- `@dp.expect` logs violations but lets rows through (monitoring).
+- `@dp.expect_or_fail` halts the pipeline on violation (hard stop).
+
+These are validation patterns baked into the pipeline itself. The agent does not need to remember to run checks -- they execute every time.
+
+### 6.4 API Schema Contracts
+
+Tests that validate the exact response structure, not just "returns 200". Every field, every type, every boundary.
+
+```python
+def test_metrics_schema(client):
+    """Gold metrics endpoint returns correct structure and value ranges."""
+    response = client.get("/api/metrics")
+    assert response.status_code == 200
+
+    data = response.json()
+    assert isinstance(data, list)
+    assert len(data) > 0
+
+    for record in data:
+        # Exact field set -- no extra, no missing
+        assert set(record.keys()) == {"state", "turnover", "yoy_growth"}
+
+        # Type checks
+        assert isinstance(record["state"], str)
+        assert isinstance(record["turnover"], (int, float))
+        assert isinstance(record["yoy_growth"], (int, float))
+
+        # Boundary checks -- catch nonsense values
+        assert record["state"] in ("NSW", "VIC", "QLD", "SA", "WA", "TAS", "NT", "ACT")
+        assert 0 < record["turnover"] < 50000
+        assert -100 < record["yoy_growth"] < 500
+```
+
+This test does not just check that the endpoint works. It proves the data contract is correct. If the agent adds a field, removes a field, or returns a value outside the expected range, this test fails immediately.
+
+### 6.5 Regression Testing (The Ratchet)
+
+After every new test passes, run the **full** test suite:
+
+```bash
+pytest tests/ -x --no-header -q
+```
+
+This proves new code did not break existing functionality. The `-x` flag stops at the first failure -- you want to know immediately.
+
+Each green test is permanent progress. The suite is a ratchet: quality only goes up, never down. If the agent adds a new silver transformation and breaks a bronze test, the full suite catches it before you move on.
+
+### 6.6 Negative Case Testing
+
+Prove error handling works. Happy-path tests are necessary but insufficient -- you need to verify the system fails gracefully.
+
+```python
+def test_invalid_date_returns_error(client):
+    """Invalid date format returns 400/422, not a server crash."""
+    response = client.get("/api/metrics?start_date=2024/13/45")
+    assert response.status_code in (400, 422)
+    assert "error" in response.json()
+
+
+def test_unknown_state_raises(spark):
+    """Decoding an invalid state code raises ValueError."""
+    from src.silver.transforms import decode_region
+    import pytest
+
+    with pytest.raises(ValueError, match="Unknown region code"):
+        decode_region(99)
+
+
+def test_empty_dataframe_handled(spark):
+    """Silver transform handles empty input without crashing."""
+    empty_df = spark.createDataFrame([], "date STRING, turnover DOUBLE, state STRING")
+    result = clean_retail_data(empty_df)
+    assert result.count() == 0
+```
+
+Negative tests are how you prove the agent built something robust, not just something that works on the happy path.
+
+### 6.7 Diff-Based Validation
+
+After changes, ask the agent to show `git diff` and verify only the intended files changed. This catches hidden side effects -- the agent reformatting a file it should not have touched, or silently modifying a passing test.
+
+```text
+"Show me git diff. Only src/silver/transforms.py should have changed.
+If any other files were modified, revert them."
+```
+
+This is especially important after the agent has been running for several iterations. Context window pressure can cause it to make broader changes than intended.
+
+### 6.8 The Prompt Checklist
+
+Before every prompt, ask yourself these four questions:
+
+| Question | If "No"... |
+|---|---|
+| Can Claude run something to prove this worked? (test, command, query) | Add a verification step: "Run pytest after" or "Query the table and show row count" |
+| Is the success criterion binary? (pass/fail, not "looks good") | Rewrite with a concrete assertion: exact count, specific value, schema match |
+| Can it run in under 30 seconds? | Break into smaller pieces. Long-running validation wastes context on waiting. |
+| Is it separate from the implementation? (not self-grading) | Write the test first in a separate prompt. Never let the agent grade its own work. |
+
+If the answer to any of these is "no," stop and add a verification step before sending the prompt.
+
+---
+
+## 7. Context Windows -- Your Agent's RAM
 
 ### What Are Tokens?
 
@@ -197,7 +351,7 @@ Context window = RAM. When it fills up, older context gets evicted and the agent
 
 # Block B: Lab 0 -- Hands-On Together
 
-## 7. Writing Your CLAUDE.md (10 min)
+## 8. Writing Your CLAUDE.md (10 min)
 
 Open your Coding Agents terminal and paste the prompt below. Replace `<team_schema>` with your assigned schema name.
 
@@ -228,7 +382,7 @@ Include:
 
 ---
 
-## 8. Writing Your First Test (10 min)
+## 9. Writing Your First Test (10 min)
 
 ### Given -- When -- Then
 
@@ -265,7 +419,7 @@ def test_bronze_ingest_retail(spark):
 
 ---
 
-## 9. Building Bronze Ingest (20 min)
+## 10. Building Bronze Ingest (20 min)
 
 Now let the agent build the implementation to pass your test. Paste the prompt below into Claude Code.
 
@@ -300,7 +454,7 @@ After ~15 minutes you should see:
 
 ---
 
-## 10. Lab 0 Checkpoint (5 min)
+## 11. Lab 0 Checkpoint (5 min)
 
 **Before moving on, verify your team has all three pieces in place:**
 
@@ -336,7 +490,7 @@ After ~15 minutes you should see:
 
 # Block C: Tools for the Labs
 
-## 11. Skills -- Slash Commands
+## 12. Skills -- Slash Commands
 
 Skills are **reusable agent capabilities** triggered by slash commands. They encode domain knowledge and multi-step workflows into a single invocation.
 
@@ -372,7 +526,7 @@ A skill is a Markdown file that defines a multi-step workflow. When you type `/c
 
 ---
 
-## 12. MCP -- "USB-C for AI"
+## 13. MCP -- "USB-C for AI"
 
 **Model Context Protocol (MCP)** is a standard protocol for connecting AI agents to external tools and data sources. One protocol, every tool connects -- like USB-C for AI.
 
@@ -404,7 +558,7 @@ Build your own for internal tools:
 
 ---
 
-## 13. Genie & AI/BI Dashboards
+## 14. Genie & AI/BI Dashboards
 
 ### Genie: Natural Language on Your Data
 
@@ -444,7 +598,7 @@ Both feed from the same **gold tables** -- the output of your data pipeline. Goo
 
 # Block D: Reference
 
-## 14. Anthropic's Two Core Practices
+## 15. Anthropic's Two Core Practices
 
 ### #1: Give Claude a Way to Verify Its Work
 
@@ -469,7 +623,7 @@ Don't ask the agent to implement immediately. Follow a three-phase approach:
 
 ---
 
-## 15. Steering Your Agent -- Pitfalls & Phrases
+## 16. Steering Your Agent -- Pitfalls & Phrases
 
 ### Common Pitfalls & Fixes
 
@@ -501,7 +655,7 @@ Don't ask the agent to implement immediately. Follow a three-phase approach:
 
 ---
 
-## 16. Workshop Quick Reference
+## 17. Workshop Quick Reference
 
 ### Key Commands
 
@@ -564,7 +718,7 @@ into my schema workshop_vibe_coding.<team_schema>
 
 ---
 
-## 17. Key Takeaways
+## 18. Key Takeaways
 
 1. **Write clear specs** -- CLAUDE.md, tests, and PRDs define what "done" looks like. The agent can only be as good as your specification.
 2. **Use tests as executable specs (TDD)** -- Tests are unambiguous. They pass or they fail. No interpretation required. Write them first, always.

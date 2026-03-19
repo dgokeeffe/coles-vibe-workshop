@@ -1011,6 +1011,8 @@ and food price data through a medallion architecture.
         <div class="tip-box"><strong>If you take one thing from today:</strong> write the tests first. Always.</div>
       </div>
     </div>
+
+    <div class="warning-box"><strong>Tip:</strong> Always use SEPARATE prompts for tests and implementation. If the same prompt writes both, Claude may write tests that match its code rather than your requirements.</div>
   </div>
   <div class="page-footer">
     <span>Coles Vibe Coding Workshop</span>
@@ -1223,6 +1225,7 @@ Rules:
           <li><strong>Does the agent read CLAUDE.md first?</strong> If not, tell it: "Read CLAUDE.md first, then try again."</li>
           <li><strong>Does it use PySpark?</strong> If it reaches for pandas, steer it back.</li>
           <li><strong>Does it run the test?</strong> The agent should run pytest automatically and iterate until green.</li>
+          <li><strong>Does the agent run the tests automatically after implementation?</strong> If not, tell it: "Run pytest tests/test_pipeline.py -k bronze -x and show me the output."</li>
         </ul>
       </div>
       <div>
@@ -1267,6 +1270,7 @@ Rules:
           <li>Data standards section</li>
           <li>Rules section (TDD, minimal)</li>
           <li>Project structure defined</li>
+          <li><strong>Verify:</strong> Agent can read it back and list the rules</li>
         </ul>
       </div>
       <div class="success-box">
@@ -1277,6 +1281,7 @@ Rules:
           <li>Multiple assertions (count, nulls)</li>
           <li>Descriptive test name</li>
           <li><code style="font-size:0.72rem">pytest -k "bronze" -x</code> passes</li>
+          <li><strong>Verify:</strong> pytest output shows green &mdash; not just "I think it passes"</li>
         </ul>
       </div>
       <div class="success-box">
@@ -1287,6 +1292,7 @@ Rules:
           <li>Reads from data source</li>
           <li>Adds _ingested_at timestamp</li>
           <li>All bronze tests green</li>
+          <li><strong>Verify:</strong> Run <code style="font-size:0.72rem">databricks bundle validate</code> to verify pipeline config</li>
         </ul>
       </div>
     </div>
@@ -1489,35 +1495,34 @@ Rules:
 <!-- ============================================================ -->
 
 <!-- ============================================================ -->
-<!-- SLIDE 17: ANTHROPIC'S TWO CORE PRACTICES                      -->
+<!-- SLIDE 17: VALIDATION — PROVING THE WORK IS DONE               -->
 <!-- ============================================================ -->
-<section class="slide page-slide" aria-label="Anthropic's Two Core Practices">
+<section class="slide page-slide" aria-label="Validation — Proving the Work is Done">
   <div class="page-header">
-    <h2>Anthropic's Two Core Practices</h2>
+    <h2>Validation &mdash; Proving the Work is Done</h2>
     <span class="track-badge">Block D: Reference</span>
   </div>
   <div class="page-content">
     <div class="two-col">
       <div>
-        <h3>#1: Give Claude a Way to Verify Its Work</h3>
-        <p>The agent needs a <strong>feedback loop</strong> &mdash; a way to check if its output is correct without asking you.</p>
-        <ul>
-          <li><strong>Tests:</strong> pytest, unit tests, integration tests</li>
-          <li><strong>Screenshots:</strong> visual verification of UI changes</li>
-          <li><strong>Expected outputs:</strong> "this query should return 42"</li>
-          <li><strong>Diff comparisons:</strong> "output should match this template"</li>
-        </ul>
-        <div class="tip-box"><strong>Self-correcting:</strong> Agent reads failure, fixes, re-runs. Scales without human review bottleneck for each iteration.</div>
+        <h3>The Core Principle</h3>
+        <div class="big-quote">
+          "Include tests, screenshots, or expected outputs so Claude can check itself."
+          <span class="attribution">&mdash; Anthropic</span>
+        </div>
+        <p style="margin-top: 12px;">There's a difference between an agent that <strong>thinks</strong> it did the work and one that <strong>proves</strong> it did. "I implemented the function" is not proof. A green test suite is.</p>
+        <div class="insight-box" style="margin-top: 12px;">Every prompt should answer: "How will the agent verify this worked?"</div>
       </div>
       <div>
-        <h3>#2: Explore First, Plan, Then Code</h3>
-        <p>Don't ask the agent to implement immediately. Follow a three-phase approach:</p>
-        <ol>
-          <li style="margin-bottom: 6px;"><strong>Explore:</strong> Read relevant code, understand existing patterns, check what's already there</li>
-          <li style="margin-bottom: 6px;"><strong>Plan:</strong> Use <code>/plan</code> mode or <code>ultrathink</code> to align on approach before writing code</li>
-          <li style="margin-bottom: 6px;"><strong>Code:</strong> Implement with full context &mdash; agent knows what exists, what to change, what to preserve</li>
+        <h3>Six Validation Patterns</h3>
+        <ol style="font-size: 1.05rem; line-height: 1.65; margin-left: 20px;">
+          <li style="margin-bottom: 6px;"><strong>TDD Gate</strong> &mdash; tests fail &rarr; implement &rarr; tests pass (binary proof)</li>
+          <li style="margin-bottom: 6px;"><strong>Separate prompts</strong> &mdash; write tests in one prompt, implement in another (prevents gaming)</li>
+          <li style="margin-bottom: 6px;"><strong>@dp.expect</strong> &mdash; data quality expectations built into pipeline code (automatic)</li>
+          <li style="margin-bottom: 6px;"><strong>Schema contracts</strong> &mdash; test exact response keys, types, and value ranges (not just status 200)</li>
+          <li style="margin-bottom: 6px;"><strong>Full suite regression</strong> &mdash; <code style="font-size:0.82rem">pytest tests/ -x</code> after every change (the ratchet)</li>
+          <li style="margin-bottom: 6px;"><strong>Negative testing</strong> &mdash; prove error handling works with invalid inputs</li>
         </ol>
-        <div class="tip-box"><strong>Why this works:</strong> Prevents over-engineering and hallucinations. The agent builds on what exists rather than speculating about what might exist.</div>
       </div>
     </div>
   </div>
@@ -1657,7 +1662,7 @@ databricks bundle run grocery-intelligence-TEAM -t dev
       <ol style="font-size: 1.15rem; line-height: 1.7; margin-left: 24px;">
         <li><strong>Write clear specs</strong> &mdash; CLAUDE.md, tests, and PRDs define what "done" looks like. The agent can only be as good as your specification.</li>
         <li><strong>Use tests as executable specs (TDD)</strong> &mdash; Tests are unambiguous. They pass or they fail. No interpretation required. Write them first, always.</li>
-        <li><strong>Give agents verification mechanisms</strong> &mdash; Tests, screenshots, expected outputs. The agent needs a feedback loop to self-correct without human intervention.</li>
+        <li><strong>Every prompt needs a verification step</strong> &mdash; a test to run, a command to execute, or an output to check. If Claude can't prove it worked, it didn't.</li>
         <li><strong>Manage context windows</strong> &mdash; Keep CLAUDE.md lean (~50 lines), be specific with requests, use new sessions for new tasks.</li>
         <li><strong>Steer early and often</strong> &mdash; Review every 2-3 tool calls. Short feedback loops produce better results than long unsupervised runs.</li>
       </ol>

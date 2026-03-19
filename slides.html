@@ -905,7 +905,7 @@
   <!-- ============================================================ -->
   <!-- SLIDE 15: EXERCISE — WRITE YOUR CLAUDE.MD -->
   <!-- ============================================================ -->
-  <section class="slide slide-light" aria-label="Exercise: Write Your CLAUDE.md" data-notes="15-minute team exercise. Each team has a starter-kit repo with a skeleton CLAUDE.md — use it as a starting point. Each team opens their Coding Agents terminal and creates a CLAUDE.md for their Grocery Intelligence Platform. Now they know what the platform is from the previous slide. Walk around the room, help anyone stuck. Common stumbling point: people make rules too vague. Push for specificity. After 15 min, ask 2-3 teams to share one highlight each. 5 min discussion after. ~20 min total. Transition: Now let's talk about the secret weapon -- TDD with agents.">
+  <section class="slide slide-light" aria-label="Exercise: Write Your CLAUDE.md" data-notes="15-minute team exercise. Each team has a starter-kit repo with a skeleton CLAUDE.md — use it as a starting point. Each team opens their Coding Agents terminal and creates a CLAUDE.md for their Grocery Intelligence Platform. Now they know what the platform is from the previous slide. Walk around the room, help anyone stuck. Common stumbling point: people make rules too vague. Push for specificity. Emphasize that CLAUDE.md is a VALIDATION tool — when you include rules like 'always PySpark, never pandas', you're giving the agent AND yourself a way to verify the output is correct. Every rule in CLAUDE.md doubles as a checklist item: did the agent follow this? Can I check? After 15 min, ask 2-3 teams to share one highlight each. 5 min discussion after. ~20 min total. Transition: Now let's talk about the secret weapon -- TDD with agents.">
     <div class="reveal section-num">Exercise &middot; 15 Minutes</div>
     <h2 class="reveal">Exercise: Write Your Team's CLAUDE.md</h2>
     <div class="reveal two-col" style="margin-top:1.5rem;gap:2rem;">
@@ -942,7 +942,7 @@
   <!-- ============================================================ -->
   <!-- SLIDE 16: TDD WORKFLOW -->
   <!-- ============================================================ -->
-  <section class="slide slide-light" aria-label="TDD Workflow" data-notes="Walk through the 4-step flow: Human writes test, Agent implements, Run and iterate, Human reviews. The key insight: the test IS the spec. No ambiguity. The agent reads the test, writes code to pass it, runs the test, reads failures, fixes code. Tight feedback loop. ~3 min. Transition: Why is this so much more powerful than traditional TDD?">
+  <section class="slide slide-light" aria-label="TDD Workflow" data-notes="Walk through the 4-step flow: Human writes test, Agent implements, Run and iterate, Human reviews. The key insight: the test IS the spec. No ambiguity. The agent reads the test, writes code to pass it, runs the test, reads failures, fixes code. Tight feedback loop. KEY POINT: Use SEPARATE prompts for writing tests and implementing code. If the same prompt does both, the agent may write tests that match its implementation rather than your requirements. Prompt 1: write the tests. Prompt 2: make them pass. ~3 min. Transition: Why is this so much more powerful than traditional TDD?">
     <div class="reveal section-num">Session 2</div>
     <h2 class="reveal">The TDD + Agent Workflow</h2>
     <div class="reveal accent-line"></div>
@@ -1055,20 +1055,23 @@
   <!-- ============================================================ -->
   <!-- SLIDE 19: OFFICIAL BEST PRACTICES — VERIFICATION & PLANNING -->
   <!-- ============================================================ -->
-  <section class="slide slide-white" aria-label="Anthropic Best Practices" data-notes="These two principles come straight from Anthropic's official Claude Code best practices. First: give Claude a way to verify its work. Tests, screenshots, expected outputs -- this is literally the #1 thing you can do. Ties directly to the TDD workflow we just covered. Second: explore first, then plan, then code. Separate research from implementation. Use /plan mode to align on approach before burning context. This prevents solving the wrong problem fast. The quote at the bottom is from Anthropic's docs. ~2 min. Transition: Now let's talk about managing context windows.">
+  <section class="slide slide-white" aria-label="Anthropic Best Practices" data-notes="This is the most important slide in the session. The core question every prompt should answer: How will Claude PROVE this worked? Not 'I think it works' -- proof. Walk through the six verification patterns on the left. TDD gates: write tests first, agent must pass them. Separate prompts: Prompt 1 writes the tests, Prompt 2 implements -- if the same prompt does both, the agent writes tests that match its implementation rather than your requirements. @dp.expect: Lakeflow data quality constraints that fail the pipeline on bad data. Schema contracts: StructType definitions as machine-readable specs. Full suite regression: run ALL tests after every change, not just the new ones. Negative testing: test what should fail, not just what should pass. Then the right column: explore first, plan, then code. The bottom line is the key takeaway: the difference between an agent that THINKS it did the work and one that PROVES it did. ~3 min. Transition: Now let's talk about managing context windows.">
     <div class="reveal section-num">Session 2</div>
-    <h2 class="reveal">Anthropic's <span class="text-lava">#1</span> Best Practice</h2>
+    <h2 class="reveal">Every Prompt Must Answer: <span class="text-lava">How Will Claude Prove This Worked?</span></h2>
     <div class="reveal accent-line"></div>
     <div class="reveal two-col" style="gap:2.5rem;align-items:start;margin-top:1.5rem;">
       <div>
         <div class="card" style="border-left:3px solid var(--db-lava);margin-bottom:1.25rem;">
           <div style="font-size:2rem;margin-bottom:0.5rem;">&#x2705;</div>
-          <h3 style="color:var(--db-lava);">Give Claude a Way to Verify Its Work</h3>
-          <p style="font-size:0.95rem;margin-top:0.5rem;">Include tests, screenshots, or expected outputs so Claude can check itself. This is the <strong>single highest-leverage thing</strong> you can do.</p>
-          <ul class="bullet-list" style="margin-top:0.75rem;font-size:0.9rem;">
-            <li>Tests are the clearest form of verification</li>
-            <li>The agent runs them, sees pass/fail, self-corrects</li>
-            <li>No ambiguity &mdash; the machine knows when it&rsquo;s done</li>
+          <h3 style="color:var(--db-lava);">Six Verification Patterns</h3>
+          <p style="font-size:0.95rem;margin-top:0.5rem;">Give the agent concrete proof mechanisms &mdash; not just instructions, but <strong>gates it must pass</strong>.</p>
+          <ul class="bullet-list" style="margin-top:0.75rem;font-size:0.85rem;">
+            <li><strong>TDD gates</strong> &mdash; write tests first, agent must pass them</li>
+            <li><strong>Separate prompts</strong> &mdash; Prompt 1 writes tests, Prompt 2 implements</li>
+            <li><strong><code>@dp.expect</code></strong> &mdash; data quality constraints that fail the pipeline</li>
+            <li><strong>Schema contracts</strong> &mdash; <code>StructType</code> definitions as machine-readable specs</li>
+            <li><strong>Full suite regression</strong> &mdash; run ALL tests after every change</li>
+            <li><strong>Negative testing</strong> &mdash; test what should <em>fail</em>, not just what should pass</li>
           </ul>
         </div>
       </div>
@@ -1086,7 +1089,7 @@
       </div>
     </div>
     <div class="reveal" style="margin-top:1.5rem;padding:0.75rem 1.25rem;background:rgba(27,81,98,0.06);border-radius:8px;text-align:center;">
-      <p style="font-size:0.85rem;color:var(--text-secondary);font-style:italic;">&ldquo;Give Claude a way to verify its work. This is the single highest-leverage thing you can do.&rdquo; &mdash; Anthropic, Claude Code Best Practices</p>
+      <p style="font-size:0.85rem;color:var(--text-secondary);font-style:italic;">The difference: an agent that <strong>thinks</strong> it did the work vs one that <strong>proves</strong> it did. &mdash; Anthropic, Claude Code Best Practices</p>
     </div>
   </section>
 
@@ -1304,7 +1307,7 @@
   <!-- ============================================================ -->
   <!-- SLIDE 24: PRACTICAL TIPS — BEFORE YOU START -->
   <!-- ============================================================ -->
-  <section class="slide slide-white" aria-label="Practical Tips for the Labs" data-notes="Three practical warnings before they start the labs. These come from Anthropic's official best practices and will save teams a lot of frustration. (1) Overeagerness: Claude tends to overengineer — extra files, unnecessary abstractions. Tell it to keep solutions minimal. Add a line to your CLAUDE.md. (2) Hallucination prevention: never trust claims about code Claude hasn't read. Add the investigate_before_answering instruction to your CLAUDE.md. (3) Course-correct early: don't let it run for 10 minutes unchecked. Check in every 2-3 tool calls. If it's heading the wrong direction, say 'stop, let's rethink.' ~2 min. Transition: OK, let's start Lab 1.">
+  <section class="slide slide-white" aria-label="Practical Tips for the Labs" data-notes="Three practical warnings before they start the labs. These come from Anthropic's official best practices and will save teams a lot of frustration. (1) Overeagerness: Claude tends to overengineer — extra files, unnecessary abstractions. Tell it to keep solutions minimal. Add a line to your CLAUDE.md. (2) Hallucination prevention: never trust claims about code Claude hasn't read. Add the investigate_before_answering instruction to your CLAUDE.md. (3) Course-correct early: don't let it run for 10 minutes unchecked. Check in every 2-3 tool calls. If it's heading the wrong direction, say 'stop, let's rethink.' Remind teams: after Claude implements, it must RUN the tests and show green output. 'I think it works' is not enough — proof is a passing test. If you don't see green test output in the terminal, the work is not done. ~2 min. Transition: OK, let's start Lab 1.">
     <div class="reveal section-num">Before You Start</div>
     <h2 class="reveal">Practical Tips for the Labs</h2>
     <div class="reveal accent-line"></div>
