@@ -85,6 +85,20 @@
     /* === SLIDE NUMBER === */
     .slide-number { position: fixed; bottom: 1.5rem; right: 2rem; font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-secondary); z-index: 100; opacity: 0.6; }
 
+    /* === DATABRICKS LOGO WATERMARK === */
+    .slide::after {
+      content: '';
+      position: absolute;
+      top: 1.2rem;
+      left: 2rem;
+      width: 24px;
+      height: 26px;
+      background: url("data:image/svg+xml,%3Csvg viewBox='0 0 105 113' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M98.9 46.6L52.3 72.9L2.4 44.8L0 46.1V66.5L52.3 95.9L98.9 69.7V80.5L52.3 106.8L2.4 78.7L0 80V83.5L52.3 112.9L104.5 83.5V63.1L102.1 61.8L52.3 89.8L5.6 63.6V52.8L52.3 79L104.5 49.6V29.5L101.9 28L52.3 55.9L8 31.1L52.3 6.2L88.7 26.7L91.9 24.9V22.4L52.3 0.1L0 29.5V32.7L52.3 62.1L98.9 35.8V46.6Z' fill='%23FF3621'/%3E%3C/svg%3E") no-repeat center/contain;
+      opacity: 0.35;
+      z-index: 10;
+      pointer-events: none;
+    }
+
     /* === DARK SLIDE === */
     .slide-dark { background: var(--db-navy); color: var(--text-on-dark); }
     .slide-dark h1, .slide-dark h2, .slide-dark h3, .slide-dark p, .slide-dark li { color: var(--text-on-dark); }
@@ -397,7 +411,7 @@
   <!-- ============================================================ -->
   <!-- SLIDE 1: TITLE -->
   <!-- ============================================================ -->
-  <section class="slide slide-dark" aria-label="Title" data-notes="Welcome everyone to The Great Grocery Data Challenge. Introduce yourself: David O'Keeffe, Solutions Architect at Databricks. Thank the Coles Data &amp; AI Engineering team for hosting. Set the tone: today is a 5-hour hackathon. Teams of 2-3 will compete to build the best Grocery Intelligence Platform using real Australian public data. You will leave with skills you can use on Monday. ~2 min. Transition: Let's warm up with a fun quiz.">
+  <section class="slide slide-dark" aria-label="Title" data-notes="Welcome everyone to The Great Grocery Data Challenge. Introduce yourself: David O'Keeffe, Solutions Architect at Databricks. Thank the Coles Data &amp; AI Engineering team for hosting. Set the tone: today is a 6.5-hour hackathon. Teams of 2-3 will compete to build the best Grocery Intelligence Platform using real Australian public data. You will leave with skills you can use on Monday. ~2 min. Transition: Let's warm up with a fun quiz.">
     <div style="position:absolute;top:0;left:0;width:100%;height:100%;overflow:hidden;pointer-events:none;">
       <div style="position:absolute;right:-80px;top:-80px;width:400px;height:400px;border:2px solid rgba(255,54,33,0.08);border-radius:50%;"></div>
       <div style="position:absolute;right:-40px;top:-40px;width:320px;height:320px;border:2px solid rgba(255,54,33,0.05);border-radius:50%;"></div>
@@ -427,7 +441,7 @@
     <div class="reveal" style="width:60px;height:4px;background:var(--db-lava);border-radius:2px;margin-top:1.5rem;"></div>
     <div class="reveal" style="margin-top:1.5rem;">
       <span class="coles-badge">Coles Group</span>
-      <span class="meta" style="margin-top:0;">&middot; Data &amp; AI Engineering Team &middot; 5-Hour Hackathon</span>
+      <span class="meta" style="margin-top:0;">&middot; Data &amp; AI Engineering Team &middot; 6.5-Hour Hackathon</span>
     </div>
     <div class="reveal meta" style="margin-top:0.5rem;">
       David O'Keeffe &middot; Solutions Architect, Databricks
@@ -438,7 +452,7 @@
   <!-- SLIDE 2: OPENING DEMO — MY WORKING SETUP -->
   <!-- ============================================================ -->
   <section class="slide slide-dark" aria-label="Opening Demo: Working Setup" data-notes="OPENING DEMO — ~5 min. This is the hook. Show YOUR actual working setup — not slides, not theory. This is a real SA's daily driver. Open Claude Code, show: (1) 7 MCP servers connected (Slack, JIRA, Confluence, Chrome DevTools, Databricks Docs, Glean, DeepWiki). (2) 150+ skills from the internal marketplace. (3) Hooks for safety guardrails. (4) CLAUDE.md with MCP routing and subagent orchestration. Then do something impressive: search Slack for a recent thread, check a JIRA ticket, query Databricks docs — all from one terminal, no context switching. Or ask it to build something quick. The point: this isn't a toy — it's a fully integrated development environment that connects to every system you use. By end of today, you'll understand every piece of this. ~5 min. Transition: Let's warm up with a quiz.">
-    <div class="reveal section-num">9:45 AM &middot; Live Demo</div>
+    <div class="reveal section-num">Live Demo</div>
     <h2 class="reveal">This Is How I Work <span class="text-lava">Every Day</span></h2>
     <div class="reveal accent-line" style="background:var(--db-lava-light);"></div>
     <p class="reveal" style="color:rgba(255,255,255,0.8);margin-bottom:1.5rem;max-width:700px;">Before any slides &mdash; let me show you what a fully configured AI development environment looks like in practice.</p>
@@ -1094,6 +1108,64 @@
   </section>
 
   <!-- ============================================================ -->
+  <!-- SLIDE 19B: THE SYCOPHANCY PROBLEM                           -->
+  <!-- ============================================================ -->
+  <section class="slide slide-dark" aria-label="The Sycophancy Problem" data-notes="This is the uncomfortable truth. Stanford published in Science (March 2026): tested 11 production LLMs against 2000+ real advice prompts. AI endorsed the user's position 49% more than humans. The killer stat: when the user was 100% wrong, AI still agreed 51% of the time. Same week, Karpathy spent 4 hours refining an argument with an LLM, thought it was solid. Asked it to argue the opposite — it demolished the argument. His comment: LOL. The model isn't reasoning toward truth — it generates the most compelling version of whatever position you ask. This is NOT a bug. It's RLHF: humans prefer agreeable responses, so models that weren't likable got deprecated. We selected for sycophancy. Practical defenses: (1) Karpathy Test — always ask the model to argue the opposite. (2) 'Wait a minute' prefix — two words that measurably improve critical evaluation. (3) TDD — structural verification that doesn't rely on claims. (4) Separate prompts — one writes tests, another implements. Code Rabbit data: AI-authored code has 1.7x more major issues, 2.7x more security vulnerabilities. Chollet framing: focus class (uses AI to extend thinking) vs slop class (delegates cognition). The discipline of stress-testing AI output is the career skill of this decade. ~3 min. Transition: Now let's talk about managing context.">
+    <div class="reveal section-num">Session 2 &middot; Critical Insight</div>
+    <h2 class="reveal">Why AI Agrees With You <span class="text-lava">(Even When You're Wrong)</span></h2>
+    <div class="reveal accent-line" style="background:var(--db-lava-light);"></div>
+    <div class="reveal two-col" style="gap:2.5rem;align-items:start;margin-top:1rem;">
+      <!-- Left: The Problem -->
+      <div>
+        <div class="card" style="border-left:3px solid var(--db-lava);margin-bottom:1rem;">
+          <h3 style="color:var(--db-lava-light);font-size:0.95rem;">The Stanford Study <span style="font-size:0.75rem;color:rgba(255,255,255,0.4);">(Science, March 2026)</span></h3>
+          <p style="font-size:0.85rem;color:rgba(255,255,255,0.7);margin-top:0.5rem;">Tested 11 production LLMs against 2,000+ real advice prompts.</p>
+          <div style="display:flex;gap:1rem;margin-top:0.75rem;">
+            <div style="text-align:center;flex:1;">
+              <div style="font-size:2.2rem;font-weight:700;color:var(--db-lava-light);">49%</div>
+              <div style="font-size:0.7rem;color:rgba(255,255,255,0.5);">more agreement<br>than humans</div>
+            </div>
+            <div style="text-align:center;flex:1;">
+              <div style="font-size:2.2rem;font-weight:700;color:var(--db-lava-light);">51%</div>
+              <div style="font-size:0.7rem;color:rgba(255,255,255,0.5);">agreement when user<br>is 100% wrong</div>
+            </div>
+          </div>
+        </div>
+        <div class="card" style="border-left:3px solid rgba(255,255,255,0.2);">
+          <h3 style="color:var(--db-white);font-size:0.95rem;">The Karpathy Experiment</h3>
+          <p style="font-size:0.85rem;color:rgba(255,255,255,0.7);margin-top:0.5rem;">Spent 4 hours refining an argument with an LLM. Was genuinely convinced. Then asked the model to argue the opposite &mdash; <strong style="color:var(--db-lava-light);">it demolished his argument completely.</strong></p>
+          <p style="font-size:0.8rem;color:rgba(255,255,255,0.5);margin-top:0.5rem;font-style:italic;">"The model was never reasoning toward truth. It was generating the most compelling version of whatever position it was asked to defend."</p>
+        </div>
+      </div>
+      <!-- Right: Your Defenses -->
+      <div>
+        <h3 style="color:var(--db-green);margin-bottom:0.75rem;font-size:0.95rem;">Your Defenses</h3>
+        <div style="display:flex;flex-direction:column;gap:0.6rem;">
+          <div class="card" style="padding:0.75rem 1rem;border-left:3px solid var(--db-green);">
+            <h3 style="color:var(--db-green);font-size:0.85rem;">The Karpathy Test</h3>
+            <p style="font-size:0.78rem;color:rgba(255,255,255,0.65);margin-top:0.25rem;">Before trusting any AI analysis, ask it to <strong>argue the opposite position</strong>. If it demolishes its own argument, the original wasn&rsquo;t reliable.</p>
+          </div>
+          <div class="card" style="padding:0.75rem 1rem;border-left:3px solid var(--db-green);">
+            <h3 style="color:var(--db-green);font-size:0.85rem;">"Wait a minute..."</h3>
+            <p style="font-size:0.78rem;color:rgba(255,255,255,0.65);margin-top:0.25rem;">Two words that measurably improve critical evaluation. Prefixing with doubt triggers more rigorous analysis.</p>
+          </div>
+          <div class="card" style="padding:0.75rem 1rem;border-left:3px solid var(--db-green);">
+            <h3 style="color:var(--db-green);font-size:0.85rem;">TDD &mdash; Structural Verification</h3>
+            <p style="font-size:0.78rem;color:rgba(255,255,255,0.65);margin-top:0.25rem;">Tests don&rsquo;t rely on claims. Code passes or it doesn&rsquo;t. AI-authored code has <strong>1.7&times; more issues</strong> and <strong>2.7&times; more security vulnerabilities</strong> (Code Rabbit, 2026).</p>
+          </div>
+          <div class="card" style="padding:0.75rem 1rem;border-left:3px solid var(--db-green);">
+            <h3 style="color:var(--db-green);font-size:0.85rem;">Separate Prompts</h3>
+            <p style="font-size:0.78rem;color:rgba(255,255,255,0.65);margin-top:0.25rem;">Prompt 1 writes tests, Prompt 2 implements. If the same prompt does both, it writes tests that match its implementation, not your requirements.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="reveal" style="margin-top:1rem;padding:0.6rem 1.25rem;background:rgba(255,54,33,0.1);border-radius:8px;border-left:3px solid var(--db-lava);text-align:left;">
+      <p style="font-size:0.78rem;color:rgba(255,255,255,0.7);">This is not a bug to patch. RLHF training <em>selected</em> for agreement. The question: are you using AI to <strong style="color:var(--db-green);">extend</strong> your thinking, or <strong style="color:var(--db-lava-light);">replace</strong> it? &mdash; <span style="color:rgba(255,255,255,0.5);">Fran&ccedil;ois Chollet</span></p>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
   <!-- SLIDE 20: WHAT ARE TOKENS -->
   <!-- ============================================================ -->
   <section class="slide slide-light" aria-label="What Are Tokens" data-notes="Before talking about context windows, make sure everyone understands what a token is. Most people think 1 token = 1 word. It's closer to 3/4 of a word, or about 4 characters. A 200-line Python file is roughly 2-3K tokens. The key insight for the workshop: we're likely running through AI Gateway with a ~1M tokens per minute rate limit shared across all teams. That means if 5 teams are all asking the agent to read large files simultaneously, you'll hit throttling. Practical tips: keep requests focused, don't ask the agent to read entire directories, use subagents to parallelise but be aware of the shared limit. This directly motivates the context management strategies on the next slide. ~3 min. Transition: So how do we manage this finite resource?">
@@ -1295,163 +1367,79 @@
   </section>
 
   <!-- ============================================================ -->
-  <!-- SLIDE 24: SECTION DIVIDER — LAB 1 -->
-  <!-- ============================================================ -->
-  <section class="slide slide-dark" aria-label="Section: Lab 1" data-notes="Lab 1 section divider. 60 minutes hands-on, track-specific. Remind everyone to have their Coding Agents terminal ready. If anyone has access issues, flag them now. ~30 sec.">
-    <div class="reveal section-num">Lab 1 &middot; 12:00 PM &middot; 60 Minutes</div>
-    <h1 class="reveal">The Great Grocery<br>Data Challenge &mdash; Phase 1</h1>
-    <p class="reveal subtitle">Track-specific build with real Australian data</p>
-    <div class="reveal accent-line" style="background:var(--db-lava-light);margin-top:1.5rem;"></div>
-  </section>
-
-  <!-- ============================================================ -->
   <!-- SLIDE 24: PRACTICAL TIPS — BEFORE YOU START -->
   <!-- ============================================================ -->
-  <section class="slide slide-white" aria-label="Practical Tips for the Labs" data-notes="Three practical warnings before they start the labs. These come from Anthropic's official best practices and will save teams a lot of frustration. (1) Overeagerness: Claude tends to overengineer — extra files, unnecessary abstractions. Tell it to keep solutions minimal. Add a line to your CLAUDE.md. (2) Hallucination prevention: never trust claims about code Claude hasn't read. Add the investigate_before_answering instruction to your CLAUDE.md. (3) Course-correct early: don't let it run for 10 minutes unchecked. Check in every 2-3 tool calls. If it's heading the wrong direction, say 'stop, let's rethink.' Remind teams: after Claude implements, it must RUN the tests and show green output. 'I think it works' is not enough — proof is a passing test. If you don't see green test output in the terminal, the work is not done. ~2 min. Transition: OK, let's start Lab 1.">
+  <section class="slide slide-white" aria-label="Practical Tips for the Labs" data-notes="Five practical patterns before they start the labs. These come from Anthropic's best practices and community-tested patterns. (1) Overeagerness: Claude tends to overengineer — extra files, unnecessary abstractions. Tell it to keep solutions minimal. Add a line to your CLAUDE.md. (2) Hallucination prevention: never trust claims about code Claude hasn't read. Add the investigate_before_answering instruction to your CLAUDE.md. (3) Course-correct early: don't let it run for 10 minutes unchecked. Check in every 2-3 tool calls. If it's heading the wrong direction, say 'stop, let's rethink.' (4) Challenge Claude: after it implements, make it prove the work — 'show me git diff', 'prove to me this works', 'grill me on these changes'. Then iterate: 'knowing everything you know now, scrap this and implement the elegant solution.' (5) Commit as checkpoints: every 15-20 minutes, /commit. If the agent goes off-rails, Esc-Esc to cancel, git checkout to rewind. Commits are your safety net. Also remind teams: start every non-trivial task with /plan and have Claude interview you about what you need before building. ~3 min. Transition: OK, let's start Lab 1.">
     <div class="reveal section-num">Before You Start</div>
     <h2 class="reveal">Practical Tips for the Labs</h2>
     <div class="reveal accent-line"></div>
-    <p class="reveal" style="color:var(--text-secondary);margin-bottom:1.5rem;">Three patterns from Anthropic's best practices that will save you time.</p>
-    <div class="reveal" style="display:flex;flex-direction:column;gap:1rem;max-width:56rem;">
-      <div class="card" style="border-left:3px solid var(--db-lava);display:flex;gap:1.5rem;align-items:flex-start;">
-        <div style="font-size:2rem;min-width:2.5rem;text-align:center;">&#x26A0;&#xFE0F;</div>
+    <p class="reveal" style="color:var(--text-secondary);margin-bottom:0.75rem;">Five patterns from Anthropic&rsquo;s best practices and the community that will save you time.</p>
+    <div class="reveal" style="margin-bottom:1rem;padding:0.6rem 1rem;background:rgba(27,81,98,0.06);border-radius:8px;border-left:3px solid var(--db-teal);">
+      <p style="font-size:0.85rem;color:var(--text-secondary);"><strong style="color:var(--db-teal);">Default workflow:</strong> Start every non-trivial task with <code>/plan</code>. Even better &mdash; ask Claude to <em>interview you</em> about requirements before it builds anything.</p>
+    </div>
+    <div class="reveal" style="display:flex;flex-direction:column;gap:0.85rem;max-width:56rem;">
+      <div class="card" style="border-left:3px solid var(--db-lava);display:flex;gap:1.5rem;align-items:flex-start;padding:1rem 1.25rem;">
+        <div style="font-size:1.6rem;min-width:2rem;text-align:center;">&#x26A0;&#xFE0F;</div>
         <div>
-          <h3 style="color:var(--db-lava);margin-bottom:0.25rem;">Watch for Overengineering</h3>
-          <p style="font-size:0.9rem;">Claude tends to create extra files, add unnecessary abstractions, and build in flexibility you didn&rsquo;t ask for. Keep it simple.</p>
-          <div class="code-block" style="font-size:0.78rem;margin-top:0.5rem;padding:0.5rem 0.75rem;">
+          <h3 style="color:var(--db-lava);margin-bottom:0.2rem;font-size:1rem;">Watch for Overengineering</h3>
+          <p style="font-size:0.85rem;">Claude tends to create extra files, add unnecessary abstractions, and build in flexibility you didn&rsquo;t ask for.</p>
+          <div class="code-block" style="font-size:0.75rem;margin-top:0.4rem;padding:0.4rem 0.65rem;">
 <span class="comment"># Add to your CLAUDE.md:</span>
 <span class="keyword">-</span> Keep solutions minimal. Do not add features, abstractions, or files beyond what is requested.
           </div>
         </div>
       </div>
-      <div class="card" style="border-left:3px solid var(--db-teal);display:flex;gap:1.5rem;align-items:flex-start;">
-        <div style="font-size:2rem;min-width:2.5rem;text-align:center;">&#x1F50D;</div>
+      <div class="card" style="border-left:3px solid var(--db-teal);display:flex;gap:1.5rem;align-items:flex-start;padding:1rem 1.25rem;">
+        <div style="font-size:1.6rem;min-width:2rem;text-align:center;">&#x1F50D;</div>
         <div>
-          <h3 style="color:var(--db-teal);margin-bottom:0.25rem;">Prevent Hallucinations</h3>
-          <p style="font-size:0.9rem;">Never trust claims about code Claude hasn&rsquo;t read. Make it investigate before answering.</p>
-          <div class="code-block" style="font-size:0.78rem;margin-top:0.5rem;padding:0.5rem 0.75rem;">
+          <h3 style="color:var(--db-teal);margin-bottom:0.2rem;font-size:1rem;">Prevent Hallucinations</h3>
+          <p style="font-size:0.85rem;">Never trust claims about code Claude hasn&rsquo;t read. Make it investigate before answering.</p>
+          <div class="code-block" style="font-size:0.75rem;margin-top:0.4rem;padding:0.4rem 0.65rem;">
 <span class="comment"># Add to your CLAUDE.md:</span>
 <span class="keyword">-</span> Never speculate about code you have not opened. Read relevant files BEFORE answering.
           </div>
         </div>
       </div>
-      <div class="card" style="border-left:3px solid var(--db-green);display:flex;gap:1.5rem;align-items:flex-start;">
-        <div style="font-size:2rem;min-width:2.5rem;text-align:center;">&#x1F3AF;</div>
+      <div class="card" style="border-left:3px solid var(--db-green);display:flex;gap:1.5rem;align-items:flex-start;padding:1rem 1.25rem;">
+        <div style="font-size:1.6rem;min-width:2rem;text-align:center;">&#x1F3AF;</div>
         <div>
-          <h3 style="color:var(--db-green);margin-bottom:0.25rem;">Course-Correct Early and Often</h3>
-          <p style="font-size:0.9rem;">Don&rsquo;t let the agent run for 10 minutes unchecked. Check in every 2&ndash;3 tool calls. If it&rsquo;s heading the wrong direction, say <code>&ldquo;stop, let&rsquo;s rethink this approach&rdquo;</code>.</p>
+          <h3 style="color:var(--db-green);margin-bottom:0.2rem;font-size:1rem;">Course-Correct Early and Often</h3>
+          <p style="font-size:0.85rem;">Don&rsquo;t let the agent run for 10 minutes unchecked. Check in every 2&ndash;3 tool calls. If it&rsquo;s heading the wrong direction, say <code>&ldquo;stop, let&rsquo;s rethink this approach&rdquo;</code>.</p>
+        </div>
+      </div>
+      <div class="card" style="border-left:3px solid #7c3aed;display:flex;gap:1.5rem;align-items:flex-start;padding:1rem 1.25rem;">
+        <div style="font-size:1.6rem;min-width:2rem;text-align:center;">&#x1F4AA;</div>
+        <div>
+          <h3 style="color:#7c3aed;margin-bottom:0.2rem;font-size:1rem;">Challenge Claude to Prove Its Work</h3>
+          <p style="font-size:0.85rem;">After implementation, demand proof: <code>&ldquo;show me the git diff&rdquo;</code>, <code>&ldquo;prove to me this works&rdquo;</code>, <code>&ldquo;grill me on these changes&rdquo;</code>. Then iterate: <code>&ldquo;knowing everything you know now, scrap this and implement the elegant solution.&rdquo;</code></p>
+        </div>
+      </div>
+      <div class="card" style="border-left:3px solid var(--db-navy);display:flex;gap:1.5rem;align-items:flex-start;padding:1rem 1.25rem;">
+        <div style="font-size:1.6rem;min-width:2rem;text-align:center;">&#x1F4BE;</div>
+        <div>
+          <h3 style="color:var(--db-navy);margin-bottom:0.2rem;font-size:1rem;">Commit as Checkpoints</h3>
+          <p style="font-size:0.85rem;">Every 15&ndash;20 minutes, use <code>/commit</code>. Commits are your safety net &mdash; if the agent goes off-rails, press <strong>Esc</strong> twice to cancel, then rewind with git.</p>
         </div>
       </div>
     </div>
   </section>
 
   <!-- ============================================================ -->
-  <!-- SLIDE 25: LAB 1 BRIEFING -->
+  <!-- SLIDE 25: SECTION DIVIDER — SKILLS, MCP & GENIE -->
   <!-- ============================================================ -->
-  <section class="slide slide-light" aria-label="Lab 1 Briefing" data-notes="~3 min briefing. Lab 0 is already done together, so teams go straight into their chosen track. Gold tables are pre-loaded as Checkpoint 0 so DS and Analyst tracks can start immediately. Recommend tracks based on team composition: ML experience to DS, analyst background to Analyst, everyone else to DE. Each track has its own lab doc, prompts, and checkpoints. Person A/B/C parallel tasks are in each track's lab doc. Walk around and help during the 60-minute lab. Transition after lab: Show and Tell.">
-    <div class="reveal section-num">Lab 1</div>
-    <h2 class="reveal">Choose Your Track</h2>
-    <div class="reveal accent-line"></div>
-    <p class="reveal" style="text-align:center;color:var(--text-secondary);margin-bottom:1.5em;">All teams start with <code>LAB-0-GETTING-STARTED.md</code> (10 min), then fork into your track</p>
-    <div class="reveal" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.2em;max-width:950px;margin:0 auto;">
-      <div class="card" style="border-top:4px solid var(--db-lava);padding:1.2em;">
-        <h3 style="color:var(--db-lava);margin-bottom:0.5em;font-size:1.1em;">Data Engineering</h3>
-        <p style="font-size:0.8em;color:var(--text-secondary);margin-bottom:0.8em;">Build the data foundation</p>
-        <ul style="list-style:none;font-size:0.78em;line-height:1.8;">
-          <li>Lakeflow pipeline</li>
-          <li>Bronze &rarr; Silver &rarr; Gold</li>
-          <li>Data quality expectations</li>
-          <li>DABs deployment</li>
-        </ul>
-        <div style="margin-top:0.8em;font-size:0.75em;color:var(--db-lava);font-weight:600;">LAB-1-DE.md</div>
-      </div>
-      <div class="card" style="border-top:4px solid var(--db-teal);padding:1.2em;">
-        <h3 style="color:var(--db-teal);margin-bottom:0.5em;font-size:1.1em;">Data Science</h3>
-        <p style="font-size:0.8em;color:var(--text-secondary);margin-bottom:0.8em;">Build ML models from the data</p>
-        <ul style="list-style:none;font-size:0.78em;line-height:1.8;">
-          <li>Feature engineering</li>
-          <li>MLflow experiment tracking</li>
-          <li>Correlation analysis</li>
-          <li>EDA visualizations</li>
-        </ul>
-        <div style="margin-top:0.8em;font-size:0.75em;color:var(--db-teal);font-weight:600;">LAB-1-DS.md</div>
-      </div>
-      <div class="card" style="border-top:4px solid var(--db-green);padding:1.2em;">
-        <h3 style="color:var(--db-green);margin-bottom:0.5em;font-size:1.1em;">Analyst</h3>
-        <p style="font-size:0.8em;color:var(--text-secondary);margin-bottom:0.8em;">Build interfaces for business users</p>
-        <ul style="list-style:none;font-size:0.78em;line-height:1.8;">
-          <li>Genie spaces (NL queries)</li>
-          <li>AI/BI dashboards</li>
-          <li>Column metadata tuning</li>
-          <li>Dashboard publishing</li>
-        </ul>
-        <div style="margin-top:0.8em;font-size:0.75em;color:var(--db-green);font-weight:600;">LAB-1-ANALYST.md</div>
-      </div>
-    </div>
-    <div class="reveal" style="text-align:center;margin-top:1.2em;">
-      <div style="display:inline-block;padding:0.6em 1.2em;background:rgba(27,81,98,0.06);border-radius:8px;border-left:3px solid var(--db-teal);font-size:0.85em;">
-        <strong>Checkpoints at every phase</strong> &mdash; pre-loaded data in <code>workshop_vibe_coding.checkpoints</code>. Nobody gets stuck.
-      </div>
-    </div>
-  </section>
-
-  <!-- ============================================================ -->
-  <!-- SLIDE 26: SHOW & TELL + ICE BREAKER REVEAL -->
-  <!-- ============================================================ -->
-  <section class="slide slide-light" aria-label="Show and Tell" data-notes="7 minutes total. Quick demos from 3 volunteer teams (90 sec each): show their pipeline DAG, share one interesting insight from their Gold data. Not every team needs to present — pick 3 volunteers, save time for the prediction reveal. Then reveal the ice breaker answers using actual data from the pipelines they just built — 'Which state DOES have the highest food retail turnover?' This connects the ice breaker to the lab work. Score the prediction cards. Award bragging rights to the most accurate team.">
-    <div class="reveal section-num">1:00 PM &middot; 15 Minutes</div>
-    <h2 class="reveal">Show &amp; Tell + Prediction Reveal</h2>
-    <div class="reveal accent-line"></div>
-    <div class="reveal two-col" style="margin-top:1rem;">
-      <div>
-        <h3 style="color:var(--db-teal);margin-bottom:1rem;">Show &amp; Tell</h3>
-        <div class="card">
-          <ul class="bullet-list">
-            <li>3 teams volunteer to show their pipeline DAG (90 sec each)</li>
-            <li>Share one interesting insight from your Gold data</li>
-            <li>What worked well? Where did TDD help?</li>
-            <li>Where did the agent go off-rails?</li>
-          </ul>
-        </div>
-        <div style="margin-top:1rem;padding:1rem;background:rgba(27,81,98,0.06);border-radius:8px;border-left:3px solid var(--db-teal);">
-          <p style="font-size:0.9rem;"><strong>Discussion:</strong> Where did TDD help the agent stay on track? Where did it go off-rails?</p>
-        </div>
-      </div>
-      <div>
-        <h3 style="color:var(--db-lava);margin-bottom:1rem;">Prediction Reveal</h3>
-        <div class="card" style="border-left:3px solid var(--db-lava);">
-          <p style="margin-bottom:0.75rem;">Query <strong>your Gold tables</strong> live to answer the ice breaker:</p>
-          <ul class="bullet-list" style="font-size:0.85rem;">
-            <li>Q1: Highest food retail turnover by state?</li>
-            <li>Q2: Food CPI increase since 2020?</li>
-            <li>Q3: Average household grocery spend/week?</li>
-            <li>Q4: Peak retail spending month?</li>
-            <li>Q5: Fastest-rising food category?</li>
-          </ul>
-          <div style="margin-top:1rem;padding:0.5rem 0.75rem;background:var(--accent-glow);border-radius:6px;">
-            <p style="font-size:0.85rem;"><strong>Score the prediction cards</strong> &mdash; most accurate team gets bragging rights!</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============================================================ -->
-  <!-- SLIDE 27: SECTION DIVIDER — TOOLS FOR LAB 2 -->
-  <!-- ============================================================ -->
-  <section class="slide slide-dark" aria-label="Section: Tools for Lab 2" data-notes="Pre-lab tools session. This is a focused tools briefing: Skills, MCP, Genie, and AI/BI dashboards — everything they need for the labs. Quick and practical. ~1 min.">
+  <section class="slide slide-dark" aria-label="Section: Skills, MCP and Genie" data-notes="Pre-lab tools session. This is a focused tools briefing: Skills, MCP, Genie, and AI/BI dashboards — everything they need for the labs. Quick and practical. ~1 min.">
     <div class="reveal section-num">11:30 AM</div>
-    <h1 class="reveal">Tools for Lab 2</h1>
-    <p class="reveal subtitle">Skills, MCP, Genie &amp; AI/BI Dashboards</p>
+    <h1 class="reveal">Skills, MCP &amp; Genie</h1>
+    <p class="reveal subtitle">Practical tools for the labs</p>
     <div class="reveal accent-line" style="background:var(--db-lava-light);margin-top:1.5rem;"></div>
   </section>
 
   <!-- ============================================================ -->
-  <!-- SLIDE 28: SKILLS & MCP — PRACTICAL TOOLS -->
+  <!-- SLIDE 26: SKILLS & MCP — PRACTICAL TOOLS -->
   <!-- ============================================================ -->
-  <section class="slide slide-white" aria-label="Skills and MCP" data-notes="These are two practical tools you'll use in Lab 2. Skills are slash commands that encode domain knowledge — type slash in Claude Code and you'll see what's available. The commit skill writes good commit messages. The deploy skill handles DABs deployment. You can chain them together. MCP is how agents connect to external systems. Think of it as USB-C for AI — one standard protocol, every tool connects the same way. The Databricks Docs MCP is already available in your terminal. Try asking Claude to search the docs for anything you need during the lab.">
+  <section class="slide slide-white" aria-label="Skills and MCP" data-notes="These are two practical tools you'll use in the labs. Skills are slash commands that encode domain knowledge — type slash in Claude Code and you'll see what's available. The commit skill writes good commit messages. The deploy skill handles DABs deployment. You can chain them together. MCP is how agents connect to external systems. Think of it as USB-C for AI — one standard protocol, every tool connects the same way. The Databricks Docs MCP is already available in your terminal. Try asking Claude to search the docs for anything you need during the lab.">
     <div class="reveal">
-      <h2 style="text-align:center;margin-bottom:1.5em;">Practical Tools for Lab 2</h2>
+      <h2 style="text-align:center;margin-bottom:1.5em;">Practical Tools for the Labs</h2>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:2em;max-width:900px;margin:0 auto;">
         <div>
           <h3 style="color:var(--db-lava);margin-bottom:0.8em;">Skills</h3>
@@ -1491,10 +1479,10 @@
   </section>
 
   <!-- ============================================================ -->
-  <!-- SLIDE 29: MCP ON DATABRICKS -->
+  <!-- SLIDE 27: MCP ON DATABRICKS -->
   <!-- ============================================================ -->
   <section class="slide slide-light" aria-label="MCP on Databricks" data-notes="Three flavours of MCP servers on Databricks. Built-in/Managed: UC functions, tables, volumes, Vector Search, Genie -- zero config. Proxy/External: third-party services (GitHub, Slack, Glean) via UC Connections -- no credentials exposed. Custom: host your own on Databricks Apps. All secured through Unity Catalog. List of supported clients at bottom. ~5 min. Transition: Genie and AI/BI Dashboards.">
-    <div class="reveal section-num">Session 3</div>
+    <div class="reveal section-num">11:30 AM</div>
     <h2 class="reveal">MCP Servers on Databricks</h2>
     <div class="reveal accent-line"></div>
     <p class="reveal subtitle" style="margin-bottom:1.5rem;">Three flavours &mdash; all secured through Unity Catalog</p>
@@ -1552,10 +1540,10 @@
   </section>
 
   <!-- ============================================================ -->
-  <!-- SLIDE 30: DEMO — HOW DATABRICKS USES CLAUDE INTERNALLY -->
+  <!-- SLIDE 28: DEMO — HOW DATABRICKS USES CLAUDE INTERNALLY -->
   <!-- ============================================================ -->
-  <section class="slide slide-light" aria-label="Demo: Databricks Internal Claude Setup" data-notes="LIVE DEMO. Show how Databricks internally configures Claude Code for its own engineering teams. Walk through the actual setup: (1) CLAUDE.md — company-wide rules, coding standards, approved patterns. (2) Hooks — pre-commit hooks that run linting, security scans, and format checks BEFORE the AI commits. Post-edit hooks that auto-format. These are deterministic, not AI — they're guardrails. (3) Skills — custom /deploy, /validate, /create-dashboard commands encoding Databricks-specific workflows. (4) MCP servers — connected to Unity Catalog, Genie, internal tooling. The key insight: this is reproducible. Coles can set up the same structure — a CLAUDE.md with your standards, hooks for your CI/CD, skills for your data patterns. ~8 min live demo.">
-    <div class="reveal section-num">Session 3 &middot; Live Demo</div>
+  <section class="slide slide-light" aria-label="Demo: Databricks Internal Claude Setup" data-notes="LIVE DEMO. Show how Databricks internally configures Claude Code. Walk through: (1) CLAUDE.md — company-wide rules, coding standards, approved patterns. (2) Hooks — PostToolUse hook that auto-formats and lints Python with ruff every time the agent edits a file. Stop hook that runs verify-hint.sh so you never walk away without checking. These are deterministic shell commands, not AI — guaranteed guardrails. (3) Skills — custom /deploy, /validate, /create-dashboard commands encoding Databricks workflows. (4) MCP servers — Slack, JIRA, Confluence, Databricks Docs, Glean, DeepWiki. Key insight: this is reproducible. Coles can set up the same structure. ~8 min live demo.">
+    <div class="reveal section-num">11:30 AM &middot; Live Demo</div>
     <h2 class="reveal">How Databricks Uses Claude</h2>
     <div class="reveal accent-line"></div>
     <p class="reveal subtitle" style="margin-bottom:1.5rem;">A look inside how we&rsquo;ve configured AI-assisted development at Databricks</p>
@@ -1579,7 +1567,7 @@
               <h3 style="font-size:0.95rem;color:#E8A317;">Hooks</h3>
               <span class="tag" style="font-size:0.65rem;margin:0;background:rgba(232,163,23,0.12);color:#E8A317;">Guardrails</span>
             </div>
-            <p style="font-size:0.8rem;color:var(--text-secondary);">Deterministic shell commands on events. Pre-commit: lint + security scan. Post-edit: auto-format. Not AI &mdash; guaranteed to run.</p>
+            <p style="font-size:0.8rem;color:var(--text-secondary);">Shell commands that fire on tool events. Post-edit: auto-format &amp; lint Python with ruff. On stop: verify your work. Not AI &mdash; deterministic guardrails.</p>
           </div>
           <!-- Skills + MCP -->
           <div class="card" style="border-left:3px solid var(--db-teal);padding:1rem;">
@@ -1599,16 +1587,12 @@
 <span class="comment">// .claude/settings.json</span>
 {
   <span class="keyword">"hooks"</span>: {
-    <span class="string">"PreToolUse"</span>: [{
-      <span class="string">"matcher"</span>: <span class="string">"Bash"</span>,
-      <span class="string">"command"</span>: <span class="string">"security-scan.sh"</span>
-    }],
     <span class="string">"PostToolUse"</span>: [{
-      <span class="string">"matcher"</span>: <span class="string">"Edit"</span>,
-      <span class="string">"command"</span>: <span class="string">"ruff format $FILE"</span>
+      <span class="string">"matcher"</span>: <span class="string">"Edit|Write"</span>,
+      <span class="string">"command"</span>: <span class="string">"ruff format $FILE &amp;&amp; ruff check --fix $FILE"</span>
     }],
-    <span class="string">"PostCommit"</span>: [{
-      <span class="string">"command"</span>: <span class="string">"run-ci-checks.sh"</span>
+    <span class="string">"Stop"</span>: [{
+      <span class="string">"command"</span>: <span class="string">"~/.claude/verify-hint.sh"</span>
     }]
   },
   <span class="keyword">"mcpServers"</span>: {
@@ -1630,10 +1614,10 @@
   </section>
 
   <!-- ============================================================ -->
-  <!-- SLIDE 31: GENIE + AI/BI DASHBOARDS -->
+  <!-- SLIDE 29: GENIE + AI/BI DASHBOARDS -->
   <!-- ============================================================ -->
   <section class="slide slide-white" aria-label="Genie and AI/BI Dashboards" data-notes="These are the intelligence layer you'll add in Lab 2. Genie lets business users query data in English — create a Genie space, point it at your gold tables, ask questions in plain English. No code needed. AI/BI dashboards auto-generate charts — point at tables, describe what you want, get interactive dashboards. Both connect to the gold tables from Lab 1. ~5 min. Transition: Lab 2.">
-    <div class="reveal section-num">Session 3</div>
+    <div class="reveal section-num">11:30 AM</div>
     <h2 class="reveal">Genie + AI/BI Dashboards</h2>
     <div class="reveal accent-line"></div>
     <div class="reveal two-col" style="gap:2rem;">
@@ -1688,7 +1672,108 @@ with food CPI overlay"</span>
   </section>
 
   <!-- ============================================================ -->
-  <!-- SLIDE 32: SECTION DIVIDER — LAB 2 -->
+  <!-- SLIDE 30: SECTION DIVIDER — LAB 1 -->
+  <!-- ============================================================ -->
+  <section class="slide slide-dark" aria-label="Section: Lab 1" data-notes="Lab 1 section divider. 60 minutes hands-on, track-specific. Remind everyone to have their Coding Agents terminal ready. If anyone has access issues, flag them now. ~30 sec.">
+    <div class="reveal section-num">Lab 1 &middot; 12:00 PM &middot; 60 Minutes</div>
+    <h1 class="reveal">The Great Grocery<br>Data Challenge &mdash; Phase 1</h1>
+    <p class="reveal subtitle">Track-specific build with real Australian data</p>
+    <div class="reveal accent-line" style="background:var(--db-lava-light);margin-top:1.5rem;"></div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SLIDE 31: LAB 1 BRIEFING -->
+  <!-- ============================================================ -->
+  <section class="slide slide-light" aria-label="Lab 1 Briefing" data-notes="~3 min briefing. Lab 0 is already done together, so teams go straight into their chosen track. Gold tables are pre-loaded as Checkpoint 0 so DS and Analyst tracks can start immediately. Recommend tracks based on team composition: ML experience to DS, analyst background to Analyst, everyone else to DE. Each track has its own lab doc, prompts, and checkpoints. Person A/B/C parallel tasks are in each track's lab doc. Walk around and help during the 60-minute lab. Transition after lab: Show and Tell.">
+    <div class="reveal section-num">Lab 1</div>
+    <h2 class="reveal">Choose Your Track</h2>
+    <div class="reveal accent-line"></div>
+    <p class="reveal" style="text-align:center;color:var(--text-secondary);margin-bottom:1.5em;">All teams start with <code>LAB-0-GETTING-STARTED.md</code> (10 min), then fork into your track</p>
+    <div class="reveal" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.2em;max-width:950px;margin:0 auto;">
+      <div class="card" style="border-top:4px solid var(--db-lava);padding:1.2em;">
+        <h3 style="color:var(--db-lava);margin-bottom:0.5em;font-size:1.1em;">Data Engineering</h3>
+        <p style="font-size:0.8em;color:var(--text-secondary);margin-bottom:0.8em;">Build the data foundation</p>
+        <ul style="list-style:none;font-size:0.78em;line-height:1.8;">
+          <li>Lakeflow pipeline</li>
+          <li>Bronze &rarr; Silver &rarr; Gold</li>
+          <li>Data quality expectations</li>
+          <li>DABs deployment</li>
+        </ul>
+        <div style="margin-top:0.8em;font-size:0.75em;color:var(--db-lava);font-weight:600;">LAB-1-DE.md</div>
+      </div>
+      <div class="card" style="border-top:4px solid var(--db-teal);padding:1.2em;">
+        <h3 style="color:var(--db-teal);margin-bottom:0.5em;font-size:1.1em;">Data Science</h3>
+        <p style="font-size:0.8em;color:var(--text-secondary);margin-bottom:0.8em;">Build ML models from the data</p>
+        <ul style="list-style:none;font-size:0.78em;line-height:1.8;">
+          <li>Feature engineering</li>
+          <li>MLflow experiment tracking</li>
+          <li>Correlation analysis</li>
+          <li>EDA visualizations</li>
+        </ul>
+        <div style="margin-top:0.8em;font-size:0.75em;color:var(--db-teal);font-weight:600;">LAB-1-DS.md</div>
+      </div>
+      <div class="card" style="border-top:4px solid var(--db-green);padding:1.2em;">
+        <h3 style="color:var(--db-green);margin-bottom:0.5em;font-size:1.1em;">Analyst</h3>
+        <p style="font-size:0.8em;color:var(--text-secondary);margin-bottom:0.8em;">Build interfaces for business users</p>
+        <ul style="list-style:none;font-size:0.78em;line-height:1.8;">
+          <li>Genie spaces (NL queries)</li>
+          <li>AI/BI dashboards</li>
+          <li>Column metadata tuning</li>
+          <li>Dashboard publishing</li>
+        </ul>
+        <div style="margin-top:0.8em;font-size:0.75em;color:var(--db-green);font-weight:600;">LAB-1-ANALYST.md</div>
+      </div>
+    </div>
+    <div class="reveal" style="text-align:center;margin-top:1.2em;">
+      <div style="display:inline-block;padding:0.6em 1.2em;background:rgba(27,81,98,0.06);border-radius:8px;border-left:3px solid var(--db-teal);font-size:0.85em;">
+        <strong>Checkpoints at every phase</strong> &mdash; pre-loaded data in <code>workshop_vibe_coding.checkpoints</code>. Nobody gets stuck.
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SLIDE 32: SHOW & TELL + ICE BREAKER REVEAL -->
+  <!-- ============================================================ -->
+  <section class="slide slide-light" aria-label="Show and Tell" data-notes="7 minutes total. Quick demos from 3 volunteer teams (90 sec each): show their pipeline DAG, share one interesting insight from their Gold data. Not every team needs to present — pick 3 volunteers, save time for the prediction reveal. Then reveal the ice breaker answers using actual data from the pipelines they just built — 'Which state DOES have the highest food retail turnover?' This connects the ice breaker to the lab work. Score the prediction cards. Award bragging rights to the most accurate team.">
+    <div class="reveal section-num">1:00 PM &middot; 15 Minutes</div>
+    <h2 class="reveal">Show &amp; Tell + Prediction Reveal</h2>
+    <div class="reveal accent-line"></div>
+    <div class="reveal two-col" style="margin-top:1rem;">
+      <div>
+        <h3 style="color:var(--db-teal);margin-bottom:1rem;">Show &amp; Tell</h3>
+        <div class="card">
+          <ul class="bullet-list">
+            <li>3 teams volunteer to show their pipeline DAG (90 sec each)</li>
+            <li>Share one interesting insight from your Gold data</li>
+            <li>What worked well? Where did TDD help?</li>
+            <li>Where did the agent go off-rails?</li>
+          </ul>
+        </div>
+        <div style="margin-top:1rem;padding:1rem;background:rgba(27,81,98,0.06);border-radius:8px;border-left:3px solid var(--db-teal);">
+          <p style="font-size:0.9rem;"><strong>Discussion:</strong> Where did TDD help the agent stay on track? Where did it go off-rails?</p>
+        </div>
+      </div>
+      <div>
+        <h3 style="color:var(--db-lava);margin-bottom:1rem;">Prediction Reveal</h3>
+        <div class="card" style="border-left:3px solid var(--db-lava);">
+          <p style="margin-bottom:0.75rem;">Query <strong>your Gold tables</strong> live to answer the ice breaker:</p>
+          <ul class="bullet-list" style="font-size:0.85rem;">
+            <li>Q1: Highest food retail turnover by state?</li>
+            <li>Q2: Food CPI increase since 2020?</li>
+            <li>Q3: Average household grocery spend/week?</li>
+            <li>Q4: Peak retail spending month?</li>
+            <li>Q5: Fastest-rising food category?</li>
+          </ul>
+          <div style="margin-top:1rem;padding:0.5rem 0.75rem;background:var(--accent-glow);border-radius:6px;">
+            <p style="font-size:0.85rem;"><strong>Score the prediction cards</strong> &mdash; most accurate team gets bragging rights!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SLIDE 33: SECTION DIVIDER — LAB 2 -->
   <!-- ============================================================ -->
   <section class="slide slide-dark" aria-label="Section: Lab 2" data-notes="Lab 2 section divider. This is the capstone challenge. 60 minutes to continue building in your track. Remind everyone: use everything from today -- CLAUDE.md, TDD, subagents, MCP. ~30 sec.">
     <div class="reveal section-num">Lab 2 &middot; 2:00 PM &middot; 60 Minutes</div>
@@ -1698,7 +1783,7 @@ with food CPI overlay"</span>
   </section>
 
   <!-- ============================================================ -->
-  <!-- SLIDE 33: LAB 2 BRIEFING -->
+  <!-- SLIDE 34: LAB 2 BRIEFING -->
   <!-- ============================================================ -->
   <section class="slide slide-light" aria-label="Lab 2 Briefing" data-notes="~3 min briefing. Same track as Lab 1 — teams continue where they left off. DE adds data sources + quality + scheduling. DS trains a model, registers, serves, builds prediction app. Analyst builds FastAPI app with embedded dashboards. Framing: get as far as you can, checkpoints at every phase. Person A/B/C parallel tasks are in each track's lab doc. ~60 min lab time. Transition: demos.">
     <div class="reveal section-num">Lab 2</div>
@@ -1748,7 +1833,7 @@ with food CPI overlay"</span>
   </section>
 
   <!-- ============================================================ -->
-  <!-- SLIDE 34: TEAM DEMOS & VOTING -->
+  <!-- SLIDE 35: TEAM DEMOS & VOTING -->
   <!-- ============================================================ -->
   <section class="slide slide-dark" aria-label="Team Demos and Voting" data-notes="Each team gets 3 minutes to demo their platform. Use a projected timer. After all demos, quick anonymous vote (show of hands or Google Form). Announce winners. Then 5-min retro: What worked? What would you do differently? What will you use on Monday? ~20 min total.">
     <div class="reveal section-num">3:00 PM &middot; 30 Minutes</div>
@@ -1779,7 +1864,7 @@ with food CPI overlay"</span>
   </section>
 
   <!-- ============================================================ -->
-  <!-- SLIDE 35: KEY TAKEAWAYS -->
+  <!-- SLIDE 36: KEY TAKEAWAYS -->
   <!-- ============================================================ -->
   <section class="slide slide-light" aria-label="Key Takeaways" data-notes="Four cards, four key messages. Walk through each one deliberately. 1) Specs are leverage -- reference what they learned in Session 1. 2) TDD + agents -- reference their Lab 1 and Lab 2 experience. 3) Subagents and MCP extend reach -- the new tools from Session 3. 4) Start small -- the adoption advice. Ask: which of these resonated most with you today? ~3 min.">
     <div class="reveal section-num">Takeaways</div>
@@ -1810,7 +1895,7 @@ with food CPI overlay"</span>
   </section>
 
   <!-- ============================================================ -->
-  <!-- SLIDE 36: NEXT STEPS -->
+  <!-- SLIDE 37: NEXT STEPS -->
   <!-- ============================================================ -->
   <section class="slide slide-white" aria-label="Next Steps" data-notes="Concrete actions they can take. Left column: immediate things this week (share learnings, set up CLAUDE.md, try on a real task). Coming soon: broader team rollout, shared skill libraries, Genie spaces for real data. Right column: champions -- Farbod and Swee Hoe internally, David from Databricks for follow-up. ~3 min.">
     <div class="reveal section-num">What's Next</div>
@@ -1857,7 +1942,7 @@ with food CPI overlay"</span>
   </section>
 
   <!-- ============================================================ -->
-  <!-- SLIDE 37: CLOSING -->
+  <!-- SLIDE 38: CLOSING -->
   <!-- ============================================================ -->
   <section class="slide slide-dark" aria-label="Closing" data-notes="Final slide. Let the quote land. Thank them for their time, energy, and willingness to experiment. Congratulate the winning team one more time. Remind them of your email. Open the floor for any last questions. If no questions, close with: 'Go build something great this week.' ~2 min.">
     <div style="text-align:center;">
@@ -1941,16 +2026,16 @@ on the backend API."</span>
         <h3 style="color:#E8A317;font-size:1rem;">Hooks</h3>
         <p style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:0.4rem;">Event-driven guardrails</p>
         <ul class="bullet-list" style="font-size:0.8rem;">
-          <li>Fire on tool events automatically</li>
-          <li>Pre/post edit, commit, notify</li>
+          <li>PostToolUse: auto-format on save</li>
+          <li>Stop: verify before you walk away</li>
           <li>Deterministic &mdash; not AI</li>
         </ul>
         <div class="code-block" style="font-size:0.65rem;margin-top:0.5rem;padding:0.6rem;">
 <span class="comment"># .claude/settings.json</span>
 <span class="keyword">"hooks"</span>: {
-  <span class="string">"PreToolUse"</span>: [{
-    <span class="string">"matcher"</span>: <span class="string">"Edit"</span>,
-    <span class="string">"command"</span>: <span class="string">"lint $FILE"</span>
+  <span class="string">"PostToolUse"</span>: [{
+    <span class="string">"matcher"</span>: <span class="string">"Edit|Write"</span>,
+    <span class="string">"command"</span>: <span class="string">"ruff format &amp;&amp; ruff check --fix"</span>
   }]
 }
         </div>
