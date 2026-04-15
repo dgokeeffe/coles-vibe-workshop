@@ -19,3 +19,14 @@ resources:
             path: ../src/gold/retail_summary.py
         - notebook:
             path: ../src/gold/food_inflation_yoy.py
+
+  jobs:
+    grocery_daily_refresh:
+      name: grocery-refresh-${var.team_name}
+      tasks:
+        - task_key: run_pipeline
+          pipeline_task:
+            pipeline_id: ${resources.pipelines.grocery_pipeline.id}
+      schedule:
+        quartz_cron_expression: "0 0 6 * * ?"
+        timezone_id: "Australia/Sydney"
