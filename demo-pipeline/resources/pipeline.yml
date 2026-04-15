@@ -7,9 +7,6 @@ resources:
       schema: ${var.schema}
       development: true
       libraries:
-        # Shared utilities wheel (mappings, decode helpers)
-        - whl: ../dist/*.whl
-        # Pipeline entry-point notebooks
         - notebook:
             path: ../src/bronze/abs_retail_trade.py
         - notebook:

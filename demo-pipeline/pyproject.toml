@@ -5,12 +5,6 @@ description = "Shared utilities for the Grocery Intelligence demo pipeline"
 requires-python = ">=3.10"
 dependencies = []
 
-[project.optional-dependencies]
-test = [
-    "behave>=1.2.6",
-    "databricks-sdk>=0.40",
-]
-
 [build-system]
 requires = ["setuptools>=68.0", "wheel"]
 build-backend = "setuptools.build_meta"

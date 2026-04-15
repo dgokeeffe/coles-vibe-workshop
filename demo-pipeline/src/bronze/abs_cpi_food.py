@@ -8,8 +8,6 @@ except ModuleNotFoundError:
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import current_timestamp
 
-from grocery_intelligence import VOLUME_PATH
-
 
 @dp.expect("valid_time_period", "TIME_PERIOD IS NOT NULL")
 @dp.expect("valid_obs_value", "OBS_VALUE IS NOT NULL")
@@ -17,6 +15,9 @@ from grocery_intelligence import VOLUME_PATH
 def bronze_abs_cpi_food():
     spark = SparkSession.getActiveSession()
     return (
-        spark.read.csv(f"{VOLUME_PATH}/abs_cpi_food.csv", header=True, inferSchema=True)
+        spark.read.csv(
+            "/Volumes/workshop_vibe_coding/demo/raw_data/abs_cpi_food.csv",
+            header=True, inferSchema=True,
+        )
         .withColumn("_ingested_at", current_timestamp())
     )

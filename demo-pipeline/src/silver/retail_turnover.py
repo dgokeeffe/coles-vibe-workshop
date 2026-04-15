@@ -6,9 +6,24 @@ try:
 except ModuleNotFoundError:
     import dlt as dp
 from pyspark.sql import SparkSession
-from pyspark.sql.functions import col, month, year, quarter
+from pyspark.sql.functions import col, month, year, quarter, when, lit
 
-from grocery_intelligence import REGION_DECODE, INDUSTRY_DECODE, decode_column
+REGION_DECODE = {
+    1: "New South Wales", 2: "Victoria", 3: "Queensland", 4: "South Australia",
+    5: "Western Australia", 6: "Tasmania", 7: "Northern Territory", 8: "Australian Capital Territory",
+}
+INDUSTRY_DECODE = {
+    20: "Food retailing", 41: "Clothing, footwear and personal accessories",
+    42: "Department stores", 43: "Other retailing",
+    44: "Cafes, restaurants and takeaway", 45: "Household goods retailing",
+}
+
+
+def _decode(column, mapping):
+    expr = lit("Unknown")
+    for code, name in mapping.items():
+        expr = when(col(column) == code, lit(name)).otherwise(expr)
+    return expr
 
 
 @dp.expect_or_fail("valid_date", "date IS NOT NULL")
@@ -24,8 +39,8 @@ def silver_retail_turnover():
     df = spark.read.table("LIVE.bronze_abs_retail_trade")
 
     return (
-        df.withColumn("state", decode_column("REGION", REGION_DECODE))
-        .withColumn("industry", decode_column("INDUSTRY", INDUSTRY_DECODE))
+        df.withColumn("state", _decode("REGION", REGION_DECODE))
+        .withColumn("industry", _decode("INDUSTRY", INDUSTRY_DECODE))
         .withColumn("date", col("TIME_PERIOD").cast("date"))
         .withColumn("year", year("date"))
         .withColumn("month", month("date"))

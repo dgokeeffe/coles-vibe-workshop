@@ -8,7 +8,18 @@ except ModuleNotFoundError:
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import col, when, lit, to_date, concat, year, quarter as quarter_fn
 
-from grocery_intelligence import REGION_DECODE, INDEX_DECODE, decode_column
+REGION_DECODE = {
+    1: "New South Wales", 2: "Victoria", 3: "Queensland", 4: "South Australia",
+    5: "Western Australia", 6: "Tasmania", 7: "Northern Territory", 8: "Australian Capital Territory",
+}
+INDEX_DECODE = {10001: "All groups CPI", 20001: "Food and non-alcoholic beverages"}
+
+
+def _decode(column, mapping):
+    expr = lit("Unknown")
+    for code, name in mapping.items():
+        expr = when(col(column) == code, lit(name)).otherwise(expr)
+    return expr
 
 
 @dp.expect_or_fail("valid_date", "date IS NOT NULL")
@@ -24,14 +35,13 @@ def silver_food_price_index():
     df = spark.read.table("LIVE.bronze_abs_cpi_food")
 
     return (
-        df.withColumn("state", decode_column("REGION", REGION_DECODE))
-        .withColumn("category", decode_column("INDEX", INDEX_DECODE))
+        df.withColumn("state", _decode("REGION", REGION_DECODE))
+        .withColumn("category", _decode("INDEX", INDEX_DECODE))
         .withColumn(
             "date",
             to_date(
                 concat(
-                    col("TIME_PERIOD").substr(1, 4),
-                    lit("-"),
+                    col("TIME_PERIOD").substr(1, 4), lit("-"),
                     when(col("TIME_PERIOD").contains("Q1"), lit("01"))
                     .when(col("TIME_PERIOD").contains("Q2"), lit("04"))
                     .when(col("TIME_PERIOD").contains("Q3"), lit("07"))
