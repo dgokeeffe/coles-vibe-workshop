@@ -13,3 +13,6 @@ uv.lock
 .idea/
 .vscode/
 *.swp
+dist/
+*.egg-info/
+build/

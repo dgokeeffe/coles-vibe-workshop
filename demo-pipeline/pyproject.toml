@@ -1,7 +1,7 @@
 [project]
-name = "grocery-intelligence-demo"
+name = "grocery-intelligence"
 version = "0.1.0"
-description = "Demo pipeline for the Coles Vibe Coding Workshop"
+description = "Shared utilities for the Grocery Intelligence demo pipeline"
 requires-python = ">=3.10"
 dependencies = []
 
@@ -10,6 +10,14 @@ test = [
     "behave>=1.2.6",
     "databricks-sdk>=0.40",
 ]
+
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["grocery_intelligence*"]
 
 [tool.ruff]
 line-length = 100

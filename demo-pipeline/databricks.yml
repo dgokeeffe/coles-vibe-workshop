@@ -7,6 +7,11 @@ variables:
   schema:
     default: demo
 
+artifacts:
+  grocery_intelligence:
+    type: whl
+    path: .
+
 include:
   - resources/*.yml
 
