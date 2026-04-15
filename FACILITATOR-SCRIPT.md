@@ -43,7 +43,7 @@
 
 - `/status` or show MCP connections — "Seven MCP servers: Slack, JIRA, Confluence, Chrome DevTools, Databricks Docs, Glean, DeepWiki"
 - Show the CLAUDE.md briefly — "This is my onboarding doc for the agent — MCP routing rules, subagent patterns, context management"
-- Show hooks in settings — "Safety guardrails: blocks dangerous commands, logs telemetry, cleans up sessions"
+- Show hooks in settings — "Two real hooks: PostToolUse runs ruff format and ruff check --fix every time the agent edits a Python file — deterministic, not AI. Stop hook runs verify-hint.sh so I never walk away without checking the output."
 
 **[DEMO — Do something impressive (~90 sec). Pick ONE:]**
 
@@ -303,7 +303,35 @@ What tables are in the workshop_vibe_coding catalog? Show me the schema of the r
 
 ---
 
-## Slide 19: What Are Tokens | 10:23 | 2 min
+## Slide 19B: The Sycophancy Problem | 10:21 | 3 min
+
+**[CLICK — dark slide, let the stats land]**
+
+- "Before we move on — this is the uncomfortable truth about working with AI agents."
+- Stanford published in Science this month: tested 11 production LLMs against 2,000 real advice prompts
+- **49% more agreement than humans** — the AI tells you what you want to hear
+- **The killer stat:** when the user was 100% wrong — zero human agreement — the AI still agreed 51% of the time
+
+**[CLICK — Karpathy experiment]**
+
+- Karpathy spent 4 hours refining an argument with an LLM. Was genuinely convinced it was solid.
+- Then asked the same model to argue the opposite — it demolished his argument completely
+- "The model was never reasoning toward truth. It was a rhetorical engine."
+
+**[CLICK — Defenses]**
+
+- "This is NOT a bug. RLHF training selected for agreement. Models that weren't likable got deprecated."
+- Walk through the four defenses:
+  1. **Karpathy Test** — ask it to argue the opposite before trusting any analysis
+  2. **"Wait a minute..."** — two words that measurably improve critical evaluation
+  3. **TDD** — structural verification, code passes or it doesn't. Code Rabbit data: 1.7x more issues, 2.7x more security vulns in AI code
+  4. **Separate prompts** — one writes tests, another implements
+- **[LAND THE POINT]** "This is WHY we teach TDD first. This is WHY we say 'prove it worked, don't ask if it worked.'"
+- Chollet's framing: "Are you using AI to extend your thinking, or replace it?"
+
+---
+
+## Slide 20: What Are Tokens | 10:24 | 2 min
 
 **[CLICK]**
 
@@ -498,13 +526,16 @@ Run the tests. They should fail. Then implement the functions to make them pass.
 
 ---
 
-## Slide 25: Practical Tips | 11:31 | 2 min
+## Slide 25: Practical Tips | 11:31 | 3 min
 
 **[CLICK]**
 
+- Start with the **default workflow callout** at top: "Start every non-trivial task with /plan. Even better — ask Claude to interview you about requirements before building."
 - **Overengineering:** Claude loves extra files/abstractions — add "Keep solutions minimal. Do not add features beyond what is requested" to CLAUDE.md
 - **Hallucinations:** Never trust claims about unread code — add "Never speculate about code you have not opened"
 - **Course-correct early:** Check in every 2-3 tool calls — "stop, let's rethink this approach"
+- **Challenge Claude:** After it implements, demand proof — "show me the git diff", "prove to me this works", "grill me on these changes". Then try: "knowing everything you know now, scrap this and implement the elegant solution" — second pass often produces cleaner code
+- **Commit as checkpoints:** Every 15-20 minutes, use `/commit`. Commits are your safety net — if the agent goes off-rails, Esc-Esc to cancel, then rewind with git. [ASK] "Who has lost work by not committing? Don't let it happen today."
 - **Use the starter-kit prompts** — they're copy-paste ready, no interpretation needed
 
 ---
@@ -552,7 +583,7 @@ Run the tests. They should fail. Then implement the functions to make them pass.
 
 - Walk through Databricks internal setup on screen:
   - CLAUDE.md with company-wide standards — approved patterns, forbidden actions
-  - Hooks: pre-commit linting/security, post-edit formatting — deterministic guardrails
+  - Hooks: PostToolUse auto-formats Python with ruff on every edit, Stop hook runs verify-hint.sh — deterministic guardrails, not AI
   - Skills + MCP: custom slash commands, UC/Genie/internal service connections
 
 **[Switch to live terminal, type:]**
@@ -836,7 +867,7 @@ Search the Databricks docs for how to create a Genie space programmatically.
 
 - **Subagents:** parallel workers, isolated context — build frontend while you do backend
 - **Skills:** slash commands encoding domain knowledge (/commit, /review, custom /deploy-pipeline)
-- **Hooks:** event-driven guardrails — pre-commit linting/security, post-edit formatting — deterministic, not AI
+- **Hooks:** event-driven guardrails — PostToolUse auto-formats Python with ruff on every save, Stop hook runs verify-hint.sh — deterministic, not AI
 - **Plugins:** package skills + agents + hooks for your team — distributable, versioned
 
 ### Appendix B: Skills in Action — TDD Skill Chain

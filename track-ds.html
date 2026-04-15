@@ -4,43 +4,75 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Data Science Track — Coles Vibe Coding Workshop</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-  /* === THEME VARIABLES === */
+  /* === DATABRICKS PRIMARY PALETTE (from corporate template) === */
   :root {
     --db-lava:       #FF3621;
     --db-lava-light: #FF5F46;
+    --db-lava-warm:  #FE6046;
     --db-navy:       #1B3139;
     --db-ink:        #0B2026;
-    --db-teal:       #00A972;
+    --db-teal:       #1B5162;
     --db-green:      #00A972;
     --db-oat:        #F9F7F4;
     --db-oat-medium: #EEEDE9;
     --db-oat-dark:   #DBD7CE;
     --db-white:      #FFFFFF;
+    --db-black:      #000000;
     --coles-red:     #ED1C24;
     --ds-purple:     #7c3aed;
+
+    /* === EXTENDED ACCENT PALETTE (from go/pitchdeck theme) === */
+    --db-burgundy:   #970F29;
+    --db-amber:      #FEAB03;
+    --db-muted-teal: #618693;
+    --db-indigo:     #4259FE;
+
+    /* === DERIVED / FUNCTIONAL COLORS === */
+    --bg-primary:    var(--db-oat);
+    --bg-secondary:  var(--db-white);
+    --bg-dark:       var(--db-navy);
+    --bg-black:      var(--db-black);
+    --text-primary:  var(--db-ink);
+    --text-secondary: #4A5E68;
+    --text-on-dark:  var(--db-white);
+    --accent:        var(--db-lava);
+    --accent-hover:  #E02E1A;
+    --accent-glow:   rgba(255, 54, 33, 0.15);
+    --divider:       var(--db-oat-medium);
+
+    /* === TYPOGRAPHY === */
+    --font-display: 'DM Sans', sans-serif;
+    --font-body:    'DM Sans', sans-serif;
+    --font-mono:    'DM Mono', monospace;
   }
 
   /* === BASE RESET === */
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  html { scroll-snap-type: y mandatory; scroll-behavior: smooth; overflow-x: hidden; }
-  body { font-family: 'DM Sans', sans-serif; color: var(--db-navy); background: var(--db-oat); }
+  html { scroll-behavior: auto; overflow-y: scroll; scroll-snap-type: y mandatory; overflow-x: hidden; }
+  body { font-family: var(--font-body); color: var(--text-primary); background: var(--bg-primary); overflow-x: hidden; }
 
   /* === SLIDES === */
   .slide {
-    width: 100vw; height: 100vh;
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
     scroll-snap-align: start;
     overflow: hidden;
     position: relative;
     display: flex;
     flex-direction: column;
+    opacity: 1;
   }
+  .slide.visible { opacity: 1; }
 
   /* --- Page slide: warm oat background --- */
   .page-slide {
     background: var(--db-oat);
-    padding: 48px 80px 48px 80px;
+    padding: clamp(24px, 4vh, 48px) clamp(40px, 5vw, 80px);
   }
 
   /* --- Cover slide: deep branded gradient --- */
@@ -51,8 +83,27 @@
     align-items: center;
     text-align: center;
   }
+  .cover-slide::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--db-lava) 0%, var(--db-lava-light) 50%, var(--db-green) 100%);
+  }
+  .cover-slide::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 48px;
+    background: linear-gradient(90deg,
+      var(--db-lava) 0%, var(--db-lava) 25%,
+      var(--coles-red) 25%, var(--coles-red) 50%,
+      var(--db-green) 50%, var(--db-green) 75%,
+      var(--db-teal) 75%, var(--db-teal) 100%);
+    opacity: 0.15;
+  }
 
-  /* --- Divider slide: navy → ink gradient --- */
+  /* --- Divider slide: navy to ink gradient --- */
   .divider-slide {
     background: linear-gradient(135deg, var(--db-navy) 0%, var(--db-ink) 100%);
     color: white;
@@ -60,6 +111,29 @@
     align-items: center;
     text-align: center;
   }
+  .divider-slide::before {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 110%; height: 110%;
+    background: radial-gradient(ellipse at 30% 50%, rgba(27,81,98,0.25) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  /* === NOISE TEXTURE (atmospheric depth for dark slides) === */
+  .texture-noise::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 256px 256px;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .texture-noise > * { position: relative; z-index: 1; }
 
   /* === COVER SLIDE STYLING === */
   .cover-slide .cover-badge {
@@ -68,7 +142,7 @@
     color: white;
     padding: 10px 32px;
     border-radius: 28px;
-    font-size: 1.05rem;
+    font-size: clamp(0.85rem, 1vw, 1.05rem);
     font-weight: 600;
     letter-spacing: 2px;
     text-transform: uppercase;
@@ -76,20 +150,20 @@
     box-shadow: 0 4px 20px rgba(124, 58, 237, 0.3);
   }
   .cover-slide h1 {
-    font-size: 3.4rem;
+    font-size: clamp(2.2rem, 4vw, 5rem);
     font-weight: 700;
     line-height: 1.15;
     margin-bottom: 16px;
     letter-spacing: -0.02em;
   }
   .cover-slide .subtitle {
-    font-size: 1.35rem;
+    font-size: clamp(1.1rem, 1.5vw, 1.6rem);
     font-weight: 400;
     opacity: 0.85;
     margin-bottom: 12px;
   }
   .cover-slide .tagline {
-    font-size: 1.15rem;
+    font-size: clamp(0.95rem, 1.2vw, 1.3rem);
     font-weight: 500;
     opacity: 0.65;
     margin-top: 8px;
@@ -101,11 +175,32 @@
     align-items: center;
     justify-content: center;
     opacity: 0.55;
-    font-size: 1.0rem;
+    font-size: clamp(0.85rem, 1vw, 1.1rem);
     font-weight: 500;
     letter-spacing: 1px;
   }
   .cover-slide .logos span { color: rgba(255,255,255,0.6); }
+
+  /* === DATABRICKS LOGO === */
+  .db-logo { height: 28px; width: auto; }
+  .db-logo-cover { height: 40px; width: auto; margin-bottom: 20px; }
+
+  .cover-slide .cover-decoration {
+    position: absolute;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(124,58,237,0.08) 0%, transparent 70%);
+    top: -200px; right: -200px;
+    pointer-events: none;
+  }
+  .cover-slide .cover-decoration-2 {
+    position: absolute;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0,169,114,0.06) 0%, transparent 70%);
+    bottom: -150px; left: -100px;
+    pointer-events: none;
+  }
 
   /* === DIVIDER SLIDE STYLING === */
   .divider-slide .divider-badge {
@@ -114,7 +209,7 @@
     color: white;
     padding: 8px 26px;
     border-radius: 24px;
-    font-size: 1.0rem;
+    font-size: clamp(0.85rem, 1vw, 1.05rem);
     font-weight: 600;
     letter-spacing: 1.5px;
     text-transform: uppercase;
@@ -122,13 +217,13 @@
     box-shadow: 0 4px 16px rgba(124, 58, 237, 0.25);
   }
   .divider-slide h1 {
-    font-size: 2.8rem;
+    font-size: clamp(2rem, 3.5vw, 4.5rem);
     font-weight: 700;
     letter-spacing: -0.02em;
     margin-bottom: 16px;
   }
   .divider-slide .divider-sub {
-    font-size: 1.3rem;
+    font-size: clamp(1.05rem, 1.3vw, 1.6rem);
     opacity: 0.75;
     max-width: 600px;
     line-height: 1.5;
@@ -140,7 +235,7 @@
     border: 1px solid rgba(255,255,255,0.18);
     padding: 8px 24px;
     border-radius: 24px;
-    font-size: 1.0rem;
+    font-size: clamp(0.85rem, 1vw, 1.1rem);
     font-weight: 600;
   }
 
@@ -155,17 +250,26 @@
     flex-shrink: 0;
   }
   .page-header h2 {
-    font-size: 1.8rem;
+    font-size: clamp(1.3rem, 2vw, 2.2rem);
     font-weight: 700;
     color: var(--db-navy);
     letter-spacing: -0.02em;
+  }
+  .page-header h2::before {
+    content: '';
+    display: inline-block;
+    width: 22px;
+    height: 24px;
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 105 113' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M98.9 46.6L52.3 72.9L2.4 44.8L0 46.1V66.5L52.3 95.9L98.9 69.7V80.5L52.3 106.8L2.4 78.7L0 80V83.5L52.3 112.9L104.5 83.5V63.1L102.1 61.8L52.3 89.8L5.6 63.6V52.8L52.3 79L104.5 49.6V29.5L101.9 28L52.3 55.9L8 31.1L52.3 6.2L88.7 26.7L91.9 24.9V22.4L52.3 0.1L0 29.5V32.7L52.3 62.1L98.9 35.8V46.6Z' fill='%23FF3621'/%3E%3C/svg%3E") no-repeat center/contain;
+    margin-right: 10px;
+    vertical-align: middle;
   }
   .page-header .track-badge {
     background: #7c3aed;
     color: white;
     padding: 6px 20px;
     border-radius: 24px;
-    font-size: 1.0rem;
+    font-size: clamp(0.8rem, 0.9vw, 1.05rem);
     font-weight: 700;
     letter-spacing: 1.5px;
     text-transform: uppercase;
@@ -175,27 +279,27 @@
   /* === PAGE CONTENT === */
   .page-content { flex: 1; overflow: hidden; }
   .page-content h3 {
-    font-size: 1.3rem;
+    font-size: clamp(1.05rem, 1.3vw, 1.6rem);
     font-weight: 700;
     color: var(--ds-purple);
     margin: 16px 0 8px;
     letter-spacing: -0.02em;
   }
   .page-content h3:first-child { margin-top: 0; }
-  .page-content h4 { font-size: 1rem; font-weight: 600; color: var(--db-navy); margin: 12px 0 6px; }
-  .page-content p { font-size: 1.0rem; line-height: 1.5; margin-bottom: 8px; }
-  .page-content ul, .page-content ol { font-size: 1.0rem; line-height: 1.5; margin-left: 24px; margin-bottom: 8px; }
+  .page-content h4 { font-size: clamp(0.85rem, 1vw, 1.15rem); font-weight: 600; color: var(--db-navy); margin: 12px 0 6px; }
+  .page-content p { font-size: clamp(0.85rem, 1vw, 1.15rem); line-height: 1.5; margin-bottom: 8px; }
+  .page-content ul, .page-content ol { font-size: clamp(0.85rem, 1vw, 1.15rem); line-height: 1.5; margin-left: 24px; margin-bottom: 8px; }
   .page-content li { margin-bottom: 4px; }
 
-  /* === CODE BLOCKS — dark theme, purple top border === */
+  /* === CODE BLOCKS -- dark theme, purple top border === */
   .code-block {
     background: #1e1e2e;
     color: #cdd6f4;
     border-radius: 12px;
     border-top: 3px solid #7c3aed;
     padding: 14px 18px;
-    font-family: 'DM Mono', monospace;
-    font-size: 1.05rem;
+    font-family: var(--font-mono);
+    font-size: clamp(0.82rem, 0.95vw, 1.15rem);
     line-height: 1.45;
     white-space: pre;
     overflow-x: auto;
@@ -214,19 +318,19 @@
     background: var(--db-oat-medium);
     padding: 2px 6px;
     border-radius: 4px;
-    font-family: 'DM Mono', monospace;
-    font-size: 1.05rem;
+    font-family: var(--font-mono);
+    font-size: clamp(0.82rem, 0.95vw, 1.15rem);
     color: #7c3aed;
   }
 
-  /* === TIP / WARNING / SUCCESS BOXES — white cards, colored left borders === */
+  /* === TIP / WARNING / SUCCESS BOXES -- white cards, colored left borders === */
   .tip-box {
     background: var(--db-white);
     border-left: 4px solid var(--db-green);
     padding: 12px 16px;
     border-radius: 12px;
     margin: 10px 0;
-    font-size: 1.0rem;
+    font-size: clamp(0.85rem, 1vw, 1.15rem);
     box-shadow: 0 1px 4px rgba(0,0,0,0.05);
   }
   .tip-box strong { color: #2e7d32; }
@@ -236,7 +340,7 @@
     padding: 12px 16px;
     border-radius: 12px;
     margin: 10px 0;
-    font-size: 1.0rem;
+    font-size: clamp(0.85rem, 1vw, 1.15rem);
     box-shadow: 0 1px 4px rgba(0,0,0,0.05);
   }
   .warning-box strong { color: #e65100; }
@@ -248,7 +352,7 @@
     color: white;
     padding: 4px 14px;
     border-radius: 20px;
-    font-size: 0.88rem;
+    font-size: clamp(0.72rem, 0.85vw, 0.95rem);
     font-weight: 600;
     letter-spacing: 0.5px;
     margin-bottom: 8px;
@@ -259,7 +363,7 @@
     color: white;
     padding: 3px 10px;
     border-radius: 12px;
-    font-size: 0.82rem;
+    font-size: clamp(0.68rem, 0.8vw, 0.9rem);
     font-weight: 600;
     margin-left: 8px;
   }
@@ -276,7 +380,7 @@
     gap: 18px;
   }
 
-  /* === SUCCESS BOX — white card, green left border === */
+  /* === SUCCESS BOX -- white card, green left border === */
   .success-box {
     background: var(--db-white);
     border: 1px solid var(--db-oat-medium);
@@ -288,7 +392,7 @@
   }
   .success-box h4 { color: var(--db-green); margin-top: 0; }
 
-  /* === TASK CARDS — white bg, branded border === */
+  /* === TASK CARDS -- white bg, branded border === */
   .task-card {
     background: var(--db-white);
     border: 1px solid var(--db-oat-medium);
@@ -296,27 +400,32 @@
     padding: 12px 16px;
     margin: 6px 0;
     box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
-  .task-card h4 { color: var(--ds-purple); margin: 0 0 4px; font-size: 1.0rem; }
-  .task-card p { font-size: 1.05rem; margin: 0; color: #555; }
+  .task-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  }
+  .task-card h4 { color: var(--ds-purple); margin: 0 0 4px; font-size: clamp(0.85rem, 1vw, 1.1rem); }
+  .task-card p { font-size: clamp(0.85rem, 0.95vw, 1.1rem); margin: 0; color: var(--text-secondary); }
 
-  /* === CHECKPOINT BOX — purple accent === */
+  /* === CHECKPOINT BOX -- purple accent === */
   .checkpoint-box {
     background: var(--db-white);
     border: 2px dashed var(--ds-purple);
     border-radius: 12px;
     padding: 12px 16px;
     margin: 10px 0;
-    font-size: 1.0rem;
+    font-size: clamp(0.85rem, 1vw, 1.15rem);
     box-shadow: 0 1px 4px rgba(0,0,0,0.05);
   }
   .checkpoint-box strong { color: var(--ds-purple); }
 
-  /* === TABLES — alternating oat rows === */
+  /* === TABLES -- alternating oat rows === */
   table.info-table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 1.05rem;
+    font-size: clamp(0.82rem, 0.95vw, 1.1rem);
     margin: 8px 0;
     border-radius: 12px;
     overflow: hidden;
@@ -340,22 +449,22 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-top: 1px solid var(--db-oat-medium);
+    border-top: 2px solid var(--db-lava);
     padding-top: 8px;
     margin-top: auto;
-    font-size: 0.82rem;
+    font-size: clamp(0.68rem, 0.8vw, 0.9rem);
     color: #999;
     flex-shrink: 0;
   }
 
-  /* === PROMPT LABEL + CODE BLOCK — dark bg, purple top border === */
+  /* === PROMPT LABEL + CODE BLOCK -- dark bg, purple top border === */
   .prompt-label {
     display: inline-block;
     background: var(--ds-purple);
     color: white;
     padding: 4px 14px;
     border-radius: 6px 6px 0 0;
-    font-size: 0.88rem;
+    font-size: clamp(0.72rem, 0.85vw, 0.95rem);
     font-weight: 700;
     letter-spacing: 0.5px;
     text-transform: uppercase;
@@ -377,20 +486,150 @@
     background: var(--ds-purple);
     color: white;
     border-radius: 50%;
-    font-size: 0.88rem;
+    font-size: clamp(0.72rem, 0.85vw, 0.95rem);
     font-weight: 700;
     margin-right: 8px;
     flex-shrink: 0;
+  }
+
+  /* === DARK-BG TEXT OVERRIDES === */
+  .dark-bg .card {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 4px 24px rgba(0,0,0,0.2);
+    color: white;
+  }
+  .dark-bg .card:hover {
+    background: rgba(255,255,255,0.09);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+  }
+
+  /* === PROGRESS BAR + NAV DOTS === */
+  .progress-bar {
+    position: fixed;
+    top: 0; left: 0;
+    height: 3px;
+    background: var(--accent);
+    z-index: 100;
+    transition: width 0.3s ease;
+  }
+  .nav-dots {
+    position: fixed;
+    right: 1.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    z-index: 100;
+  }
+  .nav-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--db-oat-medium);
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 0;
+  }
+  .nav-dot.active {
+    background: var(--accent);
+    transform: scale(1.4);
+  }
+
+  /* === RESPONSIVE === */
+  @media (max-width: 768px) {
+    .nav-dots { display: none; }
+    .slide { padding: 1.5rem; }
+    .two-col, .three-col { grid-template-columns: 1fr; }
+  }
+
+  /* === PRINT STYLESHEET === */
+  @media print {
+    html { scroll-snap-type: none; overflow: visible; }
+    .slide {
+      height: auto;
+      min-height: 100vh;
+      scroll-snap-align: none;
+      page-break-after: always;
+      break-after: page;
+      page-break-inside: avoid;
+      break-inside: avoid;
+      overflow: visible;
+      padding: 2rem 2.5rem;
+    }
+    .slide:last-child { page-break-after: auto; }
+    .progress-bar,
+    .nav-dots { display: none !important; }
+    *, *::before, *::after {
+      animation: none !important;
+      transition: none !important;
+    }
+    .slide, .reveal-item, .timeline-item {
+      opacity: 1 !important;
+      transform: none !important;
+    }
+    .texture-noise::after { display: none; }
+    .cover-slide, .divider-slide {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+      color-adjust: exact;
+    }
+    .dark-bg .card {
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      border: 1px solid rgba(255,255,255,0.2);
+      background: rgba(255,255,255,0.1);
+    }
+    img { page-break-inside: avoid; }
+    .task-card, .tip-box, .warning-box, .success-box, .checkpoint-box {
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+  }
+
+  /* === REDUCED MOTION === */
+  @media (prefers-reduced-motion: reduce) {
+    .task-card { transition: none; }
   }
 </style>
 </head>
 <body>
 
+<div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+<nav class="nav-dots" aria-label="Slide navigation"></nav>
+
 <!-- ============================================================ -->
 <!-- SLIDE 1: COVER                                                -->
 <!-- ============================================================ -->
-<section class="slide cover-slide" aria-label="Cover">
+<section class="slide cover-slide dark-bg texture-noise" aria-label="Cover">
+  <div style="position:absolute;top:0;left:0;width:100%;height:100%;overflow:hidden;pointer-events:none;">
+    <div style="position:absolute;right:-80px;top:-80px;width:400px;height:400px;border:2px solid rgba(124,58,237,0.08);border-radius:50%;"></div>
+    <div style="position:absolute;right:-40px;top:-40px;width:320px;height:320px;border:2px solid rgba(124,58,237,0.05);border-radius:50%;"></div>
+    <div style="position:absolute;left:-120px;bottom:-120px;width:500px;height:500px;border:2px solid rgba(255,255,255,0.03);border-radius:50%;"></div>
+  </div>
+  <div class="cover-decoration"></div>
+  <div class="cover-decoration-2"></div>
   <div class="cover-badge">Data Science Track</div>
+  <svg class="db-logo-cover" viewBox="0 0 713 113" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Databricks">
+<g clip-path="url(#clip0_on_dark)">
+<path d="M98.9 46.5996L52.3 72.8996L2.4 44.7996L0 46.0996V66.4996L52.3 95.8996L98.9 69.6996V80.4996L52.3 106.8L2.4 78.6996L0 79.9996V83.4996L52.3 112.9L104.5 83.4996V63.0996L102.1 61.7996L52.3 89.7996L5.6 63.5996V52.7996L52.3 78.9996L104.5 49.5996V29.4996L101.9 27.9996L52.3 55.8996L8 31.0996L52.3 6.19961L88.7 26.6996L91.9 24.8996V22.3996L52.3 0.0996094L0 29.4996V32.6996L52.3 62.0996L98.9 35.7996V46.5996Z" fill="#FF3621"/>
+<path d="M202.2 96.1994V6.39941H188.4V39.9994C188.4 40.4994 188.1 40.8994 187.6 41.0994C187.1 41.2994 186.6 41.0994 186.3 40.7994C181.6 35.2994 174.3 32.1994 166.3 32.1994C149.2 32.1994 135.8 46.5994 135.8 64.9994C135.8 73.9994 138.9 82.2994 144.6 88.3994C150.3 94.4994 158 97.7994 166.3 97.7994C174.2 97.7994 181.5 94.4994 186.3 88.7994C186.6 88.3994 187.2 88.2994 187.6 88.3994C188.1 88.5994 188.4 88.9994 188.4 89.4994V96.1994H202.2ZM169.3 85.2994C158.3 85.2994 149.7 76.3994 149.7 64.9994C149.7 53.5994 158.3 44.6994 169.3 44.6994C180.3 44.6994 188.9 53.5994 188.9 64.9994C188.9 76.3994 180.3 85.2994 169.3 85.2994Z" fill="white"/>
+<path d="M276 96.0996V33.6996H262.3V39.9996C262.3 40.4996 262 40.8996 261.5 41.0996C261 41.2996 260.5 41.0996 260.2 40.6996C255.6 35.1996 248.4 32.0996 240.2 32.0996C223.1 32.0996 209.7 46.4996 209.7 64.8996C209.7 83.2996 223.1 97.6996 240.2 97.6996C248.1 97.6996 255.4 94.3996 260.2 88.5996C260.5 88.1996 261.1 88.0996 261.5 88.1996C262 88.3996 262.3 88.7996 262.3 89.2996V96.0996H276ZM243.3 85.2996C232.3 85.2996 223.7 76.3996 223.7 64.9996C223.7 53.5996 232.3 44.6996 243.3 44.6996C254.3 44.6996 262.9 53.5996 262.9 64.9996C262.9 76.3996 254.3 85.2996 243.3 85.2996Z" fill="white"/>
+<path d="M314.4 97.1994C318.8 97.1994 322.7 96.7994 324.9 96.4994V84.4994C323.1 84.6994 319.9 84.8994 318 84.8994C312.4 84.8994 308.1 83.8994 308.1 71.7994V46.0994C308.1 45.3994 308.6 44.8994 309.3 44.8994H322.8V33.5994H309.3C308.6 33.5994 308.1 33.0994 308.1 32.3994V14.3994H294.3V32.4994C294.3 33.1994 293.8 33.6994 293.1 33.6994H283.5V44.9994H293.1C293.8 44.9994 294.3 45.4994 294.3 46.1994V75.2994C294.3 97.1994 308.9 97.1994 314.4 97.1994Z" fill="white"/>
+<path d="M393.3 96.1996V33.6996H379.6V39.9996C379.6 40.4996 379.3 40.8996 378.8 41.0996C378.3 41.2996 377.8 41.0996 377.5 40.6996C372.9 35.1996 365.7 32.0996 357.5 32.0996C340.3 32.0996 327 46.4996 327 64.9996C327 83.4996 340.4 97.7996 357.5 97.7996C365.4 97.7996 372.7 94.4996 377.5 88.6996C377.8 88.2996 378.4 88.1996 378.8 88.2996C379.3 88.4996 379.6 88.8996 379.6 89.3996V96.1996H393.3ZM360.6 85.2996C349.6 85.2996 341 76.3996 341 64.9996C341 53.5996 349.6 44.6996 360.6 44.6996C371.6 44.6996 380.2 53.5996 380.2 64.9996C380.2 76.3996 371.6 85.2996 360.6 85.2996Z" fill="white"/>
+<path d="M418.4 88.7994C418.5 88.7994 418.7 88.6994 418.8 88.6994C419.1 88.6994 419.5 88.8994 419.7 89.0994C424.4 94.5994 431.7 97.6994 439.7 97.6994C456.8 97.6994 470.2 83.2994 470.2 64.8994C470.2 55.8994 467.1 47.5994 461.4 41.4994C455.7 35.3994 448 32.0994 439.7 32.0994C431.8 32.0994 424.5 35.3994 419.7 41.0994C419.4 41.4994 418.9 41.5994 418.4 41.4994C417.9 41.2994 417.6 40.8994 417.6 40.3994V6.39941H403.8V96.1994H417.6V89.8994C417.6 89.3994 417.9 88.9994 418.4 88.7994ZM417 64.9994C417 53.5994 425.6 44.6994 436.6 44.6994C447.6 44.6994 456.2 53.5994 456.2 64.9994C456.2 76.3994 447.6 85.2994 436.6 85.2994C425.6 85.2994 417 76.2994 417 64.9994Z" fill="white"/>
+<path d="M510.1 46.4994C511.4 46.4994 512.6 46.5994 513.4 46.7994V32.5994C512.9 32.4994 512 32.3994 511.1 32.3994C503.9 32.3994 497.3 36.0994 493.8 41.9994C493.5 42.4994 493 42.6994 492.5 42.4994C492 42.3994 491.6 41.8994 491.6 41.3994V33.6994H477.9V96.2994H491.7V68.6994C491.7 54.9994 498.7 46.4994 510.1 46.4994Z" fill="white"/>
+<path d="M536.1 33.6992H522.1V96.2992H536.1V33.6992Z" fill="white"/>
+<path d="M528.9 6.49902C524.2 6.49902 520.4 10.299 520.4 14.999C520.4 19.699 524.2 23.499 528.9 23.499C533.6 23.499 537.4 19.699 537.4 14.999C537.4 10.299 533.6 6.49902 528.9 6.49902Z" fill="white"/>
+<path d="M577.1 32.0996C557.9 32.0996 544 45.8996 544 64.9996C544 74.2996 547.3 82.5996 553.2 88.5996C559.2 94.5996 567.6 97.8996 577 97.8996C584.8 97.8996 590.8 96.3996 602.2 87.9996L594.3 79.6996C588.7 83.3996 583.5 85.1996 578.4 85.1996C566.8 85.1996 558.1 76.4996 558.1 64.9996C558.1 53.4996 566.8 44.7996 578.4 44.7996C583.9 44.7996 589 46.5996 594.1 50.2996L602.9 41.9996C592.6 33.1996 583.3 32.0996 577.1 32.0996Z" fill="white"/>
+<path d="M626.5 68.699C626.7 68.499 627 68.399 627.3 68.399H627.4C627.7 68.399 628 68.599 628.3 68.799L650.4 96.199H667.4L638.8 61.599C638.4 61.099 638.4 60.399 638.9 59.999L665.2 33.699H648.3L625.6 56.499C625.3 56.799 624.8 56.899 624.3 56.799C623.9 56.599 623.6 56.199 623.6 55.699V6.49902H609.7V96.299H623.5V71.899C623.5 71.599 623.6 71.199 623.9 70.999L626.5 68.699Z" fill="white"/>
+<path d="M689.9 97.799C701.2 97.799 712.7 90.899 712.7 77.799C712.7 69.199 707.3 63.299 696.3 59.699L688.8 57.199C683.7 55.499 681.3 53.099 681.3 49.799C681.3 45.999 684.7 43.399 689.5 43.399C694.1 43.399 698.2 46.399 700.8 51.599L711.9 45.599C707.8 37.199 699.3 31.999 689.5 31.999C677.1 31.999 668.1 39.999 668.1 50.899C668.1 59.599 673.3 65.399 684 68.799L691.7 71.299C697.1 72.999 699.4 75.199 699.4 78.699C699.4 83.999 694.5 85.899 690.3 85.899C684.7 85.899 679.7 82.299 677.3 76.399L666 82.399C669.7 91.899 678.8 97.799 689.9 97.799Z" fill="white"/>
+</g>
+<defs><clipPath id="clip0_on_dark"><rect width="712.8" height="113" fill="white"/></clipPath></defs>
+</svg>
   <h1>Feature Engineering,<br>MLflow &amp; Model Serving</h1>
   <p class="subtitle">Coles &times; Databricks Vibe Coding Workshop</p>
   <p class="tagline">Build ML models from Australian retail data — directed entirely by AI agents</p>
@@ -402,7 +641,7 @@
 </section>
 
 <!-- ============================================================ -->
-<!-- SLIDE 2: GETTING STARTED — SETUP                              -->
+<!-- SLIDE 2: GETTING STARTED -- SETUP                              -->
 <!-- ============================================================ -->
 <section class="slide page-slide" aria-label="Getting Started — Setup">
   <div class="page-header">
@@ -459,7 +698,7 @@ range is covered, and which states are included.</div>
 <!-- ============================================================ -->
 <!-- SLIDE 3: LAB 1 DIVIDER                                        -->
 <!-- ============================================================ -->
-<section class="slide divider-slide" aria-label="Lab 1 Divider">
+<section class="slide divider-slide dark-bg texture-noise" aria-label="Lab 1 Divider">
   <div class="divider-badge">Lab 1</div>
   <h1>Features &amp; Experiments</h1>
   <p class="divider-sub">Build a feature engineering pipeline from gold tables and track experiments with MLflow</p>
@@ -467,7 +706,7 @@ range is covered, and which states are included.</div>
 </section>
 
 <!-- ============================================================ -->
-<!-- SLIDE 4: LAB 1 PHASE 1 — EXPLORE DATA                        -->
+<!-- SLIDE 4: LAB 1 PHASE 1 -- EXPLORE DATA                        -->
 <!-- ============================================================ -->
 <section class="slide page-slide" aria-label="Lab 1 Phase 1 — Explore Data">
   <div class="page-header">
@@ -515,7 +754,7 @@ Show me the results as tables.</div>
 </section>
 
 <!-- ============================================================ -->
-<!-- SLIDE 5: LAB 1 PHASE 1 — WRITE TESTS                         -->
+<!-- SLIDE 5: LAB 1 PHASE 1 -- WRITE TESTS                         -->
 <!-- ============================================================ -->
 <section class="slide page-slide" aria-label="Lab 1 Phase 1 — Write Tests">
   <div class="page-header">
@@ -525,7 +764,7 @@ Show me the results as tables.</div>
   <div class="page-content">
     <span class="phase-badge">Phase 1</span><span class="time-badge">15 min</span>
 
-    <h3>1.2 Write Tests First (TDD)</h3>
+    <h3>1.2 Write Tests First (BDD)</h3>
     <div class="prompt-label">Paste into Claude Code</div>
 <div class="code-block">Create pytest tests for feature engineering in tests/test_features.py.
 Use the fixtures from tests/conftest.py.
@@ -565,7 +804,7 @@ Use PySpark test fixtures with small DataFrames.</div>
 </section>
 
 <!-- ============================================================ -->
-<!-- SLIDE 6: LAB 1 PHASE 2 — FEATURE ENGINEERING                 -->
+<!-- SLIDE 6: LAB 1 PHASE 2 -- FEATURE ENGINEERING                 -->
 <!-- ============================================================ -->
 <section class="slide page-slide" aria-label="Lab 1 Phase 2 — Feature Engineering">
   <div class="page-header">
@@ -623,7 +862,7 @@ Run tests after implementation. Handle nulls in lag features
 </section>
 
 <!-- ============================================================ -->
-<!-- SLIDE 7: LAB 1 PHASE 2 — FEATURE REFERENCE                   -->
+<!-- SLIDE 7: LAB 1 PHASE 2 -- FEATURE REFERENCE                   -->
 <!-- ============================================================ -->
 <section class="slide page-slide" aria-label="Lab 1 Phase 2 — Feature Reference">
   <div class="page-header">
@@ -704,7 +943,7 @@ df = df.withColumn(
 </section>
 
 <!-- ============================================================ -->
-<!-- SLIDE 8: LAB 1 PHASE 3 — MLFLOW EXPERIMENT TRACKING           -->
+<!-- SLIDE 8: LAB 1 PHASE 3 -- MLFLOW EXPERIMENT TRACKING           -->
 <!-- ============================================================ -->
 <section class="slide page-slide" aria-label="Lab 1 Phase 3 — MLflow Tracking">
   <div class="page-header">
@@ -759,7 +998,7 @@ Show me the MLflow experiment URL when done.</div>
 </section>
 
 <!-- ============================================================ -->
-<!-- SLIDE 9: LAB 1 PHASE 4 — VERIFY                              -->
+<!-- SLIDE 9: LAB 1 PHASE 4 -- VERIFY                              -->
 <!-- ============================================================ -->
 <section class="slide page-slide" aria-label="Lab 1 Phase 4 — Verify">
   <div class="page-header">
@@ -816,7 +1055,7 @@ Show me the MLflow experiment URL when done.</div>
 <!-- ============================================================ -->
 <!-- SLIDE 10: LAB 2 DIVIDER                                       -->
 <!-- ============================================================ -->
-<section class="slide divider-slide" aria-label="Lab 2 Divider">
+<section class="slide divider-slide dark-bg texture-noise" aria-label="Lab 2 Divider">
   <div class="divider-badge">Lab 2</div>
   <h1>Train, Serve &amp; Deploy</h1>
   <p class="divider-sub">Train a forecasting model, register in MLflow, serve as an endpoint, and build a prediction app</p>
@@ -824,7 +1063,7 @@ Show me the MLflow experiment URL when done.</div>
 </section>
 
 <!-- ============================================================ -->
-<!-- SLIDE 11: LAB 2 PHASE 1 — WRITE MODEL TESTS                  -->
+<!-- SLIDE 11: LAB 2 PHASE 1 -- WRITE MODEL TESTS                  -->
 <!-- ============================================================ -->
 <section class="slide page-slide" aria-label="Lab 2 Phase 1 — Write Model Tests">
   <div class="page-header">
@@ -869,7 +1108,7 @@ Write ONLY tests. Do NOT implement yet.</div>
 </section>
 
 <!-- ============================================================ -->
-<!-- SLIDE 12: LAB 2 PHASE 1 — TRAIN MODEL                        -->
+<!-- SLIDE 12: LAB 2 PHASE 1 -- TRAIN MODEL                        -->
 <!-- ============================================================ -->
 <section class="slide page-slide" aria-label="Lab 2 Phase 1 — Train Model">
   <div class="page-header">
@@ -918,7 +1157,7 @@ Run tests after training.</div>
 </section>
 
 <!-- ============================================================ -->
-<!-- SLIDE 13: LAB 2 PHASE 2 — REGISTER MODEL                     -->
+<!-- SLIDE 13: LAB 2 PHASE 2 -- REGISTER MODEL                     -->
 <!-- ============================================================ -->
 <section class="slide page-slide" aria-label="Lab 2 Phase 2 — Register Model">
   <div class="page-header">
@@ -959,7 +1198,7 @@ Run tests after training.</div>
 </section>
 
 <!-- ============================================================ -->
-<!-- SLIDE 14: LAB 2 PHASE 2 — SERVE MODEL                        -->
+<!-- SLIDE 14: LAB 2 PHASE 2 -- SERVE MODEL                        -->
 <!-- ============================================================ -->
 <section class="slide page-slide" aria-label="Lab 2 Phase 2 — Serve Model">
   <div class="page-header">
@@ -1008,7 +1247,7 @@ Show me the prediction response.</div>
 </section>
 
 <!-- ============================================================ -->
-<!-- SLIDE 15: LAB 2 PHASE 3 — BUILD APP                           -->
+<!-- SLIDE 15: LAB 2 PHASE 3 -- BUILD APP                           -->
 <!-- ============================================================ -->
 <section class="slide page-slide" aria-label="Lab 2 Phase 3 — Build App">
   <div class="page-header">
@@ -1068,7 +1307,7 @@ Show me the prediction response.</div>
 </section>
 
 <!-- ============================================================ -->
-<!-- SLIDE 16: LAB 2 PHASE 4 — DEMO PREP                          -->
+<!-- SLIDE 16: LAB 2 PHASE 4 -- DEMO PREP                          -->
 <!-- ============================================================ -->
 <section class="slide page-slide" aria-label="Lab 2 Phase 4 — Demo Prep">
   <div class="page-header">
@@ -1082,7 +1321,7 @@ Show me the prediction response.</div>
       <div>
         <h3>Your 3-Minute Demo</h3>
         <p>Show the group your end-to-end ML pipeline:</p>
-        <ol style="margin-top: 12px; font-size: 1.05rem; line-height: 1.8;">
+        <ol style="margin-top: 12px; font-size: clamp(0.85rem, 1vw, 1.15rem); line-height: 1.8;">
           <li><strong>Feature table</strong> — show in Unity Catalog browser</li>
           <li><strong>MLflow experiment</strong> — show runs, metrics, artifacts</li>
           <li><strong>Model</strong> — show registry + serving endpoint</li>
@@ -1106,7 +1345,7 @@ Show me the prediction response.</div>
       <div>
         <h3>Reflection Questions</h3>
         <div style="background: #f8f6ff; border-radius: 8px; padding: 16px; margin-top: 8px;">
-          <ol style="font-size: 1.0rem; line-height: 1.7;">
+          <ol style="font-size: clamp(0.85rem, 1vw, 1.1rem); line-height: 1.7;">
             <li>How accurate were your model's predictions?</li>
             <li>What was the hardest part — training, serving, or building the app?</li>
             <li>How would you improve the model for production use?</li>
@@ -1127,7 +1366,7 @@ Show me the prediction response.</div>
 </section>
 
 <!-- ============================================================ -->
-<!-- SLIDE 17: CHEATSHEET — COMMON PROBLEMS                        -->
+<!-- SLIDE 17: CHEATSHEET -- COMMON PROBLEMS                        -->
 <!-- ============================================================ -->
 <section class="slide page-slide" aria-label="Cheatsheet — Common Problems">
   <div class="page-header">
@@ -1201,7 +1440,7 @@ Show me the prediction response.</div>
 </section>
 
 <!-- ============================================================ -->
-<!-- SLIDE 18: CHEATSHEET — COMMANDS & RECOVERY                    -->
+<!-- SLIDE 18: CHEATSHEET -- COMMANDS & RECOVERY                    -->
 <!-- ============================================================ -->
 <section class="slide page-slide" aria-label="Cheatsheet — Commands & Recovery">
   <div class="page-header">
@@ -1302,7 +1541,7 @@ databricks serving-endpoints get \
       <div>
         <h3>Lab 1: Features &amp; Experiments</h3>
         <div class="success-box">
-          <ul style="font-size: 1.0rem; line-height: 1.8;">
+          <ul style="font-size: clamp(0.85rem, 1vw, 1.1rem); line-height: 1.8;">
             <li>Feature table has lag, seasonal, and growth features</li>
             <li>All feature engineering tests pass</li>
             <li>MLflow experiment logged with parameters, metrics, artifacts</li>
@@ -1313,7 +1552,7 @@ databricks serving-endpoints get \
 
         <h3 style="margin-top: 20px;">What You Built</h3>
         <div style="background: #f8f6ff; border-radius: 8px; padding: 16px;">
-          <p style="font-size: 1.0rem; line-height: 1.6; margin: 0;">
+          <p style="font-size: clamp(0.85rem, 1vw, 1.1rem); line-height: 1.6; margin: 0;">
             <strong>Gold Tables</strong> &rarr; <strong>Feature Engineering</strong> (lag, seasonal, growth)
             &rarr; <strong>Feature Table</strong> in Unity Catalog
             &rarr; <strong>MLflow Experiment</strong> with tracked runs, metrics &amp; visualizations
@@ -1328,7 +1567,7 @@ databricks serving-endpoints get \
       <div>
         <h3>Lab 2: Train, Serve &amp; Deploy</h3>
         <div class="success-box">
-          <ul style="font-size: 1.0rem; line-height: 1.8;">
+          <ul style="font-size: clamp(0.85rem, 1vw, 1.1rem); line-height: 1.8;">
             <li>Model trained with R&sup2; &gt; 0.5</li>
             <li>Model registered in Unity Catalog Model Registry</li>
             <li>Model Serving endpoint responding to requests</li>
@@ -1340,9 +1579,9 @@ databricks serving-endpoints get \
 
         <h3 style="margin-top: 20px;">Key Takeaways</h3>
         <div style="background: #f8f6ff; border-radius: 8px; padding: 16px;">
-          <ul style="font-size: 1.0rem; line-height: 1.7; margin-left: 16px;">
+          <ul style="font-size: clamp(0.85rem, 1vw, 1.1rem); line-height: 1.7; margin-left: 16px;">
             <li>AI agents can build ML pipelines when given clear specs</li>
-            <li>TDD keeps the agent focused and verifiable</li>
+            <li>BDD keeps the agent focused and verifiable</li>
             <li>MLflow tracks the full experiment lifecycle</li>
             <li>Unity Catalog provides governance for models + data</li>
             <li>Model Serving makes deployment a single API call</li>
@@ -1357,5 +1596,94 @@ databricks serving-endpoints get \
   </div>
 </section>
 
+<script>
+  class SlidePresentation {
+    constructor() {
+      this.slides = document.querySelectorAll('.slide');
+      this.progressBar = document.querySelector('.progress-bar');
+      this.navDots = document.querySelector('.nav-dots');
+      this.currentSlide = 0;
+      this.init();
+    }
+    init() {
+      this.createNavDots();
+      this.setupIntersectionObserver();
+      this.setupKeyboardNav();
+      this.setupTouchNav();
+      this.setupWheelNav();
+      this.updateProgress();
+    }
+    createNavDots() {
+      this.slides.forEach((_, i) => {
+        const dot = document.createElement('button');
+        dot.className = 'nav-dot' + (i === 0 ? ' active' : '');
+        dot.setAttribute('aria-label', `Go to slide ${i + 1}`);
+        dot.addEventListener('click', () => this.goToSlide(i));
+        this.navDots.appendChild(dot);
+      });
+    }
+    setupIntersectionObserver() {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            const index = [...this.slides].indexOf(entry.target);
+            this.currentSlide = index;
+            this.updateDots();
+            this.updateProgress();
+          }
+        });
+      }, { threshold: 0.5 });
+      this.slides.forEach(slide => observer.observe(slide));
+    }
+    setupKeyboardNav() {
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowDown' || e.key === 'ArrowRight' || e.key === ' ') {
+          e.preventDefault();
+          this.goToSlide(this.currentSlide + 1);
+        } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+          e.preventDefault();
+          this.goToSlide(this.currentSlide - 1);
+        }
+      });
+    }
+    setupTouchNav() {
+      let startY = 0;
+      document.addEventListener('touchstart', (e) => {
+        startY = e.touches[0].clientY;
+      }, { passive: true });
+      document.addEventListener('touchend', (e) => {
+        const diff = startY - e.changedTouches[0].clientY;
+        if (Math.abs(diff) > 50) {
+          this.goToSlide(this.currentSlide + (diff > 0 ? 1 : -1));
+        }
+      }, { passive: true });
+    }
+    setupWheelNav() {
+      let lastScroll = 0;
+      document.addEventListener('wheel', (e) => {
+        const now = Date.now();
+        if (now - lastScroll < 800) return;
+        lastScroll = now;
+        this.goToSlide(this.currentSlide + (e.deltaY > 0 ? 1 : -1));
+      }, { passive: true });
+    }
+    goToSlide(index) {
+      const target = Math.max(0, Math.min(index, this.slides.length - 1));
+      this.slides[target].scrollIntoView({ behavior: 'instant' });
+    }
+    updateDots() {
+      this.navDots.querySelectorAll('.nav-dot').forEach((dot, i) => {
+        dot.classList.toggle('active', i === this.currentSlide);
+      });
+    }
+    updateProgress() {
+      const pct = ((this.currentSlide + 1) / this.slides.length) * 100;
+      this.progressBar.style.width = pct + '%';
+      this.progressBar.setAttribute('aria-valuenow', Math.round(pct));
+    }
+  }
+  new SlidePresentation();
+</script>
 </body>
 </html>

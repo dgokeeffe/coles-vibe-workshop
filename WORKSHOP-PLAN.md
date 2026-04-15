@@ -121,7 +121,7 @@ Short, punchy teaching → hands-on practice in teams → share learnings with t
 | 21 | Live Demo — TDD in Action | Theory |
 | 22 | Section: Lab 0 — Guided Hands-On | Lab 0 |
 | 23 | Lab 0 Briefing | Lab 0 |
-| 24 | Practical Tips | Lab 0 |
+| 24 | Practical Tips (5 patterns: overengineering, hallucinations, course-correct, challenge & verify, commit cadence) | Lab 0 |
 | 25 | Section: Tools for Labs | Session 2 |
 | 26 | **Skills & MCP — Practical Tools** (condensed) | Session 2 |
 | 27 | MCP on Databricks | Session 2 |
@@ -367,7 +367,11 @@ Short, punchy teaching → hands-on practice in teams → share learnings with t
    - Facilitator recommends based on team composition (ML experience → DS, analyst background → Analyst)
    - Teams announce their track choice
 
-3. **Practical tips** (2 min)
+3. **Practical tips** (3 min)
+   - Five patterns: overengineering, hallucinations, course-correct early, challenge & verify, commit as checkpoints
+   - Default workflow: start every non-trivial task with `/plan`; have Claude interview you about requirements first
+   - After Claude implements, demand proof: "show me the git diff", "grill me on these changes"
+   - Commit every 15-20 min — safety net for Esc-Esc rewind
    - Start with the starter-kit prompts — they're copy-paste ready
    - Run tests after every change
    - Use checkpoints if you fall behind — nobody gets stuck
