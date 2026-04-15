@@ -1,0 +1,18 @@
+bundle:
+  name: grocery-intelligence-demo
+
+variables:
+  team_name:
+    default: demo
+  schema:
+    default: demo
+
+include:
+  - resources/*.yml
+
+targets:
+  dev:
+    default: true
+    variables:
+      team_name: demo
+      schema: demo
