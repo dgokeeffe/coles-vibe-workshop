@@ -41,10 +41,10 @@
 
 **[Walk through the four stat cards:]**
 
-- **4.5M members** — "Every single Flybuys member gets personalized recommendations"
-- **13 offers** — "Ranked by propensity models — Spark ML, XGBoost, LightGBM — across 4 product lines"
-- **340+ tests** — "Test-driven gates. PRDs with acceptance criteria. The agent couldn't ship until every gate passed."
-- **22K lines** — "Migrated from R running on Azure Batch VMs to pure Python on Databricks. No data round-trips."
+- **4.5M members** — "Every Flybuys member gets 13 personalized offers every week"
+- **857 commits** — "37,000 lines of Python. 4 product lines. 340+ automated tests."
+- **7 weeks** — "One engineer, AI-assisted. This is the punchline."
+- **R→Python** — "Full migration from R on Azure Batch VMs to native Databricks. 452 million training rows on Ray."
 
 **[SHOW the YWS app if possible — open in browser, show the recommendation viewer]**
 
@@ -53,9 +53,9 @@
 
 **[KEY MESSAGE:]**
 
-- "This entire system — the pipeline, the models, the app, the tests — was built with PRDs, test-driven development, and Claude Code."
-- "The techniques you're about to learn aren't academic. They produced this."
-- "Rule #1: I typed what I wanted. The agent built it. I curated the good stuff into markdown. That's the whole workflow."
+- "857 commits in 7 weeks. One person. The bottleneck was domain knowledge — understanding the ranking logic, the trial groups, the business rules. Not engineering capacity."
+- "The techniques you're about to learn aren't academic. PRDs, test-driven gates, Claude Code — they produced this."
+- "Rule #1: I typed what I wanted. The agent built it."
 
 **[BACKUP: If app is unavailable — stay on the slide, walk through the 4 stat cards, reference the pipeline architecture]**
 

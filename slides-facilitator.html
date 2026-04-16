@@ -774,7 +774,7 @@
   <!-- ============================================================ -->
   <!-- SLIDE 2: YOUR WEEKLY SPECIALS — BUILT WITH VIBE CODING -->
   <!-- ============================================================ -->
-  <section class="slide slide-dark dark-bg texture-noise" aria-label="Slide 2: Your Weekly Specials" data-notes="OPENING — ~5 min. This is the hook. Before any theory, show them a real Coles production system you built with the same techniques they'll learn today. Your Weekly Specials: 4.5M Flybuys members get 13 personalized offers every week. The whole pipeline — Python, Spark ML, Ray, LightGBM — runs natively on Databricks. Show the app briefly if you can. Key stats: migrated from R on Azure Batch VMs to pure Databricks. 22K lines of Python. 340+ quality tests. Built with PRDs, test-driven gates, and Claude Code. The point: this isn't a toy demo. The techniques you're about to learn produced this. Then briefly mention your setup (MCP servers, skills, hooks) — but keep the focus on YWS. ~5 min. Transition: Let's warm up with a quiz.">
+  <section class="slide slide-dark dark-bg texture-noise" aria-label="Slide 2: Your Weekly Specials" data-notes="OPENING — ~5 min. This is the hook. Before any theory, show them a real Coles production system you built with the same techniques they'll learn today. Your Weekly Specials: 4.5M Flybuys members get 13 personalized offers every week. The whole pipeline — Python, Spark ML, Ray, LightGBM, 452M training rows — runs natively on Databricks. Show the app briefly if you can. Key stats: 857 commits, 37K lines, 4 product lines, 340+ tests. 7 weeks, one engineer, AI-assisted. Migrated from R on Azure Batch VMs to native Databricks. Built with PRDs, test-driven gates, and Claude Code. The bottleneck was domain knowledge, not engineering capacity. The point: this isn't a toy demo. The techniques you're about to learn produced this. Then briefly mention your setup (MCP servers, skills, hooks) — but keep the focus on YWS. ~5 min. Transition: Let's warm up with a quiz.">
     <div class="slide-content">
       <span class="section-num">Before We Start</span>
       <h2>I Built This <span style="color:var(--db-lava-light);">for Coles</span></h2>
@@ -784,26 +784,26 @@
         <div style="padding:1rem;background:rgba(255,255,255,0.06);border-radius:8px;border-top:3px solid var(--db-lava-light);text-align:center;">
           <div style="font-family:var(--font-mono);font-size:2rem;font-weight:700;color:var(--db-lava-light);">4.5M</div>
           <p style="font-size:0.8rem;color:rgba(255,255,255,0.7);">Flybuys Members</p>
-          <p style="font-size:0.7rem;color:rgba(255,255,255,0.45);margin-top:0.25rem;">Personalized recommendations every week</p>
+          <p style="font-size:0.7rem;color:rgba(255,255,255,0.45);margin-top:0.25rem;">13 personalized offers every week</p>
         </div>
         <div style="padding:1rem;background:rgba(255,255,255,0.06);border-radius:8px;border-top:3px solid #2D8DAD;text-align:center;">
-          <div style="font-family:var(--font-mono);font-size:2rem;font-weight:700;color:#5BB8D4;">13</div>
-          <p style="font-size:0.8rem;color:rgba(255,255,255,0.7);">Offers Per Member</p>
-          <p style="font-size:0.7rem;color:rgba(255,255,255,0.45);margin-top:0.25rem;">Ranked by propensity models across 4 product lines</p>
+          <div style="font-family:var(--font-mono);font-size:2rem;font-weight:700;color:#5BB8D4;">857</div>
+          <p style="font-size:0.8rem;color:rgba(255,255,255,0.7);">Commits</p>
+          <p style="font-size:0.7rem;color:rgba(255,255,255,0.45);margin-top:0.25rem;">37K lines, 4 product lines, 340+ tests</p>
         </div>
         <div style="padding:1rem;background:rgba(255,255,255,0.06);border-radius:8px;border-top:3px solid var(--db-green);text-align:center;">
-          <div style="font-family:var(--font-mono);font-size:2rem;font-weight:700;color:#33D49A;">340+</div>
-          <p style="font-size:0.8rem;color:rgba(255,255,255,0.7);">Quality Tests</p>
-          <p style="font-size:0.7rem;color:rgba(255,255,255,0.45);margin-top:0.25rem;">PRD-driven, test-gated, R-to-Python validated</p>
+          <div style="font-family:var(--font-mono);font-size:2rem;font-weight:700;color:#33D49A;">7</div>
+          <p style="font-size:0.8rem;color:rgba(255,255,255,0.7);">Weeks</p>
+          <p style="font-size:0.7rem;color:rgba(255,255,255,0.45);margin-top:0.25rem;">One engineer, AI-assisted</p>
         </div>
         <div style="padding:1rem;background:rgba(255,255,255,0.06);border-radius:8px;border-top:3px solid #E8A317;text-align:center;">
-          <div style="font-family:var(--font-mono);font-size:2rem;font-weight:700;color:#F0B840;">22K</div>
-          <p style="font-size:0.8rem;color:rgba(255,255,255,0.7);">Lines of Python</p>
-          <p style="font-size:0.7rem;color:rgba(255,255,255,0.45);margin-top:0.25rem;">Migrated from R + Azure Batch to native Databricks</p>
+          <div style="font-family:var(--font-mono);font-size:2rem;font-weight:700;color:#F0B840;">R&rarr;Py</div>
+          <p style="font-size:0.8rem;color:rgba(255,255,255,0.7);">Full Migration</p>
+          <p style="font-size:0.7rem;color:rgba(255,255,255,0.45);margin-top:0.25rem;">Azure Batch VMs to native Databricks</p>
         </div>
       </div>
       <div style="padding:1rem 1.5rem;background:rgba(255,54,33,0.08);border-radius:8px;border-left:3px solid var(--db-lava-light);">
-        <p style="font-size:0.9rem;color:rgba(255,255,255,0.85);"><strong style="color:var(--db-lava-light);">Your Weekly Specials</strong> &mdash; Spark ML + Ray + LightGBM + FastAPI app, all on Databricks. Built with PRDs, test-driven gates, and Claude Code. The same techniques you&rsquo;ll learn today.</p>
+        <p style="font-size:0.9rem;color:rgba(255,255,255,0.85);"><strong style="color:var(--db-lava-light);">Your Weekly Specials</strong> &mdash; Spark ML + Ray + LightGBM, 452M training rows, FastAPI app. PRDs, test-driven gates, Claude Code. The bottleneck was domain knowledge, not engineering capacity.</p>
       </div>
     </div>
     <div class="slide-footer">2</div>
