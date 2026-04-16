@@ -48,7 +48,7 @@ Each team builds a complete platform using real Australian public data:
 
 By end of day, participants will be able to:
 
-1. Write effective CLAUDE.md files and PRDs that guide AI coding agents
+1. Use conversation to initialize projects and guide AI coding agents (CLAUDE.md, PRDs)
 2. Use TDD to dramatically improve agentic code generation accuracy
 3. Build and deploy Lakeflow Declarative Pipelines with Databricks Asset Bundles
 4. Use **skills** and **MCP** for practical tool integration with agents
@@ -79,7 +79,7 @@ Short, punchy teaching → hands-on practice in teams → share learnings with t
 | **9:30** | 15 min | Welcome, Icebreaker: Grocery Data Predictions, Team Formation | Engage |
 | **9:45** | 45 min | Theory: Vibe Coding, CLAUDE.md, TDD (Specs → CLAUDE.md → TDD → Context Windows) | Theory |
 | **10:30** | 15 min | Break | |
-| **10:45** | 45 min | **Lab 0: Guided Hands-On** (write CLAUDE.md, first test, bronze ingest — ALL together) | Exercise |
+| **10:45** | 45 min | **Lab 0: Guided Hands-On** (initialize project, first test, bronze ingest — ALL together) | Exercise |
 | **11:30** | 20 min | Theory: Skills, MCP, Genie, AI/BI Dashboards | Theory |
 | **11:50** | 10 min | Track Briefing — choose your track (DE / DS / Analyst) | Briefing |
 | **12:00** | 60 min | **Lab 1** (track-specific) | Exercise |
@@ -272,19 +272,18 @@ Short, punchy teaching → hands-on practice in teams → share learnings with t
 
 **How it works:**
 
-1. **Write your team CLAUDE.md** (10 min)
+1. **Rule #1: Just Say What You Want** (10 min)
    - Teams open their Coding Agents terminal
-   - Copy the starter-kit CLAUDE.md template into their project
-   - Customise it with their team angle, schema name, and any team-specific standards
-   - The starter-kit prompt is exact copy-paste — no interpretation needed
+   - Tell Claude about their project — tech stack, data sources, team standards
+   - Claude creates the CLAUDE.md, project structure, and initial config
+   - Teams review and refine through conversation, not manual editing
 
-   > **Prompt to give teams:**
+   > **Just say:**
    >
-   > _"Copy the starter-kit CLAUDE.md into our project. Customise it for our team:
-   > schema `workshop_vibe_coding.<team_schema>`, angle `<chosen_angle>`.
-   > Add our tech stack (PySpark, Lakeflow Declarative Pipelines, FastAPI,
-   > Tailwind CSS + htmx), our data standards (Unity Catalog, medallion architecture,
-   > date formats), and our testing standards (pytest, TDD, small test DataFrames)."_
+   > _"I'm building a grocery intelligence platform on Databricks. Tech stack: PySpark,
+   > Lakeflow Declarative Pipelines, FastAPI + React, DABs. Data sources: ABS SDMX APIs,
+   > FSANZ web scraping, ACCC PDF ingestion via UC Volumes. Unity Catalog namespace:
+   > workshop_vibe_coding.<team_schema>. Set up the project and create a CLAUDE.md."_
 
 2. **Write your first test** (10 min)
    - Teams copy `test_bronze` from `starter-kit/test_pipeline.py`

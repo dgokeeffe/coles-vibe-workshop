@@ -11,35 +11,33 @@ Your Coding Agents app gives you a browser-based terminal with Claude Code pre-i
 
 ---
 
-## Step 2: Set Up Your Project
+## Step 2: Set Up Your Project (Rule #1: Just Say What You Want)
+
+Don't write config files by hand — have a conversation. Tell Claude about your project and it will create everything.
 
 1. Create your project directory:
    ```bash
    mkdir -p grocery-intelligence && cd grocery-intelligence
    ```
 
-2. Copy the starter CLAUDE.md to your project root:
-   ```bash
-   cp ~/starter-kit/CLAUDE.md ./CLAUDE.md
+2. Tell Claude about your project — just say it:
+
+   ```
+   I'm building a grocery intelligence platform on Databricks.
+   Tech stack: PySpark, Lakeflow Declarative Pipelines, FastAPI + React, DABs.
+   Data sources: ABS SDMX APIs, FSANZ web scraping, ACCC PDF ingestion via UC Volumes.
+   Unity Catalog namespace: workshop_vibe_coding.<team_schema>.
+   Set up the project and create a CLAUDE.md.
    ```
 
-3. Edit CLAUDE.md — replace `TEAM_NAME` and `TEAM_SCHEMA` with your assigned values (e.g., `team_01`)
+   Replace `<team_schema>` with your assigned value (e.g., `team_01`).
 
-4. Append your track-specific CLAUDE.md additions:
+3. Review what Claude created — want to change something? Just say it:
+   - "Add a rule that we always use PySpark, never pandas"
+   - "Add our team angle: Retail Performance"
+   - "Set up the test directory with conftest.py"
 
-   | Track | Command |
-   |-------|---------|
-   | **Data Engineering** | `cat ~/starter-kit/CLAUDE-de.md >> CLAUDE.md` |
-   | **Data Science** | `cat ~/starter-kit/CLAUDE-ds.md >> CLAUDE.md` |
-   | **Analyst** | `cat ~/starter-kit/CLAUDE-analyst.md >> CLAUDE.md` |
-
-5. Copy test fixtures:
-   ```bash
-   mkdir -p tests
-   cp ~/starter-kit/conftest.py tests/
-   ```
-
-6. Copy your track's test stubs:
+4. Copy your track's test stubs:
 
    | Track | Command |
    |-------|---------|

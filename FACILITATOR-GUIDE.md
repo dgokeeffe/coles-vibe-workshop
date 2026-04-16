@@ -215,33 +215,35 @@ Complete these **the day before** and verify again **30 minutes before start**:
 
 ---
 
-### Slide 12: Exercise -- Write Your CLAUDE.md
+### Slide 12: Rule #1 -- Just Say What You Want
 - **Time:** 10:35 AM
 - **Duration:** ~20 min total (15 min exercise + 5 min discussion)
-- **Key Message:** Hands-on: each team creates a CLAUDE.md for their Grocery Intelligence Platform.
+- **Key Message:** Rule #1 of vibe coding: you literally type what you want and it happens. Don't write config files -- have a conversation.
 - **Speaker Notes:**
   - 15-minute team exercise
-  - Each team opens their Coding Agents terminal and creates a CLAUDE.md
+  - Each team opens their Coding Agents terminal and tells Claude about their project
+  - Claude creates the CLAUDE.md, project structure, and initial config
   - Walk around the room, help anyone stuck
-  - Common stumbling point: people make rules too vague -- push for specificity
-  - After 15 min, ask 2-3 teams to share one highlight each
+  - The "aha" moment: they realise they can just type what they want
+  - After 15 min, ask 2-3 teams what surprised them
   - 5 min discussion after
 - **What to Watch For:**
   - Teams that cannot access their terminal -- help them immediately, this is their first hands-on moment
-  - Teams writing vague rules like "write good code" -- push them: "What does 'good' mean? PySpark? Type hints? What patterns?"
-  - Teams that finish early -- encourage them to add edge case rules, testing requirements, or data contract specs
+  - Teams trying to hand-write CLAUDE.md -- redirect: "Just tell Claude what you want"
+  - Teams not reviewing Claude's output -- remind them to refine through conversation
+  - Teams that finish early -- encourage them to modify through conversation: "Tell Claude to add a rule about X"
 - **Facilitator Tips:**
   - Set a visible timer for 15 minutes
   - Walk the room continuously. Spend ~90 seconds with each team
-  - Have the prompt template ready to paste into chat for teams that are stuck starting
-  - For the share-back, pick teams that wrote interesting or specific rules -- this teaches by example
-  - Discussion questions on the slide are gold for the share-back
+  - Have the prompt ready to paste for teams that are stuck starting
+  - For the share-back, ask: "What did Claude get right? What did you correct by just saying so?"
+  - The key teaching point: this is agentic engineering -- you engineer the harness through conversation
 
 **Discussion Questions & Suggested Talking Points:**
-1. *What rules did you include that the agent would not know on its own?* -- Unity Catalog namespace, Coles-specific naming conventions, PySpark over pandas preference
-2. *What Coles-specific standards should be in a shared team CLAUDE.md?* -- Data governance rules, approved libraries, naming conventions, security patterns
-3. *How would this change the agent's behaviour on your daily work?* -- Consistent code style, fewer review comments, faster onboarding of the agent to your patterns
-4. *What would you put at user-level vs repo-level?* -- Personal git preferences at user level; team architecture decisions at repo level
+1. *What did Claude get right without you specifying it?* -- Often gets project structure, basic rules, but misses team-specific standards
+2. *What did you correct by just saying so?* -- This demonstrates Rule #1 in action: want to change something, just say it
+3. *How is this different from hand-writing config?* -- Faster, iterative, conversational, and Claude brings knowledge you might miss
+4. *What Coles-specific standards would you add through conversation?* -- Data governance rules, approved libraries, naming conventions
 
 ---
 

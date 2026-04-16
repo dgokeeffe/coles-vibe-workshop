@@ -32,46 +32,32 @@
 
 ---
 
-## Slide 2: Opening Demo — My Working Setup | 9:32 | 5 min
+## Slide 2: Your Weekly Specials — Built with Vibe Coding | 9:32 | 5 min
 
-**[CLICK to show the setup slide, then SWITCH to live Claude Code terminal]**
+**[CLICK to show the YWS slide]**
 
-- "This is my actual working setup — not a demo environment, this is what I use every day"
-- Point at the slide stats: 7 MCP servers, 150+ skills, 12 plugins, hooks for guardrails
+- "Before any theory — let me show you something real. This is a system I built for Coles."
+- "Your Weekly Specials. 4.5 million Flybuys members get 13 personalized grocery offers every week."
 
-**[DEMO — Show each layer in the terminal:]**
+**[Walk through the four stat cards:]**
 
-- `/status` or show MCP connections — "Seven MCP servers: Slack, JIRA, Confluence, Chrome DevTools, Databricks Docs, Glean, DeepWiki"
-- Show the CLAUDE.md briefly — "This is my onboarding doc for the agent — MCP routing rules, subagent patterns, context management"
-- Show hooks in settings — "Two real hooks: PostToolUse runs ruff format and ruff check --fix every time the agent edits a Python file — deterministic, not AI. Stop hook runs verify-hint.sh so I never walk away without checking the output."
+- **4.5M members** — "Every single Flybuys member gets personalized recommendations"
+- **13 offers** — "Ranked by propensity models — Spark ML, XGBoost, LightGBM — across 4 product lines"
+- **340+ tests** — "Test-driven gates. PRDs with acceptance criteria. The agent couldn't ship until every gate passed."
+- **22K lines** — "Migrated from R running on Azure Batch VMs to pure Python on Databricks. No data round-trips."
 
-**[DEMO — Do something impressive (~90 sec). Pick ONE:]**
+**[SHOW the YWS app if possible — open in browser, show the recommendation viewer]**
 
-Option A (Slack + JIRA):
-```
-Check Slack for the latest message in #coles-workshop, then find the most recent JIRA ticket assigned to me and summarise both.
-```
+- "This is the Databricks App — React frontend, FastAPI backend, querying Delta tables directly"
+- "Member search, trial group comparison, model validation — all built with the same patterns you'll learn today"
 
-Option B (Databricks Docs + build):
-```
-Search the Databricks docs for how to create a Genie space via API, then scaffold a Python script that creates one pointing at workshop_vibe_coding.gold tables.
-```
+**[KEY MESSAGE:]**
 
-Option C (UC MCP query):
-```
-What tables are in the workshop_vibe_coding catalog? Show me the schema of the retail_trade table and write a quick analysis of the top 5 states by food retail turnover.
-```
+- "This entire system — the pipeline, the models, the app, the tests — was built with PRDs, test-driven development, and Claude Code."
+- "The techniques you're about to learn aren't academic. They produced this."
+- "Rule #1: I typed what I wanted. The agent built it. I curated the good stuff into markdown. That's the whole workflow."
 
-**[Narrate as it runs:]**
-- "No context switching — Slack, JIRA, docs, code, all from one terminal"
-- "Every tool call is logged, every action goes through guardrails"
-
-**[PAUSE — let results land]**
-
-- "By end of today, you'll understand every piece of this: CLAUDE.md, skills, MCP, hooks"
-- "You won't have 150 skills by 4pm — but you'll have the patterns to build them"
-
-**[BACKUP: If demo fails — stay on the slide, walk through the 4 stat cards verbally, say "trust me, it's impressive when the WiFi cooperates"]**
+**[BACKUP: If app is unavailable — stay on the slide, walk through the 4 stat cards, reference the pipeline architecture]**
 
 **Transition:** "Let's warm up with a quiz."
 
@@ -259,10 +245,10 @@ What tables are in the workshop_vibe_coding catalog? Show me the schema of the r
 
 **[CLICK]**
 
-- "If you take one thing from today — write the tests first"
-- Four steps: human writes test, agent implements, run/iterate, human reviews + edge cases
-- Key insight: the test IS the spec — no ambiguity
-- Agent reads test, sees "correct", writes code, verifies own work — tight feedback loop
+- "Rule #1 said: just say what you want. BDD is the same idea applied to testing."
+- "You describe what should happen. The agent writes the test. Because it's Given/When/Then, you can actually read it back."
+- Four steps: describe behavior, agent writes test, run/iterate, human reviews
+- Key insight: the agent writes the code AND the tests — but you can verify the tests because they're plain English
 
 ---
 
@@ -270,6 +256,7 @@ What tables are in the workshop_vibe_coding catalog? Show me the schema of the r
 
 **[CLICK]**
 
+- "The agent writes the tests, but you can read them. That's why this works."
 - Unambiguous specs — "correct" = green tick
 - Self-correcting loop — run, read failure, fix, repeat (no human in between)
 - Guardrails — prevents agent from confidently producing elegant but wrong code
@@ -428,36 +415,37 @@ Run the tests. They should fail. Then implement the functions to make them pass.
 
 - "This is a guided session — everyone does the same three things before we split into tracks"
 - Three milestones:
-  1. **Write your CLAUDE.md** (15 min) — copy starter-kit template, customise for your team
+  1. **Rule #1: Just Say What You Want** (15 min) — tell Claude about your project, it initializes everything
   2. **Write your first test** (15 min) — TDD workflow, write a failing test, let the agent implement
   3. **Build bronze ingest** (15 min) — first Lakeflow table from ABS Retail Trade API
-- "By 11:30, every team has a CLAUDE.md, a passing test, and data landing in bronze"
+- "By 11:30, every team has an initialized project, a passing test, and data landing in bronze"
 - "This is the foundation — Labs 1 and 2 build on top of this"
 
 **Transition:** "Open your terminals. Let's go."
 
 ---
 
-## Lab 0, Phase 1: Write Your CLAUDE.md | 10:47 | 15 min
+## Lab 0, Phase 1: Just Say What You Want | 10:47 | 15 min
 
 **[TIMER: 15 min]**
 
-**[PROJECT on screen — show the starter-kit CLAUDE.md template]**
+**[PROJECT on screen — show Rule #1 slide]**
 
-- "Step 1: Copy the starter-kit CLAUDE.md into your project"
+- "Rule #1 of vibe coding: you literally just say what you want. Don't write a file — have a conversation."
+- "Open your terminal. Tell Claude about your project. Watch what happens."
 
-> "Copy the starter-kit CLAUDE.md into our project. Customise it for our team: schema `workshop_vibe_coding.<team_schema>`, angle `<chosen_angle>`. Add our tech stack (PySpark, Lakeflow Declarative Pipelines, FastAPI, Tailwind CSS + htmx), our data standards (Unity Catalog, medallion architecture, date formats), and our testing standards (pytest, TDD, small test DataFrames)."
+> "I'm building a grocery intelligence platform on Databricks. Tech stack: PySpark, Lakeflow Declarative Pipelines, FastAPI + React, DABs. Data sources: ABS SDMX APIs, FSANZ web scraping, ACCC PDF ingestion via UC Volumes. Unity Catalog namespace: workshop_vibe_coding.<team_schema>. Set up the project and create a CLAUDE.md."
 
 **[WALK — Circulate full 15 min. Watch for:]**
 
-- Rules too vague — push for specificity ("Use PySpark, not pandas" not "use good practices")
-- Teams not reviewing output — remind them to read and edit
-- People writing code instead of CLAUDE.md — redirect
-- Missing UC namespace — "Add your catalog and schema"
+- Teams trying to hand-write CLAUDE.md — redirect: "Just tell Claude what you want"
+- Teams not reviewing output — remind them to read and refine through conversation
+- Missing UC namespace — "Tell Claude your catalog and schema"
+- The "aha" moment — when they realise they can just type what they want and it happens
 
-**[At 12 min]** "Two minutes left — your CLAUDE.md should be saved."
+**[At 12 min]** "Two minutes left — your project should be initialized."
 
-**[At 15 min]** Quick check: "Hands up if your CLAUDE.md is committed. Good."
+**[At 15 min]** Quick check: "Hands up if Claude created your CLAUDE.md and project structure. Good. Notice — you didn't write a single config file by hand."
 
 ---
 
@@ -558,6 +546,12 @@ Run the tests. They should fail. Then implement the functions to make them pass.
 - Already in your terminal: Databricks Docs MCP server
 - "Ask Claude to search the docs for anything you need during the lab"
 - **"Without MCP, the agent guesses. With MCP, it knows."**
+
+**Curation message (tie back to Rule #1):**
+- "Skills are the curation step. Rule #1 says just say what you want. When you find yourself saying the same thing 3 times, save it as a skill — it's literally just a markdown file."
+- "Same with tools — you don't always need an MCP server. Sometimes the tool is just an instruction: 'run this CLI command.' The agent reads the instruction and executes it."
+
+- **[CALLOUT]** "There's a site called deathbyclawd.com — it scans SaaS products and tells you which ones can be replaced by a single Claude skill. A markdown file. That's how powerful this pattern is."
 
 **Transition:** "Let me show you MCP on Databricks specifically."
 

@@ -761,38 +761,38 @@
   </section>
 
   <!-- ============================================================ -->
-  <!-- SLIDE 2: OPENING DEMO — MY WORKING SETUP -->
+  <!-- SLIDE 2: YOUR WEEKLY SPECIALS — BUILT WITH VIBE CODING -->
   <!-- ============================================================ -->
-  <section class="slide slide-dark dark-bg texture-noise" aria-label="Slide 2: Opening Demo" data-notes="OPENING DEMO — ~5 min. This is the hook. Show YOUR actual working setup — not slides, not theory. This is a real SA's daily driver. Open Claude Code, show: (1) 7 MCP servers connected (Slack, JIRA, Confluence, Chrome DevTools, Databricks Docs, Glean, DeepWiki). (2) 150+ skills from the internal marketplace. (3) Hooks for safety guardrails. (4) CLAUDE.md with MCP routing and subagent orchestration. Then do something impressive: search Slack for a recent thread, check a JIRA ticket, query Databricks docs — all from one terminal, no context switching. Or ask it to build something quick. The point: this isn't a toy — it's a fully integrated development environment that connects to every system you use. By end of today, you'll understand every piece of this. ~5 min. Transition: Let's warm up with a quiz.">
+  <section class="slide slide-dark dark-bg texture-noise" aria-label="Slide 2: Your Weekly Specials" data-notes="OPENING — ~5 min. This is the hook. Before any theory, show them a real Coles production system you built with the same techniques they'll learn today. Your Weekly Specials: 4.5M Flybuys members get 13 personalized offers every week. The whole pipeline — Python, Spark ML, Ray, LightGBM — runs natively on Databricks. Show the app briefly if you can. Key stats: migrated from R on Azure Batch VMs to pure Databricks. 22K lines of Python. 340+ quality tests. Built with PRDs, test-driven gates, and Claude Code. The point: this isn't a toy demo. The techniques you're about to learn produced this. Then briefly mention your setup (MCP servers, skills, hooks) — but keep the focus on YWS. ~5 min. Transition: Let's warm up with a quiz.">
     <div class="slide-content">
-      <span class="section-num">Live Demo</span>
-      <h2>This Is How I Work <span style="color:var(--db-lava-light);">Every Day</span></h2>
+      <span class="section-num">Before We Start</span>
+      <h2>I Built This <span style="color:var(--db-lava-light);">for Coles</span></h2>
       <div class="accent-line" style="background:var(--db-lava-light);"></div>
-      <p style="color:rgba(255,255,255,0.8);margin-bottom:1.5rem;max-width:700px;">Before any slides &mdash; let me show you what a fully configured AI development environment looks like in practice.</p>
+      <p style="color:rgba(255,255,255,0.8);margin-bottom:1.5rem;max-width:750px;">Before any slides &mdash; let me show you a real production system built with the techniques you&rsquo;ll learn today.</p>
       <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem;">
         <div style="padding:1rem;background:rgba(255,255,255,0.06);border-radius:8px;border-top:3px solid var(--db-lava-light);text-align:center;">
-          <div style="font-family:var(--font-mono);font-size:2rem;font-weight:700;color:var(--db-lava-light);">7</div>
-          <p style="font-size:0.8rem;color:rgba(255,255,255,0.7);">MCP Servers</p>
-          <p style="font-size:0.7rem;color:rgba(255,255,255,0.45);margin-top:0.25rem;">Slack, JIRA, Confluence, Chrome DevTools, Databricks Docs, Glean, DeepWiki</p>
+          <div style="font-family:var(--font-mono);font-size:2rem;font-weight:700;color:var(--db-lava-light);">4.5M</div>
+          <p style="font-size:0.8rem;color:rgba(255,255,255,0.7);">Flybuys Members</p>
+          <p style="font-size:0.7rem;color:rgba(255,255,255,0.45);margin-top:0.25rem;">Personalized recommendations every week</p>
         </div>
         <div style="padding:1rem;background:rgba(255,255,255,0.06);border-radius:8px;border-top:3px solid #2D8DAD;text-align:center;">
-          <div style="font-family:var(--font-mono);font-size:2rem;font-weight:700;color:#5BB8D4;">150+</div>
-          <p style="font-size:0.8rem;color:rgba(255,255,255,0.7);">Skills</p>
-          <p style="font-size:0.7rem;color:rgba(255,255,255,0.45);margin-top:0.25rem;">Databricks, Salesforce, Google, account planning, expenses, demos&hellip;</p>
+          <div style="font-family:var(--font-mono);font-size:2rem;font-weight:700;color:#5BB8D4;">13</div>
+          <p style="font-size:0.8rem;color:rgba(255,255,255,0.7);">Offers Per Member</p>
+          <p style="font-size:0.7rem;color:rgba(255,255,255,0.45);margin-top:0.25rem;">Ranked by propensity models across 4 product lines</p>
         </div>
         <div style="padding:1rem;background:rgba(255,255,255,0.06);border-radius:8px;border-top:3px solid var(--db-green);text-align:center;">
-          <div style="font-family:var(--font-mono);font-size:2rem;font-weight:700;color:#33D49A;">12</div>
-          <p style="font-size:0.8rem;color:rgba(255,255,255,0.7);">Plugins</p>
-          <p style="font-size:0.7rem;color:rgba(255,255,255,0.45);margin-top:0.25rem;">Internal marketplace, team-distributed, versioned</p>
+          <div style="font-family:var(--font-mono);font-size:2rem;font-weight:700;color:#33D49A;">340+</div>
+          <p style="font-size:0.8rem;color:rgba(255,255,255,0.7);">Quality Tests</p>
+          <p style="font-size:0.7rem;color:rgba(255,255,255,0.45);margin-top:0.25rem;">PRD-driven, test-gated, R-to-Python validated</p>
         </div>
         <div style="padding:1rem;background:rgba(255,255,255,0.06);border-radius:8px;border-top:3px solid #E8A317;text-align:center;">
-          <div style="font-family:var(--font-mono);font-size:2rem;font-weight:700;color:#F0B840;">&#x1F6E1;</div>
-          <p style="font-size:0.8rem;color:rgba(255,255,255,0.7);">Hooks &amp; Guardrails</p>
-          <p style="font-size:0.7rem;color:rgba(255,255,255,0.45);margin-top:0.25rem;">Safety blocks, telemetry, auto-cleanup on stop</p>
+          <div style="font-family:var(--font-mono);font-size:2rem;font-weight:700;color:#F0B840;">22K</div>
+          <p style="font-size:0.8rem;color:rgba(255,255,255,0.7);">Lines of Python</p>
+          <p style="font-size:0.7rem;color:rgba(255,255,255,0.45);margin-top:0.25rem;">Migrated from R + Azure Batch to native Databricks</p>
         </div>
       </div>
       <div style="padding:1rem 1.5rem;background:rgba(255,54,33,0.08);border-radius:8px;border-left:3px solid var(--db-lava-light);">
-        <p style="font-size:0.9rem;color:rgba(255,255,255,0.85);"><strong style="color:var(--db-lava-light);">Live demo:</strong> One terminal &rarr; search Slack, check JIRA, query Databricks docs, build something &mdash; no context switching. By end of today, you&rsquo;ll understand every piece of this.</p>
+        <p style="font-size:0.9rem;color:rgba(255,255,255,0.85);"><strong style="color:var(--db-lava-light);">Your Weekly Specials</strong> &mdash; Spark ML + Ray + LightGBM + FastAPI app, all on Databricks. Built with PRDs, test-driven gates, and Claude Code. The same techniques you&rsquo;ll learn today.</p>
       </div>
     </div>
     <div class="slide-footer">2</div>
@@ -977,6 +977,10 @@
           </ul>
         </div>
       </div>
+      <div style="margin-top:1.5rem;padding:1rem 1.5rem;background:rgba(255,54,33,0.08);border-radius:8px;border-left:4px solid var(--db-lava);">
+        <p style="font-size:1.05rem;font-weight:700;margin-bottom:0.25rem;">Rule #1: Just Say What You Want</p>
+        <p style="font-size:0.9rem;color:var(--text-secondary);">You literally type what you want and it happens. Want to change behavior? Say how. See a technique you like? Paste it in. Everything &mdash; CLAUDE.md, skills, hooks &mdash; is just markdown files.</p>
+      </div>
     </div>
     <div class="slide-footer">7</div>
   </section>
@@ -1144,7 +1148,7 @@
       <span class="eyebrow" style="color:var(--db-lava-light);">THE CHALLENGE</span>
       <h2>Today's Challenge: <span style="color:var(--db-lava-light);">Grocery Intelligence Platform</span></h2>
       <div class="accent-line" style="background:var(--db-lava-light);"></div>
-      <p class="subtitle" style="margin-bottom:1.5rem;">One platform, two labs. The CLAUDE.md you write next will guide you through both.</p>
+      <p class="subtitle" style="margin-bottom:1.5rem;">One platform, two labs. The CLAUDE.md you create next will guide you through both.</p>
       <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;">
         <div class="card" style="border-top:3px solid var(--db-lava-light);">
           <h3 style="color:var(--db-lava-light);margin-bottom:0.75rem;">Four Real Data Sources</h3>
@@ -1332,39 +1336,48 @@
   </section>
 
   <!-- ============================================================ -->
-  <!-- SLIDE 15: EXERCISE — WRITE YOUR CLAUDE.MD -->
+  <!-- SLIDE 15: RULE #1 — JUST SAY WHAT YOU WANT -->
   <!-- ============================================================ -->
-  <section class="slide slide-light" aria-label="Slide 15: Exercise" data-notes="15-minute team exercise. Each team has a starter-kit repo with a skeleton CLAUDE.md — use it as a starting point. Each team opens their Coding Agents terminal and creates a CLAUDE.md for their Grocery Intelligence Platform. Now they know what the platform is from the previous slide. Walk around the room, help anyone stuck. Common stumbling point: people make rules too vague. Push for specificity. Emphasize that CLAUDE.md is a VALIDATION tool — when you include rules like 'always PySpark, never pandas', you're giving the agent AND yourself a way to verify the output is correct. Every rule in CLAUDE.md doubles as a checklist item: did the agent follow this? Can I check? After 15 min, ask 2-3 teams to share one highlight each. 5 min discussion after. ~20 min total. Transition: Now let's talk about the secret weapon -- BDD with agents.">
+  <section class="slide slide-light" aria-label="Slide 15: Rule #1 Exercise" data-notes="People think they need to manually write configuration files. They don't. You have a conversation. Open the terminal, tell Claude about your project, and it creates everything — CLAUDE.md, project structure, initial config. When you want something different, you just say so. This is agentic engineering: you engineer the harness through conversation. Everything — CLAUDE.md, skills, hooks — is just markdown files. Walk around, help anyone stuck. The 'aha' moment is when they realise they can just TYPE what they want. Push for natural language, not manual file editing. After 15 min, ask 2-3 teams what surprised them. ~20 min total. Transition: Now let's talk about the secret weapon -- BDD with agents.">
     <div class="slide-content">
-      <span class="eyebrow">EXERCISE &middot; 15 MINUTES</span>
-      <h2>Exercise: Write Your Team's CLAUDE.md</h2>
+      <span class="eyebrow">RULE #1 &middot; EXERCISE &middot; 15 MINUTES</span>
+      <h2>Just Say What You Want</h2>
       <div class="accent-line"></div>
       <div class="grid-wide-narrow" style="margin-top:1.5rem;gap:2rem;">
         <div>
-          <h3 style="margin-bottom:1rem;">Your Task</h3>
-          <ol class="num-list">
-            <li>Open your Coding Agents terminal as a team</li>
-            <li>Create a project called <code>grocery-intelligence</code></li>
-            <li>Ask Claude Code to create a CLAUDE.md with your tech stack, data standards, and testing approach</li>
-            <li>Review the output together &mdash; does it capture your standards?</li>
-            <li>Edit and refine based on what's missing</li>
-          </ol>
-          <div style="margin-top:1.5rem;padding:1rem 1.25rem;background:rgba(255,54,33,0.06);border-radius:8px;border-left:3px solid var(--db-lava);">
-            <p style="font-size:0.9rem;"><strong>Prompt template:</strong> "Create a CLAUDE.md for a grocery intelligence platform. Tech stack: PySpark, Lakeflow Declarative Pipelines, FastAPI + React, DABs. Data sources: ABS SDMX APIs, FSANZ web scraping, ACCC PDF ingestion via UC Volumes. Unity Catalog namespace: workshop_vibe_coding.&lt;team_schema&gt;."</p>
+          <h3 style="margin-bottom:1rem;">The Insight</h3>
+          <p style="margin-bottom:1rem;">Everything else in this workshop builds on one idea:</p>
+          <div style="padding:1rem 1.25rem;background:rgba(255,54,33,0.06);border-radius:8px;border-left:3px solid var(--db-lava);margin-bottom:1.25rem;">
+            <p style="font-size:1.1rem;font-weight:700;">You literally type what you want and it happens.</p>
           </div>
+          <ul class="bullet-list" style="font-size:0.95rem;">
+            <li><strong>Want a project?</strong> Tell Claude what you're building</li>
+            <li><strong>Want behavior to change?</strong> Say &ldquo;from now on, do X&rdquo;</li>
+            <li><strong>See a technique you like?</strong> Paste it in</li>
+            <li><strong>Everything is markdown</strong> &mdash; CLAUDE.md, skills, hooks</li>
+          </ul>
+          <p style="margin-top:1rem;font-size:0.9rem;color:var(--text-secondary);">That's <strong>agentic engineering</strong>. It works in three steps:</p>
+          <ol class="num-list" style="font-size:0.85rem;margin-top:0.5rem;">
+            <li><strong>Say it</strong> &mdash; have a conversation, get what you want</li>
+            <li><strong>Curate it</strong> &mdash; save the good stuff as markdown files (CLAUDE.md, skills, hooks)</li>
+            <li><strong>Wire up tools</strong> &mdash; increasingly just instructions to CLI commands, not heavyweight servers</li>
+          </ol>
         </div>
         <div>
-          <h3 style="margin-bottom:1rem;">Discussion Questions</h3>
-          <div class="card">
-            <ul class="bullet-list" style="font-size:0.95rem;">
-              <li>What rules did you include that the agent wouldn't know on its own?</li>
-              <li>What Coles-specific standards should be in a shared team CLAUDE.md?</li>
-              <li>How would this change the agent's behaviour on your daily work?</li>
-              <li>What would you put at user-level vs repo-level?</li>
-            </ul>
+          <h3 style="margin-bottom:1rem;">Try It Now (15 min)</h3>
+          <ol class="num-list">
+            <li>Open your Coding Agents terminal as a team</li>
+            <li>Don't write a file &mdash; have a conversation:</li>
+          </ol>
+          <div style="margin-top:0.75rem;padding:1rem 1.25rem;background:rgba(255,54,33,0.06);border-radius:8px;border-left:3px solid var(--db-lava);">
+            <p style="font-size:0.9rem;"><strong>Just say:</strong> &ldquo;I'm building a grocery intelligence platform on Databricks. Tech stack: PySpark, Lakeflow Declarative Pipelines, FastAPI + React, DABs. Data sources: ABS SDMX APIs, FSANZ web scraping, ACCC PDF ingestion via UC Volumes. Unity Catalog namespace: workshop_vibe_coding.&lt;team_schema&gt;. Set up the project and create a CLAUDE.md.&rdquo;</p>
           </div>
+          <ol class="num-list" start="3" style="margin-top:0.75rem;">
+            <li>Watch Claude create your project, CLAUDE.md, and structure</li>
+            <li>Want to change something? Just say it. That's the whole point.</li>
+          </ol>
           <div style="margin-top:1rem;padding:1rem 1.25rem;background:rgba(0,169,114,0.08);border-radius:8px;border-left:3px solid var(--db-green);">
-            <p style="font-size:0.9rem;"><strong>Share with the group:</strong> Each team shares one highlight from their CLAUDE.md. We'll compare approaches and build a shared understanding.</p>
+            <p style="font-size:0.9rem;"><strong>Discussion:</strong> What did Claude get right? What did you correct by just saying so? How is this different from writing config by hand?</p>
           </div>
         </div>
       </div>
@@ -1380,7 +1393,7 @@
       <span class="eyebrow">BEHAVIOR-DRIVEN DEVELOPMENT</span>
       <h2>The BDD + Agent Workflow</h2>
       <div class="accent-line"></div>
-      <p class="lead">You write what the system should do in plain English. The agent figures out how. When a scenario fails, it reads the error and fixes its own code.</p>
+      <p class="lead">Rule #1 applies here too: say what the system should do in plain English. The agent writes the test code. You can read it because it's Given/When/Then. When a scenario fails, the agent reads the error and fixes itself.</p>
       <div class="step-flow" style="margin-top:1.5rem;">
         <div class="step-item">
           <div class="step-num">01</div>
@@ -1419,8 +1432,8 @@
       <div class="card-grid grid-cols-3" style="margin-top:2rem;">
         <div class="card" style="text-align:center;">
           <div style="font-size:2.5rem;margin-bottom:0.5rem;">&#x1F3AF;</div>
-          <h3>Plain-English Specs</h3>
-          <p>Your PM can read the spec. Your analyst can validate it. The agent can execute it. Same file.</p>
+          <h3>Agent Writes, You Read</h3>
+          <p>The agent writes the test code. But it's Given/When/Then, so you can actually read it and check if it captured what you meant.</p>
         </div>
         <div class="card" style="text-align:center;">
           <div style="font-size:2.5rem;margin-bottom:0.5rem;">&#x1F504;</div>
@@ -1448,7 +1461,7 @@
       <span class="eyebrow">BEHAVIOR-DRIVEN DEVELOPMENT</span>
       <h2>Writing Gherkin That Guides the Agent</h2>
       <div class="accent-line"></div>
-      <p style="color:var(--text-secondary);margin-bottom:1.5rem;">If you can write a sentence, you can write a Gherkin scenario. The agent does the rest.</p>
+      <p style="color:var(--text-secondary);margin-bottom:1.5rem;">You describe what should happen. The agent writes the test. Because it's Gherkin, you can read it back and verify it's right.</p>
       <div class="grid-wide-narrow" style="gap:2rem;">
         <div>
           <div class="code-block" style="font-size:0.8rem;">
@@ -1785,17 +1798,17 @@
   <!-- ============================================================ -->
   <!-- SLIDE 23: SECTION DIVIDER — LAB 0 (GUIDED HANDS-ON) -->
   <!-- ============================================================ -->
-  <section class="slide slide-dark dark-bg texture-noise" aria-label="Slide 23: Section: Lab 0" data-notes="Lab 0 section divider. 45 minutes guided hands-on, everyone together. This is the foundation before teams split into tracks. Walk through writing CLAUDE.md, writing a first test, and building bronze ingest step by step. Everyone should have their Coding Agents terminal ready. If anyone has access issues, flag them now. ~30 sec.">
+  <section class="slide slide-dark dark-bg texture-noise" aria-label="Slide 23: Section: Lab 0" data-notes="Lab 0 section divider. 45 minutes guided hands-on, everyone together. This is the foundation before teams split into tracks. Step 1 demonstrates Rule #1 — just tell Claude about your project and it initializes everything. Then write a first test and build bronze ingest. Everyone should have their Coding Agents terminal ready. If anyone has access issues, flag them now. ~30 sec.">
     <div class="slide-content" style="text-align:center;">
       <span class="section-num">Lab 0 &middot; 10:45 AM &middot; 45 Minutes</span>
       <h1>Lab 0: Guided Hands-On</h1>
-      <p class="subtitle">Write your CLAUDE.md, write your first test, build bronze ingest &mdash; everyone together</p>
+      <p class="subtitle">Initialize your project, write your first test, build bronze ingest &mdash; everyone together</p>
       <div class="accent-line center" style="background:var(--db-lava-light);margin-top:1.5rem;"></div>
       <div style="margin-top:2rem;display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;max-width:800px;margin-left:auto;margin-right:auto;">
         <div style="text-align:center;padding:1rem;background:rgba(255,255,255,0.05);border-radius:8px;">
           <div style="font-size:2rem;margin-bottom:0.5rem;">1</div>
-          <h3 style="color:var(--db-lava-light);font-size:0.95rem;">CLAUDE.md</h3>
-          <p style="font-size:0.8rem;color:rgba(255,255,255,0.6);">Project specs &amp; standards</p>
+          <h3 style="color:var(--db-lava-light);font-size:0.95rem;">Just Say It</h3>
+          <p style="font-size:0.8rem;color:rgba(255,255,255,0.6);">Tell Claude, it initializes</p>
         </div>
         <div style="text-align:center;padding:1rem;background:rgba(255,255,255,0.05);border-radius:8px;">
           <div style="font-size:2rem;margin-bottom:0.5rem;">2</div>
@@ -1887,7 +1900,7 @@
   <!-- ============================================================ -->
   <!-- SLIDE 26: SKILLS & MCP — PRACTICAL TOOLS -->
   <!-- ============================================================ -->
-  <section class="slide slide-white" aria-label="Slide 26: Skills and MCP" data-notes="These are two practical tools you'll use in the labs. Skills are slash commands that encode domain knowledge — type slash in Claude Code and you'll see what's available. The commit skill writes good commit messages. The deploy skill handles DABs deployment. You can chain them together. MCP is how agents connect to external systems. Think of it as USB-C for AI — one standard protocol, every tool connects the same way. The Databricks Docs MCP is already available in your terminal. Try asking Claude to search the docs for anything you need during the lab.">
+  <section class="slide slide-white" aria-label="Slide 26: Skills and Tools" data-notes="Skills are curated markdown files — the curation step from Rule #1. Say something useful 3 times? Save it as a skill. It's literally just a markdown file with instructions. The deploy skill handles DABs, the commit skill writes messages, etc. Tools are increasingly just instructions to CLI commands, not full MCP servers. MCP still matters for structured access (Databricks Docs, Slack, etc.) but many tools are simpler than that. Callout at the bottom: deathbyclawd.com scans which SaaS products can be replaced by a single Claude skill — drives the point home about how powerful a markdown file can be. ~5 min.">
     <div class="slide-content">
       <span class="eyebrow">TOOLING</span>
       <h2 style="text-align:center;margin-bottom:1.5em;">Practical Tools for the Labs</h2>
@@ -1895,7 +1908,7 @@
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:2em;max-width:900px;margin:1.5em auto 0;">
         <div>
           <h3 style="color:var(--db-lava);margin-bottom:0.8em;">Skills</h3>
-          <p style="font-size:0.85em;color:#666;margin-bottom:1em;">Slash commands that encode domain knowledge</p>
+          <p style="font-size:0.85em;color:#666;margin-bottom:1em;">Curated markdown files &mdash; just instructions, not code</p>
           <div style="background:#f8f9fa;padding:1em;border-radius:8px;margin-bottom:0.8em;">
             <div class="code-block" style="font-size:0.8em;margin:0;">
 <span class="comment"># Built-in skills</span>
@@ -1907,25 +1920,28 @@
 <span class="function">/deploy-dab</span> &rarr; validate + deploy bundle
             </div>
           </div>
-          <p style="font-size:0.85em;"><strong>Try it:</strong> Type <code>/</code> in Claude Code to see all available skills</p>
+          <p style="font-size:0.85em;"><strong>Rule #1 in action:</strong> Say something 3&times;? Curate it into a skill. It's just a markdown file.</p>
         </div>
         <div>
-          <h3 style="color:var(--db-lava);margin-bottom:0.8em;">MCP</h3>
-          <p style="font-size:0.85em;color:#666;margin-bottom:1em;">USB-C for AI agents &mdash; one protocol, every tool connects</p>
+          <h3 style="color:var(--db-lava);margin-bottom:0.8em;">Tools</h3>
+          <p style="font-size:0.85em;color:#666;margin-bottom:1em;">Increasingly just instructions to CLI commands, not heavyweight servers</p>
           <div style="background:#f8f9fa;padding:1em;border-radius:8px;margin-bottom:0.8em;">
             <div class="code-block" style="font-size:0.8em;margin:0;">
-<span class="comment"># Already in your terminal:</span>
+<span class="comment"># MCP server (structured):</span>
 <span class="string">"Search the Databricks docs
  for how to create a
  Genie space"</span>
 
-<span class="comment"># The agent calls the</span>
-<span class="comment"># Databricks Docs MCP server</span>
-<span class="comment"># and gets the real answer</span>
+<span class="comment"># CLI instruction (lightweight):</span>
+<span class="string">"Run: databricks catalogs list
+ to check available catalogs"</span>
             </div>
           </div>
-          <p style="font-size:0.85em;"><strong>Without MCP:</strong> the agent guesses<br/><strong>With MCP:</strong> the agent <em>knows</em></p>
+          <p style="font-size:0.85em;"><strong>MCP:</strong> structured tool access<br/><strong>CLI instructions:</strong> just tell it which command to run</p>
         </div>
+      </div>
+      <div style="text-align:center;margin-top:1.5em;">
+        <p style="font-size:0.85em;color:#666;">How powerful is a markdown skill? <a href="https://deathbyclawd.com/" target="_blank" style="color:var(--db-lava);font-weight:600;">deathbyclawd.com</a> scans which SaaS products can be replaced by one.</p>
       </div>
       <div class="slide-footer">26</div>
     </div>

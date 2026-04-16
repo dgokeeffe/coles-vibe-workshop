@@ -1045,6 +1045,10 @@
           <h4>Agentic Development</h4>
           <p>Human specifies intent via tests, specs, and CLAUDE.md. Agent implements, self-corrects by reading test failures. Speed limited by quality of direction, not typing.</p>
         </div>
+        <div class="concept-card" style="border-top: 3px solid var(--db-lava); margin-top: 10px;">
+          <h4 style="color: var(--db-lava);">Rule #1: Just Say What You Want</h4>
+          <p>You literally type what you want and it happens. Don't write config files by hand. Have a conversation instead. Want behavior to change? Say how. See a technique? Paste it in. Everything is just markdown: CLAUDE.md, skills, hooks. The progression: say it &rarr; curate it &rarr; wire up tools (often just CLI instructions).</p>
+        </div>
       </div>
       <div>
         <h3>The "Brilliant New Employee"</h3>
@@ -1133,7 +1137,7 @@
     <span class="track-badge">Block A: How to Think</span>
   </div>
   <div class="page-content">
-    <p>CLAUDE.md is a <strong>persistent instruction file</strong> that encodes your team's standards. The agent reads it automatically at the start of every session &mdash; no need to repeat yourself.</p>
+    <p>CLAUDE.md is a <strong>persistent instruction file</strong> that encodes your team's standards. The agent reads it automatically at the start of every session &mdash; no need to repeat yourself. You don't write it by hand &mdash; tell Claude about your project and it creates the CLAUDE.md for you.</p>
 
     <h3>Three Scope Levels</h3>
     <div class="three-col">
@@ -1268,8 +1272,8 @@ and food price data through a medallion architecture.
       <div>
         <h3>Why This Works</h3>
         <div class="concept-card" style="margin-bottom: 8px;">
-          <h4><span class="step-num">1</span> Unambiguous Specifications</h4>
-          <p>A test says exactly what the code must do. No room for "I thought you meant..." The agent reads the assertion and knows the target.</p>
+          <h4><span class="step-num">1</span> Agent Writes, You Read</h4>
+          <p>The agent writes the test code, but because it's Given/When/Then, you can read it back. You verify the test captured what you meant. No room for "I thought you meant..."</p>
         </div>
         <div class="concept-card" style="margin-bottom: 8px;">
           <h4><span class="step-num">2</span> Self-Correcting Loop</h4>
@@ -1366,22 +1370,22 @@ and food price data through a medallion architecture.
 <section class="slide divider-slide dark-bg texture-noise" aria-label="Lab 0 Divider">
   <div class="divider-number">0</div>
   <h1>Lab 0: Guided Hands-On</h1>
-  <p class="divider-subtitle">Write your CLAUDE.md &middot; Write your first test &middot; Build bronze ingest</p>
+  <p class="divider-subtitle">Initialize your project &middot; Write your first test &middot; Build bronze ingest</p>
   <div class="divider-time">10:45 AM / 45 Minutes</div>
 </section>
 
 <!-- ============================================================ -->
-<!-- SLIDE 9: WRITING YOUR CLAUDE.MD (LAB 0 — 10 MIN)             -->
+<!-- SLIDE 9: RULE #1 — JUST SAY WHAT YOU WANT (LAB 0 — 10 MIN)   -->
 <!-- ============================================================ -->
-<section class="slide page-slide" aria-label="Writing Your CLAUDE.md">
+<section class="slide page-slide" aria-label="Rule #1: Just Say What You Want">
   <div class="page-header">
-    <h2>Lab 0: Write Your Team's CLAUDE.md <span class="time-badge">10 min</span></h2>
+    <h2>Lab 0: Just Say What You Want <span class="time-badge">10 min</span></h2>
     <span class="track-badge">Lab 0: Hands-On</span>
   </div>
   <div class="page-content">
-    <p>Open your Coding Agents terminal and paste the prompt below. Replace <code>&lt;team_schema&gt;</code> with your assigned schema name.</p>
+    <p>Don't write a file &mdash; have a conversation. Open your Coding Agents terminal and tell Claude about your project. Replace <code>&lt;team_schema&gt;</code> with your assigned schema name.</p>
 
-    <div class="prompt-block">Create a CLAUDE.md for a grocery intelligence platform.
+    <div class="prompt-block">I'm building a grocery intelligence platform on Databricks.
 
 Tech stack: PySpark, Lakeflow Declarative Pipelines, FastAPI + React,
 Databricks Asset Bundles (DABs).
@@ -1391,18 +1395,11 @@ via UC Volumes.
 
 Unity Catalog namespace: workshop_vibe_coding.&lt;team_schema&gt;.
 
-Include:
-- Team name and schema
-- Tech stack with explicit constraints (PySpark not pandas)
-- Data standards (medallion architecture, date formats, naming)
-- Rules (BDD, minimal solutions, don't change passing tests)
-- Project structure (src/bronze, src/silver, src/gold, tests/, app/)
-- Data sources table with API endpoints
-- Code mappings for region and industry codes</div>
+Set up the project and create a CLAUDE.md.</div>
 
-    <div class="insight-box">This is the most important 10 minutes of the workshop &mdash; everything else builds on this.</div>
+    <div class="insight-box">This is Rule #1 of vibe coding: you literally type what you want and it happens. You don't hand-write config files &mdash; you engineer the harness through conversation.</div>
 
-    <div class="tip-box"><strong>After generating:</strong> Read through the CLAUDE.md and edit anything that doesn't match your team's preferences. Add your team's chosen angle (Retail Performance, Food Inflation, etc.) to the Project section.</div>
+    <div class="tip-box"><strong>After Claude responds:</strong> Want to change something? Just say it. &ldquo;Add a rule that we always use PySpark, never pandas.&rdquo; &ldquo;Add our team angle: Retail Performance.&rdquo; That's agentic engineering &mdash; you direct, it implements.</div>
   </div>
   <div class="page-footer">
     <span>Coles Vibe Coding Workshop</span>
@@ -1606,7 +1603,7 @@ Rules:
     <span class="track-badge">Block C: Tools</span>
   </div>
   <div class="page-content">
-    <p>Skills are <strong>reusable agent capabilities</strong> triggered by slash commands. They encode domain knowledge and multi-step workflows into a single invocation.</p>
+    <p>Skills are <strong>curated markdown files</strong> triggered by slash commands. Remember Rule #1: you said something useful, so you save it. A skill is just that &mdash; instructions you don't want to repeat, saved as markdown.</p>
 
     <div class="two-col">
       <div>
@@ -1645,6 +1642,7 @@ Rules:
         </div>
 
         <div class="tip-box"><strong>Workshop tip:</strong> You can create custom skills during the labs. Think about which multi-step workflows you repeat most often.</div>
+    <div class="insight-box">How powerful is a markdown skill? <a href="https://deathbyclawd.com/" target="_blank">deathbyclawd.com</a> scans which SaaS products can be replaced by one.</div>
       </div>
     </div>
   </div>

@@ -22,6 +22,23 @@ A Guide to Agentic Software Development with Claude
 | **Debugging** | Human debugs, refactors, and iterates manually | Agent self-corrects by reading test failures |
 | **Speed bottleneck** | Speed limited by typing and cognitive load | Speed limited by quality of direction, not typing |
 
+### Rule #1: Just Say What You Want
+
+Everything else builds on this: **you literally type what you want and it happens.**
+
+- **Want a project?** Tell Claude what you're building — it creates the CLAUDE.md, project structure, and config
+- **Want behavior to change?** Say "from now on, do X" — it updates the rules
+- **See a technique you like?** Paste it in — Claude reads it and adapts
+- **Everything is markdown** — CLAUDE.md, skills, hooks, all of it
+
+That's **agentic engineering**. You shape the harness through conversation, not by hand-writing config files. You don't "write" a CLAUDE.md. You have a conversation that produces one.
+
+The progression of agentic engineering:
+
+1. **Say it** — have a conversation, get what you want
+2. **Curate it** — save the good stuff as markdown files (CLAUDE.md, skills, hooks) so you don't repeat yourself
+3. **Wire up tools** — increasingly just instructions to CLI commands, not heavyweight MCP servers
+
 ### The "Brilliant New Employee"
 
 Think of Claude as a **brilliant but brand-new employee** who just joined your team today:
@@ -151,6 +168,8 @@ and food price data through a medallion architecture.
 ---
 
 ## 5. TDD + Agents -- The Loop & Why It Works
+
+> **Rule #1 connection:** You say what should happen. The agent writes the test. Because it's Given/When/Then, you can read it back and verify it captured your intent. The agent writes the code AND the tests -- your job is to check that the tests match what you actually wanted.
 
 ```
 STEP 1              STEP 2              STEP 3              STEP 4
@@ -578,6 +597,8 @@ Skills are Markdown files that encode multi-step workflows. Any team can create 
 Save this as a skill, and every team member gets a one-command deploy workflow. No tribal knowledge required.
 
 **Where to start:** Identify the 3 workflows your team repeats most often. Write them as skills. Share them in a team repo.
+
+> **How powerful is a markdown skill?** [deathbyclawd.com](https://deathbyclawd.com/) scans which SaaS products can be replaced by one.
 
 ### Unity Catalog MCP Servers -- Connecting to Your Data
 
