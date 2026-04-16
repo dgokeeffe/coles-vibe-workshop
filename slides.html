@@ -705,6 +705,139 @@
       img, .arch-diagram, .image-full, .image-split { page-break-inside: avoid; }
       .card, .slide-media, .image-full { box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
     }
+    /* === OPENER SLIDE STYLES === */
+
+    /* Slide 1 — Title */
+    .slide-title {
+      background: var(--db-navy);
+    }
+
+    /* Decorative circles */
+    .deco-circles {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      pointer-events: none;
+    }
+    .deco-circle {
+      position: absolute;
+      border-radius: 50%;
+      border: 2px solid transparent;
+    }
+    .deco-circle-1 {
+      right: -80px;
+      top: -80px;
+      width: 400px;
+      height: 400px;
+      border-color: rgba(255,54,33,0.08);
+    }
+    .deco-circle-2 {
+      right: -40px;
+      top: -40px;
+      width: 320px;
+      height: 320px;
+      border-color: rgba(255,54,33,0.05);
+    }
+    .deco-circle-3 {
+      left: -120px;
+      bottom: -120px;
+      width: 500px;
+      height: 500px;
+      border-color: rgba(255,255,255,0.03);
+    }
+    .deco-circle-4 {
+      right: 10%;
+      bottom: -60px;
+      width: 240px;
+      height: 240px;
+      border-color: rgba(0,169,114,0.06);
+    }
+    .deco-circle-5 {
+      left: 15%;
+      top: -40px;
+      width: 180px;
+      height: 180px;
+      border-color: rgba(27,81,98,0.08);
+    }
+
+    /* Slide 2 — Your Weekly Specials */
+    .slide-specials {
+      background: var(--db-ink);
+    }
+
+    /* Stat cards grid */
+    .stat-cards {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    @media (max-width: 900px) {
+      .stat-cards { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 500px) {
+      .stat-cards { grid-template-columns: 1fr; }
+    }
+
+    .stat-card {
+      padding: 1.25rem 1rem;
+      background: rgba(255,255,255,0.06);
+      border-radius: 8px;
+      text-align: center;
+      border-top: 3px solid transparent;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .stat-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+      background: rgba(255,255,255,0.09);
+    }
+    .stat-card-lava    { border-top-color: var(--db-lava-light); }
+    .stat-card-teal    { border-top-color: #2D8DAD; }
+    .stat-card-green   { border-top-color: var(--db-green); }
+    .stat-card-amber   { border-top-color: #E8A317; }
+
+    .stat-value {
+      font-family: var(--font-mono);
+      font-size: 2rem;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+    .stat-value-lava   { color: var(--db-lava-light); }
+    .stat-value-teal   { color: #5BB8D4; }
+    .stat-value-green  { color: #33D49A; }
+    .stat-value-amber  { color: #F0B840; }
+
+    .stat-label {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.7);
+      margin-top: 0.25rem;
+    }
+    .stat-sublabel {
+      font-size: 0.7rem;
+      color: rgba(255,255,255,0.45);
+      margin-top: 0.25rem;
+    }
+
+    /* Callout box */
+    .callout-box {
+      padding: 1rem 1.5rem;
+      background: rgba(255,54,33,0.08);
+      border-radius: 8px;
+      border-left: 3px solid var(--db-lava-light);
+    }
+    .callout-box p {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.85);
+      line-height: 1.6;
+    }
+    .callout-box strong {
+      color: var(--db-lava-light);
+    }
+
   </style>
 </head>
 <body>
@@ -720,14 +853,15 @@
     <div class="speaker-notes-content" id="notesContent"></div>
   </div>
 
-    <!-- ============================================================ -->
   <!-- SLIDE 1: TITLE -->
   <!-- ============================================================ -->
-  <section class="slide slide-dark dark-bg" aria-label="Slide 1: Title" data-notes="Welcome everyone to The Great Grocery Data Challenge. Introduce yourself: David O'Keeffe, Solutions Architect at Databricks. Thank the Coles Data &amp; AI Engineering team for hosting. Set the tone: today is a 6.5-hour hackathon. Teams of 2-3 will compete to build the best Grocery Intelligence Platform using real Australian public data. You will leave with skills you can use on Monday. ~2 min. Transition: Let's warm up with a fun quiz.">
-    <div style="position:absolute;top:0;left:0;width:100%;height:100%;overflow:hidden;pointer-events:none;">
-      <div style="position:absolute;right:-80px;top:-80px;width:400px;height:400px;border:2px solid rgba(255,54,33,0.08);border-radius:50%;"></div>
-      <div style="position:absolute;right:-40px;top:-40px;width:320px;height:320px;border:2px solid rgba(255,54,33,0.05);border-radius:50%;"></div>
-      <div style="position:absolute;left:-120px;bottom:-120px;width:500px;height:500px;border:2px solid rgba(255,255,255,0.03);border-radius:50%;"></div>
+  <section class="slide slide-title" aria-label="Slide 1: Title" data-notes="Welcome everyone to The Great Grocery Data Challenge. Introduce yourself: David O'Keeffe, Solutions Architect at Databricks. Thank the Coles Data &amp; AI Engineering team for hosting. Set the tone: today is a 6.5-hour hackathon. Teams of 2-3 will compete to build the best Grocery Intelligence Platform using real Australian public data. You will leave with skills you can use on Monday. ~2 min.">
+    <div class="deco-circles">
+      <div class="deco-circle deco-circle-1"></div>
+      <div class="deco-circle deco-circle-2"></div>
+      <div class="deco-circle deco-circle-3"></div>
+      <div class="deco-circle deco-circle-4"></div>
+      <div class="deco-circle deco-circle-5"></div>
     </div>
     <div class="slide-content">
       <svg class="db-logo" viewBox="0 0 713 113" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Databricks" style="width:280px;margin-bottom:1rem;">
@@ -748,9 +882,9 @@
 <defs><clipPath id="clip0_on_dark"><rect width="712.8" height="113" fill="white"/></clipPath></defs>
       </svg>
       <h1 style="margin-top:2rem;">Vibe Coding</h1>
-      <p class="subtitle" style="font-size:clamp(1.3rem,2.5vw,2rem);margin-top:0.5rem;">The Great Grocery Data Challenge<br>Agentic Software Development with Databricks</p>
+      <p class="subtitle" style="margin-top:0.5rem;">The Great Grocery Data Challenge<br>Agentic Software Development with Databricks</p>
       <div class="accent-line" style="margin-top:1.5rem;"></div>
-      <div style="margin-top:1.5rem;">
+      <div style="margin-top:1.5rem;display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap;">
         <span class="coles-badge">Coles Group</span>
         <span class="meta" style="margin-top:0;">&middot; Data &amp; AI Engineering Team &middot; 6.5-Hour Hackathon</span>
       </div>
@@ -758,41 +892,44 @@
         David O'Keeffe &middot; Solutions Architect, Databricks
       </div>
     </div>
+    <div class="slide-footer">1</div>
   </section>
 
   <!-- ============================================================ -->
   <!-- SLIDE 2: YOUR WEEKLY SPECIALS — BUILT WITH VIBE CODING -->
   <!-- ============================================================ -->
-  <section class="slide slide-dark dark-bg texture-noise" aria-label="Slide 2: Your Weekly Specials" data-notes="OPENING — ~5 min. Hook: a real Coles production system you built with the techniques they'll learn today. YWS: 4.5M Flybuys members, 13 offers/week, Spark ML + Ray + LightGBM on Databricks. 857 commits, 37K lines, 7 weeks of spare time. You're not a data scientist — knew almost nothing about the system. The agent helped you learn the domain and build it. Hard parts: trillion-row tables, OOMs, distributed LightGBM on Ray. Show the app if you can. ~5 min. Transition: quiz.">
+  <section class="slide slide-specials texture-noise" aria-label="Slide 2: Your Weekly Specials" data-notes="OPENING — ~5 min. Hook: a real Coles production system you built with the techniques they'll learn today. YWS: 4.5M Flybuys members, 13 offers/week, Spark ML + Ray + LightGBM on Databricks. 857 commits, 37K lines, 7 weeks of spare time. You're not a data scientist — knew almost nothing about the system. The agent helped you learn the domain and build it. Hard parts: trillion-row tables, OOMs, distributed LightGBM on Ray. Show the app if you can. ~5 min. Transition: quiz.">
     <div class="slide-content">
-      <span class="section-num">Before We Start</span>
+      <span class="eyebrow">Before We Start</span>
       <h2>I Built This <span style="color:var(--db-lava-light);">for Coles</span></h2>
       <div class="accent-line" style="background:var(--db-lava-light);"></div>
-      <p style="color:rgba(255,255,255,0.8);margin-bottom:1.5rem;max-width:750px;">Before any theory &mdash; this is a real system, close to production-ready, running on Databricks.</p>
-      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem;">
-        <div style="padding:1rem;background:rgba(255,255,255,0.06);border-radius:8px;border-top:3px solid var(--db-lava-light);text-align:center;">
-          <div style="font-family:var(--font-mono);font-size:2rem;font-weight:700;color:var(--db-lava-light);">4.5M</div>
-          <p style="font-size:0.8rem;color:rgba(255,255,255,0.7);">Flybuys Members</p>
-          <p style="font-size:0.7rem;color:rgba(255,255,255,0.45);margin-top:0.25rem;">13 personalized offers every week</p>
+      <p class="lead">Before any theory — this is a real system, close to production-ready, running on Databricks.</p>
+
+      <div class="stat-cards">
+        <div class="stat-card stat-card-lava">
+          <div class="stat-value stat-value-lava">4.5M</div>
+          <p class="stat-label">Flybuys Members</p>
+          <p class="stat-sublabel">13 personalized offers every week</p>
         </div>
-        <div style="padding:1rem;background:rgba(255,255,255,0.06);border-radius:8px;border-top:3px solid #2D8DAD;text-align:center;">
-          <div style="font-family:var(--font-mono);font-size:2rem;font-weight:700;color:#5BB8D4;">857</div>
-          <p style="font-size:0.8rem;color:rgba(255,255,255,0.7);">Commits</p>
-          <p style="font-size:0.7rem;color:rgba(255,255,255,0.45);margin-top:0.25rem;">37K lines, 4 product lines, 340+ tests</p>
+        <div class="stat-card stat-card-teal">
+          <div class="stat-value stat-value-teal">857</div>
+          <p class="stat-label">Commits</p>
+          <p class="stat-sublabel">37K lines, 4 product lines, 340+ tests</p>
         </div>
-        <div style="padding:1rem;background:rgba(255,255,255,0.06);border-radius:8px;border-top:3px solid var(--db-green);text-align:center;">
-          <div style="font-family:var(--font-mono);font-size:2rem;font-weight:700;color:#33D49A;">7</div>
-          <p style="font-size:0.8rem;color:rgba(255,255,255,0.7);">Weeks, Spare Time</p>
-          <p style="font-size:0.7rem;color:rgba(255,255,255,0.45);margin-top:0.25rem;">One engineer, AI-assisted, nights &amp; weekends</p>
+        <div class="stat-card stat-card-green">
+          <div class="stat-value stat-value-green">7</div>
+          <p class="stat-label">Weeks, Spare Time</p>
+          <p class="stat-sublabel">One engineer, AI-assisted, nights &amp; weekends</p>
         </div>
-        <div style="padding:1rem;background:rgba(255,255,255,0.06);border-radius:8px;border-top:3px solid #E8A317;text-align:center;">
-          <div style="font-family:var(--font-mono);font-size:2rem;font-weight:700;color:#F0B840;">R&rarr;Py</div>
-          <p style="font-size:0.8rem;color:rgba(255,255,255,0.7);">Full Migration</p>
-          <p style="font-size:0.7rem;color:rgba(255,255,255,0.45);margin-top:0.25rem;">Azure Batch VMs to native Databricks</p>
+        <div class="stat-card stat-card-amber">
+          <div class="stat-value stat-value-amber">R&rarr;Py</div>
+          <p class="stat-label">Full Migration</p>
+          <p class="stat-sublabel">Azure Batch VMs to native Databricks</p>
         </div>
       </div>
-      <div style="padding:1rem 1.5rem;background:rgba(255,54,33,0.08);border-radius:8px;border-left:3px solid var(--db-lava-light);">
-        <p style="font-size:0.9rem;color:rgba(255,255,255,0.85);"><strong style="color:var(--db-lava-light);">Your Weekly Specials</strong> &mdash; I'm not a data scientist. I knew almost nothing about this system. The agent helped me learn the domain, port the R code, and solve the hard problems: trillion-row tables, memory overruns, distributed LightGBM on Ray.</p>
+
+      <div class="callout-box">
+        <p><strong>Your Weekly Specials</strong> — I'm not a data scientist. I knew almost nothing about this system. The agent helped me learn the domain, port the R code, and solve the hard problems: trillion-row tables, memory overruns, distributed LightGBM on Ray.</p>
       </div>
     </div>
     <div class="slide-footer">2</div>
