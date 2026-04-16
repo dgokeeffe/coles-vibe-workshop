@@ -53,7 +53,7 @@
 
 **[KEY MESSAGE:]**
 
-- "I knew almost nothing about YWS before I started. The agent helped me learn the domain — reading the R code, understanding the ranking logic, the trial groups, the business rules."
+- "I'm not a data scientist. I dabbled 10 years ago but my career went a different direction. I knew almost nothing about YWS before I started. The agent helped me learn the domain — reading the R code, understanding the ranking logic, the trial groups, the business rules."
 - "857 commits over 7 weeks of spare time. The hard parts were the data scale — trillion-row feature tables, memory overruns, getting LightGBM to run distributed on Ray. The agent handled the code. I steered."
 - "The techniques you're about to learn today are the same ones that produced this. Rule #1: I typed what I wanted."
 
