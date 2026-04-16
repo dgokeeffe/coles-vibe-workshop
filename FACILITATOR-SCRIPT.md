@@ -53,9 +53,9 @@
 
 **[KEY MESSAGE:]**
 
-- "857 commits over 7 weeks of spare time. One person. The hard parts were the data scale — trillion-row feature tables, memory overruns, getting LightGBM to run distributed on Ray — and the domain knowledge. The ranking logic, the trial groups, the business rules. Not engineering capacity."
-- "The techniques you're about to learn aren't academic. PRDs, test-driven gates, Claude Code — they produced this."
-- "Rule #1: I typed what I wanted. The agent built it."
+- "I knew almost nothing about YWS before I started. The agent helped me learn the domain — reading the R code, understanding the ranking logic, the trial groups, the business rules."
+- "857 commits over 7 weeks of spare time. The hard parts were the data scale — trillion-row feature tables, memory overruns, getting LightGBM to run distributed on Ray. The agent handled the code. I steered."
+- "The techniques you're about to learn today are the same ones that produced this. Rule #1: I typed what I wanted."
 
 **[BACKUP: If app is unavailable — stay on the slide, walk through the 4 stat cards, reference the pipeline architecture]**
 
