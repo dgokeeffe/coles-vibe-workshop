@@ -43,7 +43,7 @@
 
 - **4.5M members** — "Every Flybuys member gets 13 personalized offers every week"
 - **857 commits** — "37,000 lines of Python. 4 product lines. 340+ automated tests."
-- **7 weeks** — "One engineer, AI-assisted. This is the punchline."
+- **7 weeks** — "Spare time. Nights and weekends. One engineer, AI-assisted. That's the punchline."
 - **R→Python** — "Full migration from R on Azure Batch VMs to native Databricks. 452 million training rows on Ray."
 
 **[SHOW the YWS app if possible — open in browser, show the recommendation viewer]**
@@ -53,7 +53,7 @@
 
 **[KEY MESSAGE:]**
 
-- "857 commits in 7 weeks. One person. The bottleneck was domain knowledge — understanding the ranking logic, the trial groups, the business rules. Not engineering capacity."
+- "857 commits over 7 weeks of spare time. One person. The hard parts were the data scale — trillion-row feature tables, memory overruns, getting LightGBM to run distributed on Ray — and the domain knowledge. The ranking logic, the trial groups, the business rules. Not engineering capacity."
 - "The techniques you're about to learn aren't academic. PRDs, test-driven gates, Claude Code — they produced this."
 - "Rule #1: I typed what I wanted. The agent built it."
 
