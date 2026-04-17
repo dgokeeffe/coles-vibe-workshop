@@ -5,3 +5,5 @@ package-lock.json
 _state.md
 export-pdf.js
 .venvs/
+__pycache__/
+*.pyc
