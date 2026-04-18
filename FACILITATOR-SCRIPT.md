@@ -773,12 +773,14 @@ Search the Databricks docs for how to create a Genie space programmatically.
 >
 > **Teams of 2:** Driver follows the lab guide. Navigator verifies in Databricks UI and prepares Show & Tell.
 
-**[WALK — Circulate every 15 min:]**
+**[WALK + DEMO SIDEBARS — choreographed rhythm, not reactive:]**
 
-- **12:15 (15 min):** "Should have first deliverable working. If not, grab a checkpoint."
-- **12:30 (30 min):** "Halfway. How's the track going? Any blockers?"
-- **12:45 (45 min):** "Fifteen minutes left. Start wrapping up current phase."
-- **12:55 (55 min):** "Five minutes. Stop building — prepare your Show & Tell."
+- **12:15 (15 min):** Walk the room. "Should have first deliverable working. If not, grab a checkpoint."
+- **12:25 (~20 min):** **[DEMO SIDEBAR — Model Mix Bake-Off, 90 sec]** See `starter-kit/demos/model-mix-bakeoff.md`. Terminal side-by-side: `claude --model haiku-4-5 "fix typo..."` (3 sec) vs `claude --model sonnet-4-6 "generate pytest fixture..."` (15-20 sec). Key message: pick the right tool for the task.
+- **12:35 (30 min):** Walk. "Halfway. How's the track going? Any blockers?" Identify one team with clean silver/gold code for the next demo.
+- **12:45 (~40 min):** **[DEMO SIDEBAR — `/review` on a team's code, 90 sec]** See `starter-kit/demos/review-subagent-demo.md`. Pre-selected team (asked consent during the 12:35 walk). Run `/review src/silver/...` on their code on the big screen. Demonstrates subagents in practice; one team gets real feedback.
+- **12:50 (50 min):** "Ten minutes. Start wrapping up current phase."
+- **13:00 (60 min):** "Stop building — prepare your Show & Tell. 2 min pitch, one interesting finding."
 
 **[Common issues:]**
 
@@ -865,12 +867,14 @@ Search the Databricks docs for how to create a Genie space programmatically.
 
 **Bonus:** Build an MCP server wrapping your retail analytics — let any agent query your data
 
-**[WALK — Circulate:]**
+**[WALK + DEMO SIDEBARS — choreographed rhythm:]**
 
-- **14:15 (15 min):** "Core build underway? Any blockers?"
-- **14:30 (30 min):** "Halfway. Start thinking about Genie/dashboard if you haven't already."
-- **14:45 (45 min):** "Fifteen minutes of building left. Wrap up current work."
-- **14:50 (50 min):** "Stop building! Spend last 10 min on your demo pitch."
+- **14:15 (15 min):** Walk the room. "Core build underway? Any blockers?"
+- **14:20 (~20 min):** **[DEMO SIDEBAR — Small-Steps Save, 90 sec, PRE-RECORDED]** See `starter-kit/demos/small-steps-save.md`. Play the video — big-bang prompt hanging vs small-step prompts succeeding. Intro: *"Halfway through Lab 2 — this is the moment I'd warn my past self about."* No live demo; pre-recorded is safer.
+- **14:30 (30 min):** Walk. "Halfway. How's the integration going? Any Genie/dashboard decisions needed?"
+- **14:40 (~40 min):** **[DEMO SIDEBAR — Commit Cadence, 60 sec, LIVE]** See `starter-kit/demos/commit-cadence.md`. Quick live demo: run a test green, then `/commit` — skill generates the message. Key message: *"Green test → /commit. Every time. Don't lose work."*
+- **14:50 (50 min):** "Ten minutes of building left. Wrap up current work."
+- **14:55 (55 min):** "Stop building! Spend the last 5 min on your demo pitch."
 
 **[Common issues:]**
 

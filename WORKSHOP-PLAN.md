@@ -755,6 +755,26 @@ cp -r /Workspace/Shared/workshop-checkpoints/1A/* ./
 4. **Nobody gets stuck.** Checkpoints ensure every team can demo something at the end.
 5. **Energy over perfection.** It's a hackathon, not an exam.
 
+### Facilitator Demo Sidebars
+
+Four choreographed 60–90 second demos slotted into the labs at natural wait moments. Purpose: fill the dead air inside hour-long lab blocks with active teaching, keep energy up across all experience levels, give laggards a visible breather without slowing leaders down.
+
+| When | Duration | Demo | Style | What it teaches |
+|---|---|---|---|---|
+| Lab 1, ~minute 20 (12:25) | 90 sec | **Model Mix Bake-Off** | Live | Haiku vs Sonnet on matched tasks — model selection as technique |
+| Lab 1, ~minute 40 (12:45) | 90 sec | **Fresh-Context `/review`** | Live (pre-selected team) | Subagents in practice; one team gets real feedback |
+| Lab 2, ~minute 20 (14:20) | 90 sec | **Small-Steps Save** | Pre-recorded video | Big-bang fail vs small-step success — the anti-pattern felt |
+| Lab 2, ~minute 40 (14:40) | 60 sec | **Commit Cadence** | Live | `/commit` after every green test — the habit that saves work |
+
+**Scripts + pre-flight checklists:** `starter-kit/demos/` (one file per demo + `README.md` index).
+
+**Principles for demo sidebars:**
+- **Four is the ceiling.** Beyond this, demos stop being spotlights and start feeling like slowdowns.
+- **Live only for predictable behaviour.** If the point depends on the agent doing something specific (arguing with itself, generating flawed code), pre-record. If it depends on something reliably measurable (Haiku is faster than Sonnet for a typo fix), go live.
+- **Every demo teaches a habit, not a concept.** Each 90 seconds leaves attendees with something they can do on Monday, not just something they understand better.
+- **Consent for any demo that uses a team's work.** The `/review` demo requires asking first during the 12:35 walk. Never ambush a struggling team.
+- **If a demo fails live, read the fallback paragraph and move on.** Each script has one. Don't try to fix live — cost of a failed attempt is silence; cost of trying to fix is 3–4 lost minutes and a room that's tuned out.
+
 ### Timing Flex
 
 - If theory runs long: compress Session 2 to 15 min (cut Databricks internal demo)
