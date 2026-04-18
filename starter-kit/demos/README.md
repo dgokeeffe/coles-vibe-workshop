@@ -6,6 +6,8 @@ Choreographed 60–90 second facilitator demos slotted into the labs. Purpose: f
 
 | When | Duration | Demo | Style | Link |
 |---|---|---|---|---|
+| 9:47 (Arc B, slide 8) | ~90 sec | **Mini-demo — Claude Code responds to one prompt** | Live | (inline in facilitator script, no dedicated file) |
+| 10:25 (Arc D, slide 24) | ~4 min | **Pipeline + Dashboard End-to-End** — test → implement → deploy → dashboard | Live (heavy pre-deploy) | [pipeline-and-dashboard-demo.md](pipeline-and-dashboard-demo.md) |
 | Lab 1, ~minute 20 | 90 sec | **Model Mix Bake-Off** — Haiku vs Sonnet on matched tasks | Live | [model-mix-bakeoff.md](model-mix-bakeoff.md) |
 | Lab 1, ~minute 40 | 90 sec | **Fresh-Context `/review`** on a team's silver/gold code | Live (pre-selected team) | [review-subagent-demo.md](review-subagent-demo.md) |
 | Lab 2, ~minute 20 | 90 sec | **Small-Steps Save** — big-bang fail vs small-step success | Pre-recorded | [small-steps-save.md](small-steps-save.md) |

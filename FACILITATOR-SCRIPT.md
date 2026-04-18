@@ -159,37 +159,32 @@
 
 ---
 
-## Slide 8: What is Vibe Coding | 9:48 | 3 min
+## Slide 8: Watch First (Paradigm-Shift Demo) | 9:48 | ~2 min total
 
-**[CLICK]**
+**[CLICK]** Slide stays up for 30 seconds.
 
-- Read Karpathy quote: "...fully give in to the vibes, embrace exponentials, forget the code exists"
-- Real term: agentic software development
-- Traditional: write every line, slow iteration. Agentic: you direct, agent implements, tight feedback loops
-- "Amplification, not replacement — you still need to know good code, your data, your architecture"
+- Read the Karpathy quote off the slide: *"...fully give in to the vibes, embrace exponentials, forget that the code even exists."*
+- Frame: *"I'm not going to define 'coding agent' with more slides. I'll show you one. Then we teach the technique. Then you use it yourselves."*
+- Mention CODA in ONE sentence: *"Environment's called CODA — Claude Code on a Databricks App, 39 skills pre-loaded. You'll use it all day."*
 
-**[PEPPER]** "A brilliant intern joined your team — writes code at incredible speed but doesn't know your systems. How you onboard them determines how useful they are."
+**[FLIP TO TERMINAL — CODA tab already open]** ~60-90 seconds.
 
-**Transition:** "Let me show you the platform."
+- Run ONE demo prompt. Suggested: `claude "Open reference-implementation/src/bronze/abs_retail_trade.py and describe what it does in 3 bullet points."`
+- Watch Claude open the file, reason about it, respond.
+- No commentary while it runs. Let the interface speak.
+- When it responds: *"That's what we mean when we say 'coding agent'. Now — how to direct one well."*
 
----
+**Transition:** → Slide 9 (Specs & Testing section divider).
 
-## Slide 9: Platform Architecture | 9:51 | 2 min
+> **BACKUP:** If the terminal is slow or the prompt fails, skip the demo. Just say: *"You'll see it work plenty today. For now — how to direct one well."* Do NOT try to fix live.
 
-**[CLICK]**
+> **NOTE:** Cut slides for this section (previously 8 "What is Vibe Coding", 9 "Platform Architecture", 8B "CODA"): too many concept slides for what a 60-second demo conveys better. CODA gets mentioned in one sentence on slide 8.
 
-- Walk through architecture left-to-right: browser terminal, Flask app, AI agent, AI Gateway
-- 39 pre-built skills from AI Dev Kit, MCP for tool access, MLflow tracing for observability
-
-**Transition:** "Now let me show you where we're going today."
-
----
-
-> **NOTE:** "What We're Building" and "Today's Challenge" have been moved from early theory (slides 10-11) to just before Lab 0 (now slides 24-25). The rationale: showing the end state BEFORE teaching the technique assumes buy-in; showing it AFTER the technique creates a "now let's go build this" payoff moment. See their new entries below, just before the Lab 0 section divider.
+> **NOTE:** "What We're Building" (old static slide) has been REPLACED with a live Pipeline + Dashboard demo at slide 24. Today's Challenge moves to slide 25. See their new entries below, just before the Lab 0 section divider.
 
 ---
 
-## Slide 10: Section — Specs & Testing | 9:53 | 30 sec
+## Slide 9: Section — Specs & Testing | 9:50 | 30 sec
 
 **[CLICK]**
 
@@ -446,20 +441,73 @@ Run the tests. They should fail. Then implement the functions to make them pass.
 
 ---
 
-## Slide 24: What We're Building — End State | 10:26 | 2 min **[MOVED from early theory]**
+## Slide 24: Live Demo — Pipeline + Dashboard End-to-End | 10:25 | ~4-5 min **[ARC D CLIMAX]**
 
-**[CLICK]**
+**[CLICK]** Slide stays up for ~30 seconds while you frame.
 
-- "You've just learned the technique. Now let me show you what you're building with it."
-- Walk through the four quadrants quickly:
-  - **Data Pipeline** — Lakeflow ingesting ABS retail + CPI + FSANZ recalls, Bronze → Silver → Gold
-  - **Web Application** — FastAPI + Tailwind with dashboards and filters
-  - **Genie Space** — Business users query in English
-  - **AI/BI Dashboard** — Auto-generated visualisations from your gold tables
-- Point at the flow: Pipeline → App → Genie → Dashboard = Grocery Intelligence Platform.
-- **"By 4pm, every team will have all four of these running."**
+- *"You've just learned the technique. Now watch it work end-to-end on a real pipeline."*
+- *"This isn't a pre-recorded demo. The pipeline is running on my instance right now. The dashboard is already open. I'm going to add one new metric, BDD-style, and you'll see it flow through."*
 
-**Transition:** "Quick look at the challenge, then we start building."
+**[FLIP TO BROWSER — AI/BI dashboard tab already open]** ~30 seconds.
+
+- *"This is gold_retail_summary. ABS retail data, monthly turnover by state, rolling averages. Refreshed this morning."*
+- Pause, let them read the charts.
+- *"Notice there's no year-over-year column. Let me add one."*
+
+**[FLIP TO TERMINAL — CODA, reference-implementation loaded]**
+
+**[PROMPT 1 — the test] (~45 sec)**
+
+```
+Write ONE pytest test in tests/test_gold_retail_summary.py named
+test_gold_has_yoy_growth. 24-month sample DataFrame for NSW,
+turnover_millions increasing 5% MoM. Assert a yoy_growth_pct column
+exists and month 13's value is approximately 79.6%.
+
+Do NOT implement yet. Just the test.
+```
+
+- Read the test aloud.
+- *"There's the spec. Sample data, expected value, one column."*
+
+**[PROMPT 2 — run red] (~15 sec)**
+
+```
+Run that test. Show me the failure.
+```
+
+- *"Red. Good."*
+
+**[PROMPT 3 — implement] (~45 sec)**
+
+```
+Add a yoy_growth_pct column to src/gold/retail_summary.py using a
+window function partitioned by state ordered by month_date, comparing
+each row's turnover_millions to the row 12 months prior. Percentage
+change. Nothing else.
+```
+
+- *"Re-run the test."* → Green.
+- *"Green. Two prompts."*
+
+**[PROMPT 4 — deploy + dashboard refresh] (~90 sec)**
+
+```
+databricks bundle deploy -t demo && databricks bundle run grocery-intelligence-demo -t demo
+```
+
+- While pipeline runs, narrate: *"The pipeline's materialising the new column. This takes about a minute."*
+- When done, **[FLIP TO DASHBOARD]**, refresh.
+- Point at the new `yoy_growth_pct` column visible in the data.
+- **"Four prompts. One metric. End-to-end in under five minutes. That's what Lab 1 looks like."**
+
+**Transition:** *"Quick look at what your team's building, then we start."*
+
+> **FULL PRE-DEPLOY CHECKLIST + FALLBACKS:** `starter-kit/demos/pipeline-and-dashboard-demo.md`
+>
+> Key rule from the demo doc: **if the deploy takes >90 sec, skip the dashboard flip**. Move on to Today's Challenge. Do not wait live.
+
+> **NOTE:** This replaces the old static "What We're Building — End State" slide. Showing the end state *live* is stronger than describing it.
 
 ---
 

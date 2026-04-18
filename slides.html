@@ -776,55 +776,37 @@
 <!-- SLIDE 2: THE AI CODING MOMENT -->
 <section class="slide slide-dark dark-bg texture-noise" aria-label="Slide 2: The AI Coding Moment" data-notes="OPENING CONTEXT -- ~3-4 min. This is the intellectual frame for the day. Five recent reads (all last 3 months), one converging picture: the work is moving from writing code to orchestrating systems of agents. Walk the sources top-to-bottom, 20-30 sec each. Pragmatic Engineer (most important, cite first) -- survey data, uneven impact, team productivity over individual speed. Thoughtworks -- orchestration and governance now matter as much as model quality. Stack Overflow -- code review is the new bottleneck, shared conventions become engineering leverage. CIO -- creators to curators. Anthropic 2026 report -- long-running multi-step execution, formerly uneconomic projects become viable. ASK the room: 'Anyone here felt the Pragmatic Engineer thing -- you feel faster individually but the team is delivering about the same?' Expect nods. Land the synthesis: the new bottleneck is verification and coordination, not code generation. Today you learn the practices that put you on the leverage side. Transition: 'Here's what that looks like when the technique lines up' -> YWS.">
   <div class="slide-content">
-    <span class="section-num" style="color:rgba(255,255,255,0.5);">The State of Play &middot; Last 3 Months</span>
-    <h2 style="color:white; font-size:2.1rem; margin:0.25rem 0 0.5rem 0; line-height:1.2;">The work is moving from <span style="color:rgba(255,255,255,0.5);">writing code</span> to <span style="color:var(--db-lava-light);">orchestrating agents that write code.</span></h2>
+    <span class="section-num" style="color:rgba(255,255,255,0.5);">The State of Play</span>
+    <h2 style="color:var(--db-lava-light); font-size:2.5rem; margin:0.25rem 0 0.5rem 0;">The AI Coding Moment</h2>
     <div class="accent-line"></div>
-    <p class="lead" style="color:rgba(255,255,255,0.7); margin-bottom:1rem; font-size:1rem;">Five recent reads. One converging picture: coding agents aren&rsquo;t just changing who writes code &mdash; they&rsquo;re changing how teams organize, review, and define engineering value.</p>
+    <p class="lead" style="color:rgba(255,255,255,0.7); margin-bottom:2rem;">The work is moving from writing code to <strong style="color:white;">orchestrating agents that write code</strong>.</p>
 
-    <div style="display:flex; flex-direction:column; gap:0.45rem; margin-bottom:1rem;">
-      <div style="display:flex; gap:1rem; padding:0.55rem 0.9rem; background:rgba(255,255,255,0.05); border-left:3px solid var(--db-teal); border-radius:3px; align-items:center;">
-        <div style="min-width:190px; flex-shrink:0;">
-          <strong style="color:var(--db-teal); font-size:0.9rem;">Pragmatic Engineer</strong>
-          <div style="font-size:0.68rem; color:rgba(255,255,255,0.4);">Apr 13, 2026 &middot; survey-based</div>
-        </div>
-        <div style="font-size:0.82rem; color:rgba(255,255,255,0.85); line-height:1.45;">Impact is <strong>uneven</strong>. Stronger engineers get more leverage from agents; others produce cleanup debt. <em>Team</em> productivity matters more than feeling faster individually.</div>
+    <div class="card-grid grid-cols-4" style="margin-bottom:1.75rem;">
+      <div class="card" style="border-top:3px solid var(--db-teal); background:rgba(255,255,255,0.06);">
+        <div class="stat-hero" style="font-size:3rem; color:var(--db-teal); font-weight:700;">65%</div>
+        <h3 style="color:white; font-size:1rem; margin:0.25rem 0;">Weekly AI users</h3>
+        <p style="color:rgba(255,255,255,0.6); font-size:0.85rem; margin:0;">Developers using AI coding tools weekly &mdash; Stack Overflow survey</p>
       </div>
-
-      <div style="display:flex; gap:1rem; padding:0.55rem 0.9rem; background:rgba(255,255,255,0.05); border-left:3px solid var(--db-lava-light); border-radius:3px; align-items:center;">
-        <div style="min-width:190px; flex-shrink:0;">
-          <strong style="color:var(--db-lava-light); font-size:0.9rem;">Thoughtworks</strong>
-          <div style="font-size:0.68rem; color:rgba(255,255,255,0.4);">Apr 14, 2026 &middot; macro trends</div>
-        </div>
-        <div style="font-size:0.82rem; color:rgba(255,255,255,0.85); line-height:1.45;"><strong>Orchestration and governance</strong> now matter as much as model quality. Agents need structure &mdash; specs, reusable components, workflow controls &mdash; to be safe and useful.</div>
+      <div class="card" style="border-top:3px solid var(--db-lava-light); background:rgba(255,255,255,0.06);">
+        <div class="stat-hero" style="font-size:3rem; color:var(--db-lava-light); font-weight:700;">&minus;19%</div>
+        <h3 style="color:white; font-size:1rem; margin:0.25rem 0;">The disconnect</h3>
+        <p style="color:rgba(255,255,255,0.6); font-size:0.85rem; margin:0;">Experienced devs objectively slower. Felt 20% faster. &mdash; METR study</p>
       </div>
-
-      <div style="display:flex; gap:1rem; padding:0.55rem 0.9rem; background:rgba(255,255,255,0.05); border-left:3px solid var(--db-green); border-radius:3px; align-items:center;">
-        <div style="min-width:190px; flex-shrink:0;">
-          <strong style="color:var(--db-green); font-size:0.9rem;">Stack Overflow</strong>
-          <div style="font-size:0.68rem; color:rgba(255,255,255,0.4);">Mar 25, 2026 &middot; team practices</div>
-        </div>
-        <div style="font-size:0.82rem; color:rgba(255,255,255,0.85); line-height:1.45;">You now review code you didn&rsquo;t write. <strong>Shared conventions, linters, explicit standards</strong> become the leverage &mdash; teams with strong process hygiene benefit more.</div>
+      <div class="card" style="border-top:3px solid var(--db-green); background:rgba(255,255,255,0.06);">
+        <div class="stat-hero" style="font-size:2.5rem; color:var(--db-green); font-weight:700;">4h &rarr; 2m</div>
+        <h3 style="color:white; font-size:1rem; margin:0.25rem 0;">The inflection</h3>
+        <p style="color:rgba(255,255,255,0.6); font-size:0.85rem; margin:0;">Same task, one CTO, Claude Code. Higher quality. &mdash; MIT Tech Review</p>
       </div>
-
-      <div style="display:flex; gap:1rem; padding:0.55rem 0.9rem; background:rgba(255,255,255,0.05); border-left:3px solid var(--db-amber); border-radius:3px; align-items:center;">
-        <div style="min-width:190px; flex-shrink:0;">
-          <strong style="color:var(--db-amber); font-size:0.9rem;">CIO</strong>
-          <div style="font-size:0.68rem; color:rgba(255,255,255,0.4);">Feb 19, 2026 &middot; workflow shift</div>
-        </div>
-        <div style="font-size:0.82rem; color:rgba(255,255,255,0.85); line-height:1.45;">Engineers shift from <strong>creators to curators</strong>. More time on architecture, guardrails, and validation; agents as first-pass executors across the SDLC.</div>
-      </div>
-
-      <div style="display:flex; gap:1rem; padding:0.55rem 0.9rem; background:rgba(255,255,255,0.05); border-left:3px solid #a78bfa; border-radius:3px; align-items:center;">
-        <div style="min-width:190px; flex-shrink:0;">
-          <strong style="color:#a78bfa; font-size:0.9rem;">Anthropic 2026 Report</strong>
-          <div style="font-size:0.68rem; color:rgba(255,255,255,0.4);">Jan 20, 2026 &middot; agentic trends</div>
-        </div>
-        <div style="font-size:0.82rem; color:rgba(255,255,255,0.85); line-height:1.45;"><strong>Long-running, multi-step execution</strong> &mdash; agents handle broader workflows, making formerly uneconomic projects viable. Human role: orchestration, evaluation, strategy.</div>
+      <div class="card" style="border-top:3px solid var(--db-amber); background:rgba(255,255,255,0.06);">
+        <div class="stat-hero" style="font-size:3rem; color:var(--db-amber); font-weight:700;">&minus;20%</div>
+        <h3 style="color:white; font-size:1rem; margin:0.25rem 0;">The floor rising</h3>
+        <p style="color:rgba(255,255,255,0.6); font-size:0.85rem; margin:0;">Employment drop, devs aged 22&ndash;25 &mdash; Stanford study</p>
       </div>
     </div>
 
-    <div class="card" style="border-left:4px solid var(--db-lava); background:rgba(255,255,255,0.05); text-align:left; padding:0.85rem 1.25rem;">
-      <p style="color:rgba(255,255,255,0.88); font-size:0.92rem; margin:0; line-height:1.5;">They all agree: the new bottleneck is <strong style="color:white;">verification and coordination</strong>, not code generation. Architecture, tests, conventions, governance become central. <strong style="color:var(--db-lava-light);">Today you learn the practices that put you on the leverage side.</strong></p>
+    <div class="card" style="border-left:4px solid var(--db-lava); background:rgba(255,255,255,0.05); text-align:left; padding:1.25rem 1.5rem;">
+      <p style="color:rgba(255,255,255,0.75); font-size:0.85rem; margin:0 0 0.5rem 0; letter-spacing:0.04em; text-transform:uppercase;">Pragmatic Engineer &middot; Thoughtworks &middot; Stack Overflow &middot; CIO &middot; Anthropic 2026</p>
+      <p style="color:rgba(255,255,255,0.85); font-size:1rem; margin:0; line-height:1.55;">All agree: the new bottleneck is <strong style="color:white;">verification and coordination</strong>, not code generation. <strong style="color:var(--db-lava-light);">Today you learn the practices that put you on the leverage side.</strong></p>
     </div>
   </div>
   <div class="slide-footer" style="color:rgba(255,255,255,0.3);">2</div>
@@ -1044,149 +1026,25 @@
   </div>
 </section>
 
-<!-- SLIDE 8: WHAT IS VIBE CODING -->
-<section class="slide slide-light" aria-label="Slide 8: What is Vibe Coding" data-notes="Read the Karpathy quote aloud. Explain: vibe coding is the casual term, but what we're really talking about is agentic software development. Key contrast: traditional dev has humans writing every line; agentic dev has humans directing and agents implementing. Emphasise: this is amplification, not replacement. ~3 min.">
-  <div class="slide-content">
-    <span class="eyebrow">THE PARADIGM SHIFT</span>
-    <h2>What is Vibe Coding?</h2>
-    <div class="accent-line"></div>
+<!-- SLIDE 8: WATCH FIRST — FRAME FOR PARADIGM-SHIFT DEMO -->
+<section class="slide slide-dark dark-bg texture-noise" aria-label="Slide 8: Watch First" data-notes="~30 sec on slide, then flip to terminal for a ~60-90 sec mini-demo of Claude Code responding to ONE prompt (e.g., 'describe what this file does' on a file they'll touch in Lab 0). Purpose: show the interface and cadence before Arc C teaches technique. Read the Karpathy quote aloud. Land: 'We'll watch the agent work before we talk about how to direct one. Then we teach the technique.' Transition after the mini-demo: 'Now — how to direct one well.' → Specs section divider.">
+  <div class="slide-content" style="text-align:center;">
+    <span class="section-num" style="color:rgba(255,255,255,0.5);">The Paradigm Shift</span>
+    <h2 style="color:white; font-size:2.75rem; margin:0.5rem 0; line-height:1.1;">Watch first.<br><span style="color:var(--db-lava-light);">Then we teach the technique.</span></h2>
+    <div class="accent-line center"></div>
 
-    <div class="quote-block" style="margin:1.25rem 0;">
-      <p class="quote-text" style="font-size:1.1rem;">"There's a new kind of coding I call 'vibe coding', where you fully give in to the vibes, embrace exponentials, and forget that the code even exists."</p>
-      <p class="quote-author">Andrej Karpathy, February 2025</p>
+    <div class="card" style="max-width:720px; margin:2rem auto 0 auto; background:rgba(255,255,255,0.05); border-left:4px solid var(--db-lava-light); text-align:left; padding:1.5rem 1.75rem;">
+      <p style="color:white; font-size:1.2rem; line-height:1.4; margin:0 0 0.75rem 0; font-weight:300;">&ldquo;There&rsquo;s a new kind of coding I call <strong style="color:var(--db-lava-light); font-weight:600;">vibe coding</strong> &mdash; you fully give in to the vibes, embrace exponentials, and <strong style="color:var(--db-lava-light); font-weight:600;">forget that the code even exists</strong>.&rdquo;</p>
+      <p style="color:rgba(255,255,255,0.5); font-size:0.85rem; margin:0;">&mdash; Andrej Karpathy, Feb 2025</p>
     </div>
 
-    <div class="comparison-grid" style="margin-bottom:1.5rem;">
-      <div class="comparison-card before">
-        <h3>Traditional Development</h3>
-        <ul>
-          <li>Human writes every line</li>
-          <li>Slow iteration cycles</li>
-          <li>Knowledge bottlenecks</li>
-          <li>Context switching overhead</li>
-        </ul>
-      </div>
-      <div class="comparison-card after">
-        <h3>Agentic Development</h3>
-        <ul>
-          <li>Human directs, agent implements</li>
-          <li>Build-test cycles in seconds</li>
-          <li>One CLAUDE.md rule fixes every future output</li>
-          <li>10x amplification, not replacement</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="card" style="border-left:4px solid var(--db-lava); text-align:left;">
-      <h3 style="color:var(--db-lava); font-size:0.95rem; margin:0 0 0.25rem 0;">Rule #1: Just Say What You Want</h3>
-      <p style="font-size:0.9rem; margin:0;">You literally type what you want and it happens.</p>
-    </div>
+    <p style="color:rgba(255,255,255,0.7); font-size:0.95rem; margin-top:2rem;">The environment: <strong style="color:white;">CODA</strong> &mdash; Claude Code running on a Databricks App, 39 skills pre-loaded, Unity Catalog governance, MLflow tracing. You&rsquo;ll use it all day.</p>
   </div>
-  <div class="slide-footer">8</div>
+  <div class="slide-footer" style="color:rgba(255,255,255,0.3);">8</div>
 </section>
 
-<!-- SLIDE 9: PLATFORM ARCHITECTURE -->
-<section class="slide slide-white" aria-label="Slide 9: Platform Architecture" data-notes="Walk through the architecture left to right. Browser terminal connects to a Databricks App running Flask. The app hosts AI agents. All LLM calls go through AI Gateway. ~3 min.">
-  <div class="slide-content">
-    <span class="eyebrow">YOUR ENVIRONMENT</span>
-    <h2>Coding Agents Databricks App</h2>
-    <div class="accent-line"></div>
-    <p class="lead">A browser terminal running AI coding agents. Nothing to install -- it runs on Databricks compute.</p>
-
-    <div class="diagram-row" style="margin:2rem 0;">
-      <div class="diagram-node accent" style="min-width:140px;">
-        <strong style="display:block; margin-bottom:0.25rem;">Browser</strong>
-        <span style="font-size:0.8rem; opacity:0.7;">xterm.js terminal</span>
-      </div>
-      <div class="diagram-arrow"></div>
-      <div class="diagram-node secondary" style="min-width:140px;">
-        <strong style="display:block; margin-bottom:0.25rem;">Databricks App</strong>
-        <span style="font-size:0.8rem; opacity:0.7;">Flask + Gunicorn</span>
-      </div>
-      <div class="diagram-arrow"></div>
-      <div class="diagram-node" style="min-width:140px;">
-        <strong style="display:block; margin-bottom:0.25rem;">AI Agents</strong>
-        <span style="font-size:0.8rem; opacity:0.7;">Claude Code / OpenCode</span>
-      </div>
-      <div class="diagram-arrow"></div>
-      <div class="diagram-node green" style="min-width:140px;">
-        <strong style="display:block; margin-bottom:0.25rem;">AI Gateway</strong>
-        <span style="font-size:0.8rem; opacity:0.7;">Route &middot; Limit &middot; Trace</span>
-      </div>
-    </div>
-
-    <div style="display:flex; gap:0.75rem; justify-content:center; flex-wrap:wrap; margin-top:2rem;">
-      <span class="tag lava">39 Pre-built Skills</span>
-      <span class="tag teal">MCP Servers</span>
-      <span class="tag green">MLflow Tracing</span>
-      <span class="tag" style="background:var(--db-navy); color:white;">Unity Catalog</span>
-    </div>
-  </div>
-  <div class="slide-footer">9</div>
-</section>
-
-<!-- SLIDE 8B: CODA -->
-<section class="slide slide-dark dark-bg texture-noise" aria-label="Slide 8B: CODA" data-notes="CODA = Coding Agents on Databricks Apps. Four agents available. All go through AI Gateway. Auth, tracing, governance, cost control. github.com/datasciencemonkey/coding-agents-databricks-apps. ~3 min.">
-  <div class="slide-content">
-    <span class="eyebrow" style="color:var(--db-lava-light);">OPEN SOURCE</span>
-    <h2 style="color:white; font-size:2.2rem; margin:0.25rem 0 0.5rem 0;">CODA: Coding Agents on Databricks Apps</h2>
-    <div class="accent-line" style="background:var(--db-lava-light);"></div>
-    <p class="lead" style="color:rgba(255,255,255,0.7);">The platform you're using today. Browser-based AI agents with zero local setup, governed by Unity Catalog, traced by MLflow.</p>
-
-    <div class="grid-wide-narrow" style="gap:2rem; align-items:start;">
-      <div>
-        <div class="card-grid grid-cols-2" style="gap:0.75rem;">
-          <div class="card" style="background:rgba(255,255,255,0.06); border-top:3px solid var(--db-lava-light);">
-            <h3 style="color:white; font-size:0.95rem; margin:0 0 0.25rem 0;">Claude Code</h3>
-            <p style="color:rgba(255,255,255,0.6); font-size:0.8rem; margin:0;">39 Databricks skills + 2 MCP servers</p>
-          </div>
-          <div class="card" style="background:rgba(255,255,255,0.06); border-top:3px solid var(--db-teal);">
-            <h3 style="color:white; font-size:0.95rem; margin:0 0 0.25rem 0;">Codex</h3>
-            <p style="color:rgba(255,255,255,0.6); font-size:0.8rem; margin:0;">OpenAI's agent</p>
-          </div>
-          <div class="card" style="background:rgba(255,255,255,0.06); border-top:3px solid var(--db-green);">
-            <h3 style="color:white; font-size:0.95rem; margin:0 0 0.25rem 0;">Gemini CLI</h3>
-            <p style="color:rgba(255,255,255,0.6); font-size:0.8rem; margin:0;">Google's agent</p>
-          </div>
-          <div class="card" style="background:rgba(255,255,255,0.06); border-top:3px solid var(--db-amber);">
-            <h3 style="color:white; font-size:0.95rem; margin:0 0 0.25rem 0;">OpenCode</h3>
-            <p style="color:rgba(255,255,255,0.6); font-size:0.8rem; margin:0;">Open-source, any provider</p>
-          </div>
-        </div>
-      </div>
-
-      <div>
-        <h3 style="color:white; font-size:1rem; margin:0 0 1rem 0;">Why This Matters</h3>
-        <div style="display:flex; flex-direction:column; gap:0.75rem;">
-          <div style="display:flex; gap:0.75rem; align-items:start;">
-            <span class="tag lava" style="flex-shrink:0; font-size:0.7rem;">Auth</span>
-            <p style="color:rgba(255,255,255,0.7); font-size:0.85rem; margin:0;">Paste a PAT once. Auto-rotates every 10 minutes.</p>
-          </div>
-          <div style="display:flex; gap:0.75rem; align-items:start;">
-            <span class="tag teal" style="flex-shrink:0; font-size:0.7rem;">Trace</span>
-            <p style="color:rgba(255,255,255,0.7); font-size:0.85rem; margin:0;">Every agent session logged to MLflow.</p>
-          </div>
-          <div style="display:flex; gap:0.75rem; align-items:start;">
-            <span class="tag green" style="flex-shrink:0; font-size:0.7rem;">Govern</span>
-            <p style="color:rgba(255,255,255,0.7); font-size:0.85rem; margin:0;">Unity Catalog controls what each agent can read and write.</p>
-          </div>
-          <div style="display:flex; gap:0.75rem; align-items:start;">
-            <span class="tag amber" style="flex-shrink:0; font-size:0.7rem;">Cost</span>
-            <p style="color:rgba(255,255,255,0.7); font-size:0.85rem; margin:0;">AI Gateway handles rate limiting and spend tracking per team.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <p style="text-align:center; margin-top:1.5rem; font-size:0.85rem;">
-      <span style="color:rgba(255,255,255,0.4);">github.com/datasciencemonkey/coding-agents-databricks-apps</span>
-    </p>
-  </div>
-  <div class="slide-footer" style="color:rgba(255,255,255,0.3);">10</div>
-</section>
-
-<!-- SLIDE 10: SECTION DIVIDER — SPECS & TESTING -->
-<section class="slide slide-dark dark-bg texture-noise" aria-label="Slide 10: Section Divider" data-notes="Section divider. Key message: the skill that matters most with AI agents is your ability to specify what you want. ~30 sec.">
+<!-- SLIDE 9: SECTION DIVIDER — SPECS & TESTING -->
+<section class="slide slide-dark dark-bg texture-noise" aria-label="Slide 9: Section Divider" data-notes="Section divider. Key message: the skill that matters most with AI agents is your ability to specify what you want. ~30 sec.">
   <div class="slide-content" style="text-align:center; display:flex; flex-direction:column; align-items:center; justify-content:center;">
     <span class="section-num" style="color:rgba(255,255,255,0.5);">9:45 AM</span>
     <h1 style="font-size:3.5rem; color:white; margin:0.5rem 0 0.5rem 0; font-weight:700;">Specs &amp; Testing</h1>
@@ -1195,8 +1053,8 @@
   </div>
 </section>
 
-<!-- SLIDE 11: WHY SPECS MATTER -->
-<section class="slide slide-light" aria-label="Slide 11: Why Specs Matter" data-notes="Key point: garbage in, garbage out. Anthropic framing: brilliant but new employee. Walk through PRD and CLAUDE.md cards. ~3 min.">
+<!-- SLIDE 10: WHY SPECS MATTER -->
+<section class="slide slide-light" aria-label="Slide 10: Why Specs Matter" data-notes="Key point: garbage in, garbage out. Anthropic framing: brilliant but new employee. Walk through PRD and CLAUDE.md cards. ~3 min.">
   <div class="slide-content">
     <span class="eyebrow">SPECIFICATIONS</span>
     <h2>Why Specs Matter More with AI</h2>
@@ -1235,12 +1093,12 @@
       <span class="tag" style="background:var(--db-navy); color:white;">Evolve over time</span>
     </div>
   </div>
-  <div class="slide-footer">11</div>
+  <div class="slide-footer">10</div>
 </section>
   <!-- ============================================================ -->
-  <!-- SLIDE 12: CLAUDE.MD IN ACTION                               -->
+  <!-- SLIDE 11: CLAUDE.MD IN ACTION                               -->
   <!-- ============================================================ -->
-  <section class="slide slide-white" aria-label="Slide 12: CLAUDE.md Example" data-notes="Walk through the code example on the right. Show how a few lines shape every output: tech stack, data standards, testing approach. On the left, explain the three scope levels: repo, project, user. The exercise box at the bottom previews the upcoming hands-on exercise. Mention: add one rule, change all future output. This is the highest ROI activity. ~3 min. Transition: Let's look at CLAUDE.md scope levels in more detail.">
+  <section class="slide slide-white" aria-label="Slide 11: CLAUDE.md Example" data-notes="Walk through the code example on the right. Show how a few lines shape every output: tech stack, data standards, testing approach. On the left, explain the three scope levels: repo, project, user. The exercise box at the bottom previews the upcoming hands-on exercise. Mention: add one rule, change all future output. This is the highest ROI activity. ~3 min. Transition: Let's look at CLAUDE.md scope levels in more detail.">
     <div class="slide-content">
       <span class="eyebrow">SPECIFICATIONS</span>
       <h2>CLAUDE.md in Action</h2>
@@ -1279,13 +1137,13 @@
         </div>
       </div>
     </div>
-    <div class="slide-footer">12</div>
+    <div class="slide-footer">11</div>
   </section>
 
   <!-- ============================================================ -->
-  <!-- SLIDE 13: CLAUDE.MD SCOPE LEVELS                            -->
+  <!-- SLIDE 12: CLAUDE.MD SCOPE LEVELS                            -->
   <!-- ============================================================ -->
-  <section class="slide slide-white" aria-label="Slide 13: CLAUDE.md Scope Levels" data-notes="Three levels cascade like CSS. User-level: personal prefs (git style, tool choices). Repo-level: team standards committed to git. Project-level: module-specific rules. More specific rules override general ones. Show the file paths on each card. Ask: what would you put at each level? ~2 min. Transition: Time for the exercise -- write your own CLAUDE.md.">
+  <section class="slide slide-white" aria-label="Slide 12: CLAUDE.md Scope Levels" data-notes="Three levels cascade like CSS. User-level: personal prefs (git style, tool choices). Repo-level: team standards committed to git. Project-level: module-specific rules. More specific rules override general ones. Show the file paths on each card. Ask: what would you put at each level? ~2 min. Transition: Time for the exercise -- write your own CLAUDE.md.">
     <div class="slide-content">
       <span class="eyebrow">SPECIFICATIONS</span>
       <h2>CLAUDE.md: Three Scope Levels</h2>
@@ -1326,13 +1184,13 @@
         </div>
       </div>
     </div>
-    <div class="slide-footer">13</div>
+    <div class="slide-footer">12</div>
   </section>
 
   <!-- ============================================================ -->
-  <!-- SLIDE 14: RULE #1 — JUST SAY WHAT YOU WANT                 -->
+  <!-- SLIDE 13: RULE #1 — JUST SAY WHAT YOU WANT                 -->
   <!-- ============================================================ -->
-  <section class="slide slide-light" aria-label="Slide 14: Rule #1 Exercise" data-notes="People think they need to manually write configuration files. They don't. You have a conversation. Open the terminal, tell Claude about your project, and it creates everything — CLAUDE.md, project structure, initial config. When you want something different, you just say so. This is agentic engineering: you engineer the harness through conversation. Everything — CLAUDE.md, skills, hooks — is just markdown files. Walk around, help anyone stuck. The 'aha' moment is when they realise they can just TYPE what they want. Push for natural language, not manual file editing. After 15 min, ask 2-3 teams what surprised them. ~20 min total. Transition: Now let's talk about the secret weapon -- BDD with agents.">
+  <section class="slide slide-light" aria-label="Slide 13: Rule #1 Exercise" data-notes="People think they need to manually write configuration files. They don't. You have a conversation. Open the terminal, tell Claude about your project, and it creates everything — CLAUDE.md, project structure, initial config. When you want something different, you just say so. This is agentic engineering: you engineer the harness through conversation. Everything — CLAUDE.md, skills, hooks — is just markdown files. Walk around, help anyone stuck. The 'aha' moment is when they realise they can just TYPE what they want. Push for natural language, not manual file editing. After 15 min, ask 2-3 teams what surprised them. ~20 min total. Transition: Now let's talk about the secret weapon -- BDD with agents.">
     <div class="slide-content">
       <span class="eyebrow">RULE #1 &middot; EXERCISE &middot; 15 MINUTES</span>
       <h2>Just Say What You Want</h2>
@@ -1376,13 +1234,13 @@
         </div>
       </div>
     </div>
-    <div class="slide-footer">14</div>
+    <div class="slide-footer">13</div>
   </section>
 
   <!-- ============================================================ -->
-  <!-- SLIDE 15: BDD WORKFLOW                                      -->
+  <!-- SLIDE 14: BDD WORKFLOW                                      -->
   <!-- ============================================================ -->
-  <section class="slide slide-light" aria-label="Slide 15: BDD Workflow" data-notes="Walk through the 4-step BDD flow: Human writes Gherkin features (Given/When/Then), Agent generates step definitions, Run behave and iterate, Human reviews. The key insight: Gherkin IS the spec — plain English that non-developers can read AND that machines execute. Use the /bdd-features skill to generate feature files from requirements, then /bdd-steps to implement them. KEY POINT: Use SEPARATE prompts — Prompt 1: write the Gherkin features. Prompt 2: implement the step definitions. If the same prompt does both, the agent may write steps that trivially pass rather than testing real behavior. ~3 min. Transition: Why is this so much more powerful than ad-hoc testing?">
+  <section class="slide slide-light" aria-label="Slide 14: BDD Workflow" data-notes="Walk through the 4-step BDD flow: Human writes Gherkin features (Given/When/Then), Agent generates step definitions, Run behave and iterate, Human reviews. The key insight: Gherkin IS the spec — plain English that non-developers can read AND that machines execute. Use the /bdd-features skill to generate feature files from requirements, then /bdd-steps to implement them. KEY POINT: Use SEPARATE prompts — Prompt 1: write the Gherkin features. Prompt 2: implement the step definitions. If the same prompt does both, the agent may write steps that trivially pass rather than testing real behavior. ~3 min. Transition: Why is this so much more powerful than ad-hoc testing?">
     <div class="slide-content">
       <span class="eyebrow">BEHAVIOR-DRIVEN DEVELOPMENT</span>
       <h2>The BDD + Agent Workflow</h2>
@@ -1411,13 +1269,13 @@
         </div>
       </div>
     </div>
-    <div class="slide-footer">15</div>
+    <div class="slide-footer">14</div>
   </section>
 
   <!-- ============================================================ -->
-  <!-- SLIDE 16: WHY BDD WORKS WITH AGENTS                        -->
+  <!-- SLIDE 15: WHY BDD WORKS WITH AGENTS                        -->
   <!-- ============================================================ -->
-  <section class="slide slide-white" aria-label="Slide 16: Why BDD Works with Agents" data-notes="Three reasons BDD is exponentially better with agents. Plain-English specs: anyone on the team can read and validate Gherkin features — not just developers. Self-correcting loop: agent runs behave, reads failures, fixes step definitions — no human in the loop needed. Guardrails: feature files define the acceptance boundary — the agent can't claim success unless all scenarios pass. Pro tips: start with one feature file, use Backgrounds for shared setup, write declarative not imperative steps. ~3 min. Transition: Let's look at how to write Gherkin that actually guides the agent well.">
+  <section class="slide slide-white" aria-label="Slide 15: Why BDD Works with Agents" data-notes="Three reasons BDD is exponentially better with agents. Plain-English specs: anyone on the team can read and validate Gherkin features — not just developers. Self-correcting loop: agent runs behave, reads failures, fixes step definitions — no human in the loop needed. Guardrails: feature files define the acceptance boundary — the agent can't claim success unless all scenarios pass. Pro tips: start with one feature file, use Backgrounds for shared setup, write declarative not imperative steps. ~3 min. Transition: Let's look at how to write Gherkin that actually guides the agent well.">
     <div class="slide-content">
       <span class="eyebrow">BEST PRACTICES</span>
       <h2>Why BDD Works <span class="text-lava">So Well</span> with Agents</h2>
@@ -1442,14 +1300,14 @@
       <div style="margin-top:2rem;padding:1rem 1.5rem;background:rgba(0,169,114,0.08);border-radius:8px;border-left:3px solid var(--db-green);">
         <p><strong>Pro tips:</strong> Start with one feature file. Use <code>Background:</code> for shared setup. Write declarative steps ("When I grant SELECT") not imperative ("When I click the button").</p>
       </div>
-      <div class="slide-footer">16</div>
+      <div class="slide-footer">15</div>
     </div>
   </section>
 
   <!-- ============================================================ -->
-  <!-- SLIDE 17: WRITING GHERKIN THAT GUIDES                      -->
+  <!-- SLIDE 16: WRITING GHERKIN THAT GUIDES                      -->
   <!-- ============================================================ -->
-  <section class="slide slide-white" aria-label="Slide 17: Writing Gherkin That Guides" data-notes="Walk through the Gherkin example on the left. Show Given-When-Then structure in plain English. Highlight: concrete data (10 rows, 2 invalid), specific assertions (8 clean rows, no negatives). On the right, four principles: declarative steps, concrete values, one behavior per scenario, use Backgrounds. Ask: who has seen Gherkin before? Even if you haven't written code, you can write these specs. That's the whole point. ~3 min. Transition: Let me show you a live demo of BDD in action.">
+  <section class="slide slide-white" aria-label="Slide 16: Writing Gherkin That Guides" data-notes="Walk through the Gherkin example on the left. Show Given-When-Then structure in plain English. Highlight: concrete data (10 rows, 2 invalid), specific assertions (8 clean rows, no negatives). On the right, four principles: declarative steps, concrete values, one behavior per scenario, use Backgrounds. Ask: who has seen Gherkin before? Even if you haven't written code, you can write these specs. That's the whole point. ~3 min. Transition: Let me show you a live demo of BDD in action.">
     <div class="slide-content">
       <span class="eyebrow">BEHAVIOR-DRIVEN DEVELOPMENT</span>
       <h2>Writing Gherkin That Guides the Agent</h2>
@@ -1495,14 +1353,14 @@
           </div>
         </div>
       </div>
-      <div class="slide-footer">17</div>
+      <div class="slide-footer">16</div>
     </div>
   </section>
 
   <!-- ============================================================ -->
-  <!-- SLIDE 18: POWER TOOLS — SUBAGENTS, SKILLS, HOOKS, PLUGINS -->
+  <!-- SLIDE 17: POWER TOOLS — SUBAGENTS, SKILLS, HOOKS, PLUGINS -->
   <!-- ============================================================ -->
-  <section class="slide slide-white" aria-label="Slide 18: Power Tools — Subagents, Skills, Hooks, Plugins" data-notes="~3 min. This is the 'what's in your toolkit' slide for experienced users -- quick orientation, not deep dive. Walk each card 30-45 sec. Subagents: parallel workers with isolated context, launched via Agent tool or /review skill -- useful when you want a fresh-context judgment unpolluted by your current session. Skills: reusable slash commands from the marketplace (/commit, /review, /ship, /test) -- don't reinvent what's already there. Hooks: the deterministic guardrails. PreToolUse blocks bad tool calls, PostToolUse enforces policy (like our MCP auth guard), Stop refuses to finish until state is clean. Plugins: package skills+agents+hooks for teams -- Databricks has the fe-vibe marketplace. Key message: these aren't advanced features, they're leverage. Deep dive slides in the appendix if time allows. Transition: Now let's talk verification.">
+  <section class="slide slide-white" aria-label="Slide 17: Power Tools — Subagents, Skills, Hooks, Plugins" data-notes="~3 min. This is the 'what's in your toolkit' slide for experienced users -- quick orientation, not deep dive. Walk each card 30-45 sec. Subagents: parallel workers with isolated context, launched via Agent tool or /review skill -- useful when you want a fresh-context judgment unpolluted by your current session. Skills: reusable slash commands from the marketplace (/commit, /review, /ship, /test) -- don't reinvent what's already there. Hooks: the deterministic guardrails. PreToolUse blocks bad tool calls, PostToolUse enforces policy (like our MCP auth guard), Stop refuses to finish until state is clean. Plugins: package skills+agents+hooks for teams -- Databricks has the fe-vibe marketplace. Key message: these aren't advanced features, they're leverage. Deep dive slides in the appendix if time allows. Transition: Now let's talk verification.">
     <div class="slide-content">
       <span class="eyebrow">POWER TOOLS</span>
       <h2>Subagents, Skills, Hooks &amp; Plugins</h2>
@@ -1552,13 +1410,13 @@
         <p style="font-size:0.85rem;color:var(--text-secondary);margin:0;"><strong style="color:var(--db-lava);">Key message:</strong> These aren't advanced features &mdash; they're leverage. The gap between a one-shot prompt and a hooks-guarded, skill-driven workflow is the same gap between cards 2 and 3 on the opening slide. <em>Deep dive: appendix.</em></p>
       </div>
     </div>
-    <div class="slide-footer">18</div>
+    <div class="slide-footer">17</div>
   </section>
 
   <!-- ============================================================ -->
-  <!-- SLIDE 19: VERIFICATION PATTERNS                             -->
+  <!-- SLIDE 18: VERIFICATION PATTERNS                             -->
   <!-- ============================================================ -->
-  <section class="slide slide-white" aria-label="Slide 19: Anthropic Best Practices" data-notes="This is the most important slide in the session. The core question every prompt should answer: How will Claude PROVE this worked? Not 'I think it works' -- proof. Walk through the six verification patterns on the left. BDD gates: write Gherkin features first, agent must pass all scenarios. Separate prompts: Prompt 1 writes the features, Prompt 2 implements step definitions -- if the same prompt does both, the agent writes steps that trivially pass rather than testing real behavior. @dp.expect: Lakeflow data quality constraints that fail the pipeline on bad data. Schema contracts: StructType definitions as machine-readable specs. Full suite regression: run ALL tests after every change, not just the new ones. Negative testing: test what should fail, not just what should pass. Then the right column: explore first, plan, then code. The bottom line is the key takeaway: the difference between an agent that THINKS it did the work and one that PROVES it did. ~3 min. Transition: Now let's talk about managing context windows.">
+  <section class="slide slide-white" aria-label="Slide 18: Anthropic Best Practices" data-notes="This is the most important slide in the session. The core question every prompt should answer: How will Claude PROVE this worked? Not 'I think it works' -- proof. Walk through the six verification patterns on the left. BDD gates: write Gherkin features first, agent must pass all scenarios. Separate prompts: Prompt 1 writes the features, Prompt 2 implements step definitions -- if the same prompt does both, the agent writes steps that trivially pass rather than testing real behavior. @dp.expect: Lakeflow data quality constraints that fail the pipeline on bad data. Schema contracts: StructType definitions as machine-readable specs. Full suite regression: run ALL tests after every change, not just the new ones. Negative testing: test what should fail, not just what should pass. Then the right column: explore first, plan, then code. The bottom line is the key takeaway: the difference between an agent that THINKS it did the work and one that PROVES it did. ~3 min. Transition: Now let's talk about managing context windows.">
     <div class="slide-content">
       <span class="eyebrow">VERIFICATION PATTERNS</span>
       <h2>Every Prompt Must Answer: <span class="text-lava">How Will Claude Prove This Worked?</span></h2>
@@ -1595,14 +1453,14 @@
       <div style="margin-top:1.5rem;padding:0.75rem 1.25rem;background:rgba(27,81,98,0.06);border-radius:8px;text-align:center;">
         <p style="font-size:0.85rem;color:var(--text-secondary);font-style:italic;">The difference: an agent that <strong>thinks</strong> it did the work vs one that <strong>proves</strong> it did. &mdash; Anthropic, Claude Code Best Practices</p>
       </div>
-      <div class="slide-footer">19</div>
+      <div class="slide-footer">18</div>
     </div>
   </section>
 
   <!-- ============================================================ -->
-  <!-- SLIDE 20: THE SYCOPHANCY PROBLEM                            -->
+  <!-- SLIDE 19: THE SYCOPHANCY PROBLEM                            -->
   <!-- ============================================================ -->
-  <section class="slide slide-dark dark-bg texture-noise" aria-label="Slide 20: The Sycophancy Problem" data-notes="This is the uncomfortable truth. Stanford published in Science (March 2026): tested 11 production LLMs against 2000+ real advice prompts. AI endorsed the user's position 49% more than humans. The killer stat: when the user was 100% wrong, AI still agreed 51% of the time. Same week, Karpathy spent 4 hours refining an argument with an LLM, thought it was solid. Asked it to argue the opposite — it demolished the argument. His comment: LOL. The model isn't reasoning toward truth — it generates the most compelling version of whatever position you ask. This is NOT a bug. It's RLHF: humans prefer agreeable responses, so models that weren't likable got deprecated. We selected for sycophancy. Practical defenses: (1) Karpathy Test — always ask the model to argue the opposite. (2) 'Wait a minute' prefix — two words that measurably improve critical evaluation. (3) BDD — structural verification that doesn't rely on claims. (4) Separate prompts — one writes tests, another implements. Code Rabbit data: AI-authored code has 1.7x more major issues, 2.7x more security vulnerabilities. Chollet framing: focus class (uses AI to extend thinking) vs slop class (delegates cognition). The discipline of stress-testing AI output is the career skill of this decade. ~3 min. Transition: Now let's talk about managing context.">
+  <section class="slide slide-dark dark-bg texture-noise" aria-label="Slide 19: The Sycophancy Problem" data-notes="This is the uncomfortable truth. Stanford published in Science (March 2026): tested 11 production LLMs against 2000+ real advice prompts. AI endorsed the user's position 49% more than humans. The killer stat: when the user was 100% wrong, AI still agreed 51% of the time. Same week, Karpathy spent 4 hours refining an argument with an LLM, thought it was solid. Asked it to argue the opposite — it demolished the argument. His comment: LOL. The model isn't reasoning toward truth — it generates the most compelling version of whatever position you ask. This is NOT a bug. It's RLHF: humans prefer agreeable responses, so models that weren't likable got deprecated. We selected for sycophancy. Practical defenses: (1) Karpathy Test — always ask the model to argue the opposite. (2) 'Wait a minute' prefix — two words that measurably improve critical evaluation. (3) BDD — structural verification that doesn't rely on claims. (4) Separate prompts — one writes tests, another implements. Code Rabbit data: AI-authored code has 1.7x more major issues, 2.7x more security vulnerabilities. Chollet framing: focus class (uses AI to extend thinking) vs slop class (delegates cognition). The discipline of stress-testing AI output is the career skill of this decade. ~3 min. Transition: Now let's talk about managing context.">
     <div class="slide-content">
       <span class="eyebrow" style="color:var(--db-lava-light);">CRITICAL INSIGHT</span>
       <h2>Why AI Agrees With You <span class="text-lava">(Even When You're Wrong)</span></h2>
@@ -1656,75 +1514,71 @@
       <div style="margin-top:1rem;padding:0.6rem 1.25rem;background:rgba(255,54,33,0.1);border-radius:8px;border-left:3px solid var(--db-lava);text-align:left;">
         <p style="font-size:0.78rem;color:rgba(255,255,255,0.7);">This is not a bug to patch. RLHF training <em>selected</em> for agreement. The question: are you using AI to <strong style="color:var(--db-green);">extend</strong> your thinking, or <strong style="color:var(--db-lava-light);">replace</strong> it? &mdash; <span style="color:rgba(255,255,255,0.5);">Fran&ccedil;ois Chollet</span></p>
       </div>
-      <div class="slide-footer" style="color:rgba(255,255,255,0.4);">20</div>
+      <div class="slide-footer" style="color:rgba(255,255,255,0.4);">19</div>
     </div>
   </section>
 
   <!-- ============================================================ -->
-  <!-- SLIDE 21: SMALL STEPS — THE CENTRAL TECHNIQUE                -->
+  <!-- SLIDE 20: SMALL STEPS — THE CENTRAL TECHNIQUE                -->
   <!-- ============================================================ -->
-  <section class="slide slide-light" aria-label="Slide 21: Small Steps — The Central Technique" data-notes="~3 min. This is THE mantra of the workshop — the synthesis of Verification + Sycophancy + Writing Tests. Frame it as the single biggest difference between ChatGPT users and Claude Code power users. Walk the left column (Big Bang): the 'build me the entire bronze layer' prompt sits for 10-20 min, attendees have nothing to do, agent can drift in silence, multiple failures hit at once. Right column (Small Steps): 5-10 tight prompts, 1-3 min each, active review between, failures isolated. Land the heuristic at the bottom: 'After this prompt finishes, will I KNOW whether it worked?' If no — split it. Callback: 'Remember Sycophancy? Big-bang prompts are how the agent bluffs — you give it so much surface area that you can't verify. Small steps force verification.' Callback to Writing Tests: 'Remember — small DataFrame, specific assertion. Same idea for prompts.' Transition: Now let's talk about context windows — one more reason small steps matter.">
+  <section class="slide slide-light" aria-label="Slide 20: Small Steps — The Central Technique" data-notes="~3 min. This is THE mantra of the workshop — the synthesis of Verification + Sycophancy + Writing Tests. Frame it as the single biggest difference between ChatGPT users and Claude Code power users. Walk the left column (Big Bang): the 'build me the entire bronze layer' prompt sits for 10-20 min, attendees have nothing to do, agent can drift in silence, multiple failures hit at once. Right column (Small Steps): 5-10 tight prompts, 1-3 min each, active review between, failures isolated. Land the heuristic at the bottom: 'After this prompt finishes, will I KNOW whether it worked?' If no — split it. Callback: 'Remember Sycophancy? Big-bang prompts are how the agent bluffs — you give it so much surface area that you can't verify. Small steps force verification.' Callback to Writing Tests: 'Remember — small DataFrame, specific assertion. Same idea for prompts.' Transition: Now let's talk about context windows — one more reason small steps matter.">
     <div class="slide-content">
       <span class="eyebrow">THE CENTRAL TECHNIQUE</span>
       <h2>Small Steps Beat <span class="text-lava">Big Bang</span></h2>
       <div class="accent-line"></div>
-      <p style="color:var(--text-secondary);margin-bottom:1.25rem;">The single biggest difference between ChatGPT users and Claude Code power users. Each prompt is one verifiable step. The rest follows.</p>
+      <p class="lead">The single biggest difference between ChatGPT users and Claude Code power users. Each prompt is one verifiable step &mdash; the rest follows.</p>
 
-      <div class="two-col" style="gap:2rem; align-items:start;">
-        <div>
-          <h3 style="color:var(--db-lava); font-size:1.05rem; margin-bottom:0.75rem;">Big Bang <span style="font-weight:400; color:var(--text-secondary);">(what ChatGPT teaches you)</span></h3>
-
-          <div class="code-block" style="font-size:0.78rem; background:rgba(224,26,34,0.04); border-left:3px solid var(--db-lava);">
+      <div class="two-col" style="gap:2rem;align-items:stretch;margin-top:1.5rem;">
+        <div class="card" style="border-left:3px solid var(--db-lava);">
+          <h3 style="color:var(--db-lava);">Big Bang</h3>
+          <p style="font-size:0.9rem;color:var(--text-secondary);margin-top:0.25rem;">What ChatGPT habits teach you.</p>
+          <div class="code-block" style="margin:0.75rem 0;">
 <span class="comment"># One mega-prompt</span>
-<span class="string">"Build the entire bronze layer — </span>
-<span class="string">both tables, all tests, quality </span>
+<span class="string">"Build the entire bronze layer &mdash;</span>
+<span class="string">both tables, all tests, quality</span>
 <span class="string">expectations, and pipeline config."</span>
           </div>
-
-          <ul style="font-size:0.85rem; margin-top:0.75rem; padding-left:1.1rem; color:var(--text-secondary);">
-            <li><strong style="color:var(--db-lava);">10–20 min wait</strong> with no visibility</li>
-            <li>Pile of code you didn't watch generate</li>
-            <li>Multiple failures hit at once &mdash; hard to debug</li>
-            <li>You end up <em>trusting</em>, not verifying</li>
-            <li>Perfect setup for the sycophancy trap</li>
+          <ul class="bullet-list">
+            <li><strong>10&ndash;20 min wait</strong> with no visibility</li>
+            <li>Pile of code you didn&rsquo;t watch generate</li>
+            <li>Multiple failures hit at once</li>
+            <li>You <em>trust</em> instead of verifying</li>
+            <li>Perfect setup for sycophancy</li>
           </ul>
         </div>
 
-        <div>
-          <h3 style="color:var(--db-green); font-size:1.05rem; margin-bottom:0.75rem;">Small Steps <span style="font-weight:400; color:var(--text-secondary);">(what Claude Code rewards)</span></h3>
-
-          <div class="code-block" style="font-size:0.78rem; background:rgba(0,169,114,0.04); border-left:3px solid var(--db-green);">
+        <div class="card" style="border-left:3px solid var(--db-green);">
+          <h3 style="color:var(--db-green);">Small Steps</h3>
+          <p style="font-size:0.9rem;color:var(--text-secondary);margin-top:0.25rem;">What Claude Code rewards.</p>
+          <div class="code-block" style="margin:0.75rem 0;">
 <span class="comment"># Five tight prompts</span>
 <span class="string">1. "Create the repo skeleton."</span>
-<span class="string">2. "Write @dp.table that fetches</span>
-<span class="string">    the CSV. No tests yet."</span>
-<span class="string">3. "Write one schema test with</span>
-<span class="string">    3 sample rows."</span>
+<span class="string">2. "Write @dp.table for CSV fetch."</span>
+<span class="string">3. "Write one schema test."</span>
 <span class="string">4. "Run the test. Fix if it fails."</span>
 <span class="string">5. "Add @dp.expect for validity."</span>
           </div>
-
-          <ul style="font-size:0.85rem; margin-top:0.75rem; padding-left:1.1rem; color:var(--text-secondary);">
-            <li><strong style="color:var(--db-green);">1–3 min per prompt</strong>, 10+ per hour</li>
+          <ul class="bullet-list">
+            <li><strong>1&ndash;3 min per prompt</strong>, 10+ per hour</li>
             <li>Active review between every step</li>
             <li>Failures isolated to one change</li>
             <li>You see the agent reason &mdash; you can disagree</li>
-            <li>Each prompt has its own verification</li>
+            <li>Every prompt has its own verification</li>
           </ul>
         </div>
       </div>
 
-      <div style="margin-top:1.25rem;padding:0.85rem 1.25rem;background:var(--db-oat);border-left:4px solid var(--db-lava);border-radius:4px;">
-        <p style="font-size:0.92rem;margin:0;line-height:1.5;color:var(--text-secondary);"><strong style="color:var(--db-lava);">Heuristic:</strong> <em>&ldquo;After this prompt finishes, will I <u>know</u> whether it worked?&rdquo;</em> If the answer is &ldquo;I&rsquo;ll have to trust it and check later&rdquo; &mdash; <strong>the prompt is too big. Split it.</strong></p>
+      <div class="card" style="margin-top:1.25rem;border-left:4px solid var(--db-lava);background:var(--db-oat);">
+        <p style="margin:0;font-size:1rem;line-height:1.55;"><strong style="color:var(--db-lava);">Heuristic:</strong> <em>&ldquo;After this prompt finishes, will I <u>know</u> whether it worked?&rdquo;</em> &mdash; if &ldquo;no,&rdquo; <strong>the prompt is too big. Split it.</strong></p>
       </div>
     </div>
-    <div class="slide-footer">21</div>
+    <div class="slide-footer">20</div>
   </section>
 
   <!-- ============================================================ -->
-  <!-- SLIDE 22: WHAT ARE TOKENS                                   -->
+  <!-- SLIDE 21: WHAT ARE TOKENS                                   -->
   <!-- ============================================================ -->
-  <section class="slide slide-light" aria-label="Slide 22: What Are Tokens" data-notes="Before talking about context windows, make sure everyone understands what a token is. Most people think 1 token = 1 word. It's closer to 3/4 of a word, or about 4 characters. A 200-line Python file is roughly 2-3K tokens. The key insight for the workshop: we're likely running through AI Gateway with a ~1M tokens per minute rate limit shared across all teams. That means if 5 teams are all asking the agent to read large files simultaneously, you'll hit throttling. Practical tips: keep requests focused, don't ask the agent to read entire directories, use subagents to parallelise but be aware of the shared limit. This directly motivates the context management strategies on the next slide. ~3 min. Transition: So how do we manage this finite resource?">
+  <section class="slide slide-light" aria-label="Slide 21: What Are Tokens" data-notes="Before talking about context windows, make sure everyone understands what a token is. Most people think 1 token = 1 word. It's closer to 3/4 of a word, or about 4 characters. A 200-line Python file is roughly 2-3K tokens. The key insight for the workshop: we're likely running through AI Gateway with a ~1M tokens per minute rate limit shared across all teams. That means if 5 teams are all asking the agent to read large files simultaneously, you'll hit throttling. Practical tips: keep requests focused, don't ask the agent to read entire directories, use subagents to parallelise but be aware of the shared limit. This directly motivates the context management strategies on the next slide. ~3 min. Transition: So how do we manage this finite resource?">
     <div class="slide-content">
       <span class="eyebrow">CONTEXT MANAGEMENT</span>
       <h2>What Are <span class="text-lava">Tokens</span>?</h2>
@@ -1774,14 +1628,14 @@
           </div>
         </div>
       </div>
-      <div class="slide-footer">22</div>
+      <div class="slide-footer">21</div>
     </div>
   </section>
 
   <!-- ============================================================ -->
-  <!-- SLIDE 23: MANAGING CONTEXT WINDOWS                          -->
+  <!-- SLIDE 22: MANAGING CONTEXT WINDOWS                          -->
   <!-- ============================================================ -->
-  <section class="slide slide-dark dark-bg" aria-label="Slide 23: Managing Context Windows" data-notes="Critical concept. The context window is the agent's working memory — everything it can 'see' at once. Claude's is ~200K tokens, roughly a medium novel. But it fills up fast: every file read, every tool result, every conversation turn consumes tokens. The status bar visualisation shows how context fills up as you work — green is fine, amber is getting heavy, red means auto-compaction is about to fire and the agent forgets earlier details. Four strategies to manage this. ~4 min. Transition: Let me show you this in practice.">
+  <section class="slide slide-dark dark-bg" aria-label="Slide 22: Managing Context Windows" data-notes="Critical concept. The context window is the agent's working memory — everything it can 'see' at once. Claude's is ~200K tokens, roughly a medium novel. But it fills up fast: every file read, every tool result, every conversation turn consumes tokens. The status bar visualisation shows how context fills up as you work — green is fine, amber is getting heavy, red means auto-compaction is about to fire and the agent forgets earlier details. Four strategies to manage this. ~4 min. Transition: Let me show you this in practice.">
     <div class="slide-content">
       <span class="eyebrow" style="color:var(--db-lava-light);">CONTEXT MANAGEMENT</span>
       <h2>Managing Context Windows</h2>
@@ -1846,14 +1700,14 @@
       <div style="margin-top:1rem;text-align:center;">
         <p style="font-size:0.75rem;color:rgba(255,255,255,0.45);font-family:var(--font-mono);">Think of it like RAM &mdash; manage it or the OS starts swapping.</p>
       </div>
-      <div class="slide-footer" style="color:rgba(255,255,255,0.4);">23</div>
+      <div class="slide-footer" style="color:rgba(255,255,255,0.4);">22</div>
     </div>
   </section>
 
   <!-- ============================================================ -->
-  <!-- SLIDE 24: LIVE DEMO PREVIEW                                 -->
+  <!-- SLIDE 23: LIVE DEMO PREVIEW                                 -->
   <!-- ============================================================ -->
-  <section class="slide slide-light" aria-label="Slide 24: Live Demo Preview" data-notes="DEMO SLIDE. Open Coding Agents terminal. Write 3 failing tests: clean_data, join_tables, aggregate. Ask Claude Code to implement. Watch the agent read tests, write code, run tests, see failures, fix code. Point out: agent reads test expectations BEFORE writing code. Self-corrects on failures. Converges in 2-5 iterations. Have backup recording ready in case of issues. ~5 min demo. Transition: Now it's your turn -- Lab 1.">
+  <section class="slide slide-light" aria-label="Slide 23: Live Demo Preview" data-notes="DEMO SLIDE. Open Coding Agents terminal. Write 3 failing tests: clean_data, join_tables, aggregate. Ask Claude Code to implement. Watch the agent read tests, write code, run tests, see failures, fix code. Point out: agent reads test expectations BEFORE writing code. Self-corrects on failures. Converges in 2-5 iterations. Have backup recording ready in case of issues. ~5 min demo. Transition: Now it's your turn -- Lab 1.">
     <div class="slide-content">
       <span class="eyebrow">LIVE DEMO</span>
       <h2>Live Demo: BDD in Action</h2>
@@ -1901,56 +1755,46 @@
           </div>
         </div>
       </div>
-      <div class="slide-footer">24</div>
+      <div class="slide-footer">23</div>
     </div>
   </section>
-<!-- SLIDE 25: WHAT WE'RE BUILDING -->
-<section class="slide slide-white" aria-label="Slide 25: What We're Building" data-notes="Show the end state: 4 components. Pipeline, App, Genie, Dashboard. Everything connects through Unity Catalog.">
+<!-- SLIDE 24: LIVE DEMO — PIPELINE + DASHBOARD END-TO-END -->
+<section class="slide slide-dark dark-bg texture-noise" aria-label="Slide 24: Live Demo — Pipeline + Dashboard" data-notes="~30 sec on slide, then flip to terminal + dashboard for a 4-5 min live demo. PRE-DEPLOY CHECKLIST: (1) reference-implementation pipeline deployed and running in demo schema; (2) AI/BI dashboard built on gold_retail_summary, already open in a browser tab; (3) terminal pre-opened in CODA with reference-implementation cloned; (4) Databricks warehouse warm. SCRIPT: Flip to dashboard — 'here's the pipeline running right now.' Flip to terminal — 'I want to add year-over-year growth, BDD style.' Prompt 1: write pytest for yoy_growth_pct. Prompt 2: implement window function. Run test → red → green. Deploy: databricks bundle deploy && run. Flip to dashboard, refresh, new column visible. Land: 'Four prompts, one metric, end-to-end loop. That's the 60 minutes of labs.' See starter-kit/demos/pipeline-and-dashboard-demo.md for full script + fallbacks. Transition: Today's Challenge.">
   <div class="slide-content" style="text-align:center;">
-    <span class="eyebrow">THE DESTINATION</span>
-    <h2>What We're Building Today</h2>
+    <span class="section-num" style="color:rgba(255,255,255,0.5);">What You'll Build &middot; Live</span>
+    <h2 style="color:white; font-size:2.75rem; margin:0.5rem 0; line-height:1.1;">The loop, <span style="color:var(--db-lava-light);">end-to-end</span>.</h2>
     <div class="accent-line center"></div>
-    <p class="subtitle" style="color:var(--text-secondary); margin-bottom:2rem;">By 4pm today, your team will have built all four of these</p>
+    <p class="lead" style="color:rgba(255,255,255,0.75); max-width:780px; margin:1.5rem auto;">Pipeline already running. Dashboard already open. I&rsquo;m going to add one new metric, BDD-style, and you&rsquo;ll see it flow all the way through.</p>
 
-    <div class="card-grid grid-cols-2" style="max-width:880px; margin:0 auto 2rem auto; gap:1.25rem;">
-      <div class="card" style="background:var(--db-navy); color:white; text-align:left; padding:1.5rem;">
-        <span style="font-size:2rem; font-weight:700; color:var(--db-lava-light); display:block; margin-bottom:0.25rem;">1</span>
-        <h3 style="color:white; margin:0 0 0.5rem 0;">Data Pipeline</h3>
-        <p style="color:rgba(255,255,255,0.7); font-size:0.85rem; margin:0;">Lakeflow pipeline ingesting ABS retail &amp; food price data through Bronze &#8594; Silver &#8594; Gold medallion architecture</p>
+    <div class="diagram-row" style="justify-content:center; margin:2rem 0 1rem 0; flex-wrap:wrap;">
+      <div class="diagram-node" style="padding:0.65rem 1.1rem; font-size:0.9rem; background:rgba(255,255,255,0.08); color:white; border:1px solid rgba(255,54,33,0.3);">
+        <strong style="color:var(--db-lava-light); display:block; font-size:0.75rem; letter-spacing:0.05em; text-transform:uppercase;">Test</strong>
+        <span style="font-size:0.8rem; opacity:0.7;">pytest fixture</span>
       </div>
-      <div class="card" style="background:var(--db-navy); color:white; text-align:left; padding:1.5rem;">
-        <span style="font-size:2rem; font-weight:700; color:var(--db-teal); display:block; margin-bottom:0.25rem;">2</span>
-        <h3 style="color:white; margin:0 0 0.5rem 0;">Web Application</h3>
-        <p style="color:rgba(255,255,255,0.7); font-size:0.85rem; margin:0;">FastAPI + Tailwind app with dashboards, filters, and an AI-powered "Ask a Question" feature</p>
+      <div class="diagram-arrow" style="color:rgba(255,255,255,0.4);"></div>
+      <div class="diagram-node" style="padding:0.65rem 1.1rem; font-size:0.9rem; background:rgba(255,255,255,0.08); color:white; border:1px solid rgba(45,141,173,0.3);">
+        <strong style="color:#6ec6e0; display:block; font-size:0.75rem; letter-spacing:0.05em; text-transform:uppercase;">Implement</strong>
+        <span style="font-size:0.8rem; opacity:0.7;">@dp.table window fn</span>
       </div>
-      <div class="card" style="background:var(--db-navy); color:white; text-align:left; padding:1.5rem;">
-        <span style="font-size:2rem; font-weight:700; color:var(--db-green); display:block; margin-bottom:0.25rem;">3</span>
-        <h3 style="color:white; margin:0 0 0.5rem 0;">Genie Space</h3>
-        <p style="color:rgba(255,255,255,0.7); font-size:0.85rem; margin:0;">Natural language Q&amp;A -- business users type questions in English, get instant answers from your data</p>
+      <div class="diagram-arrow" style="color:rgba(255,255,255,0.4);"></div>
+      <div class="diagram-node" style="padding:0.65rem 1.1rem; font-size:0.9rem; background:rgba(255,255,255,0.08); color:white; border:1px solid rgba(0,169,114,0.3);">
+        <strong style="color:var(--db-green); display:block; font-size:0.75rem; letter-spacing:0.05em; text-transform:uppercase;">Deploy</strong>
+        <span style="font-size:0.8rem; opacity:0.7;">DABs bundle</span>
       </div>
-      <div class="card" style="background:var(--db-navy); color:white; text-align:left; padding:1.5rem;">
-        <span style="font-size:2rem; font-weight:700; color:var(--db-amber); display:block; margin-bottom:0.25rem;">4</span>
-        <h3 style="color:white; margin:0 0 0.5rem 0;">AI/BI Dashboard</h3>
-        <p style="color:rgba(255,255,255,0.7); font-size:0.85rem; margin:0;">Auto-generated visualizations from your gold tables -- describe what you want in plain language</p>
+      <div class="diagram-arrow" style="color:rgba(255,255,255,0.4);"></div>
+      <div class="diagram-node" style="padding:0.65rem 1.1rem; font-size:0.9rem; background:rgba(255,255,255,0.08); color:white; border:1px solid rgba(254,171,3,0.3);">
+        <strong style="color:var(--db-amber); display:block; font-size:0.75rem; letter-spacing:0.05em; text-transform:uppercase;">Dashboard</strong>
+        <span style="font-size:0.8rem; opacity:0.7;">AI/BI refresh</span>
       </div>
     </div>
 
-    <div class="diagram-row" style="justify-content:center; margin-top:1rem;">
-      <div class="diagram-node primary" style="padding:0.5rem 1rem; font-size:0.85rem;">Pipeline</div>
-      <div class="diagram-arrow"></div>
-      <div class="diagram-node accent" style="padding:0.5rem 1rem; font-size:0.85rem;">App</div>
-      <div class="diagram-arrow"></div>
-      <div class="diagram-node green" style="padding:0.5rem 1rem; font-size:0.85rem;">Genie</div>
-      <div class="diagram-arrow"></div>
-      <div class="diagram-node amber" style="padding:0.5rem 1rem; font-size:0.85rem;">Dashboard</div>
-      <span style="font-size:1.1rem; font-weight:700; color:var(--db-ink); margin-left:0.75rem;">= Grocery Intelligence Platform</span>
-    </div>
+    <p style="color:rgba(255,255,255,0.5); font-size:0.85rem; margin-top:2rem; letter-spacing:0.04em;">FOUR PROMPTS &middot; ONE NEW METRIC &middot; ~4 MIN</p>
   </div>
-  <div class="slide-footer">25</div>
+  <div class="slide-footer" style="color:rgba(255,255,255,0.3);">24</div>
 </section>
 
-<!-- SLIDE 26: TODAY'S CHALLENGE -->
-<section class="slide slide-dark dark-bg" aria-label="Slide 26: Today's Challenge" data-notes="Introduce the challenge. Data sources, tech stack, what they'll build. ~3 min.">
+<!-- SLIDE 25: TODAY'S CHALLENGE -->
+<section class="slide slide-dark dark-bg" aria-label="Slide 25: Today's Challenge" data-notes="Introduce the challenge. Data sources, tech stack, what they'll build. ~3 min.">
   <div class="slide-content">
     <span class="eyebrow" style="color:var(--db-lava-light);">THE CHALLENGE</span>
     <h2 style="color:var(--db-lava-light); font-size:2.2rem; margin:0.25rem 0 0.5rem 0;">Today's Challenge: Grocery Intelligence Platform</h2>
@@ -1987,14 +1831,14 @@
       </div>
     </div>
   </div>
-  <div class="slide-footer" style="color:rgba(255,255,255,0.3);">26</div>
+  <div class="slide-footer" style="color:rgba(255,255,255,0.3);">25</div>
 </section>
 
 
   <!-- ============================================================ -->
-  <!-- SLIDE 27: SECTION DIVIDER — LAB 0                           -->
+  <!-- SLIDE 26: SECTION DIVIDER — LAB 0                           -->
   <!-- ============================================================ -->
-  <section class="slide slide-dark dark-bg texture-noise" aria-label="Slide 27: Section: Lab 0" data-notes="Lab 0 section divider. 45 minutes guided hands-on, everyone together. This is the foundation before teams split into tracks. Step 1 demonstrates Rule #1 — just tell Claude about your project and it initializes everything. Then write a first test and build bronze ingest. Everyone should have their Coding Agents terminal ready. If anyone has access issues, flag them now. ~30 sec.">
+  <section class="slide slide-dark dark-bg texture-noise" aria-label="Slide 26: Section: Lab 0" data-notes="Lab 0 section divider. 45 minutes guided hands-on, everyone together. This is the foundation before teams split into tracks. Step 1 demonstrates Rule #1 — just tell Claude about your project and it initializes everything. Then write a first test and build bronze ingest. Everyone should have their Coding Agents terminal ready. If anyone has access issues, flag them now. ~30 sec.">
     <div class="slide-content" style="text-align:center;">
       <span class="section-num">Lab 0 &middot; 10:45 AM &middot; 45 Minutes</span>
       <h1>Lab 0: Guided Hands-On</h1>
@@ -2021,9 +1865,9 @@
   </section>
 
   <!-- ============================================================ -->
-  <!-- SLIDE 28: PRACTICAL TIPS FOR THE LABS                       -->
+  <!-- SLIDE 27: PRACTICAL TIPS FOR THE LABS                       -->
   <!-- ============================================================ -->
-  <section class="slide slide-white" aria-label="Slide 28: Practical Tips for the Labs" data-notes="Five practical patterns before they start the labs. These come from Anthropic's best practices and community-tested patterns. (1) Overeagerness: Claude tends to overengineer — extra files, unnecessary abstractions. Tell it to keep solutions minimal. Add a line to your CLAUDE.md. (2) Hallucination prevention: never trust claims about code Claude hasn't read. Add the investigate_before_answering instruction to your CLAUDE.md. (3) Course-correct early: don't let it run for 10 minutes unchecked. Check in every 2-3 tool calls. If it's heading the wrong direction, say 'stop, let's rethink.' (4) Challenge Claude: after it implements, make it prove the work — 'show me git diff', 'prove to me this works', 'grill me on these changes'. Then iterate: 'knowing everything you know now, scrap this and implement the elegant solution.' (5) Commit as checkpoints: every 15-20 minutes, /commit. If the agent goes off-rails, Esc-Esc to cancel, git checkout to rewind. Commits are your safety net. Also remind teams: start every non-trivial task with /plan and have Claude interview you about what you need before building. ~3 min. Transition: OK, let's start Lab 1.">
+  <section class="slide slide-white" aria-label="Slide 27: Practical Tips for the Labs" data-notes="Five practical patterns before they start the labs. These come from Anthropic's best practices and community-tested patterns. (1) Overeagerness: Claude tends to overengineer — extra files, unnecessary abstractions. Tell it to keep solutions minimal. Add a line to your CLAUDE.md. (2) Hallucination prevention: never trust claims about code Claude hasn't read. Add the investigate_before_answering instruction to your CLAUDE.md. (3) Course-correct early: don't let it run for 10 minutes unchecked. Check in every 2-3 tool calls. If it's heading the wrong direction, say 'stop, let's rethink.' (4) Challenge Claude: after it implements, make it prove the work — 'show me git diff', 'prove to me this works', 'grill me on these changes'. Then iterate: 'knowing everything you know now, scrap this and implement the elegant solution.' (5) Commit as checkpoints: every 15-20 minutes, /commit. If the agent goes off-rails, Esc-Esc to cancel, git checkout to rewind. Commits are your safety net. Also remind teams: start every non-trivial task with /plan and have Claude interview you about what you need before building. ~3 min. Transition: OK, let's start Lab 1.">
     <div class="slide-content">
       <span class="eyebrow">LAB PREPARATION</span>
       <h2>Practical Tips for the Labs</h2>
@@ -2077,13 +1921,13 @@
           </div>
         </div>
       </div>
-      <div class="slide-footer">28</div>
+      <div class="slide-footer">27</div>
     </div>
   </section>
 <!-- ============================================================ -->
-<!-- SLIDE 29: SECTION DIVIDER — CAPABILITIES FOR YOUR TRACK -->
+<!-- SLIDE 28: SECTION DIVIDER — CAPABILITIES FOR YOUR TRACK -->
 <!-- ============================================================ -->
-<section class="slide slide-dark dark-bg texture-lines" aria-label="Slide 29: Section: Capabilities for Your Track" data-notes="Pre-lab tools session — reframed as 'capabilities that matter for your track.' DE track cares about Iceberg + Skills/MCP. Analyst cares about Genie + AI/BI. DS cares about MCP + Skills. Preview this framing. ~1 min.">
+<section class="slide slide-dark dark-bg texture-lines" aria-label="Slide 28: Section: Capabilities for Your Track" data-notes="Pre-lab tools session — reframed as 'capabilities that matter for your track.' DE track cares about Iceberg + Skills/MCP. Analyst cares about Genie + AI/BI. DS cares about MCP + Skills. Preview this framing. ~1 min.">
   <div class="slide-content" style="text-align:center;">
     <span class="section-num">11:30 AM</span>
     <h1>Capabilities for Your Track</h1>
@@ -2093,9 +1937,9 @@
 </section>
 
 <!-- ============================================================ -->
-<!-- SLIDE 30: SKILLS & TOOLS — PRACTICAL TOOLS -->
+<!-- SLIDE 29: SKILLS & TOOLS — PRACTICAL TOOLS -->
 <!-- ============================================================ -->
-<section class="slide slide-white" aria-label="Slide 30: Skills and Tools" data-notes="Skills vs Tools. deathbyclawd.com callout. ~5 min.">
+<section class="slide slide-white" aria-label="Slide 29: Skills and Tools" data-notes="Skills vs Tools. deathbyclawd.com callout. ~5 min.">
   <div class="slide-content">
     <span class="eyebrow">TOOLING</span>
     <h2 style="text-align:center;margin-bottom:0.5em;">Practical Tools for the Labs</h2>
@@ -2138,14 +1982,14 @@
     <div style="text-align:center;margin-top:1.5em;">
       <p style="font-size:0.85em;color:var(--text-secondary);">How powerful is a markdown skill? <a href="https://deathbyclawd.com/" target="_blank" style="color:var(--db-lava);font-weight:600;">deathbyclawd.com</a> scans which SaaS products can be replaced by one.</p>
     </div>
-    <div class="slide-footer">30</div>
+    <div class="slide-footer">29</div>
   </div>
 </section>
 
 <!-- ============================================================ -->
-<!-- SLIDE 31: MCP ON DATABRICKS -->
+<!-- SLIDE 30: MCP ON DATABRICKS -->
 <!-- ============================================================ -->
-<section class="slide slide-light" aria-label="Slide 31: MCP on Databricks" data-notes="Three flavours of MCP servers. ~5 min.">
+<section class="slide slide-light" aria-label="Slide 30: MCP on Databricks" data-notes="Three flavours of MCP servers. ~5 min.">
   <div class="slide-content">
     <span class="eyebrow">PLATFORM CAPABILITIES</span>
     <h2>MCP Servers on Databricks</h2>
@@ -2202,14 +2046,14 @@ Databricks Apps &rarr; your-mcp-server:8000
       <span class="coles-badge" style="font-size:0.75rem;">Coles</span>
       <span style="font-size:0.8rem;color:var(--text-secondary);">In Lab 2, you&rsquo;ll connect your app to Genie via a managed MCP server &mdash; zero custom glue code.</span>
     </div>
-    <div class="slide-footer">31</div>
+    <div class="slide-footer">30</div>
   </div>
 </section>
 
 <!-- ============================================================ -->
-<!-- SLIDE 32: DEMO — HOW DATABRICKS USES CLAUDE INTERNALLY -->
+<!-- SLIDE 31: DEMO — HOW DATABRICKS USES CLAUDE INTERNALLY -->
 <!-- ============================================================ -->
-<section class="slide slide-light" aria-label="Slide 32: Demo: Databricks Internal Claude Setup" data-notes="LIVE DEMO. CLAUDE.md, hooks, skills, MCP servers. ~8 min.">
+<section class="slide slide-light" aria-label="Slide 31: Demo: Databricks Internal Claude Setup" data-notes="LIVE DEMO. CLAUDE.md, hooks, skills, MCP servers. ~8 min.">
   <div class="slide-content">
     <span class="eyebrow">LIVE DEMO</span>
     <h2>How Databricks Uses Claude</h2>
@@ -2279,72 +2123,67 @@ Databricks Apps &rarr; your-mcp-server:8000
         </div>
       </div>
     </div>
-    <div class="slide-footer">32</div>
+    <div class="slide-footer">31</div>
   </div>
 </section>
 
 <!-- ============================================================ -->
-<!-- SLIDE 33: OPEN LAKEHOUSE — MANAGED ICEBERG IN UC -->
+<!-- SLIDE 32: OPEN LAKEHOUSE — MANAGED ICEBERG IN UC -->
 <!-- ============================================================ -->
-<section class="slide slide-light" aria-label="Slide 33: Open Lakehouse — Managed Iceberg in Unity Catalog" data-notes="~3-4 min. Callback to the platform-stack slide (slide 6, Open Formats row). Managed Iceberg tables in UC are CREATE TABLE ... USING ICEBERG (not DELTA). Key rules: no LOCATION (UC owns storage), CLUSTER BY only (no PARTITIONED BY), all UC governance applies. The point: external engines (Snowflake, Trino, DuckDB, BigQuery via BigLake) read these via the Iceberg REST Catalog — zero copy, same governance. Delta is still deeper (CDF, UniForm, deletion vectors); Iceberg is the vendor-neutral interop lingua franca. Mention: DE track Lab 2 has an optional Iceberg stretch goal. Transition: Now Genie.">
+<section class="slide slide-light" aria-label="Slide 32: Open Lakehouse — Managed Iceberg in Unity Catalog" data-notes="~3-4 min. Callback to the platform-stack slide (slide 6, Open Formats row). Managed Iceberg tables in UC are CREATE TABLE ... USING ICEBERG (not DELTA). Key rules: no LOCATION (UC owns storage), CLUSTER BY only (no PARTITIONED BY), all UC governance applies. The point: external engines (Snowflake, Trino, DuckDB, BigQuery via BigLake) read these via the Iceberg REST Catalog — zero copy, same governance. Delta is still deeper (CDF, UniForm, deletion vectors); Iceberg is the vendor-neutral interop lingua franca. Mention: DE track Lab 2 has an optional Iceberg stretch goal. Transition: Now Genie.">
   <div class="slide-content">
-    <span class="eyebrow" style="color:var(--db-teal);">OPEN LAKEHOUSE</span>
-    <h2>Managed Iceberg in Unity Catalog</h2>
+    <span class="eyebrow">OPEN LAKEHOUSE</span>
+    <h2>Managed Iceberg in <span class="text-lava">Unity Catalog</span></h2>
     <div class="accent-line"></div>
-    <p style="color:var(--text-secondary);margin-bottom:1.25rem;">Same UC governance. Same workspace. But external engines read it with zero copy via the Iceberg REST Catalog. This is what the Open Formats row on the platform stack actually means.</p>
+    <p class="lead">Same UC governance. Same workspace. External engines read it with <strong>zero copy</strong> via the Iceberg REST Catalog &mdash; what the Open Formats row on the platform stack means in practice.</p>
 
-    <div class="two-col" style="gap:2rem;">
-      <div>
-        <div class="code-block" style="font-size:0.85rem;">
-<span class="comment">-- Same catalog, different format, same governance</span>
+    <div class="two-col" style="gap:2rem;align-items:stretch;margin-top:1.5rem;">
+      <div class="card" style="border-left:3px solid var(--db-teal);">
+        <h3 style="color:var(--db-teal);">The SQL</h3>
+        <div class="code-block" style="margin:0.75rem 0;">
+<span class="comment">-- Same catalog, different format</span>
 <span class="keyword">CREATE OR REPLACE TABLE</span> workshop.gold.retail_summary_iceberg
 <span class="keyword">USING</span> <span class="type">ICEBERG</span>
 <span class="keyword">CLUSTER BY</span> (state, month_date)
 <span class="keyword">AS SELECT</span> * <span class="keyword">FROM</span> workshop.gold.retail_summary;
 
-<span class="comment">-- Now readable by Snowflake, Trino, DuckDB, BigQuery</span>
-<span class="comment">-- via the Iceberg REST Catalog endpoint — no copy</span>
+<span class="comment">-- Readable by Snowflake, Trino, DuckDB, BigQuery</span>
+<span class="comment">-- via the Iceberg REST Catalog &mdash; no copy</span>
         </div>
-
-        <div style="margin-top:1rem;padding:0.75rem 1rem;background:var(--db-oat);border-left:3px solid var(--db-lava);border-radius:4px;">
-          <p style="font-size:0.85rem;margin:0;color:var(--text-secondary);"><strong style="color:var(--db-lava);">Key rules:</strong> No <code>LOCATION</code> (UC owns storage). No <code>PARTITIONED BY</code> (liquid clustering only). Everything else you know about UC still applies.</p>
-        </div>
+        <p style="font-size:0.9rem;margin:0.75rem 0 0 0;"><strong style="color:var(--db-lava);">Rules:</strong> no <code>LOCATION</code>, no <code>PARTITIONED BY</code>. Liquid clustering only. UC owns the path.</p>
       </div>
 
       <div>
-        <h3 style="margin-bottom:0.75rem;font-size:1.05rem;">When to pick which</h3>
-
-        <div class="card" style="margin-bottom:0.6rem;border-left:3px solid var(--db-green);">
-          <strong style="color:var(--db-green);font-size:0.95rem;">Pick Iceberg when:</strong>
-          <ul style="font-size:0.85rem;margin:0.35rem 0 0 0;padding-left:1.1rem;">
+        <div class="card" style="border-left:3px solid var(--db-green);margin-bottom:0.75rem;">
+          <h3 style="color:var(--db-green);">Pick Iceberg when</h3>
+          <ul class="bullet-list">
             <li>External engines will read the table</li>
             <li>You need a vendor-neutral format</li>
-            <li>Multi-cloud / multi-warehouse setup</li>
+            <li>Multi-cloud or multi-warehouse setup</li>
           </ul>
         </div>
-
-        <div class="card" style="margin-bottom:0.6rem;border-left:3px solid var(--db-lava);">
-          <strong style="color:var(--db-lava);font-size:0.95rem;">Stay on Delta when:</strong>
-          <ul style="font-size:0.85rem;margin:0.35rem 0 0 0;padding-left:1.1rem;">
-            <li>You use Change Data Feed, deletion vectors, identity columns</li>
+        <div class="card" style="border-left:3px solid var(--db-lava);">
+          <h3 style="color:var(--db-lava);">Stay on Delta when</h3>
+          <ul class="bullet-list">
+            <li>Using Change Data Feed, deletion vectors, identity columns</li>
             <li>Most reads come from Databricks</li>
-            <li>UniForm gives you Iceberg-read from Delta for free</li>
+            <li>UniForm already gives you Iceberg-read from Delta</li>
           </ul>
-        </div>
-
-        <div style="padding:0.6rem 0.9rem;background:rgba(0,169,114,0.08);border-radius:4px;">
-          <p style="font-size:0.82rem;margin:0;color:var(--text-secondary);"><strong style="color:var(--db-green);">DE track:</strong> Optional Lab 2 stretch goal — publish your gold table as Iceberg for external consumption.</p>
         </div>
       </div>
     </div>
+
+    <div class="card" style="margin-top:1rem;border-left:4px solid var(--db-green);background:var(--db-oat);">
+      <p style="margin:0;font-size:0.95rem;"><strong style="color:var(--db-green);">DE track:</strong> optional Lab 2 stretch goal &mdash; publish your gold table as Iceberg for external consumption.</p>
+    </div>
   </div>
-  <div class="slide-footer">33</div>
+  <div class="slide-footer">32</div>
 </section>
 
 <!-- ============================================================ -->
-<!-- SLIDE 34: GENIE + AI/BI DASHBOARDS -->
+<!-- SLIDE 33: GENIE + AI/BI DASHBOARDS -->
 <!-- ============================================================ -->
-<section class="slide slide-white" aria-label="Slide 34: Genie and AI/BI Dashboards" data-notes="Genie spaces + AI/BI dashboards. ~5 min.">
+<section class="slide slide-white" aria-label="Slide 33: Genie and AI/BI Dashboards" data-notes="Genie spaces + AI/BI dashboards. ~5 min.">
   <div class="slide-content">
     <span class="eyebrow">INTELLIGENCE LAYER</span>
     <h2>Genie + AI/BI Dashboards</h2>
@@ -2398,14 +2237,14 @@ with food CPI overlay"</span>
       <span class="tag" style="background:rgba(27,49,57,0.1);color:var(--db-navy);">Unity Catalog</span>
       <span class="tag lava">Natural Language</span>
     </div>
-    <div class="slide-footer">34</div>
+    <div class="slide-footer">33</div>
   </div>
 </section>
 
 <!-- ============================================================ -->
-<!-- SLIDE 35: SECTION DIVIDER — LAB 1 -->
+<!-- SLIDE 34: SECTION DIVIDER — LAB 1 -->
 <!-- ============================================================ -->
-<section class="slide slide-dark dark-bg texture-noise" aria-label="Slide 35: Section: Lab 1" data-notes="Lab 1 section divider. ~30 sec.">
+<section class="slide slide-dark dark-bg texture-noise" aria-label="Slide 34: Section: Lab 1" data-notes="Lab 1 section divider. ~30 sec.">
   <div class="slide-content" style="text-align:center;">
     <span class="section-num">Lab 1 &middot; 12:05 PM &middot; 60 Minutes</span>
     <h1>The Great Grocery<br>Data Challenge &mdash; Phase 1</h1>
@@ -2415,9 +2254,9 @@ with food CPI overlay"</span>
 </section>
 
 <!-- ============================================================ -->
-<!-- SLIDE 36: LAB 1 BRIEFING -->
+<!-- SLIDE 35: LAB 1 BRIEFING -->
 <!-- ============================================================ -->
-<section class="slide slide-light" aria-label="Slide 36: Lab 1 Briefing" data-notes="Track briefing. 3 tracks. ~3 min.">
+<section class="slide slide-light" aria-label="Slide 35: Lab 1 Briefing" data-notes="Track briefing. 3 tracks. ~3 min.">
   <div class="slide-content">
     <span class="eyebrow">LAB SESSION</span>
     <h2>Choose Your Track</h2>
@@ -2463,14 +2302,14 @@ with food CPI overlay"</span>
         <strong>Checkpoints at every phase</strong> &mdash; pre-loaded data in <code>workshop_vibe_coding.checkpoints</code>. Nobody gets stuck.
       </div>
     </div>
-    <div class="slide-footer">36</div>
+    <div class="slide-footer">35</div>
   </div>
 </section>
 
 <!-- ============================================================ -->
-<!-- SLIDE 37: SHOW & TELL + ICE BREAKER REVEAL -->
+<!-- SLIDE 36: SHOW & TELL + ICE BREAKER REVEAL -->
 <!-- ============================================================ -->
-<section class="slide slide-light" aria-label="Slide 37: Show and Tell" data-notes="Show & Tell + prediction reveal. ~7 min total.">
+<section class="slide slide-light" aria-label="Slide 36: Show and Tell" data-notes="Show & Tell + prediction reveal. ~7 min total.">
   <div class="slide-content">
     <span class="eyebrow">MID-DAY CHECK-IN</span>
     <h2>Show &amp; Tell + Prediction Reveal</h2>
@@ -2507,12 +2346,12 @@ with food CPI overlay"</span>
         </div>
       </div>
     </div>
-    <div class="slide-footer">37</div>
+    <div class="slide-footer">36</div>
   </div>
 </section>
 
 <!-- ============================================================ -->
-<!-- SLIDE 38: SECTION DIVIDER — LAB 2 -->
+<!-- SLIDE 37: SECTION DIVIDER — LAB 2 -->
 <!-- ============================================================ -->
 <section class="slide slide-dark dark-bg texture-lines" aria-label="Section: Lab 2" data-notes="Lab 2 section divider. ~30 sec.">
   <div class="slide-content" style="text-align:center;">
@@ -2524,7 +2363,7 @@ with food CPI overlay"</span>
 </section>
 
 <!-- ============================================================ -->
-<!-- SLIDE 39: LAB 2 BRIEFING -->
+<!-- SLIDE 38: LAB 2 BRIEFING -->
 <!-- ============================================================ -->
 <section class="slide slide-light" aria-label="Lab 2 Briefing" data-notes="Same tracks, continue where they left off. ~3 min.">
   <div class="slide-content">
@@ -2572,12 +2411,12 @@ with food CPI overlay"</span>
         <strong>Get as far as you can</strong> &mdash; checkpoints at every phase. 60 minutes.
       </div>
     </div>
-    <div class="slide-footer">39</div>
+    <div class="slide-footer">38</div>
   </div>
 </section>
 
 <!-- ============================================================ -->
-<!-- SLIDE 40: TEAM DEMOS AND VOTING -->
+<!-- SLIDE 39: TEAM DEMOS AND VOTING -->
 <!-- ============================================================ -->
 <section class="slide slide-dark dark-bg" aria-label="Team Demos and Voting" data-notes="Each team 3 minutes. Vote. Retro. ~20 min total.">
   <div class="slide-content" style="text-align:center;">
@@ -2607,6 +2446,33 @@ with food CPI overlay"</span>
       <p style="color:var(--db-oat);"><strong>Vote for the best platform!</strong> Winning team gets eternal bragging rights. Then 5-min retro: What worked? What would you do differently? What will you use on Monday?</p>
     </div>
   </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SLIDE 40: LET GO OF THE CODE -->
+<!-- ============================================================ -->
+<section class="slide slide-dark dark-bg texture-noise" aria-label="Slide 40: Let Go of the Code" data-notes="~2 min. IMPACT SLIDE — this is the emotional/philosophical beat before Key Takeaways. Walk it slowly, don't rush. Open with past workshop feedback: 'We want to see the code.' Name it as the instinct it is — production-identity talking. The belief that the artifact IS the work. Then Karpathy's original line: 'fully give in to the vibes, embrace exponentials, forget the code exists.' Argue this meant more than he thought. When production is cheap, what's left of you is taste — what you ask for, what you refuse, what must prove itself. The workshop wasn't about prompting tricks. It was about learning to have taste when the model wants to flatter you. Drop the mic. Transition: 'Now the practical stuff.' -> Key Takeaways.">
+  <div class="slide-content" style="text-align:center;">
+    <span class="section-num" style="color:rgba(255,255,255,0.5);">The Real Skill</span>
+    <h2 style="color:white; font-size:3.5rem; margin:0.5rem 0 0.5rem 0; font-weight:700; line-height:1.05;">Let go of the <span style="color:var(--db-lava-light);">code</span>.</h2>
+    <div class="accent-line center"></div>
+
+    <div style="max-width:780px; margin:2rem auto 1.5rem auto;">
+      <p style="color:rgba(255,255,255,0.55); font-size:0.85rem; letter-spacing:0.06em; text-transform:uppercase; margin-bottom:0.5rem;">Past workshop feedback</p>
+      <p style="color:rgba(255,255,255,0.8); font-size:1.5rem; font-style:italic; margin:0 0 2rem 0; font-weight:300;">&ldquo;We want to see the code.&rdquo;</p>
+
+      <p style="color:rgba(255,255,255,0.6); font-size:0.95rem; line-height:1.6; margin-bottom:2rem;">That&rsquo;s production-identity talking &mdash; the belief that the artifact <em>is</em> the work. The whole point is to let that belief go.</p>
+
+      <div class="card" style="background:rgba(255,255,255,0.04); border-left:4px solid var(--db-lava-light); text-align:left; padding:1.5rem 1.75rem;">
+        <p style="color:white; font-size:1.3rem; line-height:1.4; margin:0 0 0.75rem 0; font-weight:300;">&ldquo;Fully give in to the vibes, embrace exponentials, <strong style="color:var(--db-lava-light); font-weight:600;">forget the code exists</strong>.&rdquo;</p>
+        <p style="color:rgba(255,255,255,0.5); font-size:0.85rem; margin:0;">&mdash; Andrej Karpathy, Feb 2025</p>
+      </div>
+    </div>
+
+    <p style="color:rgba(255,255,255,0.85); font-size:1.1rem; line-height:1.55; max-width:760px; margin:0 auto;">The code is what the agent writes. Your work is what you <strong style="color:white;">ask for</strong>, what you <strong style="color:white;">refuse</strong>, what you make <strong style="color:white;">prove itself</strong>.</p>
+    <p style="color:var(--db-lava-light); font-size:1.15rem; font-weight:600; margin-top:1.25rem;">When production is cheap, taste is what&rsquo;s left of you.</p>
+  </div>
+  <div class="slide-footer" style="color:rgba(255,255,255,0.3);">40</div>
 </section>
 
 <!-- ============================================================ -->

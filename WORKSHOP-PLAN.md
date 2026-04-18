@@ -99,46 +99,45 @@ Short, punchy teaching → hands-on practice in teams → share learnings with t
 | # | Slide | Section |
 |---|-------|---------|
 | 1 | Title | — |
-| 2 | **The AI Coding Moment** — 5 recent reads (Pragmatic Engineer, Thoughtworks, Stack Overflow, CIO, Anthropic) | Welcome |
+| 2 | **The AI Coding Moment** — 4 stat cards + 5-source byline (Pragmatic Engineer, Thoughtworks, Stack Overflow, CIO, Anthropic) | Welcome |
 | 3 | Your Weekly Specials (David's Coles example) | Welcome |
 | 4 | Agenda | Welcome |
 | 5 | Ice Breaker — Grocery Data Predictions | Welcome |
 | 6 | Databricks Today (Platform Overview) | Welcome |
 | 7 | Section: The Paradigm Shift | Theory Arc B |
-| 8 | What is Vibe Coding | Theory Arc B |
-| 8B | CODA — Coding Agents on Databricks Apps (interstitial) | Theory Arc B |
-| 9 | Platform Architecture | Theory Arc B |
-| 10 | Section: Specs & Testing | Theory Arc C |
-| 11 | Why Specs Matter | Theory Arc C |
-| 12 | CLAUDE.md in Action | Theory Arc C |
-| 13 | CLAUDE.md Scope Levels | Theory Arc C |
-| 14 | Rule #1 — Just Say What You Want | Theory Arc C |
-| 15 | BDD / TDD Workflow | Theory Arc C |
-| 16 | Why BDD / TDD Works with Agents | Theory Arc C |
-| 17 | Writing Gherkin / Tests That Guide | Theory Arc C |
-| 18 | **Power Tools — Subagents, Skills, Hooks, Plugins** | Theory Arc C |
-| 19 | Verification Patterns / Best Practices | Theory Arc C |
-| 20 | **The Sycophancy Problem** (was 19B — now numbered) | Theory Arc C |
-| 21 | **Small Steps Beat Big Bang** (NEW — the central technique) | Theory Arc C |
-| 22 | What Are Tokens | Theory Arc C |
-| 23 | Managing Context Windows | Theory Arc C |
-| 24 | Live Demo — TDD in Action | Theory Arc C |
-| 25 | **What We're Building — End State** (MOVED to pre-Lab-0 motivation slot) | Theory Arc D |
-| 26 | **Today's Challenge — Grocery Intelligence Platform** (MOVED) | Theory Arc D |
-| 27 | Section: Lab 0 — Guided Hands-On | Lab 0 |
-| 28 | Practical Tips for the Labs (5 patterns) | Lab 0 |
-| 29 | Section: **Capabilities for Your Track** (renamed from Skills/MCP/Genie) | Session 2 |
-| 30 | Skills & Tools — Practical Tools | Session 2 |
-| 31 | MCP on Databricks | Session 2 |
-| 32 | Demo — How Databricks Uses Claude Internally | Session 2 |
-| 33 | **Open Lakehouse — Managed Iceberg in UC** (DE-relevant) | Session 2 |
-| 34 | Genie + AI/BI Dashboards (Analyst-relevant) | Session 2 |
-| 35 | Section: Lab 1 | Lab 1 |
-| 36 | Lab 1 Briefing (with parallel task assignments, incl. Track Briefing) | Lab 1 |
-| 37 | Show & Tell + Prediction Reveal | Lab 1 |
-| 38 | Section: Lab 2 | Lab 2 |
-| 39 | Lab 2 Briefing (with parallel task assignments) | Lab 2 |
-| 40 | Team Demos & Voting | Closing |
+| 8 | **Watch First** — frame for paradigm-shift mini-demo (replaces old Vibe Coding / CODA / Platform Architecture slides) | Theory Arc B |
+| 9 | Section: Specs & Testing | Theory Arc C |
+| 10 | Why Specs Matter | Theory Arc C |
+| 11 | CLAUDE.md in Action | Theory Arc C |
+| 12 | CLAUDE.md Scope Levels | Theory Arc C |
+| 13 | Rule #1 — Just Say What You Want | Theory Arc C |
+| 14 | BDD / TDD Workflow | Theory Arc C |
+| 15 | Why BDD / TDD Works with Agents | Theory Arc C |
+| 16 | Writing Gherkin / Tests That Guide | Theory Arc C |
+| 17 | **Power Tools — Subagents, Skills, Hooks, Plugins** | Theory Arc C |
+| 18 | Verification Patterns / Best Practices | Theory Arc C |
+| 19 | **The Sycophancy Problem** | Theory Arc C |
+| 20 | **Small Steps Beat Big Bang** | Theory Arc C |
+| 21 | What Are Tokens | Theory Arc C |
+| 22 | Managing Context Windows | Theory Arc C |
+| 23 | Live Demo — TDD in Action | Theory Arc C |
+| 24 | **Live Demo — Pipeline + Dashboard End-to-End** (frame slide; live demo in terminal + BI dashboard, 4–5 min; replaces static What We're Building) | Theory Arc D |
+| 25 | Today's Challenge — Grocery Intelligence Platform | Theory Arc D |
+| 26 | Section: Lab 0 — Guided Hands-On | Lab 0 |
+| 27 | Practical Tips for the Labs (5 patterns) | Lab 0 |
+| 28 | Section: **Capabilities for Your Track** | Session 2 |
+| 29 | Skills & Tools — Practical Tools | Session 2 |
+| 30 | MCP on Databricks | Session 2 |
+| 31 | Demo — How Databricks Uses Claude Internally | Session 2 |
+| 32 | **Open Lakehouse — Managed Iceberg in UC** (DE-relevant) | Session 2 |
+| 33 | Genie + AI/BI Dashboards (Analyst-relevant) | Session 2 |
+| 34 | Section: Lab 1 | Lab 1 |
+| 35 | Lab 1 Briefing (with parallel task assignments, incl. Track Briefing) | Lab 1 |
+| 36 | Show & Tell + Prediction Reveal | Lab 1 |
+| 37 | Section: Lab 2 | Lab 2 |
+| 38 | Lab 2 Briefing (with parallel task assignments) | Lab 2 |
+| 39 | Team Demos & Voting | Closing |
+| 40 | **Let Go of the Code** (impact slide before takeaways) | Closing |
 | 41 | Key Takeaways | Closing |
 | 42 | Next Steps | Closing |
 | 43 | APJ Building Intelligent Apps Hackathon (teaser) | Closing |
@@ -151,7 +150,6 @@ Short, punchy teaching → hands-on practice in teams → share learnings with t
 | 50 | Appendix: How MCP Works | Appendix |
 | 51 | Appendix: MCP Architecture on Databricks | Appendix |
 | 52 | Appendix: AI Dev Kit | Appendix |
-| — | Appendix: Subagents vs Teams | Appendix |
 | — | Appendix: Skills TDD Chain | Appendix |
 | — | Appendix: MCP Architecture | Appendix |
 | — | Appendix: AI Dev Kit | Appendix |
@@ -193,26 +191,31 @@ Short, punchy teaching → hands-on practice in teams → share learnings with t
 
 ---
 
-### 9:45–10:30 | Theory: Paradigm Shift → Technique → Challenge (45 min)
+### 9:45–10:30 | Theory: Paradigm Shift → Technique → Live Demo (45 min)
 
-**Slides:** 6–25 (Databricks Today → Today's Challenge)
+**Slides:** 7–25 (Paradigm Shift section → Today's Challenge)
 
-**Flow:** Three clear arcs — **Arc B: Paradigm Shift (5 min)** → **Arc C: How to direct agents well (32 min)** → **Arc D: What you're building (3 min, pre-Lab 0 motivation)**
+**Flow:** Three arcs — **Arc B: Paradigm Shift (3 min, demo-led)** → **Arc C: How to direct agents well (32 min)** → **Arc D: Live end-to-end demo + challenge (5 min, pre-Lab 0)**
 
-**Concepts covered:** Vibe coding, workshop platform, specs-first approach, CLAUDE.md at three scope levels, TDD workflow, **Power Tools (subagents, skills, hooks, plugins)**, verification patterns, **the sycophancy problem**, context windows, end-state preview, today's challenge
+**Concepts covered:** Vibe coding (via demo), specs-first approach, CLAUDE.md at three scope levels, TDD workflow, **Power Tools (subagents, skills, hooks, plugins)**, verification patterns, **the sycophancy problem**, **small steps**, context windows, **live end-to-end pipeline + dashboard demo**
 
 ---
 
-#### Arc B — The Paradigm Shift (5 min)
+#### Arc B — The Paradigm Shift (3 min, demo-led)
 
-1. **What is vibe coding?** (3 min)
-   - The shift from writing code to directing AI agents (Andrej Karpathy, Feb 2025)
-   - "You see stuff, you say stuff, you run stuff, and you vibe"
-   - Not replacing developers — amplifying them. Tool-agnostic: Claude Code, Cursor, Windsurf, Copilot.
+Replaces the old concept slides (What is Vibe Coding / CODA / Platform Architecture) with a single framing slide + a live mini-demo. Reasoning: watching Claude Code respond to one prompt teaches what a coding agent *is* faster than any concept slide.
 
-2. **Platform architecture** (2 min)
-   - Quick tour of the Coding Agents App (browser-based terminal)
-   - Verify everyone can access their instance
+1. **Slide 8 — "Watch First"** (~30 sec frame)
+   - Karpathy quote on the slide: *"vibe coding... forget that the code even exists"*
+   - Mention CODA in one sentence — the platform everyone's using today
+   - Land: *"We watch the agent work before we talk about how to direct one."*
+
+2. **Mini-demo — terminal, ~1–2 min**
+   - Open Claude Code in CODA
+   - One simple prompt (e.g., *"describe what this file does"* on a reference-implementation file)
+   - Watch agent plan + respond
+   - No commentary beyond *"this is what we mean when we say 'coding agent'."*
+   - Transition: *"Now — how to direct one well."* → Specs divider.
 
 ---
 
@@ -272,14 +275,17 @@ Short, punchy teaching → hands-on practice in teams → share learnings with t
 
 ---
 
-#### Arc D — What You're Building (3 min, pre-Lab 0 motivation)
+#### Arc D — Live End-to-End Demo + Challenge (~5 min, pre-Lab 0 climax)
 
-12. **What We're Building — End State** (2 min) **← MOVED from early theory**
-    - Show the complete finished product: pipeline DAG, running web app, Genie, AI/BI dashboard
-    - _"By 4pm, every team will have all four of these running. Now let's start."_
+12. **Live Demo — Pipeline + Dashboard End-to-End** (~4 min) **← MAJOR DEMO**
+    - Replaces the static "What We're Building" slide. Slide 24 is just a frame; the demo runs live in terminal + browser.
+    - **Pre-requisite:** reference-implementation pipeline pre-deployed; AI/BI dashboard pre-built + open in a tab; CODA terminal pre-opened; warehouse warm.
+    - **Flow:** Dashboard (already running) → terminal → prompt for pytest (yoy_growth_pct) → red → prompt to implement window function → green → `databricks bundle deploy && run` → dashboard refresh → new column visible.
+    - **Land:** *"Four prompts, one new metric, end-to-end loop. That's what your team is about to do for 60 minutes."*
+    - Full script + fallbacks: `starter-kit/demos/pipeline-and-dashboard-demo.md`.
 
-13. **Today's Challenge** (1 min) **← MOVED**
-    - Grocery Intelligence Platform, 4 data sources, team angles
+13. **Today's Challenge** (~1 min)
+    - Grocery Intelligence Platform: 4 data sources, team angles
     - Segue into Lab 0
 
 ---
