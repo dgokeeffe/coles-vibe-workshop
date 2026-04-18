@@ -16,6 +16,14 @@ Your gold tables are pre-loaded (from checkpoints). Build natural language inter
 
 ---
 
+> **The Small Steps Principle**
+>
+> This lab is UI-heavy, so "small steps" means: *add ONE metadata annotation, test ONE question in Genie, iterate*. Don't try to add all metadata in one go and then test — you won't know which annotation helped. See `LAB-1-DE.md` Phases 2–3 for the canonical pattern (one change → one verification → next).
+>
+> **Heuristic:** *"After this change, will I know which question got better?"* If no → too big, make one change at a time.
+
+---
+
 ## Phase 1: Create Genie Space + Add Metadata (15 min)
 
 > **Team Tasks for This Phase**

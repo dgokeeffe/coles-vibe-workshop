@@ -1,5 +1,15 @@
 # Facilitator's Guide: Vibe Coding Workshop
 
+> **⚠ DEPRECATED — Do not use for live facilitation.**
+>
+> This document uses an older slide numbering (no YWS, no AI Coding Moment, no current CLAUDE.md slides) and has not been kept in sync with the deck.
+>
+> **Canonical facilitator doc:** `FACILITATOR-SCRIPT.md` (lists every current slide with timing and cue cards, kept in sync with `slides.html`, `slides-facilitator.html`, and `WORKSHOP-PLAN.md`).
+>
+> The Pre-Workshop Checklist and Lab facilitation notes below may still be useful as reference material, but the slide-by-slide content is stale. Consider deleting this file once its useful content is ported.
+
+---
+
 This is the facilitator's companion for the Coles Vibe Coding Workshop (The Great Grocery Data Challenge). Read it the night before to feel prepared. It covers every slide with timing, speaker notes, pitfalls to watch for, and practical facilitation advice. It also includes lab facilitation notes, discussion answer guides, and a timing buffer plan.
 
 ---

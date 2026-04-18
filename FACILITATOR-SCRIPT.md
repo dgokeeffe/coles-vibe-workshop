@@ -19,27 +19,57 @@
 
 ---
 
-## Slide 1: Title | 9:30 | 2 min
+## Slide 1: Title | 9:30 | 30 sec
 
 **[CLICK]**
 
-- Welcome, introductions — thanks to Farbod and Swee Hoe
-- Six-and-a-half-hour hackathon, teams of 2-3, competing to build Grocery Intelligence Platform
-- Using real Australian public data, directing AI agents
+- Welcome — thanks to Farbod and Swee Hoe
+- Six-and-a-half-hour hackathon, teams of 2-3, building a Grocery Intelligence Platform
 - "Skills you can use on Monday — literally Monday"
 
-**Transition:** "Before any more slides — let me show you what this actually looks like in practice."
+**Transition:** "Before any of that — let's name what's actually happening in our industry right now."
 
 ---
 
-## Slide 2: Your Weekly Specials — Built with Vibe Coding | 9:32 | 5 min
+## Slide 2: The AI Coding Moment | 9:30 | 3-4 min
+
+**[CLICK]**
+
+**[FRAMING]** "Before we do anything technical — I want to set the frame. This room is mixed. Some of you have been using Claude Code for months. Some of you opened it for the first time this week. This morning isn't about whether to use AI coding tools — that ship has sailed. It's about what the work actually looks like now."
+
+**[Walk the five source cards, ~30 sec each. Emphasise these are all from the last 3 months and they all converge.]**
+
+- **Pragmatic Engineer (Apr 13, 2026 — survey data)** — "Gergely surveyed practicing engineers. The finding: impact is uneven. Stronger engineers get more leverage from agents. Others produce output that still needs human cleanup. Team-level productivity is what matters — not feeling faster individually."
+
+**[ASK the room]** — "Anyone here felt the 'faster individually but the team delivers the same' thing? When the day feels productive but the backlog hasn't moved?"
+
+- Expect nods from the experienced segment. This is the hook.
+
+- **Thoughtworks Macro Trends (Apr 14, 2026)** — "Thoughtworks places this inside a bigger shift: the industry is moving toward AI-native operating models. Their argument: orchestration and governance matter as much as model quality. Agents need structure — specs, reusable components, workflow controls — to be safe and useful."
+- **Stack Overflow Blog (Mar 25, 2026 — team practices)** — "You now review code you didn't write. More cognitive load shifts to design, architecture, and review. Teams with strong conventions, linters, documented patterns benefit more. Teams with weak process hygiene get left behind."
+- **CIO Magazine (Feb 19, 2026 — workflow)** — "CIO's framing: engineers are shifting from creators to curators. More time on architecture, guardrails, and validation. Agents act as first-pass executors across the SDLC."
+- **Anthropic 2026 Agentic Coding Trends Report (Jan 20, 2026)** — "From the model-maker side: agentic coding has moved from isolated assistance to long-running, multi-step execution. Formerly uneconomic software projects become viable. Human role shifts toward orchestration, evaluation, strategy."
+
+**[LAND THE SYNTHESIS — read it slowly, this is the thesis of the day:]**
+
+- "They all agree: the new bottleneck is **verification and coordination**, not code generation. Architecture, tests, conventions, governance become central — not peripheral."
+- "**Today you learn the practices that put you on the leverage side.**"
+
+**[OPTIONAL — if the room looks skeptical, drop a data point:]**
+
+- "METR published a controlled study in July 2025. Experienced open-source devs with AI tools: they FELT 20% faster, they were objectively 19% slower. Feeling fast isn't the same as being fast. That's the Pragmatic Engineer point, measured."
+
+**Transition:** "Let me show you what it looks like when the technique lines up — from my own work at Coles."
+
+---
+
+## Slide 3: Your Weekly Specials — Built with Vibe Coding | 9:33 | 4 min
 
 **[CLICK to show the YWS slide]**
 
-- "Before any theory — let me show you something real. This is a system I built for Coles."
-- "Your Weekly Specials. 4.5 million Flybuys members get 13 personalized grocery offers every week."
+- "This is a system I built for Coles. Your Weekly Specials. 4.5 million Flybuys members get 13 personalized grocery offers every week."
 
-**[Walk through the four stat cards:]**
+**[Walk through the four stat cards — keep it tight:]**
 
 - **4.5M members** — "Every Flybuys member gets 13 personalized offers every week"
 - **857 commits** — "37,000 lines of Python. 4 product lines. 340+ automated tests."
@@ -48,51 +78,20 @@
 
 **[SHOW the YWS app if possible — open in browser, show the recommendation viewer]**
 
-- "This is the Databricks App — React frontend, FastAPI backend, querying Delta tables directly"
-- "Member search, trial group comparison, model validation — all built with the same patterns you'll learn today"
+- "React frontend, FastAPI backend, querying Delta tables — built with the same patterns you'll learn today"
 
-**[KEY MESSAGE:]**
+**[KEY MESSAGE — keep brief, we're tight on time:]**
 
-- "I'm not a data scientist. I dabbled 10 years ago but my career went a different direction. I knew almost nothing about YWS before I started. The agent helped me learn the domain — reading the R code, understanding the ranking logic, the trial groups, the business rules."
-- "857 commits over 7 weeks of spare time. The hard parts were the data scale — trillion-row feature tables, memory overruns, getting LightGBM to run distributed on Ray. The agent handled the code. I steered."
-- "The techniques you're about to learn today are the same ones that produced this. Rule #1: I typed what I wanted."
+- "I'm not a data scientist. I knew almost nothing about YWS before I started. The agent helped me learn the domain. I steered. 857 commits, 7 weeks, spare time."
+- "That's card 3 from the previous slide — in my own work. The techniques you're about to learn are the ones that produced this."
 
-**[BACKUP: If app is unavailable — stay on the slide, walk through the 4 stat cards, reference the pipeline architecture]**
+**[BACKUP: If app is unavailable — walk through the 4 stat cards, reference the pipeline architecture]**
 
-**Transition:** "Let's warm up with a quiz."
+**Transition:** "Here's the shape of the day."
 
 ---
 
-## Slide 3: Ice Breaker — Grocery Data Predictions | 9:37 | 8 min
-
-**[CLICK]**
-
-**[ENERGY]** Form teams — 2 min. Mix of experience levels. Team names. Assign Person A/B/C roles.
-
-- 5 questions on screen, 30 seconds each, write on prediction cards
-- No phones, no Googling — gut instinct only
-
-**[Read each question aloud, 30 sec each:]**
-
-1. Which state has highest monthly food retail turnover?
-2. % increase in Australian food prices since Jan 2020?
-3. Average Australian household weekly grocery spend?
-4. What month do Australians spend most on retail?
-5. Biggest price increase since 2020 — dairy, meat, fruit, or bread & cereals?
-
-**[DO NOT reveal answers yet — save for Show & Tell]**
-
-- Each team: share your boldest prediction
-- Write boldest predictions on the scoreboard
-- "The twist: Lab 1 builds the pipeline that ingests this exact data — we'll query your Gold tables for the real answers"
-
-**[CHECKPOINT: Should be here by 9:45]**
-
-**Transition:** "Let's look at the agenda."
-
----
-
-## Slide 4: Agenda | 9:45 | 1 min
+## Slide 4: Agenda | 9:37 | 1 min
 
 **[CLICK]**
 
@@ -100,11 +99,38 @@
 - After lunch: Lab 2 (track-specific), then team demos and voting
 - "Breaks are real breaks — ask questions anytime, don't save them"
 
+**Transition:** "Let's warm up with a quiz."
+
+---
+
+## Slide 5: Ice Breaker — Grocery Data Predictions | 9:38 | 7 min
+
+**[CLICK]**
+
+**[ENERGY]** Form teams — 1 min. Mix of experience levels. Team names. Assign Person A/B/C roles.
+
+- 3 questions on screen, 45–60 seconds each, write on prediction cards
+- No phones, no Googling — gut instinct only
+
+**[Read each question aloud:]**
+
+1. Which state has highest monthly food retail turnover?
+2. % increase in Australian food prices since Jan 2020?
+3. Biggest price increase since 2020 — dairy, meat, fruit, or bread & cereals?
+
+**[DO NOT reveal answers yet — save for Show & Tell]**
+
+- Each team: share your boldest prediction (~1 min total)
+- Write boldest predictions on the scoreboard
+- "The twist: Lab 1 builds the pipeline that ingests this exact data — we'll query your Gold tables for the real answers"
+
+**[CHECKPOINT: Should be wrapping at 9:45]**
+
 **Transition:** "Quick look at Databricks today."
 
 ---
 
-## Slide 5: Databricks Today | 9:46 | 2 min
+## Slide 6: Databricks Today | 9:45 | 2 min
 
 **[CLICK]**
 
@@ -120,7 +146,7 @@
 
 ---
 
-## Slide 6: Section — The Paradigm Shift | 9:48 | 1 min
+## Slide 7: Section — The Paradigm Shift | 9:47 | 1 min
 
 **[CLICK]**
 
@@ -133,7 +159,7 @@
 
 ---
 
-## Slide 7: What is Vibe Coding | 9:49 | 3 min
+## Slide 8: What is Vibe Coding | 9:48 | 3 min
 
 **[CLICK]**
 
@@ -148,7 +174,7 @@
 
 ---
 
-## Slide 8: Platform Architecture | 9:52 | 2 min
+## Slide 9: Platform Architecture | 9:51 | 2 min
 
 **[CLICK]**
 
@@ -159,40 +185,11 @@
 
 ---
 
-## Slide 9: What We're Building — End State | 9:54 | 3 min
-
-**[CLICK]**
-
-- "Before I teach you any techniques — let me show you WHERE we're going"
-- Walk through the four quadrants:
-  - **Data Pipeline** — Lakeflow ingesting ABS retail and food price data, Bronze to Silver to Gold
-  - **Web Application** — FastAPI + Tailwind with dashboards, filters, AI-powered query feature
-  - **Genie Space** — Business users type questions in English, get instant answers
-  - **AI/BI Dashboard** — Auto-generated visualisations from your gold tables
-- Point at the flow at the bottom: Pipeline -> App -> Genie -> Dashboard = Grocery Intelligence Platform
-- **"By 4pm, every team will have all four of these running."**
-- "Now that you can see the destination, the techniques I'm about to teach you will make a lot more sense"
-
-**Transition:** "Let's look at the challenge details."
+> **NOTE:** "What We're Building" and "Today's Challenge" have been moved from early theory (slides 10-11) to just before Lab 0 (now slides 24-25). The rationale: showing the end state BEFORE teaching the technique assumes buy-in; showing it AFTER the technique creates a "now let's go build this" payoff moment. See their new entries below, just before the Lab 0 section divider.
 
 ---
 
-## Slide 10: Today's Challenge | 9:57 | 5 min
-
-**[CLICK]**
-
-- Real ABS data: retail trade + food price indices
-- Stack: PySpark, Lakeflow Declarative Pipelines, FastAPI + Tailwind + htmx, DABs
-- Lab 0 = guided setup (all together), Lab 1 = pipeline (track-specific), Lab 2 = app + Genie + dashboard (track-specific)
-- Teams pick their angle (or invent their own)
-- Briefly show the starter-kit folder and what's inside
-- "The CLAUDE.md you write in Lab 0 will guide both labs — make it count"
-
-**Transition:** "The skill that matters most."
-
----
-
-## Slide 11: Section — Specs & TDD | 10:02 | 30 sec
+## Slide 10: Section — Specs & Testing | 9:53 | 30 sec
 
 **[CLICK]**
 
@@ -201,7 +198,7 @@
 
 ---
 
-## Slide 12: Why Specs Matter | 10:02 | 5 min
+## Slide 13: Why Specs Matter | 10:01 | 5 min
 
 **[CLICK]**
 
@@ -214,7 +211,7 @@
 
 ---
 
-## Slide 13: CLAUDE.md in Action | 10:07 | 3 min
+## Slide 14: CLAUDE.md in Action | 10:06 | 3 min
 
 **[CLICK]**
 
@@ -226,7 +223,7 @@
 
 ---
 
-## Slide 14: CLAUDE.md Scope Levels | 10:10 | 2 min
+## Slide 15: CLAUDE.md Scope Levels | 10:09 | 2 min
 
 **[CLICK]**
 
@@ -241,7 +238,7 @@
 
 ---
 
-## Slide 15: TDD Workflow | 10:12 | 3 min
+## Slide 16: TDD Workflow | 10:11 | 3 min
 
 **[CLICK]**
 
@@ -252,7 +249,7 @@
 
 ---
 
-## Slide 16: Why TDD is Exponentially More Powerful | 10:15 | 3 min
+## Slide 17: Why TDD is Exponentially More Powerful | 10:14 | 3 min
 
 **[CLICK]**
 
@@ -265,7 +262,7 @@
 
 ---
 
-## Slide 17: Writing Tests That Guide the Agent | 10:18 | 3 min
+## Slide 18: Writing Tests That Guide the Agent | 10:17 | 3 min
 
 **[CLICK]**
 
@@ -280,7 +277,7 @@
 
 ---
 
-## Slide 18: Anthropic Best Practices | 10:21 | 2 min
+## Slide 19: Anthropic Best Practices | 10:20 | 2 min
 
 **[CLICK]**
 
@@ -290,7 +287,28 @@
 
 ---
 
-## Slide 19B: The Sycophancy Problem | 10:21 | 3 min
+## Slide 20: Power Tools — Subagents, Skills, Hooks, Plugins | 10:21 | 3 min
+
+**[CLICK]**
+
+**[FRAMING FOR MIXED ROOM]** "This slide is for the experienced segment. If you've been using Claude Code for months, these are your leverage multipliers. If you're new, don't worry — these are things to know EXIST, not master today."
+
+**[Walk each card 30–45 sec:]**
+
+- **Subagents** — "Parallel workers with fresh context. Use them when you want an unbiased second opinion. `/review` spawns one. `Agent` tool launches one for specific tasks."
+- **Skills** — "Reusable slash commands. `/commit`, `/review`, `/ship`, `/test`. Don't reinvent what's already in the marketplace. The Databricks plugin marketplace is `fe-vibe`."
+- **Hooks** — "Deterministic guardrails. PreToolUse blocks bad tool calls. PostToolUse enforces policy. Stop refuses to finish until state is clean. We have an MCP auth guard hook running in this session right now."
+- **Plugins** — "Package skills + agents + hooks for teams. Share via marketplace. One install, shared team conventions."
+
+**[KEY MESSAGE]** "The gap between a one-shot prompt and a hooks-guarded skill-driven workflow is the same gap as cards 2 and 3 on the opening slide. Technique, not tool."
+
+**[POINTER]** "Deep dive slides in the appendix (Subagents vs Teams, Skills for BDD, MCP architecture) — available if we have time at the end."
+
+**Transition:** "Now the honest problem with working with AI agents."
+
+---
+
+## Slide 19B: The Sycophancy Problem | 10:24 | 3 min
 
 **[CLICK — dark slide, let the stats land]**
 
@@ -318,7 +336,36 @@
 
 ---
 
-## Slide 20: What Are Tokens | 10:24 | 2 min
+## Slide 21: Small Steps Beat Big Bang | 10:27 | 3 min **[NEW — central technique]**
+
+**[CLICK]**
+
+**[SYNTHESIS FRAMING]** "Everything we've talked about so far — Verification, Sycophancy, Writing Tests — lands on one technique. Every prompt you send is one verifiable step. That's it."
+
+**[Walk the LEFT column — Big Bang, the ChatGPT habit:]**
+
+- "This is what people do when they bring ChatGPT habits to Claude Code." Read the red prompt aloud.
+- "What happens: agent sits for 15 minutes generating files. You sit there. No visibility into what it's doing. Eventually you get a pile of code you didn't watch. Multiple failures hit at once. You debug blindly."
+- "And this is the sycophancy trap on steroids. You can't challenge the agent on a 15-minute monologue — you just trust it."
+
+**[Walk the RIGHT column — Small Steps:]**
+
+- Read the five green prompts aloud: skeleton → table → test → run → quality rule.
+- "Each one is 1-3 minutes. After each, you verify — test output, schema, one decorator added. If it drifted, you catch it in 90 seconds, not 15 minutes."
+- "You see the agent reason. You can disagree. You stay in the loop."
+
+**[LAND THE HEURISTIC — read it slowly off the slide:]**
+
+- *"After this prompt finishes, will I KNOW whether it worked?"*
+- "If the answer is 'I'll have to trust it and check later' — the prompt is too big. Split it."
+
+**[WORKSHOP-LEVEL CALLOUT]** "The labs today are built on this cadence. If you catch yourself about to send a giant prompt in the lab — stop. Split it. That's the technique."
+
+**Transition:** "Now let's talk about one more thing that makes small steps even more important — context windows."
+
+---
+
+## Slide 22: What Are Tokens | 10:30 | 2 min
 
 **[CLICK]**
 
@@ -334,7 +381,7 @@
 
 ---
 
-## Slide 20: Managing Context Windows | 10:25 | 2 min
+## Slide 22: Managing Context Windows | 10:24 | 2 min
 
 **[CLICK]**
 
@@ -353,7 +400,7 @@
 
 ---
 
-## Slide 21: Live Demo — TDD in Action | 10:27 | 3 min
+## Slide 23: Live Demo — TDD in Action | 10:26 | 3 min
 
 **[CLICK]**
 
@@ -399,7 +446,38 @@ Run the tests. They should fail. Then implement the functions to make them pass.
 
 ---
 
-## Slide 22: Section — Lab 0: Guided Hands-On | 10:45 | 30 sec
+## Slide 24: What We're Building — End State | 10:26 | 2 min **[MOVED from early theory]**
+
+**[CLICK]**
+
+- "You've just learned the technique. Now let me show you what you're building with it."
+- Walk through the four quadrants quickly:
+  - **Data Pipeline** — Lakeflow ingesting ABS retail + CPI + FSANZ recalls, Bronze → Silver → Gold
+  - **Web Application** — FastAPI + Tailwind with dashboards and filters
+  - **Genie Space** — Business users query in English
+  - **AI/BI Dashboard** — Auto-generated visualisations from your gold tables
+- Point at the flow: Pipeline → App → Genie → Dashboard = Grocery Intelligence Platform.
+- **"By 4pm, every team will have all four of these running."**
+
+**Transition:** "Quick look at the challenge, then we start building."
+
+---
+
+## Slide 25: Today's Challenge | 10:28 | 1 min **[MOVED from early theory]**
+
+**[CLICK]**
+
+- Real ABS data: retail trade + food price indices + FSANZ recalls
+- Stack: PySpark, Lakeflow, FastAPI, DABs
+- Lab 0 = guided setup (all together), Labs 1–2 = track-specific
+- Teams pick their angle (Retail Performance, Food Inflation, Food Safety, Market Intelligence)
+- "The CLAUDE.md you write in Lab 0 guides both labs — make it count"
+
+**Transition:** "Let's go. Lab 0."
+
+---
+
+## Slide 26: Section — Lab 0: Guided Hands-On | 10:44 | 30 sec
 
 **[CLICK]**
 
@@ -407,7 +485,7 @@ Run the tests. They should fail. Then implement the functions to make them pass.
 
 ---
 
-## Slide 23: Lab 0 Briefing | 10:45 | 2 min
+## Slide 25: Lab 0 Briefing | 10:44 | 2 min
 
 **[CLICK]**
 
@@ -503,7 +581,7 @@ Run the tests. They should fail. Then implement the functions to make them pass.
 
 ---
 
-## Slide 24: Section — Tools for Labs 1 & 2 | 11:30 | 1 min
+## Slide 26: Section — Tools for Labs 1 & 2 | 11:29 | 1 min
 
 **[CLICK]**
 
@@ -514,7 +592,7 @@ Run the tests. They should fail. Then implement the functions to make them pass.
 
 ---
 
-## Slide 25: Practical Tips | 11:31 | 3 min
+## Slide 27: Practical Tips | 11:30 | 3 min
 
 **[CLICK]**
 
@@ -528,7 +606,7 @@ Run the tests. They should fail. Then implement the functions to make them pass.
 
 ---
 
-## Slide 26: Skills & MCP — Practical Tools | 11:33 | 5 min
+## Slide 28: Skills & MCP — Practical Tools | 11:32 | 5 min
 
 **[CLICK]**
 
@@ -557,7 +635,7 @@ Run the tests. They should fail. Then implement the functions to make them pass.
 
 ---
 
-## Slide 27: MCP on Databricks | 11:38 | 3 min
+## Slide 29: MCP on Databricks | 11:37 | 3 min
 
 **[CLICK]**
 
@@ -569,7 +647,7 @@ Run the tests. They should fail. Then implement the functions to make them pass.
 
 ---
 
-## Slide 28: Demo — Databricks Internal Claude Setup | 11:41 | 4 min
+## Slide 30: Demo — Databricks Internal Claude Setup | 11:40 | 4 min
 
 **[CLICK]**
 
@@ -595,7 +673,40 @@ Search the Databricks docs for how to create a Genie space programmatically.
 
 ---
 
-## Slide 29: Genie + AI/BI Dashboards | 11:45 | 2 min
+## Slide 31: Open Lakehouse — Managed Iceberg in UC | 11:44 | 4 min
+
+**[CLICK]**
+
+**[CALLBACK]** "Remember the Open Formats row on the platform-stack slide this morning? This is what it means in practice."
+
+**[Walk the code block on the left:]**
+
+- `CREATE OR REPLACE TABLE workshop.gold.retail_summary_iceberg USING ICEBERG CLUSTER BY (state, month_date) AS SELECT ...`
+- "Three things to notice: `USING ICEBERG` not `DELTA`, `CLUSTER BY` not `PARTITIONED BY`, and no `LOCATION` clause — UC owns the physical layout."
+
+**[Key rules — quick hit:]**
+
+- **No `LOCATION`** — UC picks the path. You don't bring your own bucket.
+- **No `PARTITIONED BY`** — liquid clustering only. Consistent with our SDP guidance.
+- Everything else you know about UC still applies: ACLs, lineage, tags, sharing.
+
+**[The payoff — this is the key message:]**
+
+- "Once you've written to a managed Iceberg table in UC, external engines — Snowflake, Trino, DuckDB, BigQuery via BigLake — can read it through the Iceberg REST Catalog URL. **Zero copy.** Same governance."
+- "For a retailer like Coles, this matters: it lets downstream teams consume your gold tables in whatever tool they already use, without exporting data or building replication pipelines."
+
+**[When to pick which:]**
+
+- **Iceberg when**: external engines read your tables, multi-cloud story, vendor-neutral requirement
+- **Delta when**: deepest Databricks feature set (CDF, deletion vectors, identity columns), mostly-Databricks reads. Plus: UniForm gives you Iceberg-read from a Delta table for free.
+
+**[POINTER]** "The DE track has this as an optional Lab 2 stretch goal — teams that finish early can publish their gold table as Iceberg and demo it at the end."
+
+**Transition:** "Now Genie."
+
+---
+
+## Slide 32: Genie + AI/BI Dashboards | 11:48 | 7 min
 
 **[CLICK]**
 
@@ -607,7 +718,7 @@ Search the Databricks docs for how to create a Genie space programmatically.
 
 ---
 
-## Slide 30: Track Briefing — Choose Your Track | 11:50 | 10 min
+## Slide 33: Track Briefing — Choose Your Track | 11:55 | 10 min
 
 **[CLICK]**
 
@@ -634,7 +745,7 @@ Search the Databricks docs for how to create a Genie space programmatically.
 
 ---
 
-## Slide 31: Section — Lab 1 | 12:00 | 30 sec
+## Slide 34: Section — Lab 1 | 12:05 | 30 sec
 
 **[CLICK]**
 
@@ -642,7 +753,7 @@ Search the Databricks docs for how to create a Genie space programmatically.
 
 ---
 
-## Slide 32: Lab 1 Briefing | 12:00 | 3 min
+## Slide 35: Lab 1 Briefing | 11:59 | 3 min
 
 **[CLICK]**
 
@@ -678,7 +789,7 @@ Search the Databricks docs for how to create a Genie space programmatically.
 
 ---
 
-## Slide 33: Show & Tell + Prediction Reveal | 13:00 | 15 min
+## Slide 36: Show & Tell + Prediction Reveal | 12:59 | 15 min
 
 **[CLICK]**
 
@@ -710,7 +821,7 @@ Search the Databricks docs for how to create a Genie space programmatically.
 
 ---
 
-## Slide 34: Section — Lab 2 | 14:00 | 30 sec
+## Slide 37: Section — Lab 2 | 13:59 | 30 sec
 
 **[CLICK]**
 
@@ -724,7 +835,7 @@ Search the Databricks docs for how to create a Genie space programmatically.
 
 ---
 
-## Slide 35: Lab 2 Briefing | 14:00 | 3 min
+## Slide 38: Lab 2 Briefing | 13:59 | 3 min
 
 **[CLICK]**
 
@@ -770,7 +881,7 @@ Search the Databricks docs for how to create a Genie space programmatically.
 
 ---
 
-## Slide 36: Team Demos & Voting | 15:00 | 30 min
+## Slide 39: Team Demos & Voting | 14:59 | 30 min
 
 **[CLICK]**
 
@@ -802,7 +913,7 @@ Search the Databricks docs for how to create a Genie space programmatically.
 
 ---
 
-## Slide 37: Key Takeaways | 15:30 | 5 min
+## Slide 40: Key Takeaways | 15:29 | 5 min
 
 **[CLICK]**
 
@@ -815,7 +926,7 @@ Search the Databricks docs for how to create a Genie space programmatically.
 
 ---
 
-## Slide 38: Next Steps | 15:35 | 5 min
+## Slide 41: Next Steps | 15:34 | 5 min
 
 **[CLICK]**
 
@@ -825,7 +936,7 @@ Search the Databricks docs for how to create a Genie space programmatically.
 
 ---
 
-## Slide 39: Closing | 15:40 | 5 min
+## Slide 42: Closing | 15:39 | 5 min
 
 **[CLICK]**
 

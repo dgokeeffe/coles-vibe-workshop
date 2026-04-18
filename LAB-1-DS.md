@@ -16,6 +16,18 @@ Your gold tables are pre-loaded (from checkpoints). Build a feature engineering 
 
 ---
 
+> **The Small Steps Principle**
+>
+> Keep each prompt to **1–3 min of agent work** with a **verification moment** at the end. If a prompt feels like "build me the whole feature pipeline" — split it. Write one test → implement one transform → run → verify → next.
+>
+> **See `LAB-1-DE.md` Phases 1–3** for the canonical small-step pattern (skeleton → one test → one implementation → run → next). Apply the same cadence here.
+>
+> **While the agent is running:** read the previous output critically, pre-write the next prompt, or update CLAUDE.md with a learning. No one ever just waits.
+
+> **Heuristic:** *"After this prompt finishes, will I KNOW whether it worked?"* If no → too big, split it.
+
+---
+
 ## Phase 1: Explore Data + Write Tests (15 min)
 
 > **Team Tasks for This Phase**

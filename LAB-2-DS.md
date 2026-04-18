@@ -14,6 +14,14 @@ Your feature table is ready. Train a model to predict retail turnover, register 
 
 ---
 
+> **The Small Steps Principle (continued from Lab 1)**
+>
+> Keep each prompt to **1–3 min of agent work**. Split "train a model with all features + register + serve" into separate prompts: *"train on baseline features"* → *"check R²"* → *"add lag features"* → *"check R² again"* → *"register"*. See `LAB-1-DE.md` Phases 2–3 for the canonical pattern.
+>
+> **Heuristic:** *"After this prompt finishes, will I KNOW whether it worked?"* If no → split it.
+
+---
+
 ## Phase 1: Train Model + Write Tests (15 min)
 
 > **Team Tasks for This Phase**

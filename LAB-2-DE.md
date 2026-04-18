@@ -14,120 +14,225 @@ Your pipeline handles ABS retail and CPI data. Now make it production-grade: add
 
 ---
 
-## Phase 1: Add FSANZ Food Recalls (20 min)
-
-> **Team Tasks for This Phase**
-> - **Person A (Terminal):** Write tests for FSANZ ingestion (schema, non-nulls, date parsing)
-> - **Person B (Terminal):** Build bronze + silver tables for FSANZ food recalls
-> - **Person C (Databricks UI):** Monitor pipeline, verify new tables appear in Unity Catalog
+> **The Small Steps Principle (continued from Lab 1)**
 >
-> *Teams of 2: Person A writes tests, Person B implements + monitors.*
-
-### 1.1 Write tests + build tables
-
-```
-Add a new data source — FSANZ food recalls:
-
-1. Write tests first:
-   - test_bronze_food_recalls_schema: has columns (product, category, issue, date, state, url)
-   - test_bronze_food_recalls_not_null: product and date are never null
-   - test_silver_food_recalls_dates: date strings parsed to proper DATE type
-   - test_silver_food_recalls_states: state names normalized to match our state list
-
-2. Build the tables:
-   - src/bronze/fsanz_food_recalls.py: @dp.table ingesting FSANZ data
-   - src/silver/food_recalls.py: @dp.table with cleaned dates, normalized states
-   - Data source: https://www.foodstandards.gov.au/food-recalls/recalls
-   - If website is blocked, read from: workshop_vibe_coding.checkpoints.fsanz_food_recalls
-
-3. Run tests after implementation.
-```
-
-> **Starter Kit:** Copy-paste prompt in `starter-kit/prompts/de/05-add-data-sources.md`
-
-> **Stuck?** Grab **Checkpoint DE-2A**: FSANZ bronze + silver tables pre-loaded.
+> Every prompt below is 1–3 min of agent work. If something feels like a "do it all" prompt, split it. Each prompt should end with a verification moment: *"after this, will I know whether it worked?"*
+>
+> **While the agent is running:** read the previous output critically, pre-write the next prompt, or update CLAUDE.md with a learning.
 
 ---
 
-## Phase 2: Data Quality Rules (20 min)
+## Phase 1: Add FSANZ Food Recalls — Bronze (8 min)
 
-> **Team Tasks for This Phase**
-> - **Person A (Terminal):** Add data quality expectations across all bronze/silver/gold tables
-> - **Person B (Terminal):** Build cross-source gold view joining retail + CPI + recalls
-> - **Person C (Databricks UI):** Verify expectations appear in pipeline UI, check quality metrics
->
-> *Teams of 2: Person A does quality rules, Person B does cross-source view + monitoring.*
+> **Team Tasks**
+> - **Person A (Terminal):** Drive 1.1–1.3
+> - **Person B (Terminal):** Read every output for quality; flag web scraping gotchas
+> - **Person C (Databricks UI):** Prepare checkpoint fallback; watch for the table to appear
 
-### 2.1 Add quality expectations
+### 1.1 Write ONE schema test (2 min)
 
 ```
-Add data quality expectations across all pipeline tables:
+In tests/test_bronze_food_recalls.py, write ONE test named
+test_bronze_food_recalls_has_required_columns.
 
-Bronze tables:
-- @dp.expect("valid_time_period", "TIME_PERIOD IS NOT NULL")
-- @dp.expect("valid_obs_value", "OBS_VALUE IS NOT NULL")
-- @dp.expect("valid_date_range", "TIME_PERIOD >= '2010-01'")
-
-Silver tables:
-- @dp.expect_or_fail("valid_state", "state IN ('New South Wales','Victoria','Queensland','South Australia','Western Australia','Tasmania','Northern Territory','Australian Capital Territory')")
-- @dp.expect("valid_turnover", "turnover_millions > 0")
-
-Gold tables:
-- @dp.expect("valid_yoy", "yoy_growth_pct BETWEEN -100 AND 500")
-- @dp.expect("valid_rolling_avg", "turnover_3m_avg > 0")
-
-Run all tests to verify nothing breaks.
+Sample 3 rows with columns: product, category, issue, date, state, url.
+Assert the schema contains all 6 columns, and product/date are non-null.
 ```
 
-### 2.2 Build cross-source gold view
+### 1.2 Implement bronze fsanz (3 min)
 
 ```
-Create a cross-source analysis view:
-- src/gold/grocery_insights.py: @dp.materialized_view
-- Joins retail_summary + food_inflation_yoy + food_recalls (if available)
-- Columns: state, month, turnover_millions, yoy_growth_pct, cpi_yoy_change, recall_count
-- Join retail (monthly) with CPI (quarterly) on state + quarter
-- Left join recalls on state + month (recall_count may be 0)
+Create src/bronze/fsanz_food_recalls.py as @dp.table.
+Data source: https://www.foodstandards.gov.au/food-recalls/recalls
+If the site is blocked, read workshop_vibe_coding.checkpoints.fsanz_food_recalls
+and copy rows as-is.
+
+No silver transformations yet — just ingest.
 ```
 
-> **Starter Kit:** Copy-paste prompt in `starter-kit/prompts/de/06-data-quality.md`
+**Verify:** Read the function. Simple ingest, no extras.
+
+### 1.3 Run test, fix if needed (3 min)
+
+```
+Run tests/test_bronze_food_recalls.py. Show me the output.
+Fix ONLY the bronze file if the test fails.
+```
+
+> **Stuck?** Grab **Checkpoint DE-2A** (FSANZ bronze pre-loaded). Tell the agent: *"Use `checkpoints.fsanz_food_recalls` directly."*
 
 ---
 
-## Phase 3: Scheduling + Deploy (10 min)
+## Phase 2: Silver food_recalls — Small Steps (8 min)
 
-> **Team Tasks for This Phase**
-> - **Person A (Terminal):** Add cron scheduling, validate, and deploy
-> - **Person B (Databricks UI):** Verify pipeline schedule in Workflows tab
-> - **Person C:** Test the full pipeline end-to-end
->
-> *Teams of 2: Person A deploys, Person B verifies.*
-
-### 3.1 Add scheduling
+### 2.1 Test for date parsing (1 min)
 
 ```
-Add cron scheduling to our pipeline:
-
-1. Update databricks.yml — add trigger:
-   trigger:
-     cron:
-       quartz_cron_expression: "0 0 6 * * ?"
-       timezone_id: "Australia/Sydney"
-
-2. Validate: databricks bundle validate
-3. Deploy: databricks bundle deploy -t dev
-4. Show me the pipeline schedule.
+In tests/test_silver_food_recalls.py, write ONE test named
+test_silver_parses_date_strings. Sample DataFrame with date strings
+like "2024-01-15". Assert the silver layer returns proper DATE type.
 ```
 
-> **Starter Kit:** Copy-paste prompt in `starter-kit/prompts/de/07-scheduling.md`
+### 2.2 Implement silver with ONLY date parsing (2 min)
+
+```
+Create src/silver/food_recalls.py as @dp.table reading from bronze.
+Only transformation: parse `date` column from string to DATE. Nothing else.
+```
+
+### 2.3 Run test. Then add state normalization (2 min)
+
+```
+Run the silver test. If green, add test_silver_normalizes_state_names
+(maps "NSW" → "New South Wales", "VIC" → "Victoria"), then extend
+the silver function to match.
+```
+
+### 2.4 Verify in Unity Catalog (30 sec)
+
+Person C: run `SELECT * FROM workshop_vibe_coding.<team_schema>.silver_food_recalls LIMIT 5`. Confirm the dates and state names look right.
 
 ---
 
-## Phase 4: Verify + Prepare (5 min)
+## Phase 3: Data Quality Rules — One Tier at a Time (10 min)
+
+> **The pattern:** add expectations to ONE table, re-run its test, then move on. Don't batch.
+
+### 3.1 Bronze expectations (3 min)
+
+```
+Add these expectations to our existing bronze tables. Apply one at a time,
+running the relevant test after each to confirm nothing breaks:
+
+Prompt 1: "Add @dp.expect('valid_time_period', 'TIME_PERIOD IS NOT NULL')
+to bronze_retail_trade and bronze_cpi_food. Run their tests."
+
+Prompt 2: "Add @dp.expect('valid_obs_value', 'OBS_VALUE IS NOT NULL') to both.
+Run tests again."
+```
+
+### 3.2 Silver expectations — one hard failure (2 min)
+
+```
+Add @dp.expect_or_fail("valid_state",
+  "state_name IN ('New South Wales','Victoria','Queensland','South Australia',
+   'Western Australia','Tasmania','Northern Territory','Australian Capital Territory')")
+to silver_retail_turnover.
+
+This is expect_or_fail (not just expect) — pipeline fails on invalid state.
+Run its test to confirm it still passes.
+```
+
+### 3.3 Gold sanity bounds (2 min)
+
+```
+Add @dp.expect("valid_yoy", "yoy_growth_pct BETWEEN -100 AND 500")
+to gold_retail_summary. Run its test.
+```
+
+### 3.4 Verify expectations surface in the pipeline UI (3 min)
+
+Person B: open the pipeline in Workflows. Confirm you can see the expectation names and pass/fail counts after a run.
+
+---
+
+## Phase 4: Cross-Source Gold View (5 min)
+
+### 4.1 Write ONE join test (2 min)
+
+```
+In tests/test_gold_grocery_insights.py, write test_join_retail_cpi_recalls.
+Minimal fixtures: 2 months retail, 2 quarters CPI, 1 recall.
+Assert the join produces columns: state, month, turnover_millions, yoy_growth_pct,
+cpi_yoy_change, recall_count.
+```
+
+### 4.2 Implement grocery_insights.py (3 min)
+
+```
+Create src/gold/grocery_insights.py as @dp.materialized_view.
+Join retail_summary (monthly) with food_inflation (quarterly) on state + quarter,
+left join silver_food_recalls on state + month.
+
+Start simple — get the join working. No derived metrics beyond what's listed.
+```
+
+**Verify:** Test passes. View exists in UC.
+
+---
+
+## Phase 5: Scheduling + Deploy (5 min)
+
+### 5.1 Add the schedule (2 min)
+
+```
+Update databricks.yml — add a trigger to our pipeline resource:
+
+trigger:
+  cron:
+    quartz_cron_expression: "0 0 6 * * ?"
+    timezone_id: "Australia/Sydney"
+
+Don't deploy yet. Just show me the diff.
+```
+
+**Verify:** Read the diff. Sensible?
+
+### 5.2 Validate, deploy, confirm (3 min)
+
+```
+Run: databricks bundle validate
+If clean, run: databricks bundle deploy -t dev
+Open the pipeline in Workflows. Confirm the schedule shows "Daily at 6:00 AM (Australia/Sydney)".
+```
+
+---
+
+## Phase 6: Verify + Prepare for Demo (4 min)
 
 - Verify full pipeline with all sources in the Workflows UI
 - Check data quality expectations are visible and passing
-- Prepare demo: Show pipeline DAG, quality metrics, cross-source view, schedule
+- Prepare 3-minute demo: pipeline DAG screenshot, quality metrics, cross-source view query, schedule
+
+---
+
+## Stretch Goal: Publish a Managed Iceberg Table (Optional)
+
+> **Advanced — skip unless you're ahead of schedule.** This is the open-lakehouse story in practice: publish your gold table in Iceberg format so external engines (Snowflake, Trino, DuckDB, BigQuery) can read it via the Iceberg REST Catalog — zero copy, same Unity Catalog governance.
+
+### Key rules for managed Iceberg in UC
+
+- Format: `USING ICEBERG` (not `USING DELTA`)
+- **No `LOCATION`** — UC owns the physical layout.
+- **No `PARTITIONED BY`** — use liquid clustering instead: `CLUSTER BY (state, month)`.
+- `REPLACE`, `NOT NULL`, and constraints are supported.
+
+### Prompt for the agent
+
+```
+Create src/gold/retail_summary_iceberg.py that reads from our existing gold
+retail_summary table and publishes it as a managed Iceberg table for
+external-engine consumption.
+
+Requirements:
+- Table name: workshop_vibe_coding.<team_schema>.retail_summary_iceberg
+- CREATE OR REPLACE TABLE ... USING ICEBERG AS SELECT ...
+- CLUSTER BY (state, month_date) — no PARTITIONED BY
+- Do NOT specify a LOCATION (UC manages the path)
+- Include a test that queries the Iceberg table and confirms row count
+  matches the source Delta table
+
+Also show me:
+1. The Iceberg REST Catalog URL for external engines (from the Databricks docs MCP)
+2. A short note in the module docstring: when to pick Iceberg (multi-engine
+   reads, vendor-neutral) vs Delta (deepest Databricks feature set)
+```
+
+### What "done" looks like
+
+- `SELECT * FROM workshop_vibe_coding.<team_schema>.retail_summary_iceberg LIMIT 10` returns rows.
+- Table appears in Unity Catalog with format = `iceberg`.
+- Mention this in your demo: *"Same data, same governance, readable by Snowflake/Trino/DuckDB with zero copy."*
 
 ---
 

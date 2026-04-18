@@ -29,6 +29,13 @@ All connect to the same gold tables from Lab 1. **You will direct the AI agent t
 
 ---
 
+> **The Small Steps Principle (continued from Lab 1)**
+>
+> Splitting the app build into small prompts matters most here because FastAPI + frontend has many moving parts. Build: *"scaffold the FastAPI app"* → *"add ONE endpoint"* → *"test it returns JSON"* → *"add ONE page/chart"* → *"render it"* → *"next endpoint"*. Don't ask for the whole app in one shot — you'll get 20 minutes of output you can't debug.
+>
+> See `LAB-1-DE.md` Phases 2–3 for the canonical cadence.
+>
+> **Heuristic:** *"After this prompt finishes, will the app still run and will I know this one feature works?"* If no → split it.
 
 ---
 
