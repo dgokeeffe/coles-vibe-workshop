@@ -1,0 +1,17 @@
+command:
+  - uvicorn
+  - app:app
+  - --host
+  - 0.0.0.0
+  - --port
+  - "8000"
+
+env:
+  - name: CATALOG
+    value: grocery_intel_demo_catalog
+  - name: SCHEMA
+    value: grocery
+  - name: GENIE_SPACE_ID
+    value: "01f13bcd204814bd9cc4ce8f34489790"
+  - name: DATABRICKS_WAREHOUSE_ID
+    valueFrom: sql-warehouse

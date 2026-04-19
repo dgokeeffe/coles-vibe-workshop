@@ -1,0 +1,12 @@
+resources:
+  apps:
+    grocery_intel_app:
+      name: grocery-intel-demo
+      description: Grocery Intelligence Platform — ABS retail & food inflation
+      source_code_path: ../app
+      resources:
+        - name: sql-warehouse
+          description: Pro warehouse for gold table queries
+          sql_warehouse:
+            id: ${var.warehouse_id}
+            permission: CAN_USE

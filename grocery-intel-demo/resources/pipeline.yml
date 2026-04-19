@@ -1,0 +1,23 @@
+resources:
+  pipelines:
+    grocery_intel_pipeline:
+      name: grocery-intel-pipeline
+      catalog: ${var.catalog}
+      schema: ${var.schema}
+      serverless: false
+      photon: true
+      channel: CURRENT
+      clusters:
+        - label: default
+          num_workers: 1
+          node_type_id: m5d.large
+      libraries:
+        - file:
+            path: ../pipeline/bronze.py
+        - file:
+            path: ../pipeline/silver.py
+        - file:
+            path: ../pipeline/gold.py
+      configuration:
+        catalog: ${var.catalog}
+        schema: ${var.schema}

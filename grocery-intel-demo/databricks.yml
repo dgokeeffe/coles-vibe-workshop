@@ -1,0 +1,23 @@
+bundle:
+  name: grocery-intel-demo
+
+variables:
+  catalog:
+    description: Unity Catalog for the demo
+    default: grocery_intel_demo_catalog
+  schema:
+    description: Schema for bronze/silver/gold tables
+    default: grocery
+  warehouse_id:
+    description: SQL warehouse ID for the app backend
+    default: ""
+
+include:
+  - resources/*.yml
+
+targets:
+  dev:
+    mode: development
+    default: true
+    workspace:
+      host: https://fevm-grocery-intel-demo.cloud.databricks.com
