@@ -39,7 +39,7 @@ class Question(BaseModel):
     explanation: str
 
 
-class Team(BaseModel):
+class Player(BaseModel):
     name: str
     score: int = 0
     answers: list[int | None] = []  # index of chosen option per question, None if unanswered
@@ -212,7 +212,7 @@ class QuizState:
     def __init__(self) -> None:
         self.phase: Phase = Phase.LOBBY
         self.current_question: int = 0
-        self.teams: dict[str, Team] = {}
+        self.players: dict[str, Player] = {}
         self.question_start_time: float = 0.0
         self._version: int = 0  # bumped on every mutation for SSE change detection
 
@@ -224,23 +224,23 @@ class QuizState:
 
         # Leaderboard sorted by score desc, then by fastest average answer time
         leaderboard = sorted(
-            self.teams.values(),
-            key=lambda t: (-t.score, -sum(x or 0 for x in t.times)),
+            self.players.values(),
+            key=lambda p: (-p.score, -sum(x or 0 for x in p.times)),
         )
 
-        # Aggregate profile answers across all teams for the host lobby
+        # Aggregate profile answers across all players for the host lobby
         persona_counts: Counter[str] = Counter()
         stack_counts: Counter[str] = Counter()
         databricks_counts: Counter[str] = Counter()
-        profiled_teams = 0
-        for t in self.teams.values():
-            if t.profile:
-                profiled_teams += 1
-                if (v := t.profile.get("persona")):
+        profiled_players = 0
+        for p in self.players.values():
+            if p.profile:
+                profiled_players += 1
+                if (v := p.profile.get("persona")):
                     persona_counts[v] += 1
-                if (v := t.profile.get("stack")):
+                if (v := p.profile.get("stack")):
                     stack_counts[v] += 1
-                if (v := t.profile.get("databricks")):
+                if (v := p.profile.get("databricks")):
                     databricks_counts[v] += 1
 
         result: dict[str, Any] = {
@@ -251,11 +251,11 @@ class QuizState:
             "timerSeconds": TIMER_SECONDS,
             "version": self._version,
             "leaderboard": [
-                {"name": t.name, "score": t.score, "answered": len([a for a in t.answers if a is not None])}
-                for t in leaderboard
+                {"name": p.name, "score": p.score, "answered": len([a for a in p.answers if a is not None])}
+                for p in leaderboard
             ],
-            "teamCount": len(self.teams),
-            "profiledTeamCount": profiled_teams,
+            "playerCount": len(self.players),
+            "profiledPlayerCount": profiled_players,
             "profileCounts": {
                 "persona": dict(persona_counts),
                 "stack": dict(stack_counts),
@@ -291,24 +291,24 @@ class JoinRequest(BaseModel):
 
 
 class AnswerRequest(BaseModel):
-    team: str
+    name: str
     answer: int
 
 
 class ProfileRequest(BaseModel):
-    team: str
+    name: str
     persona: str
     stack: str
     databricks: str
 
 
-@app.post("/api/teams")
-def join_team(req: JoinRequest) -> dict[str, Any]:
+@app.post("/api/players")
+def join_player(req: JoinRequest) -> dict[str, Any]:
     name = req.name.strip()[:30]
     if not name:
-        raise HTTPException(400, "Team name required")
-    if name not in quiz.teams:
-        quiz.teams[name] = Team(name=name)
+        raise HTTPException(400, "Name required")
+    if name not in quiz.players:
+        quiz.players[name] = Player(name=name)
         quiz.bump()
     return {"ok": True, "name": name}
 
@@ -320,10 +320,10 @@ def get_state() -> dict[str, Any]:
 
 @app.post("/api/profile")
 def set_profile(req: ProfileRequest) -> dict[str, Any]:
-    team = quiz.teams.get(req.team)
-    if not team:
-        raise HTTPException(404, "Team not found")
-    team.profile = {
+    player = quiz.players.get(req.name)
+    if not player:
+        raise HTTPException(404, "Player not found")
+    player.profile = {
         "persona": req.persona,
         "stack": req.stack,
         "databricks": req.databricks,
@@ -337,29 +337,29 @@ def submit_answer(req: AnswerRequest) -> dict[str, Any]:
     if quiz.phase != Phase.QUESTION:
         raise HTTPException(400, "Not accepting answers right now")
 
-    team = quiz.teams.get(req.team)
-    if not team:
-        raise HTTPException(404, "Team not found")
+    player = quiz.players.get(req.name)
+    if not player:
+        raise HTTPException(404, "Player not found")
 
     qi = quiz.current_question
     # Pad answers list if needed
-    while len(team.answers) <= qi:
-        team.answers.append(None)
-        team.times.append(None)
+    while len(player.answers) <= qi:
+        player.answers.append(None)
+        player.times.append(None)
 
-    if team.answers[qi] is not None:
+    if player.answers[qi] is not None:
         return {"ok": True, "already_answered": True}
 
     elapsed = time.time() - quiz.question_start_time
     time_remaining = max(0, TIMER_SECONDS - elapsed)
 
-    team.answers[qi] = req.answer
-    team.times[qi] = time_remaining
+    player.answers[qi] = req.answer
+    player.times[qi] = time_remaining
 
     if req.answer == QUESTIONS[qi].correct:
         # Score: base 100 + up to 100 bonus for speed
         speed_bonus = int(100 * (time_remaining / TIMER_SECONDS))
-        team.score += 100 + speed_bonus
+        player.score += 100 + speed_bonus
 
     quiz.bump()
     return {"ok": True, "already_answered": False}
@@ -371,11 +371,11 @@ def control(action: str) -> dict[str, Any]:
         quiz.phase = Phase.QUESTION
         quiz.current_question = 0
         quiz.question_start_time = time.time()
-        # Reset all teams
-        for t in quiz.teams.values():
-            t.score = 0
-            t.answers = []
-            t.times = []
+        # Reset all players
+        for p in quiz.players.values():
+            p.score = 0
+            p.answers = []
+            p.times = []
         quiz.bump()
     elif action == "next":
         if quiz.phase == Phase.REVEALED:
@@ -393,7 +393,7 @@ def control(action: str) -> dict[str, Any]:
     elif action == "reset":
         quiz.phase = Phase.LOBBY
         quiz.current_question = 0
-        quiz.teams.clear()
+        quiz.players.clear()
         quiz.bump()
     else:
         raise HTTPException(400, f"Unknown action: {action}")

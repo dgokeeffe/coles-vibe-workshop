@@ -22,7 +22,7 @@
     .view.active { display: flex; }
 
     /* ================================================================
-       JOIN VIEW (default — teams enter their name here)
+       JOIN VIEW (default — players enter their name here)
        ================================================================ */
     #join-view {
       align-items: center; justify-content: center; gap: 1.5rem;
@@ -123,7 +123,7 @@
     .h-break-chip .n { font-family: 'DM Mono', monospace; font-weight: 700; color: var(--lava-light); margin-right: 0.35rem; }
 
     /* ================================================================
-       PLAYER VIEW (mobile-first — teams answer here)
+       PLAYER VIEW (mobile-first — players answer here)
        ================================================================ */
     #player-view { background: var(--ink); }
 
@@ -308,17 +308,17 @@
   <div id="join-view" class="view active">
     <div style="font-size:2.5rem;margin-bottom:0.5rem;">&#x1F6D2;</div>
     <h1>Grocery Data Quiz</h1>
-    <p class="sub">Enter your team name to join</p>
-    <input id="join-input" type="text" placeholder="Team name..." maxlength="30" autocomplete="off">
-    <button class="join-btn" id="join-btn" onclick="joinTeam()">Join Quiz</button>
-    <div class="team-count" id="join-team-count"></div>
+    <p class="sub">Enter your name to join</p>
+    <input id="join-input" type="text" placeholder="Your name..." maxlength="30" autocomplete="off">
+    <button class="join-btn" id="join-btn" onclick="joinPlayer()">Join Quiz</button>
+    <div class="team-count" id="join-player-count"></div>
     <div class="host-link" onclick="goHost()">I'm the facilitator &rarr; Host view</div>
   </div>
 
   <!-- PROFILE VIEW (icebreaker — shows after joining, before lobby) -->
   <div id="profile-view" class="view">
     <div class="pf-header">
-      <div class="pf-team" id="pf-team-name">Team</div>
+      <div class="pf-team" id="pf-name-label">You</div>
       <div class="pf-step" id="pf-step-label">1 / 3</div>
     </div>
     <div class="pf-body" id="pf-body"></div>
@@ -328,7 +328,7 @@
   <div id="player-view" class="view">
     <div class="p-header">
       <div>
-        <div class="p-team" id="p-team-name">Team</div>
+        <div class="p-team" id="p-name-label">You</div>
         <div class="p-score" id="p-score">0 pts</div>
       </div>
       <div class="p-timer" id="p-timer">30</div>
@@ -352,7 +352,7 @@
        STATE
        ============================================================ */
     let mode = null; // 'profile' | 'player' | 'host'
-    let teamName = '';
+    let playerName = '';
     let state = {};
     let myAnswer = null;
     let pollInterval = null;
@@ -427,8 +427,8 @@
        ============================================================ */
     const path = window.location.pathname;
     if (path === '/host') { goHost(); }
-    else if (path === '/play' && localStorage.getItem('quizTeam')) {
-      teamName = localStorage.getItem('quizTeam');
+    else if (path === '/play' && localStorage.getItem('quizName')) {
+      playerName = localStorage.getItem('quizName');
       // If profile was completed previously (this device), skip the icebreaker
       if (localStorage.getItem('quizProfile')) {
         goPlayer();
@@ -440,20 +440,20 @@
     /* ============================================================
        JOIN
        ============================================================ */
-    $('join-input').addEventListener('keydown', e => { if (e.key === 'Enter') joinTeam(); });
+    $('join-input').addEventListener('keydown', e => { if (e.key === 'Enter') joinPlayer(); });
 
-    async function joinTeam() {
+    async function joinPlayer() {
       const name = $('join-input').value.trim();
       if (!name) return;
       $('join-btn').disabled = true;
       try {
-        const res = await fetch('/api/teams', {
+        const res = await fetch('/api/players', {
           method: 'POST', headers: {'Content-Type': 'application/json'},
           body: JSON.stringify({name})
         });
         if (!res.ok) throw new Error('Failed to join');
-        teamName = name;
-        localStorage.setItem('quizTeam', name);
+        playerName = name;
+        localStorage.setItem('quizName', name);
         goProfile();
       } catch (e) {
         alert('Could not join: ' + e.message);
@@ -468,9 +468,9 @@
       mode = 'profile';
       profileStep = 0;
       profileAnswers = {};
-      $('pf-team-name').textContent = teamName;
+      $('pf-name-label').textContent = playerName;
       showView('profile-view');
-      // Poll so state.teamCount etc is fresh if user jumps to player later
+      // Poll so state.playerCount etc is fresh if user jumps to player later
       startPolling();
       renderProfile();
     }
@@ -519,7 +519,7 @@
         await fetch('/api/profile', {
           method: 'POST',
           headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify({ team: teamName, ...profileAnswers }),
+          body: JSON.stringify({ name: playerName, ...profileAnswers }),
         });
         localStorage.setItem('quizProfile', JSON.stringify(profileAnswers));
       } catch (e) {
@@ -532,7 +532,7 @@
     function goPlayer() {
       mode = 'player';
       showView('player-view');
-      $('p-team-name').textContent = teamName;
+      $('p-name-label').textContent = playerName;
       history.replaceState(null, '', '/play');
       startPolling();
     }
@@ -595,12 +595,12 @@
       const s = state;
       const body = $('p-body');
 
-      // Find my team's score
-      const myTeam = s.leaderboard?.find(t => t.name === teamName);
-      $('p-score').textContent = myTeam ? myTeam.score + ' pts' : '0 pts';
+      // Find my own score
+      const me = s.leaderboard?.find(p => p.name === playerName);
+      $('p-score').textContent = me ? me.score + ' pts' : '0 pts';
 
       if (s.phase === 'lobby') {
-        body.innerHTML = `<div class="p-waiting"><div class="emoji">&#x23F3;</div><h2>Waiting for host to start...</h2><p>${s.teamCount} team${s.teamCount !== 1 ? 's' : ''} joined</p></div>`;
+        body.innerHTML = `<div class="p-waiting"><div class="emoji">&#x23F3;</div><h2>Waiting for host to start...</h2><p>${s.playerCount} player${s.playerCount !== 1 ? 's' : ''} joined</p></div>`;
         myAnswer = null;
       } else if (s.phase === 'question') {
         const q = s.question;
@@ -637,8 +637,8 @@
           <div style="text-align:center;color:rgba(255,255,255,0.6);font-size:0.9rem;padding:0.5rem;">${q.explanation}</div>`;
         myAnswer = null; // reset for next question
       } else if (s.phase === 'results') {
-        const rank = s.leaderboard?.findIndex(t => t.name === teamName) + 1;
-        body.innerHTML = `<div class="p-waiting"><div class="emoji">&#x1F389;</div><h2>${rank === 1 ? 'You won!' : `You placed #${rank}`}</h2><p>${myTeam?.score || 0} points</p></div>`;
+        const rank = s.leaderboard?.findIndex(p => p.name === playerName) + 1;
+        body.innerHTML = `<div class="p-waiting"><div class="emoji">&#x1F389;</div><h2>${rank === 1 ? 'You won!' : `You placed #${rank}`}</h2><p>${me?.score || 0} points</p></div>`;
       }
     }
 
@@ -649,7 +649,7 @@
       try {
         await fetch('/api/answer', {
           method: 'POST', headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify({team: teamName, answer: idx})
+          body: JSON.stringify({name: playerName, answer: idx})
         });
       } catch (e) { /* best effort */ }
     }
@@ -667,7 +667,7 @@
        ============================================================ */
     function renderAudienceBreakdown(s) {
       const counts = s.profileCounts;
-      if (!counts || !s.profiledTeamCount) return '';
+      if (!counts || !s.profiledPlayerCount) return '';
       const rows = [
         { key: 'persona',    label: 'Who\'s in the room' },
         { key: 'stack',      label: 'Daily drivers' },
@@ -694,23 +694,23 @@
       const body = $('h-body');
       const controls = $('h-controls');
 
-      $('h-qinfo').textContent = s.phase !== 'lobby' ? `Q${s.currentQuestion+1} / ${s.totalQuestions}` : `${s.teamCount} teams`;
+      $('h-qinfo').textContent = s.phase !== 'lobby' ? `Q${s.currentQuestion+1} / ${s.totalQuestions}` : `${s.playerCount} players`;
 
       if (s.phase === 'lobby') {
         const breakdown = renderAudienceBreakdown(s);
-        const profiledText = s.profiledTeamCount
-          ? ` &middot; ${s.profiledTeamCount}/${s.teamCount} profiled`
+        const profiledText = s.profiledPlayerCount
+          ? ` &middot; ${s.profiledPlayerCount}/${s.playerCount} profiled`
           : '';
         body.innerHTML = `<div class="h-lobby">
           <div style="font-size:3rem;">&#x1F6D2;</div>
           <h1>The Great <span style="color:var(--lava);">Grocery Data</span> Quiz</h1>
-          <p style="color:rgba(255,255,255,0.5);font-size:1.1rem;">${s.teamCount} team${s.teamCount !== 1 ? 's' : ''} joined — waiting to start${profiledText}</p>
-          <div class="team-grid" id="lobby-teams">
-            ${s.leaderboard?.map(t => `<div class="team-chip">${t.name}</div>`).join('') || ''}
+          <p style="color:rgba(255,255,255,0.5);font-size:1.1rem;">${s.playerCount} player${s.playerCount !== 1 ? 's' : ''} joined — waiting to start${profiledText}</p>
+          <div class="team-grid" id="lobby-players">
+            ${s.leaderboard?.map(p => `<div class="team-chip">${p.name}</div>`).join('') || ''}
           </div>
           ${breakdown}
         </div>`;
-        controls.innerHTML = `<button class="ctrl-btn primary" onclick="hostControl('start')" ${s.teamCount === 0 ? 'disabled' : ''}>Start Quiz &#x25B6;</button>
+        controls.innerHTML = `<button class="ctrl-btn primary" onclick="hostControl('start')" ${s.playerCount === 0 ? 'disabled' : ''}>Start Quiz &#x25B6;</button>
           <button class="ctrl-btn secondary" onclick="hostControl('reset')">Reset</button>`;
 
       } else if (s.phase === 'question' || s.phase === 'revealed') {
@@ -718,7 +718,7 @@
         if (!q) return;
         const keys = ['A','B','C','D'];
         const revealed = s.phase === 'revealed';
-        const answeredCount = s.leaderboard?.filter(t => t.answered > s.currentQuestion).length || 0;
+        const answeredCount = s.leaderboard?.filter(p => p.answered > s.currentQuestion).length || 0;
 
         body.innerHTML = `
           <div class="h-main">
@@ -737,9 +737,9 @@
           <div class="h-sidebar">
             <div class="lb-title">Leaderboard</div>
             <div class="lb-list">
-              ${s.leaderboard?.map((t,i) => `<div class="lb-team"><span class="lb-rank">${i+1}</span><span class="lb-name">${t.name}</span><span class="lb-pts">${t.score}</span></div>`).join('') || ''}
+              ${s.leaderboard?.map((p,i) => `<div class="lb-team"><span class="lb-rank">${i+1}</span><span class="lb-name">${p.name}</span><span class="lb-pts">${p.score}</span></div>`).join('') || ''}
             </div>
-            <div class="lb-answered">${answeredCount}/${s.teamCount} answered</div>
+            <div class="lb-answered">${answeredCount}/${s.playerCount} answered</div>
           </div>`;
 
         if (s.phase === 'question') {
@@ -758,14 +758,14 @@
         body.innerHTML = `<div class="h-results">
           <h1>&#x1F389; Final Results</h1>
           <div class="podium">
-            ${top3.map((t,i) => `<div class="podium-item">
-              <div class="podium-name">${t.name}</div>
-              <div class="podium-bar" style="height:${heights[i]}px;background:${colors[i]};">${t.score}</div>
+            ${top3.map((p,i) => `<div class="podium-item">
+              <div class="podium-name">${p.name}</div>
+              <div class="podium-bar" style="height:${heights[i]}px;background:${colors[i]};">${p.score}</div>
               <div class="podium-place">${places[i]}</div>
             </div>`).join('')}
           </div>
           <div class="lb-list" style="max-width:400px;width:100%;margin-top:1rem;">
-            ${s.leaderboard?.map((t,i) => `<div class="lb-team"><span class="lb-rank">${i+1}</span><span class="lb-name">${t.name}</span><span class="lb-pts">${t.score}</span></div>`).join('') || ''}
+            ${s.leaderboard?.map((p,i) => `<div class="lb-team"><span class="lb-rank">${i+1}</span><span class="lb-name">${p.name}</span><span class="lb-pts">${p.score}</span></div>`).join('') || ''}
           </div>
         </div>`;
         controls.innerHTML = `<button class="ctrl-btn primary" onclick="hostControl('start')">Play Again &#x1F504;</button>
@@ -781,13 +781,13 @@
       } catch (e) { alert('Error: ' + e.message); }
     }
 
-    /* Update join screen team count */
+    /* Update join screen player count */
     setInterval(async () => {
       if (mode) return;
       try {
         const res = await fetch('/api/state');
         const data = await res.json();
-        $('join-team-count').textContent = data.teamCount > 0 ? `${data.teamCount} team${data.teamCount !== 1 ? 's' : ''} already in` : '';
+        $('join-player-count').textContent = data.playerCount > 0 ? `${data.playerCount} player${data.playerCount !== 1 ? 's' : ''} already in` : '';
       } catch (e) {}
     }, 2000);
   </script>
