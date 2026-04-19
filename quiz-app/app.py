@@ -5,6 +5,7 @@ from __future__ import annotations
 import asyncio
 import os
 import time
+from collections import Counter
 from enum import Enum
 from typing import Any
 
@@ -43,6 +44,7 @@ class Team(BaseModel):
     score: int = 0
     answers: list[int | None] = []  # index of chosen option per question, None if unanswered
     times: list[float | None] = []  # seconds remaining when answered
+    profile: dict[str, str] = {}  # icebreaker answers: persona / stack / databricks
 
 
 QUESTIONS: list[Question] = [
@@ -226,6 +228,21 @@ class QuizState:
             key=lambda t: (-t.score, -sum(x or 0 for x in t.times)),
         )
 
+        # Aggregate profile answers across all teams for the host lobby
+        persona_counts: Counter[str] = Counter()
+        stack_counts: Counter[str] = Counter()
+        databricks_counts: Counter[str] = Counter()
+        profiled_teams = 0
+        for t in self.teams.values():
+            if t.profile:
+                profiled_teams += 1
+                if (v := t.profile.get("persona")):
+                    persona_counts[v] += 1
+                if (v := t.profile.get("stack")):
+                    stack_counts[v] += 1
+                if (v := t.profile.get("databricks")):
+                    databricks_counts[v] += 1
+
         result: dict[str, Any] = {
             "phase": self.phase.value,
             "currentQuestion": self.current_question,
@@ -238,6 +255,12 @@ class QuizState:
                 for t in leaderboard
             ],
             "teamCount": len(self.teams),
+            "profiledTeamCount": profiled_teams,
+            "profileCounts": {
+                "persona": dict(persona_counts),
+                "stack": dict(stack_counts),
+                "databricks": dict(databricks_counts),
+            },
         }
 
         if q:
@@ -272,6 +295,13 @@ class AnswerRequest(BaseModel):
     answer: int
 
 
+class ProfileRequest(BaseModel):
+    team: str
+    persona: str
+    stack: str
+    databricks: str
+
+
 @app.post("/api/teams")
 def join_team(req: JoinRequest) -> dict[str, Any]:
     name = req.name.strip()[:30]
@@ -286,6 +316,20 @@ def join_team(req: JoinRequest) -> dict[str, Any]:
 @app.get("/api/state")
 def get_state() -> dict[str, Any]:
     return quiz.snapshot()
+
+
+@app.post("/api/profile")
+def set_profile(req: ProfileRequest) -> dict[str, Any]:
+    team = quiz.teams.get(req.team)
+    if not team:
+        raise HTTPException(404, "Team not found")
+    team.profile = {
+        "persona": req.persona,
+        "stack": req.stack,
+        "databricks": req.databricks,
+    }
+    quiz.bump()
+    return {"ok": True}
 
 
 @app.post("/api/answer")
