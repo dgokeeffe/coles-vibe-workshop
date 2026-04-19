@@ -1,10 +1,23 @@
 # Lab 2: Data Quality, New Sources & Scheduling (Data Engineering Track)
 
-**Duration:** 55 minutes
+**Duration:** 80 minutes
 **Goal:** Add data sources, implement data quality rules, and set up pipeline scheduling
-**Team Size:** 2–3 people
+**Team Size:** Pairs (two-person teams)
 
 > Complete `LAB-0-GETTING-STARTED.md` and `LAB-1-DE.md` first.
+
+---
+
+## Pair Programming
+
+Same pattern as Lab 1 — keep the loop tight.
+
+- **Driver:** types prompts, runs tests, commits.
+- **Navigator:** reads, verifies in the Databricks UI, challenges at the **V** step of R.V.P.I.
+- **Swap every 15 min** — set a timer.
+- **Escalation rule:** if a task doesn't fit R.V.P.I. in 15 min, split it.
+
+Before you start, re-read your CLAUDE.md. Is it still current after Lab 1?
 
 ---
 
@@ -18,16 +31,15 @@ Your pipeline handles ABS retail and CPI data. Now make it production-grade: add
 >
 > Every prompt below is 1–3 min of agent work. If something feels like a "do it all" prompt, split it. Each prompt should end with a verification moment: *"after this, will I know whether it worked?"*
 >
-> **While the agent is running:** read the previous output critically, pre-write the next prompt, or update CLAUDE.md with a learning.
+> **While the Driver is running the agent, the Navigator should:** read the previous output critically, pre-write the next prompt, or update CLAUDE.md with a learning.
 
 ---
 
 ## Phase 1: Add FSANZ Food Recalls — Bronze (8 min)
 
-> **Team Tasks**
-> - **Person A (Terminal):** Drive 1.1–1.3
-> - **Person B (Terminal):** Read every output for quality; flag web scraping gotchas
-> - **Person C (Databricks UI):** Prepare checkpoint fallback; watch for the table to appear
+> **Pair Tasks**
+> - **Driver:** Drive 1.1–1.3.
+> - **Navigator:** Read every output for quality and flag web-scraping gotchas. Have the checkpoint fallback URL ready, and watch for the table to appear in Unity Catalog.
 
 ### 1.1 Write ONE schema test (2 min)
 
@@ -90,7 +102,7 @@ the silver function to match.
 
 ### 2.4 Verify in Unity Catalog (30 sec)
 
-Person C: run `SELECT * FROM workshop_vibe_coding.<team_schema>.silver_food_recalls LIMIT 5`. Confirm the dates and state names look right.
+**Navigator:** run `SELECT * FROM workshop_vibe_coding.<team_schema>.silver_food_recalls LIMIT 5` in a SQL editor tab. Confirm the dates and state names look right.
 
 ---
 
@@ -132,7 +144,7 @@ to gold_retail_summary. Run its test.
 
 ### 3.4 Verify expectations surface in the pipeline UI (3 min)
 
-Person B: open the pipeline in Workflows. Confirm you can see the expectation names and pass/fail counts after a run.
+**Navigator:** open the pipeline in Workflows. Confirm you can see the expectation names and pass/fail counts after a run.
 
 ---
 

@@ -2,6 +2,18 @@
 
 **Duration:** 10 minutes
 **Goal:** Set up your project, explore the data, and choose your track
+**Team Size:** Pairs (two-person teams)
+
+---
+
+## Pair Programming
+
+You'll work in a pair for the rest of the day. One person is **Driver** (hands on keyboard, types prompts, runs tests, commits). The other is **Navigator** (reads outputs, verifies in the Databricks UI, challenges at the **V** step of **R.V.P.I.**).
+
+- Swap roles every **15 min** — set a timer.
+- Escalation rule: if a task doesn't fit R.V.P.I. in 15 min, split it.
+
+For Lab 0 setup, pick a Driver to start. You'll swap for Lab 1.
 
 ---
 

@@ -4,7 +4,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What This Is
 
-Workshop materials for a 6.5-hour Coles Group vibe coding hackathon (9:30 AM – 4:00 PM). Teams of 2-3 build a Grocery Intelligence Platform using AI coding agents on Databricks. Three parallel tracks: Data Engineering, Data Science, and Analyst.
+Workshop materials for a 7-hour Coles Group vibe coding workshop (10:00 AM – 5:00 PM, lunch 12:00–13:00). **Pairs** (driver/navigator, 15-min swaps — not teams of 2–3) build a Grocery Intelligence Platform using AI coding agents on Databricks. Three parallel tracks: Data Engineering, Data Science, and Analyst.
+
+The workshop's meta-framework is **R.V.P.I.** — Research → Validate → Plan → Implement. The "V" is the step most other agent workflows skip: audit retrieved context (CLAUDE.md, past memory, research output) before planning on top of it. See `notes/rvpi-validate-step.md` for the full framework.
 
 ## Build & Export Commands
 
@@ -23,29 +25,30 @@ cd reference-implementation && uv run pytest tests/test_quality.py -x --no-heade
 cd reference-implementation && uv run pytest tests/test_app.py -x --no-header -q
 ```
 
-## Workshop Schedule (9:30–16:00)
+## Workshop Schedule (10:00–17:00)
 
-- **9:30** Welcome + Icebreaker (15 min)
-- **9:45** Theory: Vibe Coding, CLAUDE.md, TDD (45 min)
-- **10:30** Break (15 min)
-- **10:45** Lab 0: Guided Hands-On — ALL together (45 min)
-- **11:30** Theory: Skills, MCP, Genie/AI-BI (20 min)
-- **11:50** Track Briefing — teams choose DE / DS / Analyst (10 min)
-- **12:00** Lab 1 — track-specific (60 min)
-- **13:00** Show & Tell (15 min)
-- **13:15** Lunch (45 min)
-- **14:00** Lab 2 — track-specific (60 min)
-- **15:00** Team Demos (30 min)
-- **15:30** Takeaways + Close (15 min)
+- **10:00** Opener — why this matters, YWS story, end-output teaser (10 min)
+- **10:10** Internal Demo — coding agents at Databricks + live pipeline/dashboard (15 min)
+- **10:25** Icebreaker — quiz-app live play (15 min)
+- **10:40** Break (10 min)
+- **10:50** Get-to-know-Claude — R.V.P.I., CLAUDE.md, Small Steps, Power Tools, BDD, Sycophancy, Context (70 min)
+- **12:00** Lunch (60 min)
+- **13:00** Challenge brief + pair formation + Lab 1 briefing (15 min)
+- **13:15** Lab 1 — track-specific, pairs (90 min)
+- **14:45** Show & Tell + quiz-app reveal (15 min)
+- **15:00** Break (10 min)
+- **15:10** Lab 2 — track-specific, pairs (80 min)
+- **16:30** Team demos + Let Go + Takeaways + Hackathon + Close (30 min)
 
-## Five Files Must Stay In Sync
+## Six Files Must Stay In Sync
 
-When changing workshop content, update all five:
-1. `slides.html` — the deck attendees see. Speaker notes live in `data-notes` attributes on each `<section>`; press **N** to toggle the overlay.
-2. `FACILITATOR-SCRIPT.md` — dot-point cue cards per slide
-3. `WORKSHOP-PLAN.md` — master plan with session details and timing
-4. `VIBE-CODING-GUIDE.md` — markdown version of common track theory content
-5. `track-common.html` — HTML workbook version of the same content
+When changing workshop content, update all six:
+1. `WORKSHOP-TRANSCRIPT.md` — **single source of truth**: hybrid prose + slide cue bullets for the day's narrative. Added 2026-04-19; drives everything else.
+2. `slides.html` — the deck attendees see. 53 slides, `aria-label="Slide N: ..."` format. Speaker notes in `data-notes` attributes; press **N** to toggle the overlay.
+3. `FACILITATOR-SCRIPT.md` — dot-point cue cards per slide / per block
+4. `WORKSHOP-PLAN.md` — master plan with session details and timing
+5. `VIBE-CODING-GUIDE.md` — markdown version of common track theory content
+6. `track-common.html` — HTML workbook version of the same content
 
 > **Note:** `slides-facilitator.html` was previously a twin deck with JS-injected notes from `data-notes`. Removed 2026-04-19 — the same `data-notes` now live on `slides.html` and the press-N overlay covers the use case without the drift risk of maintaining two files. If you need a plain-text notes dump, grep `data-notes="` out of `slides.html`.
 
@@ -74,7 +77,7 @@ Track accent colors: DE = lava red (#FF3621), DS = purple (#7c3aed), Analyst = c
 
 ## Three-Track System
 
-After shared theory and Lab 0, teams choose one track:
+After shared theory (10:50–12:00 Get-to-know-Claude block) and lunch, pairs choose one track at 13:00:
 
 | Track | Badge Color | Lab 1 | Lab 2 | Lab Files |
 |-------|------------|-------|-------|-----------|

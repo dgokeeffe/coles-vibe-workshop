@@ -1,10 +1,21 @@
 # Lab 1: Feature Engineering & MLflow (Data Science Track)
 
-**Duration:** 55 minutes
+**Duration:** 90 minutes
 **Goal:** Build a feature engineering pipeline from gold tables and track experiments with MLflow
-**Team Size:** 2–3 people
+**Team Size:** Pairs (two-person teams)
 
 > Complete `LAB-0-GETTING-STARTED.md` first, then return here.
+
+---
+
+## Pair Programming
+
+You're working in a pair on one keyboard. Roles rotate every **15 minutes** — set a timer.
+
+- **Driver:** hands on keyboard. Types prompts, runs tests, runs `git commit`.
+- **Navigator:** reads every agent output critically, verifies results in the Databricks UI (Unity Catalog tables, MLflow experiment runs), and challenges the Driver — especially at the **V** step of **R.V.P.I.**
+- **Swap every 15 min.** Whoever was Navigator becomes Driver. Pass the keyboard.
+- **Escalation rule:** If a task doesn't fit the **R.V.P.I.** loop inside a single 15-minute slot, split it.
 
 ---
 
@@ -22,7 +33,7 @@ Your gold tables are pre-loaded (from checkpoints). Build a feature engineering 
 >
 > **See `LAB-1-DE.md` Phases 1–3** for the canonical small-step pattern (skeleton → one test → one implementation → run → next). Apply the same cadence here.
 >
-> **While the agent is running:** read the previous output critically, pre-write the next prompt, or update CLAUDE.md with a learning. No one ever just waits.
+> **While the Driver is running the agent, the Navigator should:** read the previous output critically, pre-write the next prompt, or update CLAUDE.md with a learning. Never just wait.
 
 > **Heuristic:** *"After this prompt finishes, will I KNOW whether it worked?"* If no → too big, split it.
 
@@ -30,12 +41,9 @@ Your gold tables are pre-loaded (from checkpoints). Build a feature engineering 
 
 ## Phase 1: Explore Data + Write Tests (15 min)
 
-> **Team Tasks for This Phase**
-> - **Person A (Terminal):** Query gold tables, understand distributions and patterns
-> - **Person B (Terminal):** Write pytest tests for feature engineering functions
-> - **Person C (Databricks UI):** Create MLflow experiment in workspace, verify tracking works
->
-> *Teams of 2: Person A takes Terminal tasks, Person B takes Terminal + UI tasks.*
+> **Pair Tasks**
+> - **Driver:** Run the gold-table exploration prompt (1.1), then the test-writing prompt (1.2).
+> - **Navigator:** Read the distributions output — does anything look off? Open MLflow in a side tab, create the experiment, and verify tracking works while the Driver keeps moving. Flag if the agent tries to implement before the tests are written.
 
 ### 1.1 Explore the gold tables
 
@@ -94,12 +102,10 @@ Use PySpark test fixtures with small DataFrames.
 
 ## Phase 2: Build Feature Engineering Pipeline (20 min)
 
-> **Team Tasks for This Phase**
-> - **Person A (Terminal):** Build lag and seasonal feature functions
-> - **Person B (Terminal):** Build growth rate features and combine into feature table
-> - **Person C (Databricks UI):** Run EDA — distribution plots, correlation analysis, trend identification
->
-> *Teams of 2: Person A takes Terminal tasks, Person B takes Terminal + UI tasks.*
+> **Pair Tasks**
+> - **Swap Driver/Navigator now** if it's been 15 min.
+> - **Driver:** Implement lag features first, then seasonal, then growth — one prompt per feature group. Run tests after each.
+> - **Navigator:** Read every agent output — flag pandas usage, flag Window functions missing `partitionBy`. While tests are running, run EDA in a notebook (distribution plots, correlation).
 
 ### 2.1 Build features
 
@@ -133,12 +139,10 @@ Run tests after implementation. Handle nulls in lag features (first N rows will 
 
 ## Phase 3: MLflow Experiment Tracking (15 min)
 
-> **Team Tasks for This Phase**
-> - **Person A (Terminal):** Log feature engineering run to MLflow with parameters, metrics, artifacts
-> - **Person B (Terminal):** Create and log visualizations (correlation heatmap, trend plots)
-> - **Person C (Databricks UI):** Review experiment in MLflow UI, compare runs, tag experiment
->
-> *Teams of 2: Person A takes Terminal tasks, Person B takes Terminal + UI tasks.*
+> **Pair Tasks**
+> - **Swap Driver/Navigator** if the timer has fired.
+> - **Driver:** Log the feature engineering run to MLflow — params, metrics, tags, artifacts, visualizations — in small steps (one `log_param` block, then `log_metric`, then artifacts).
+> - **Navigator:** Open the MLflow UI while the Driver logs. Verify each run shows up with the right params. Tag the experiment. Challenge if anything's missing.
 
 ### 3.1 Track experiments
 

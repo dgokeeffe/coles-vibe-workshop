@@ -1,10 +1,23 @@
 # Lab 2: Model Training, Serving & App (Data Science Track)
 
-**Duration:** 55 minutes
+**Duration:** 80 minutes
 **Goal:** Train a forecasting model, register in MLflow, serve via Model Serving, build a prediction app
-**Team Size:** 2–3 people
+**Team Size:** Pairs (two-person teams)
 
 > Complete `LAB-0-GETTING-STARTED.md` and `LAB-1-DS.md` first.
+
+---
+
+## Pair Programming
+
+Same pattern as Lab 1.
+
+- **Driver:** types prompts, runs tests, commits.
+- **Navigator:** reads outputs, verifies in the MLflow UI / Model Serving UI / deployed app, challenges at the **V** step of R.V.P.I.
+- **Swap every 15 min** — set a timer.
+- **Escalation rule:** if a task doesn't fit R.V.P.I. in 15 min, split it.
+
+Before you start, re-read your CLAUDE.md. Is it still current after Lab 1?
 
 ---
 
@@ -24,12 +37,9 @@ Your feature table is ready. Train a model to predict retail turnover, register 
 
 ## Phase 1: Train Model + Write Tests (15 min)
 
-> **Team Tasks for This Phase**
-> - **Person A (Terminal):** Write tests for model training (input schema, positive predictions, R² > 0.5)
-> - **Person B (Terminal):** Implement training script — read features, train model, log to MLflow
-> - **Person C (Databricks UI):** Verify Model Serving permissions, check Model Registry is accessible
->
-> *Teams of 2: Person A takes Terminal tasks, Person B takes Terminal + UI tasks.*
+> **Pair Tasks**
+> - **Driver:** Run the test prompt first (1.1), then the training prompt (1.2).
+> - **Navigator:** Read the generated tests — do they actually capture "predictions positive" and "R² > 0.5"? Flag if not. While the agent trains, open the Databricks UI and verify Model Serving + Model Registry are accessible in your workspace.
 
 ### 1.1 Write model tests
 
@@ -66,12 +76,10 @@ Run tests after training.
 
 ## Phase 2: Register + Serve (20 min)
 
-> **Team Tasks for This Phase**
-> - **Person A (Terminal):** Register best model in MLflow Model Registry
-> - **Person B (Terminal):** Create Model Serving endpoint, test with sample request
-> - **Person C (Terminal):** Write tests for serving endpoint response schema
->
-> *Teams of 2: Person A takes Terminal tasks, Person B takes Terminal + UI tasks.*
+> **Pair Tasks**
+> - **Swap Driver/Navigator** if the timer has fired.
+> - **Driver:** Run 2.1 (register), then 2.2 (create endpoint + test).
+> - **Navigator:** Verify each step in the UI — the model version appears in Model Registry with the "production" alias; the serving endpoint moves from "Creating" to "Ready". Sketch a smoke-test for the response schema (Driver can write it while the endpoint provisions).
 
 ### 2.1 Register the model
 
@@ -107,12 +115,10 @@ Show me the prediction response.
 
 ## Phase 3: Build Prediction App (15 min)
 
-> **Team Tasks for This Phase**
-> - **Person A (Terminal):** Build FastAPI backend with `/predict` endpoint calling Model Serving
-> - **Person B (Terminal):** Build HTML + Tailwind frontend with prediction form
-> - **Person C (Databricks UI):** Test end-to-end flow, verify predictions make sense
->
-> *Teams of 2: Person A takes Terminal tasks, Person B takes Terminal + UI tasks.*
+> **Pair Tasks**
+> - **Swap Driver/Navigator** if the timer has fired.
+> - **Driver:** Build backend first (FastAPI with `/predict`), then frontend (HTML + Tailwind form). Small prompts — one endpoint at a time.
+> - **Navigator:** After each backend step, hit `/health` in a browser or `curl` to verify. Once frontend exists, submit the form with a sample state/industry/month and confirm predictions are plausible (not negative, not absurdly large).
 
 ### 3.1 Build the app
 

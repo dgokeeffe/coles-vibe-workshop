@@ -1,10 +1,21 @@
 # Lab 1: Build Your Data Pipeline (Data Engineering Track)
 
-**Duration:** 55 minutes
+**Duration:** 90 minutes
 **Goal:** Build, test, and deploy a Lakeflow Declarative Pipeline using an AI coding agent
-**Team Size:** 2–3 people
+**Team Size:** Pairs (two-person teams)
 
 > Complete `LAB-0-GETTING-STARTED.md` first, then return here.
+
+---
+
+## Pair Programming
+
+You're working in a pair on one keyboard. Roles rotate every **15 minutes** — set a timer.
+
+- **Driver:** hands on keyboard. Types prompts, runs tests, runs `git commit`.
+- **Navigator:** reads every agent output critically, verifies results in the Databricks UI, and challenges the Driver — especially at the **V** step of **R.V.P.I.** (Is the research current? Are we about to plan on stale state?).
+- **Swap every 15 min.** Whoever was Navigator becomes Driver. Pass the keyboard.
+- **Escalation rule:** If a task doesn't fit the **R.V.P.I.** loop inside a single 15-minute slot, split it. Small Steps is the point.
 
 ---
 
@@ -27,23 +38,19 @@ Both APIs return CSV data via the SDMX standard. The agent will handle the API c
 
 ---
 
-
----
-
 > **The Small Steps Principle**
 >
 > Every prompt in this lab is designed to be **1–3 minutes of agent work** with a **verification moment** at the end. If you catch yourself about to send a big "build me X, Y, and Z" prompt — **stop and split it**. The pattern you're learning today is: one prompt → one change → one verification → next prompt.
 >
-> **While the agent is running, one of you should:** (a) read the previous output critically, (b) pre-write the next prompt, (c) update CLAUDE.md with a learning. No one ever just waits.
+> **While the agent is running, the Navigator should:** (a) read the previous output critically, (b) pre-write the next prompt, (c) update CLAUDE.md with a learning. Never just wait.
 
 ---
 
 ## Phase 1: Explore + Set Up (10 min)
 
-> **Team Tasks**
-> - **Person A (Terminal):** Run prompts 1.1–1.3 below
-> - **Person B (Terminal):** Copy `starter-kit/CLAUDE.md` to project root, customize team name/schema; while Person A's agent runs, read outputs critically
-> - **Person C (Databricks UI):** Verify Unity Catalog schema exists, check checkpoint tables are accessible; during waits, pre-write Phase 2 prompts
+> **Pair Tasks**
+> - **Driver:** Run prompts 1.1–1.3 below, copy `starter-kit/CLAUDE.md` to project root and customize team name/schema.
+> - **Navigator:** While the agent is running, read each output critically. Open Unity Catalog in a side tab and verify the schema + checkpoint tables exist. Pre-write Phase 2 prompts during waits.
 
 > **Remember:** Tests are your spec. Write them BEFORE any implementation. And keep each prompt tight.
 
@@ -91,10 +98,10 @@ No logic yet. Just the structure.
 
 > **Why one at a time:** You'll build `abs_retail_trade.py` end-to-end first (write → test → fix → quality rule). Then in Phase 3 you'll repeat the pattern for CPI — faster this time because you know the shape.
 
-> **Team Tasks**
-> - **Person A (Terminal):** Drive prompts 2.1–2.4
-> - **Person B (Terminal):** Read every agent output, flag anything using pandas or skipping PySpark; pre-write prompts for Phase 3
-> - **Person C (Databricks UI):** Watch Unity Catalog for the new table; prepare checkpoint fallback
+> **Pair Tasks**
+> - **Driver:** Drive prompts 2.1–2.4.
+> - **Navigator:** Read every agent output — flag pandas usage, skipped PySpark, or silent scope creep. Watch Unity Catalog for the new table appearing. Pre-write Phase 3 prompts during agent waits.
+> - **Swap after 15 min** if you haven't already.
 
 ### 2.1 Write ONE schema test (2 min)
 
@@ -153,9 +160,9 @@ Re-run the test to confirm it still passes.
 
 > **Now you know the shape.** Same pattern, different table. Aim for 10 min total — the pattern should feel automatic.
 
-> **Team Tasks**
-> - Rotate the driver: whoever was reading becomes Person A
-> - Keep each prompt tight (1–3 min)
+> **Pair Tasks**
+> - **Swap Driver/Navigator now** if it's been 15 minutes.
+> - Keep each prompt tight (1–3 min).
 
 ### 3.1 Test, implement, quality rule — one-shot each
 
@@ -181,17 +188,6 @@ Prompt 4 (after test passes):
 > **The point:** Four tight prompts, four verification moments. Never more than 3 minutes of agent work without a human checkpoint.
 
 ---
-
-## Phase 3: Build Silver + Gold (20 min)
-
-> **Team Tasks for This Phase**
-> - **Person A (Terminal):** Build silver retail_turnover and gold retail_summary
-> - **Person B (Terminal):** Build silver food_price_index and gold food_inflation
-> - **Person C (Databricks UI):** Monitor test output, review gold table data as it appears, prepare icebreaker answers
->
-> *Teams of 2: Person A takes Terminal tasks, Person B takes Terminal + UI tasks.*
-
-### 3.1 Build silver transformations
 
 ## Phase 4: Silver Layer — One Table at a Time (12 min)
 
@@ -310,10 +306,9 @@ Query the gold tables and show me:
 
 ## Phase 7: Deploy with DABs (5 min)
 
-> **Team Tasks**
-> - **Person A (Terminal):** Run 7.1–7.2
-> - **Person B (Databricks UI):** Watch the pipeline appear in the Workflows tab
-> - **Person C:** Query gold tables to check icebreaker prediction answers
+> **Pair Tasks**
+> - **Driver:** Run 7.1–7.2.
+> - **Navigator:** Watch the pipeline appear in the Workflows tab, then query the gold tables to check quiz-app answers while the Driver finishes the deploy.
 
 ### 7.1 Generate pipeline.yml + databricks.yml (2 min)
 
@@ -353,7 +348,7 @@ Then: databricks bundle run grocery-intelligence-<team_name> -t dev
 > - If the agent goes off track, say **"stop, let's go back to the failing tests"**
 > - Use **"show me the test output"** to see exactly what's failing
 > - Say **"explain what this function does"** to verify the agent's logic
-> - **Rotate the driver** every 20 min so everyone gets hands-on time
+> - **Swap Driver/Navigator every 15 min** — set a timer. The Navigator's job is not optional; it's where verification happens.
 > - Use skills: try **`/commit`** to commit your work with a good message
 
 ---

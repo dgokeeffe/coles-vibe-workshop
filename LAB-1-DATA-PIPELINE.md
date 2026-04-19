@@ -1,8 +1,21 @@
 # Lab 1: Build Your Data Pipeline
 
-**Duration:** 55 minutes
+**Duration:** 90 minutes
 **Goal:** Build, test, and deploy a Lakeflow Declarative Pipeline using an AI coding agent
-**Team Size:** 2–3 people
+**Team Size:** Pairs (two-person teams)
+
+> **Note:** This is the older generic lab file. The canonical track version is `LAB-1-DE.md`.
+
+---
+
+## Pair Programming
+
+You're working in a pair on one keyboard. Roles rotate every **15 minutes** — set a timer.
+
+- **Driver:** hands on keyboard. Types prompts, runs tests, runs `git commit`.
+- **Navigator:** reads every agent output critically, verifies results in the Databricks UI, challenges at the **V** step of **R.V.P.I.**
+- **Swap every 15 min.** Whoever was Navigator becomes Driver.
+- **Escalation rule:** if a task doesn't fit R.V.P.I. in 15 min, split it.
 
 ---
 
@@ -54,12 +67,9 @@ Before you begin, set up your project:
 
 ## Phase 1: Write Tests First (15 min)
 
-> **Team Tasks for This Phase**
-> - **Person A (Terminal):** Run data exploration prompt from `starter-kit/prompts/01-explore-data.md`
-> - **Person B (Terminal):** Copy `starter-kit/CLAUDE.md` to project root, customize team name/schema
-> - **Person C (Databricks UI):** Open workspace, verify Unity Catalog schema exists, check checkpoint tables are accessible
->
-> *Teams of 2: Person A takes Terminal tasks, Person B takes Terminal + UI tasks.*
+> **Pair Tasks**
+> - **Driver:** Run the data-exploration prompt (1.1), then copy `starter-kit/CLAUDE.md` and customize team name/schema.
+> - **Navigator:** Read the exploration output. Open Unity Catalog in a side tab and verify the schema + checkpoint tables are accessible. Pre-write the test prompt for 1.2.
 
 > **Remember:** Tests are your spec. Write them BEFORE any implementation.
 
@@ -138,12 +148,10 @@ Edit or ask the agent to adjust before moving on.
 
 ## Phase 2: Build Bronze Layer (15 min)
 
-> **Team Tasks for This Phase**
-> - **Person A (Terminal):** Build retail trade bronze table using `starter-kit/prompts/03-build-bronze.md`
-> - **Person B (Terminal):** Build CPI food bronze table (same prompt covers both)
-> - **Person C (Databricks UI):** Monitor Unity Catalog for new tables appearing, prepare checkpoint fallback if APIs fail
->
-> *Teams of 2: Person A takes Terminal tasks, Person B takes Terminal + UI tasks.*
+> **Pair Tasks**
+> - **Swap Driver/Navigator** if the timer has fired.
+> - **Driver:** Build retail trade bronze table first, then CPI food (sequential, not parallel).
+> - **Navigator:** Watch Unity Catalog for new tables appearing. Have the checkpoint fallback URL ready if the APIs fail.
 
 ### 2.1 Create the pipeline structure
 
@@ -186,12 +194,10 @@ Watch the agent iterate: read test output → fix code → re-run → repeat unt
 
 ## Phase 3: Build Silver + Gold (20 min)
 
-> **Team Tasks for This Phase**
-> - **Person A (Terminal):** Build silver retail_turnover and gold retail_summary
-> - **Person B (Terminal):** Build silver food_price_index and gold food_inflation
-> - **Person C (Databricks UI):** Monitor test output, review gold table data as it appears, prepare icebreaker answers
->
-> *Teams of 2: Person A takes Terminal tasks, Person B takes Terminal + UI tasks.*
+> **Pair Tasks**
+> - **Swap Driver/Navigator** if the timer has fired.
+> - **Driver:** Build silver retail_turnover and gold retail_summary first, then silver food_price_index and gold food_inflation. One at a time.
+> - **Navigator:** Monitor test output. Review gold table data in the UI as it appears. Prepare quiz-app answers.
 
 ### 3.1 Build silver transformations
 
@@ -256,12 +262,9 @@ Query the gold tables and show me:
 
 ## Phase 4: Deploy with DABs (5 min)
 
-> **Team Tasks for This Phase**
-> - **Person A (Terminal):** Run `databricks bundle validate` and `databricks bundle deploy`
-> - **Person B (Databricks UI):** Verify pipeline appears in Workflows tab, tables visible in Unity Catalog
-> - **Person C:** Query gold tables to check icebreaker prediction answers
->
-> *Teams of 2: Person A takes Terminal tasks, Person B takes Terminal + UI tasks.*
+> **Pair Tasks**
+> - **Driver:** Run `databricks bundle validate` and `databricks bundle deploy`.
+> - **Navigator:** Watch the pipeline appear in the Workflows tab, verify tables in Unity Catalog, then query gold tables to check quiz-app answers.
 
 ### 4.1 Create the pipeline definition
 
@@ -308,7 +311,7 @@ Open the Databricks workspace UI and confirm:
 > - If the agent goes off track, say **"stop, let's go back to the failing tests"**
 > - Use **"show me the test output"** to see exactly what's failing
 > - Say **"explain what this function does"** to verify the agent's logic
-> - **Rotate the driver** every 20 min so everyone gets hands-on time
+> - **Swap Driver/Navigator every 15 min** — set a timer.
 > - Use skills: try **`/commit`** to commit your work with a good message
 
 ---

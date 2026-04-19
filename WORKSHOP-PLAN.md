@@ -4,20 +4,20 @@
 
 **Client:** Coles Group — Data & AI Engineering Team
 **Facilitator:** David O'Keeffe, Solutions Architect, Databricks
-**Format:** Full-day (6.5 hours, 9:30–16:00), Onsite at Coles SSC
-**Team Size:** Teams of 2–3, up to 5 teams (10–15 participants)
+**Format:** Full-day (7 hours, 10:00–17:00), Onsite at Coles SSC
+**Team Size:** Pairs (driver/navigator, 15-min swaps), up to 5 pairs (10 participants)
 **Platform:** Coding Agents Databricks App (browser-based terminal)
 
 ---
 
 ## The Challenge
 
-> You're a team of data engineers at an Australian grocery retailer. Your CEO wants a
+> You're a pair of data engineers at an Australian grocery retailer. Your CEO wants a
 > **Grocery Intelligence Platform** that turns public data into actionable insights.
 > You have a full day to build it end-to-end: data pipeline, web app, and natural language
-> query interface. **May the best team win.**
+> query interface. **May the best pair win.**
 
-Each team builds a complete platform using real Australian public data:
+Each pair builds a complete platform using real Australian public data:
 
 1. A **Lakeflow Declarative Pipeline** (Bronze → Silver → Gold)
 2. A **FastAPI web app** with at least one AI-powered feature
@@ -33,7 +33,7 @@ Each team builds a complete platform using real Australian public data:
 | FSANZ Food Recalls | Food safety recall notices with product details | As issued |
 | ACCC Supermarket Inquiry | Public reports on grocery market competition (PDFs) | Ad hoc |
 
-**Suggested Team Angles** (or invent your own):
+**Suggested Pair Angles** (or invent your own):
 
 | Angle | Key Questions |
 |-------|--------------|
@@ -48,15 +48,16 @@ Each team builds a complete platform using real Australian public data:
 
 By end of day, participants will be able to:
 
-1. Use conversation to initialize projects and guide AI coding agents (CLAUDE.md, PRDs)
-2. Use TDD to dramatically improve agentic code generation accuracy
-3. Build and deploy Lakeflow Declarative Pipelines with Databricks Asset Bundles
-4. Use **skills** and **MCP** for practical tool integration with agents
-5. Connect agents to external tools via **MCP** (Model Context Protocol)
-6. Create **Genie spaces** and **AI/BI dashboards** for natural language analytics
-7. Ship a working end-to-end application on Databricks
-8. (DS) Track and compare experiments with MLflow, train and serve a model
-9. (Analyst) Create Genie spaces and AI/BI dashboards for business users
+1. Apply the **R.V.P.I. loop** (Research → Validate → Plan → Implement) to direct AI coding agents
+2. Use conversation to initialize projects and guide AI coding agents (CLAUDE.md, PRDs)
+3. Use BDD/TDD to dramatically improve agentic code generation accuracy
+4. Build and deploy Lakeflow Declarative Pipelines with Databricks Asset Bundles
+5. Use **skills** and **MCP** for practical tool integration with agents
+6. Connect agents to external tools via **MCP** (Model Context Protocol)
+7. Create **Genie spaces** and **AI/BI dashboards** for natural language analytics
+8. Ship a working end-to-end application on Databricks
+9. (DS) Track and compare experiments with MLflow, train and serve a model
+10. (Analyst) Create Genie spaces and AI/BI dashboards for business users
 
 ---
 
@@ -65,10 +66,12 @@ By end of day, participants will be able to:
 Every block follows the same pattern for maximum engagement:
 
 ```
-Theory (15–20 min)  →  Exercise (10–70 min)  →  Discussion (5–15 min)
+Theory / Demo (live)  →  Practice (pair, R.V.P.I.)  →  Discussion (5–15 min)
 ```
 
-Short, punchy teaching → hands-on practice in teams → share learnings with the group.
+Short, punchy teaching → hands-on practice in pairs → share learnings with the group.
+
+Pairs swap driver/navigator every 15 minutes. Navigator reads, verifies, and steers — never passive.
 
 ---
 
@@ -76,520 +79,440 @@ Short, punchy teaching → hands-on practice in teams → share learnings with t
 
 | Time | Duration | Activity | Mode |
 |------|----------|----------|------|
-| **9:30** | 15 min | Welcome, Icebreaker: Grocery Data Predictions, Team Formation | Engage |
-| **9:45** | 45 min | Theory: Vibe Coding, CLAUDE.md, TDD (Specs → CLAUDE.md → TDD → Context Windows) | Theory |
-| **10:30** | 15 min | Break | |
-| **10:45** | 45 min | **Lab 0: Guided Hands-On** (initialize project, first test, bronze ingest — ALL together) | Exercise |
-| **11:30** | 20 min | Theory: Skills, MCP, Genie, AI/BI Dashboards | Theory |
-| **11:50** | 10 min | Track Briefing — choose your track (DE / DS / Analyst) | Briefing |
-| **12:00** | 60 min | **Lab 1** (track-specific) | Exercise |
-| **13:00** | 15 min | Show & Tell + Prediction Reveal | Discussion |
-| **13:15** | 45 min | Lunch | |
-| **14:00** | 60 min | **Lab 2** (track-specific) | Exercise |
-| **15:00** | 30 min | Team Demos | Discussion |
-| **15:30** | 15 min | Takeaways + Close | Wrap-up |
-| **15:45** | 15 min | Buffer / Q&A | |
+| **10:00** | 10 min | Opener — why this matters, Your Weekly Specials, end-output teaser | Engage |
+| **10:10** | 15 min | Internal Demo — coding agents at Databricks + live pipeline + dashboard | Demo |
+| **10:25** | 15 min | Icebreaker — quiz-app live play (grocery data predictions) | Engage |
+| **10:40** | 10 min | Break | |
+| **10:50** | 70 min | **Get-to-know-Claude** — R.V.P.I. + CLAUDE.md + Small Steps + tools + BDD + Sycophancy + Context | Theory/Demo |
+| **12:00** | 60 min | Lunch | |
+| **13:00** | 15 min | Challenge brief + pair formation + Lab 1 briefing | Briefing |
+| **13:15** | 90 min | **Lab 1** (track-specific, pairs) | Exercise |
+| **14:45** | 15 min | Show & Tell + quiz-app reveal (Lab 1 Gold tables) | Discussion |
+| **15:00** | 10 min | Break | |
+| **15:10** | 80 min | **Lab 2** (track-specific, pairs) | Exercise |
+| **16:30** | 30 min | Team demos + Let Go of the Code + Takeaways + Hackathon + Close | Wrap-up |
 
-**Time breakdown:** 65 min theory · 45 min guided hands-on · 120 min track labs · 45 min demos/discussion · 15 min icebreaker · 60 min breaks/lunch · 25 min briefings/buffer
+**Time breakdown:** 10 min opener · 15 min internal demo · 15 min icebreaker · 70 min teaching block · 170 min pair labs · 45 min demos/discussion · 80 min breaks/lunch · 15 min briefing
 
 ---
 
 ## Slide Order
 
-| # | Slide | Section |
-|---|-------|---------|
-| 1 | Title | — |
-| 2 | **The AI Coding Moment** — 4 stat cards + 5-source byline (Pragmatic Engineer, Thoughtworks, Stack Overflow, CIO, Anthropic) | Welcome |
-| 3 | Your Weekly Specials (David's Coles example) | Welcome |
-| 4 | Agenda | Welcome |
-| 5 | Ice Breaker — Grocery Data Predictions | Welcome |
-| 6 | Databricks Today (Platform Overview) | Welcome |
-| 7 | Section: The Paradigm Shift | Theory Arc B |
-| 8 | **Watch First** — frame for paradigm-shift mini-demo (replaces old Vibe Coding / CODA / Platform Architecture slides) | Theory Arc B |
-| 9 | Section: Specs & Testing | Theory Arc C |
-| 10 | Why Specs Matter | Theory Arc C |
-| 11 | CLAUDE.md in Action | Theory Arc C |
-| 12 | CLAUDE.md Scope Levels | Theory Arc C |
-| 13 | Rule #1 — Just Say What You Want | Theory Arc C |
-| 14 | BDD / TDD Workflow | Theory Arc C |
-| 15 | Why BDD / TDD Works with Agents | Theory Arc C |
-| 16 | Writing Gherkin / Tests That Guide | Theory Arc C |
-| 17 | **Power Tools — Subagents, Skills, Hooks, Plugins** | Theory Arc C |
-| 18 | Verification Patterns / Best Practices | Theory Arc C |
-| 19 | **The Sycophancy Problem** | Theory Arc C |
-| 20 | **Small Steps Beat Big Bang** | Theory Arc C |
-| 21 | What Are Tokens | Theory Arc C |
-| 22 | Managing Context Windows | Theory Arc C |
-| 23 | Live Demo — TDD in Action | Theory Arc C |
-| 24 | **Live Demo — Pipeline + Dashboard End-to-End** (frame slide; live demo in terminal + BI dashboard, 4–5 min; replaces static What We're Building) | Theory Arc D |
-| 25 | Today's Challenge — Grocery Intelligence Platform | Theory Arc D |
-| 26 | Section: Lab 0 — Guided Hands-On | Lab 0 |
-| 27 | Practical Tips for the Labs (5 patterns) | Lab 0 |
-| 28 | Section: **Capabilities for Your Track** | Session 2 |
-| 29 | Skills & Tools — Practical Tools | Session 2 |
-| 30 | MCP on Databricks | Session 2 |
-| 31 | Demo — How Databricks Uses Claude Internally | Session 2 |
-| 32 | **Open Lakehouse — Managed Iceberg in UC** (DE-relevant) | Session 2 |
-| 33 | Genie + AI/BI Dashboards (Analyst-relevant) | Session 2 |
-| 34 | Section: Lab 1 | Lab 1 |
-| 35 | Lab 1 Briefing (with parallel task assignments, incl. Track Briefing) | Lab 1 |
-| 36 | Show & Tell + Prediction Reveal | Lab 1 |
-| 37 | Section: Lab 2 | Lab 2 |
-| 38 | Lab 2 Briefing (with parallel task assignments) | Lab 2 |
-| 39 | Team Demos & Voting | Closing |
-| 40 | **Let Go of the Code** (impact slide before takeaways) | Closing |
-| 41 | Key Takeaways | Closing |
-| 42 | Next Steps | Closing |
-| 43 | APJ Building Intelligent Apps Hackathon (teaser) | Closing |
-| 44 | Closing | Closing |
-| 45 | Appendix Divider | Appendix |
-| 46 | Appendix: Subagents, Skills, Hooks & Plugins (full deep-dive) | Appendix |
-| 47 | Appendix: Skills for BDD | Appendix |
-| 48 | Appendix: Subagents vs Agent Teams | Appendix |
-| 49 | Appendix: What is MCP | Appendix |
-| 50 | Appendix: How MCP Works | Appendix |
-| 51 | Appendix: MCP Architecture on Databricks | Appendix |
-| 52 | Appendix: AI Dev Kit | Appendix |
-| — | Appendix: Skills TDD Chain | Appendix |
-| — | Appendix: MCP Architecture | Appendix |
-| — | Appendix: AI Dev Kit | Appendix |
+See `WORKSHOP-TRANSCRIPT.md` for the authoritative block-by-block slide plan. Summary:
+
+| Block | Slides | Notes |
+|-------|--------|-------|
+| Opener | Title, AI Coding Moment, YWS, End-Output Teaser | Time strip updated to 10:00 |
+| Internal Demo | Coding Agents at Databricks, Watch First, Live Pipeline + Dashboard | Demos run live from terminal |
+| Icebreaker | Quiz-App Intro (QR code) | Prediction-cards slide cut |
+| Get-to-Know-Claude | R.V.P.I. intro, R.V.P.I. in terminal, Techniques divider, Why Specs, CLAUDE.md, Rule #1, Small Steps, Power Tools, Skills, MCP, BDD, Sycophancy, Memory-as-untrusted-input, Tokens, Context | ~18 slides |
+| Challenge Brief | Today's Challenge, Pair Programming Norms, Lab 1 Briefing | |
+| Lab 1 | Lab 1 divider | Silent block, agent work |
+| Show & Tell | Show & Tell + Quiz-App Reveal | Uses Gold tables |
+| Lab 2 | Lab 2 divider, Lab 2 Briefing | |
+| Close | Team Demos, Let Go of the Code, Takeaways, Next Steps, APJ Hackathon, Closing | |
+| Appendix | Rosetta Stone, Subagents/Skills/Hooks/Plugins, Skills for BDD, Subagents vs Agent Teams, What/How MCP, MCP on Databricks, AI Dev Kit | Reference |
+
+Target: ~48 slides total (down from 53).
 
 ---
 
 ## Detailed Agenda
 
-### 9:30–9:45 | Welcome, Industry Context, Icebreaker & Team Formation (15 min)
+### 10:00–10:10 | Opener (10 min)
 
-**Slides:** 1–6 (Title, The AI Coding Moment, Your Weekly Specials, Agenda, Icebreaker, Platform Overview)
+**Slides:** Title, AI Coding Moment, Your Weekly Specials, End-Output Teaser
 
-**Purpose:** Frame why this matters *now*, show proof it works, orient on the day, form teams, and connect participants to the data they'll be building pipelines for.
-
-**How it works:**
-
-1. **Title + The AI Coding Moment** — industry context (3 min)
-   - Name the mixed-experience room: some have used Claude Code for months, some haven't.
-   - Walk the 4 stats: 65% weekly adoption (Stack Overflow), METR −19% disconnect (felt 20% faster, were 19% slower), 4h→2m inflection (Dilley, MIT Tech Review), −20% junior dev employment (Stanford).
-   - Land the thesis: *"The difference is technique, not tool. Today you learn the technique."*
-   - Ask: *"Anyone felt the METR thing — you FEEL faster with AI but the day ends with less done?"* Expect nods from experienced users.
-2. **Your Weekly Specials** — proof the technique works (4 min)
-   - David's personal example: 4.5M members, 857 commits, 7 weeks spare time, not a data scientist.
-   - Transition: *"Here's the shape of the day."*
-3. **Agenda** — orient on the day structure (1 min)
-   - Theory block → Lab 0 together → track-specific Labs 1 and 2 → demos.
-4. **Form teams** of 2–3 (David assigns to balance skill levels) — 1 min
-5. **Grocery data predictions** — 3 questions projected, teams discuss and write guesses on prediction cards (no phones!) — 4 min:
-   - Q1: Which Australian state has the highest monthly food retail turnover?
-   - Q2: By what percentage have Australian food prices (CPI) increased since January 2020?
-   - Q3: Which food category has seen the largest price increase since 2020 — dairy, meat, fruit, or bread & cereals?
-6. **Each team announces their boldest prediction** — 1 min
-7. **The twist:** In Lab 1, you'll build the pipeline that ingests this exact ABS data — during Show & Tell we'll query your Gold tables to reveal the real answers — 1 min
-
-> **Facilitator note:** Answers are hidden on the slide (click to reveal). Do NOT reveal
-> during the ice breaker — save the reveal for Show & Tell after Lab 1. Print prediction
-> cards in advance. Have a visible scoreboard (whiteboard or shared doc). If the room
-> reacts strongly to the METR stat, give it an extra 30s — that resonance is worth the time.
-
----
-
-### 9:45–10:30 | Theory: Paradigm Shift → Technique → Live Demo (45 min)
-
-**Slides:** 7–25 (Paradigm Shift section → Today's Challenge)
-
-**Flow:** Three arcs — **Arc B: Paradigm Shift (3 min, demo-led)** → **Arc C: How to direct agents well (32 min)** → **Arc D: Live end-to-end demo + challenge (5 min, pre-Lab 0)**
-
-**Concepts covered:** Vibe coding (via demo), specs-first approach, CLAUDE.md at three scope levels, TDD workflow, **Power Tools (subagents, skills, hooks, plugins)**, verification patterns, **the sycophancy problem**, **small steps**, context windows, **live end-to-end pipeline + dashboard demo**
-
----
-
-#### Arc B — The Paradigm Shift (3 min, demo-led)
-
-Replaces the old concept slides (What is Vibe Coding / CODA / Platform Architecture) with a single framing slide + a live mini-demo. Reasoning: watching Claude Code respond to one prompt teaches what a coding agent *is* faster than any concept slide.
-
-1. **Slide 8 — "Watch First"** (~30 sec frame)
-   - Karpathy quote on the slide: *"vibe coding... forget that the code even exists"*
-   - Mention CODA in one sentence — the platform everyone's using today
-   - Land: *"We watch the agent work before we talk about how to direct one."*
-
-2. **Mini-demo — terminal, ~1–2 min**
-   - Open Claude Code in CODA
-   - One simple prompt (e.g., *"describe what this file does"* on a reference-implementation file)
-   - Watch agent plan + respond
-   - No commentary beyond *"this is what we mean when we say 'coding agent'."*
-   - Transition: *"Now — how to direct one well."* → Specs divider.
-
----
-
-#### Arc C — The Technique: Specs → Tests → Power Tools → Verification → Context (32 min)
-
-3. **Specs & Testing section divider + Why Specs Matter** (4 min)
-   - Garbage in, garbage out — at 100x speed
-   - The "brilliant new employee" framing: smart but zero context
-   - A good spec = clear acceptance criteria + constraints + example inputs/outputs
-
-4. **CLAUDE.md + Scope Levels + Rule #1** (7 min)
-   - Persistent instructions the agent follows on every prompt
-   - Three levels: user (`~/.claude/CLAUDE.md`), project, folder
-   - Rule #1: Just say what you want — no manual config file edits
-
-5. **TDD/BDD Workflow + Why it works + Writing tests that guide** (8 min)
-   - Human writes test (the spec) → agent implements → agent iterates on failures
-   - The key insight: structural verification the agent can't bluff
-   - _"If you take one thing from today: write the tests first. Always."_
-   - Note: labs use pytest; the same principles apply whether you write Gherkin or plain assertions.
-
-6. **Power Tools — Subagents, Skills, Hooks, Plugins** (3 min)
-   - For experienced attendees: quick orientation, not deep dive.
-   - Subagents: fresh-context workers (`/review`, `Agent` tool)
-   - Skills: reusable slash commands from marketplace
-   - Hooks: deterministic guardrails (PreToolUse/PostToolUse/Stop) — the live MCP-auth-guard is a real example
-   - Plugins: package for teams (Databricks fe-vibe marketplace)
-   - _Deep dive: appendix slides 45–47 if time allows._
-
-7. **Verification Patterns / Best Practices** (3 min)
-   - Always verify before moving on: run tests, check outputs
-   - Plan in chunks, use extended thinking for complex problems
-   - Trust but verify
-
-8. **The Sycophancy Problem** (3 min) **← now numbered slide 20, no longer script-only**
-   - Stanford Science (Mar 2026): 11 LLMs, 49% more agreement than humans, 51% still agree when user is 100% wrong
-   - Karpathy's 4-hour experiment: model demolished its own prior argument when asked to argue the opposite
-   - RLHF selected for likeability, not truth
-   - Four defenses: Karpathy Test, "Wait a minute..." prefix, structural verification (TDD), Separate prompts
-   - _"The discipline of stress-testing AI output is the career skill of this decade."_
-
-9. **Small Steps Beat Big Bang** (3 min) **← NEW slide 21, the central technique**
-   - The synthesis of Verification + Sycophancy + Writing Tests: **each prompt = one verifiable step**.
-   - Big-bang prompting is learned from ChatGPT; Claude Code rewards tight iteration.
-   - 10–20 min wait → attendees sit idle, agent drifts in silence, multiple failures hit at once.
-   - 1–3 min prompts → active review, isolated failures, verification every 90 seconds.
-   - _Heuristic:_ *"After this prompt, will I KNOW whether it worked?"* If no → split it.
-   - **This is also the answer to the "workshop waiting around" problem.** Labs are built around this cadence.
-
-10. **Tokens + Context Windows** (2 min)
-   - The unit of "thought" for LLMs — roughly 4 chars per token
-   - Context = working memory; use `/compact` when agent starts contradicting itself
-
-11. **Live Demo — TDD in Action** (2 min)
-    - 3 failing tests → agent implements → green. The technique in 2 minutes.
-    - Uses small-step prompts (from slide 21) so attendees see the cadence in practice.
-
----
-
-#### Arc D — Live End-to-End Demo + Challenge (~5 min, pre-Lab 0 climax)
-
-12. **Live Demo — Pipeline + Dashboard End-to-End** (~4 min) **← MAJOR DEMO**
-    - Replaces the static "What We're Building" slide. Slide 24 is just a frame; the demo runs live in terminal + browser.
-    - **Pre-requisite:** reference-implementation pipeline pre-deployed; AI/BI dashboard pre-built + open in a tab; CODA terminal pre-opened; warehouse warm.
-    - **Flow:** Dashboard (already running) → terminal → prompt for pytest (yoy_growth_pct) → red → prompt to implement window function → green → `databricks bundle deploy && run` → dashboard refresh → new column visible.
-    - **Land:** *"Four prompts, one new metric, end-to-end loop. That's what your team is about to do for 60 minutes."*
-    - Full script + fallbacks: `starter-kit/demos/pipeline-and-dashboard-demo.md`.
-
-13. **Today's Challenge** (~1 min)
-    - Grocery Intelligence Platform: 4 data sources, team angles
-    - Segue into Lab 0
-
----
-
-**Key messages:**
-- _The work is moving from writing code to orchestrating agents that write code. Today you learn the practices that put you on the leverage side._
-- _Specs + Tests + Power Tools + Verification + Context — five techniques. The rest is just typing._
-- _Don't trust what the model agrees with. Test what it does._
-
----
-
-### 10:30–10:45 | Break (15 min)
-
----
-
-### 10:45–11:30 | Lab 0: Guided Hands-On (45 min)
-
-**Slides:** 27–28 (Section: Lab 0, Practical Tips for the Labs)
-
-**Purpose:** Everyone does the same thing together — guided by the facilitator. By the end, every team has a working CLAUDE.md, a passing bronze test, and has experienced the TDD loop firsthand. This ensures all teams are ready to split into tracks.
-
-**Reference:** [LAB-0-GETTING-STARTED.md](LAB-0-GETTING-STARTED.md) for setup, then guided bronze ingest.
+**Purpose:** Frame why this matters *now*, show proof the technique works with David's personal example, preview what participants will ship today.
 
 **How it works:**
 
-1. **Rule #1: Just Say What You Want** (10 min)
-   - Teams open their Coding Agents terminal
-   - Tell Claude about their project — tech stack, data sources, team standards
-   - Claude creates the CLAUDE.md, project structure, and initial config
-   - Teams review and refine through conversation, not manual editing
+1. **Title + why this matters** (~2 min)
+   - Name the mixed-experience room.
+   - Land the thesis: *"The bottleneck in software is no longer typing. The new scarce resource is verification and coordination. Today you learn the technique."*
 
-   > **Just say:**
-   >
-   > _"I'm building a grocery intelligence platform on Databricks. Tech stack: PySpark,
-   > Lakeflow Declarative Pipelines, FastAPI + React, DABs. Data sources: ABS SDMX APIs,
-   > FSANZ web scraping, ACCC PDF ingestion via UC Volumes. Unity Catalog namespace:
-   > workshop_vibe_coding.<team_schema>. Set up the project and create a CLAUDE.md."_
+2. **The AI Coding Moment** (~2 min)
+   - One lead stat: Pragmatic Engineer on verification as the bottleneck.
+   - Other stats (Stack Overflow adoption, METR, Stanford) move to appendix.
 
-2. **Write your first test** (10 min)
-   - Teams copy `test_bronze` from `starter-kit/test_pipeline.py`
-   - Walk through the test together — what it asserts, why it's structured this way
-   - Run the test — it should fail (red)
-   - _"This is the spec. The agent now knows exactly what to build."_
+3. **Your Weekly Specials — proof the technique works** (~4 min)
+   - 4.5M Flybuys members, 857 commits, 7 weeks spare time, not a data scientist.
+   - Emphasise *agent as domain tutor*, not *agent as typist*.
+   - The agent read legacy R code, explained why certain lags existed, helped port to PySpark, solved distributed LightGBM on Ray.
 
-3. **Get the agent to pass the test** (20 min)
-   - Teams prompt the agent to build the bronze layer ingest
-   - Agent reads the failing test, implements the code, runs the test
-   - Facilitator circulates — helps teams steer the agent when it drifts
-   - Goal: green test, working bronze ingest
-
-4. **Checkpoint + sync** (5 min)
-   - Verify every team has a passing bronze test
-   - Teams that are stuck: grab Checkpoint 0 (pre-loaded bronze tables)
-   - Quick debrief: _"You just did TDD with an agent. That loop is what you'll repeat all day."_
-
-**Facilitator actions during Lab 0:**
-- At 10 min: "CLAUDE.md should be done — move to the test"
-- At 20 min: "Test should be written and failing — agent should be implementing"
-- At 35 min: "Bronze test should be passing — if stuck, grab Checkpoint 0"
-- At 40 min: "Start wrapping up — we'll sync in 5 minutes"
-
-**Goal:** Every team has a working CLAUDE.md + passing bronze test before splitting into tracks.
+4. **End-Output Teaser** (~2 min)
+   - Three-pane mosaic: pipeline graph (DE), Genie dashboard (Analyst), FastAPI app with Genie embed (DS/apps).
+   - *"Six hours from now. One pair last quarter built something I'd have budgeted six weeks for. I want that for you today."*
 
 ---
 
-### 11:30–11:55 | Theory: Capabilities for Your Track (25 min)
+### 10:10–10:25 | Internal Demo — Coding Agents at Databricks (15 min)
 
-**Slides:** 29–34 (Section: Capabilities for Your Track → Genie + AI/BI Dashboards)
+**Slides:** Coding Agents at Databricks, Watch First, Live Pipeline + Dashboard (frame only)
 
-**Concepts covered:** Skills, MCP, **Managed Iceberg in UC (DE track)**, Genie spaces, AI/BI dashboards (Analyst track)
+**Purpose:** Show the agent working live before teaching about it. Credibility beats polish.
 
-**Framing for this block:** *"These are the Databricks-specific capabilities that amplify what you just learned. Each one matters for at least one of the tracks."*
+**How it works:**
 
-> **Timing trade:** Block extended from 20 min to 25 min. Subsequent slots shift: Lab 1 Briefing → 11:55, Lab 1 → 12:05–13:05, Show & Tell → 13:05 (10 min, down from 15). Labs remain 60 min each.
+1. **Coding Agents at Databricks** (~2 min)
+   - High-level: what we use Claude Code for internally — PR review, refactors, test generation, compliance gates.
+   - Sets up that this is not a demo toy.
+
+2. **Watch First — mini-demo** (~2 min)
+   - Open terminal in CODA.
+   - Quick tour: `git log`, skills directory, CLAUDE.md, a couple of recent PRs.
+   - 90-second task live (e.g., *"add a feature-flag check to this endpoint with a test"*).
+   - Narrate the R.V.P.I. loop as you go **without naming it yet** — save the name for Block 4.
+
+3. **Live Pipeline + Dashboard Demo** (~4 min) **← MAJOR DEMO**
+   - **Pre-requisite:** reference-implementation pipeline pre-deployed; AI/BI dashboard pre-built + open in a tab; CODA terminal pre-opened; warehouse warm.
+   - **Flow:** Dashboard (already running) → terminal → prompt for pytest (yoy_growth_pct) → red → prompt to implement window function → green → `databricks bundle deploy && run` → dashboard refresh → new column visible.
+   - **Land:** *"Four prompts, one new metric, end-to-end loop. Two things I want you to notice. First: I didn't write most of that code — I *directed* it. Second: every step had a way for me to verify it worked. No verification, no trust. We'll return to that idea all day."*
+   - Full script + fallbacks: `starter-kit/demos/pipeline-and-dashboard-demo.md`.
+
+> **Facilitator note:** This is the credibility block. If the demo fails live, read the fallback paragraph and move on. Do not try to fix live — cost of failure is silence; cost of trying to fix is 3–4 lost minutes and a room that's tuned out.
+
+---
+
+### 10:25–10:40 | Icebreaker — Quiz-App Live Play (15 min)
+
+**Slide:** Quiz-App Intro (QR code + short URL)
+
+**Purpose:** Active participation before the teaching block. Seeds answers that are revealed at Show & Tell using pair-built Gold tables.
+
+**How it works:**
+
+1. **Project the quiz-app URL + QR code** (~1 min)
+   - *"Open this on your phone. Pick a team name. You've got 60 seconds."*
+   - No phones rule lifted here — the phone *is* the instrument.
+
+2. **Run the live quiz** (~10 min)
+   - 8–10 questions mixing grocery domain knowledge with prediction questions that will be revealed later.
+   - Real-time scoring. Leaderboard visible on screen.
+   - Sample question topics:
+     - Which Australian state has the highest monthly food retail turnover?
+     - By what percentage have Australian food prices (CPI) increased since January 2020?
+     - Which food category has seen the largest price increase since 2020?
+     - Average household monthly grocery spend.
+
+3. **The three-part takeaway** (~4 min)
+   - *"One: the app you just played with was built in one weekend by me and Claude Code. Start to deploy."*
+   - *"Two: some of those questions map to Gold tables you'll build in Lab 1. We're coming back to your answers at Show & Tell to see which pair guessed closest."*
+   - *"Three: this is the smallest example of what you'll ship today. By 4 PM you'll have shipped something bigger."*
+
+> **Facilitator note:** The quiz-app admin panel supports a "reveal" mode that pulls answers from Unity Catalog Gold tables. This is used at Show & Tell (14:45). Prize for highest score revealed at lunch.
+
+---
+
+### 10:40–10:50 | Break (10 min)
+
+---
+
+### 10:50–12:00 | Get-to-Know-Claude — R.V.P.I. + Techniques (70 min)
+
+**Slides:** R.V.P.I. Intro, R.V.P.I. in Terminal, Techniques divider, Why Specs, CLAUDE.md + Scopes + Rule #1 (hands-on), Small Steps, Power Tools, Skills, MCP, BDD + Gherkin, Anthropic Best Practices, Sycophancy, Memory-as-untrusted-input, Tokens, Context Windows
+
+**Purpose:** Teach the meta-framework (R.V.P.I.) and its specialisations. This is the pressure block — 70 minutes, ~18 slides, guided-demo style. Drive from the terminal; slides are backdrop.
+
+**Framing:** *"Everything I'm about to teach fits inside one loop. Let me name it first, then walk you through it."*
+
+---
+
+#### Sub-section 1 — R.V.P.I. Framework Intro (5 min)
+
+**R.V.P.I. = Research → Validate → Plan → Implement.**
+
+Most people have heard of R.P.I. (research, plan, implement). The missing letter is **V**. Before you plan on top of the research, you *audit* the research. Is it current? Is it consistent? Is it trustworthy?
+
+**Why V matters:**
+- Memory drifts. CLAUDE.md files rot.
+- An agent's summary from yesterday can quietly contradict today's reality.
+- The agent will plan on top of that contradiction without flagging it.
+- The **single biggest difference** between a junior prompter and an experienced one is validating inputs before building on them.
+
+**R.V.P.I. in the terminal:**
+- **Research** = `/init`, grep, read, documentation lookups.
+- **Validate** = re-read CLAUDE.md, check a test still passes, ask *"is this still how it works?"*, audit retrieved memory.
+- **Plan** = `/plan` or `ExitPlanMode`.
+- **Implement** = small steps, verify after each.
+
+**Callback policy:** Point back at R.V.P.I. at every sub-section boundary below. Everything else is a specialisation of one phase.
+
+---
+
+#### Sub-section 2 — CLAUDE.md Scopes (Validate's artifact) (10 min)
+
+- Persistent instructions the agent follows on every prompt — the primary artifact Validate audits.
+- **Three scope levels:**
+  - User (`~/.claude/CLAUDE.md`) — personal standards, always loaded.
+  - Project (`<repo>/CLAUDE.md`) — team standards, checked in.
+  - Folder (nested CLAUDE.md) — local overrides for specific components.
+- **Rule #1: Just say what you want.** No manual config-file edits. Tell Claude about the project; it writes the CLAUDE.md.
+
+**Hands-on (pair-friendly, 5 min):**
+- Driver asks Claude for a CLAUDE.md about their role/project.
+- Navigator reviews what it produces and flags anything that looks stale or wrong.
+- Swap after ~3 min.
+- _"This is V in practice — you're validating the output before it becomes load-bearing."_
+
+---
+
+#### Sub-section 3 — Small Steps (Implement stays honest) (10 min)
+
+- **Each prompt = one verifiable step.** Small Steps is how Implement stays honest.
+- Big-bang prompting is a habit from ChatGPT; Claude Code rewards tight iteration.
+- 10–20 min wait → attendee sits idle, agent drifts in silence, multiple failures hit at once.
+- 1–3 min prompts → active review, isolated failures, verification every 90 seconds.
+- _Heuristic:_ *"After this prompt, will I KNOW whether it worked?"* If no → split it.
+- **R.V.P.I. crossover:** each prompt is a mini-RVPI loop. Research what to change → Validate it's still the right change → Plan the step → Implement + verify.
+
+---
+
+#### Sub-section 4 — Power Tools: Skills, MCP, Hooks, Subagents (15 min, live demos)
+
+Tools that **automate V**. This is the hands-on tools section.
+
+- **Skills** — reusable slash commands (`/commit`, `/review`, `/test`). Live demo: invoke one.
+- **MCP** — "USB for AI" — open protocol for agents to call external tools. Three tiers:
+  - **Managed:** Built into Databricks (Unity Catalog, DBSQL, Vector Search).
+  - **External:** Community-built (Slack, JIRA, GitHub, Confluence, Databricks Docs).
+  - **Custom:** You build them (internal APIs, data tools, monitoring).
+  - Live demo: Databricks Docs MCP searching documentation in real time.
+- **Hooks** — deterministic guardrails (PreToolUse/PostToolUse/Stop). **Framed as V-step automation** — Stop-hook checks *"is the CLAUDE.md I'm about to follow consistent with the current project structure?"*
+- **Subagents** — fresh-context workers (`/review`, `Agent` tool). Compression: vast exploration distilled to clean signal.
+- Plugins: package for teams (Databricks fe-vibe marketplace).
+- _Deep dive available in appendix slides for motivated attendees._
+
+---
+
+#### Sub-section 5 — BDD / Gherkin (Verification inside Implement) (15 min)
+
+- Human writes spec (Gherkin or pytest assertions) → agent implements → agent iterates on failures.
+- The key insight: **structural verification the agent can't bluff.**
+- _"If you take one thing from today: write the tests first. Always."_
+- Labs use pytest; same principles apply whether you write Gherkin or plain assertions.
+- **Anthropic Best Practices slide** — verify before moving on, plan in chunks, extended thinking for complex problems, trust but verify.
+
+---
+
+#### Sub-section 6 — Sycophancy + Memory-as-Untrusted-Input (What skipping V costs) (10 min)
+
+- **Stanford Science (Mar 2026):** 11 LLMs, 49% more agreement than humans, 51% still agree when user is 100% wrong.
+- **Karpathy's 4-hour experiment:** model demolished its own prior argument when asked to argue the opposite.
+- RLHF selected for likeability, not truth.
+- **Two modes of sycophancy:**
+  - Agent agrees with you *now*.
+  - Agent agrees with itself from a past session when the past session was wrong. ← context poisoning.
+- **Four defenses:** Karpathy Test, "Wait a minute..." prefix, structural verification (BDD), separate prompts.
+- **Memory-as-untrusted-input framing:** *"Retrieved memory should be treated as untrusted input, the same way external API responses are."* This is a security-posture reframe experienced engineers remember because it rhymes with existing discipline.
+- _"The discipline of stress-testing AI output is the career skill of this decade."_
+
+---
+
+#### Sub-section 7 — Tokens + Context Windows (Why V's value compounds) (5 min)
+
+- The unit of "thought" for LLMs — roughly 4 chars per token.
+- Context = working memory; use `/compact` when agent starts contradicting itself.
+- **V prevents drift. Drift is why context management matters.** The longer the session, the more V earns its keep.
+
+---
+
+**Key messages for Block 4:**
+- *R.V.P.I. — name the loop, use it. Validate is the cheapest intervention in the stack.*
+- *CLAUDE.md is an artifact that rots. Validate it.*
+- *Small Steps beat Big Bang. Every prompt = a mini-RVPI loop.*
+- *Verification is the new bottleneck. You own that, no one else does.*
+
+---
+
+### 12:00–13:00 | Lunch (60 min)
+
+Prize for quiz-app winner awarded at lunch.
+
+---
+
+### 13:00–13:15 | Challenge Brief + Pair Formation + Lab 1 Briefing (15 min)
+
+**Slides:** Today's Challenge, Pair Programming Norms, Lab 1 Briefing
 
 **Content:**
 
-1. **Skills & MCP — practical tools** (4 min)
-   - Skills: reusable agent capabilities — `/commit`, `/review`, `/test`, plus custom skills
-   - MCP: "USB for AI" — open protocol for agents to call external tools
-   - Three tiers:
-     - **Managed:** Built into Databricks (Unity Catalog, DBSQL, Vector Search)
-     - **External:** Community-built (Slack, JIRA, GitHub, Confluence, Databricks Docs)
-     - **Custom:** You build them (internal APIs, data tools, monitoring)
-   - _"Without MCP, the agent guesses. With MCP, it knows."_
+1. **Today's Challenge** (~3 min)
+   - Grocery Intelligence Platform: 4 data sources, pair angles.
+   - Three tracks — pick one:
+     - **Data Engineering:** Lakeflow pipeline, dashboard.
+     - **Data Science:** Forecasting model, prediction app.
+     - **Analyst:** Genie spaces, FastAPI app with embedded Genie.
 
-2. **MCP on Databricks + Demo** (4 min)
-   - Demo: Use the Databricks Docs MCP to search documentation live
-   - Show how MCP connects the agent to real-time data and tools
-   - Databricks internal demo of MCP in action
+2. **Pair Programming Norms** (~5 min)
+   - Two people per keyboard. **15-min driver swaps.**
+   - Navigator duties: read, verify, suggest. Never passive.
+   - If odd-numbered, form one triad with an observer taking notes on surprises.
+   - Escalation rule: *"If a task doesn't fit R.V.P.I. in 15 min, split it."*
+   - *"Why pairs: shipping with AI is a verification problem. Verification is cheaper with a second pair of eyes. Solo is slower, not faster — you'll skip V steps a navigator wouldn't."*
 
-3. **Open Lakehouse — Managed Iceberg in UC** (4 min) **← NEW**
-   - Callback to platform-stack slide (Open Formats row): this is what it means in practice.
-   - Managed Iceberg tables in UC: `CREATE TABLE ... USING ICEBERG` — no `LOCATION`, `CLUSTER BY` only, same UC governance.
-   - External engines (Snowflake, Trino, DuckDB, BigQuery via BigLake) read via Iceberg REST Catalog — **zero copy**.
-   - Trade-off: Delta is still deeper (CDF, UniForm, deletion vectors); Iceberg is vendor-neutral interop.
-   - DE track Lab 2 has an optional **Iceberg stretch goal** for teams who finish early.
+3. **Lab 1 Briefing** (~5 min)
+   - Track-specific lab file pointers ([LAB-1-DE.md](LAB-1-DE.md) | [LAB-1-DS.md](LAB-1-DS.md) | [LAB-1-ANALYST.md](LAB-1-ANALYST.md)).
+   - Five practical patterns (sidebar, not full slide):
+     - Overengineering — start small.
+     - Hallucinations — demand proof ("show me the git diff").
+     - Course-correct early.
+     - Challenge & verify.
+     - Commit every 15–20 min — safety net for Esc-Esc rewind.
+   - Default workflow: start every non-trivial task with `/plan`; have Claude interview you about requirements first.
+   - Start with starter-kit prompts — they're copy-paste ready.
+   - Track-specific callouts:
+     - **Open Lakehouse / Managed Iceberg in UC** — DE track has an optional Iceberg stretch goal in Lab 2.
+     - **Genie + AI/BI** — Analyst track creates these in Lab 1.
+   - _"Your goal: a working Gold table (or track equivalent) ready by Show & Tell at 14:45."_
 
-4. **Genie: natural language on your data** (4 min)
-   - What it is: AI-powered Q&A interface on Unity Catalog tables
-   - How it works: user asks a question → Genie generates SQL → returns results + visualization
-   - Demo: create a Genie space on the workshop gold tables, ask a question live
-   - Why it matters: business users can self-serve without knowing SQL
-
-5. **AI/BI Dashboards** (4 min)
-   - What they are: auto-generated dashboards that understand your data
-   - Natural language to visualization: "show me monthly revenue by state as a line chart"
-   - Connected to the same Unity Catalog tables
-   - Complement to Genie: dashboards for recurring views, Genie for ad-hoc questions
-
-**Key message:** _Skills and MCP extend what agents can do. Open formats (Iceberg) extend who can read your data. Genie and AI/BI put data in the hands of business users._
+4. **Pair formation + track selection** (~2 min)
+   - Find your pair. Choose your track. Open the lab guide. Go.
 
 ---
 
-### 11:55–12:05 | Track Briefing — Choose Your Track (10 min)
-
-**Slide:** 30 (Track Briefing — Choose Your Track)
-
-**Content:**
-
-1. **Present the three tracks** (5 min)
-   - **Data Engineering:** Lakeflow pipeline (Silver→Gold), data quality, scheduling
-   - **Data Science:** Feature engineering, MLflow experiments, model serving
-   - **Analyst:** Genie spaces, AI/BI dashboards, FastAPI web app
-   - All tracks build on the bronze layer from Lab 0
-
-2. **Teams self-select** (3 min)
-   - Facilitator recommends based on team composition (ML experience → DS, analyst background → Analyst)
-   - Teams announce their track choice
-
-3. **Practical tips** (3 min)
-   - Five patterns: overengineering, hallucinations, course-correct early, challenge & verify, commit as checkpoints
-   - Default workflow: start every non-trivial task with `/plan`; have Claude interview you about requirements first
-   - After Claude implements, demand proof: "show me the git diff", "grill me on these changes"
-   - Commit every 15-20 min — safety net for Esc-Esc rewind
-   - Start with the starter-kit prompts — they're copy-paste ready
-   - Run tests after every change
-   - Use checkpoints if you fall behind — nobody gets stuck
-   - _"Your goal: track deliverables ready by Show & Tell at 13:00."_
-
----
-
-### 12:05–13:05 | Lab 1 (track-specific) (60 min)
+### 13:15–14:45 | Lab 1 (track-specific, pairs) (90 min)
 
 > **See track-specific instructions:** [LAB-1-DE.md](LAB-1-DE.md) | [LAB-1-DS.md](LAB-1-DS.md) | [LAB-1-ANALYST.md](LAB-1-ANALYST.md)
 
-> **Small Steps enforced at the lab level:** Lab 1 DE has been decomposed into 1–3 min micro-prompts (Phases 1–7) so attendees practise the cadence from slide 21 in their hands. DS and Analyst labs have intro callouts pointing to DE as the template. **No "build me everything" prompts** — every prompt has a verification moment.
+> **Note:** The previous "Lab 0 guided hands-on" dissolves into Lab 1's opening 10–15 min. Pairs set up their project, write a CLAUDE.md, and run the first test as part of Phase 1 below.
 
-**Summary:** Teams work in their chosen track. DE teams build a Lakeflow pipeline (Silver→Gold) building on the bronze layer from Lab 0. DS teams build feature tables and run MLflow experiments. Analyst teams create Genie spaces and AI/BI dashboards.
+> **Small Steps enforced at the lab level:** Lab 1 DE has been decomposed into 1–3 min micro-prompts (Phases 1–7) so attendees practise the cadence in their hands. DS and Analyst labs have intro callouts pointing to DE as the template. **No "build me everything" prompts** — every prompt has a verification moment.
 
-**Time-boxed phases with parallel task assignments:**
+**Summary:** Pairs work in their chosen track. DE pairs build a Lakeflow pipeline (Bronze → Silver → Gold). DS pairs build feature tables and run MLflow experiments. Analyst pairs create Genie spaces and AI/BI dashboards.
+
+**Time-boxed phases (approximate):**
 
 | Phase | Duration | What | Checkpoint Available |
 |-------|----------|------|---------------------|
-| Phase 1: Tests + Setup | 15 min | Write tests, explore data, set up project | — |
-| Phase 2: Bronze Layer | 15 min | Ingest ABS APIs into raw tables | Checkpoint 1A: pre-loaded bronze tables |
-| Phase 3: Silver + Gold | 25 min | Transform, enrich, create materialized views | Checkpoint 1B: pre-loaded silver+gold tables |
-| Phase 4: Deploy | 5 min | Validate, deploy, query gold tables | Checkpoint 1C: complete pipeline code |
+| Phase 1: Setup + CLAUDE.md + First Test | 15 min | Project scaffold, CLAUDE.md, write + run first failing test | — |
+| Phase 2: Bronze Layer | 20 min | Ingest ABS APIs into raw tables | Checkpoint 1A: pre-loaded bronze tables |
+| Phase 3: Silver Layer | 25 min | Transformations, data quality | Checkpoint 1B: pre-loaded silver tables |
+| Phase 4: Gold Layer | 20 min | Materialized views, business metrics | Checkpoint 1B: pre-loaded gold tables |
+| Phase 5: Deploy + Query | 10 min | Validate, deploy with DABs, query gold tables for quiz-app reveal | Checkpoint 1C: complete pipeline code |
 
-**Parallel Task Assignments — Lab 1:**
+**Pair roles (driver/navigator, swap every 15 min):**
+- **Driver:** Holds the keyboard, drives the agent terminal, implements.
+- **Navigator:** Reads, verifies, flags, suggests. Owns the R.V.P.I. Validate step. Checks tests, reviews git diffs, catches drift.
 
-| Phase | Person A | Person B | Person C |
-|-------|----------|----------|----------|
-| **Phase 1** (Tests + Setup, 15 min) | Explore data sources in terminal (curl APIs, inspect responses) | Set up project structure from starter-kit | Read test stubs and data source docs |
-| **Phase 2** (Bronze, 15 min) | Build retail trade bronze ingestion | Build CPI food bronze ingestion | Verify UC schema access + prepare checkpoint fallback |
-| **Phase 3** (Silver + Gold, 25 min) | Build silver retail transformations | Build silver CPI transformations | Monitor tests + prepare gold layer specs |
-| **Phase 4** (Deploy, 5 min) | Validate pipeline + deploy with DABs | Verify tables appear in UC UI | Query gold tables for icebreaker prediction answers |
+**Facilitator actions during Lab 1:**
+- Circulate every 10 min. Single question per pair: *"Have you validated your CLAUDE.md yet?"*
+- At 30 min (13:45): "You should have a test passing — if not, grab Checkpoint 1A."
+- At 60 min (14:15): "You should have one Gold table or track equivalent — if not, Checkpoint 1B."
+- At 75 min (14:30): "Start wrapping up — Show & Tell in 15 minutes."
 
-> **Note for teams of 2:** Combine Person B and Person C tasks. The driver handles
-> Person A tasks; the navigator handles Person B + C tasks.
-
-**Facilitator actions during lab:**
-- Circulate every 10 min, check progress
-- At 15 min: "You should have tests written — if not, grab Checkpoint 1A and skip to Silver"
-- At 30 min: "Bronze should be working — if stuck, grab Checkpoint 1A"
-- At 50 min: "Gold tables should exist — if not, grab Checkpoint 1B for Lab 2 readiness"
+**Facilitator Demo Sidebars during Lab 1:** see Facilitation Notes section below.
 
 ---
 
-### 13:05–13:15 | Show & Tell + Prediction Reveal (10 min)
+### 14:45–15:00 | Show & Tell + Quiz-App Reveal (15 min)
 
-**Slide:** 33 (Show & Tell + Prediction Reveal)
+**Slide:** Show & Tell + Quiz-App Reveal
 
-**Each team (2 min each):**
-- Show their pipeline DAG (what tables did you create?)
-- Share one interesting insight from their Gold data
-- What worked well? Where did they steer the agent?
+**Format (per track, ~30 sec each):** One highlight per pair — not a full demo, just one thing they're proud of.
 
-**Prediction Reveal (3 min):**
-- Query the actual data live: _"OK let's check — which state DOES have the highest food retail turnover?"_
-- Score the prediction cards from the ice breaker
-- Award bragging rights to the most accurate team
+**Quiz-App Reveal (~8 min):**
+- Pull up the quiz-app admin view.
+- Admin view pulls answers from one pair's Gold table per question (rotating across pairs so every pair contributes).
+- *"Which state has the highest food retail turnover? Let's check [pair's] Gold table... it's [X]. Who guessed closest?"*
+- Score reveals tie back to the leaderboard from Block 3.
+- Award bragging rights to the most accurate pair.
 
-**Group discussion prompt:** _"Where did TDD help the agent stay on track? Where did it go off-rails?"_
-
----
-
-### 13:15–14:00 | Lunch (45 min)
+**Group discussion prompt:** *"Where did Validate help you catch something early? Where did you skip it and regret it?"*
 
 ---
 
-### 14:00–15:00 | Lab 2 (track-specific) (60 min)
+### 15:00–15:10 | Break (10 min)
+
+---
+
+### 15:10–16:30 | Lab 2 (track-specific, pairs) (80 min)
 
 > **See track-specific instructions:** [LAB-2-DE.md](LAB-2-DE.md) | [LAB-2-DS.md](LAB-2-DS.md) | [LAB-2-ANALYST.md](LAB-2-ANALYST.md)
 
-**Summary:** Teams continue in their chosen track. DE teams add data quality, new sources, and scheduling. DS teams train models, deploy serving endpoints, and build a prediction app. Analyst teams build a FastAPI web app with embedded dashboards. Skills and MCP are used throughout.
+**Summary:** Pairs continue in their chosen track. DE pairs add data quality, FSANZ ingest, and scheduling. DS pairs train models, deploy serving endpoints, and build a prediction app. Analyst pairs build a FastAPI web app with embedded Genie/dashboards. Skills and MCP are used throughout.
 
-**Time-boxed phases with parallel task assignments:**
+**R.V.P.I. reminder before starting:** *"Before you start, re-read your CLAUDE.md. Is it still current? What drifted during Lab 1?"*
+
+**Time-boxed phases (approximate):**
 
 | Phase | Duration | What | Checkpoint Available |
 |-------|----------|------|---------------------|
-| Phase 1: PRD + Tests + Genie | 10 min | Write PRD, API tests, start Genie space | — |
-| Phase 2: Build | 30 min | Backend, frontend, AI/BI dashboard | Checkpoint 2A: basic app skeleton |
-| Phase 3: Wire + Polish | 15 min | Deploy app, test Genie, polish dashboard | Checkpoint 2B: Genie space instructions |
-| Phase 4: Demo Prep | 5 min | Prepare 3-minute team demo | Checkpoint 2D: complete solution |
+| Phase 1: Validate + PRD + Tests | 15 min | Audit CLAUDE.md, write PRD, write API tests, start Genie space | — |
+| Phase 2: Build | 35 min | Backend, frontend, AI/BI dashboard | Checkpoint 2A: basic app skeleton |
+| Phase 3: Wire + Polish | 20 min | Deploy app, test Genie, polish dashboard | Checkpoint 2B: Genie instructions |
+| Phase 4: Demo Prep | 10 min | Prepare 3-minute pair demo | Checkpoint 2D: complete solution |
 
-**Parallel Task Assignments — Lab 2:**
+**Pair roles (driver/navigator, swap every 15 min):**
+- Same pattern as Lab 1. Rotate driver every 15 min minimum.
+- For UI work (Genie space, AI/BI dashboard) the navigator can handle in a second tab while driver works the terminal — parallel tracks within the pair.
 
-| Phase | Person A | Person B | Person C |
-|-------|----------|----------|----------|
-| **Phase 1** (PRD + Tests, 10 min) | Write PRD for the app (use starter-kit template) | Write API tests (use starter-kit test stubs) | Start Genie space in UI (select gold tables, add descriptions) |
-| **Phase 2** (Build, 30 min) | Build FastAPI backend (endpoints, data connection) | Build frontend (HTML/Tailwind/htmx) | Create AI/BI dashboard in UI (charts, filters, layout) |
-| **Phase 3** (Wire + Polish, 15 min) | Deploy app to Databricks Apps | Test Genie space + refine instructions/descriptions | Polish dashboard + get embed URL |
-| **Phase 4** (Demo Prep, 5 min) | All: prepare 3-minute demo | All: pick best Genie question | All: rehearse narrative |
+**Facilitator actions during Lab 2:**
+- At 15 min (15:25): "PRD and tests should be done — agent should be implementing."
+- At 40 min (15:50): "Backend should be working — start Genie even if frontend isn't perfect."
+- At 60 min (16:10): "Genie space should be created — start AI/BI dashboard if not already."
+- At 75 min (16:25): "Start preparing your 3-minute demo!"
 
-> **Note for teams of 2:** Person A handles backend + deployment. Person B handles
-> frontend + Genie + dashboard (Genie and dashboard are UI tasks that run in parallel).
-
-**Facilitator actions during lab:**
-- At 10 min: "PRD and tests should be done — agent should be implementing"
-- At 30 min: "Backend should be working — start on Genie space even if frontend isn't perfect"
-- At 45 min: "Genie space should be created — start AI/BI dashboard if not already"
-- At 55 min: "Start preparing your 3-minute demo!"
+**Facilitator Demo Sidebars during Lab 2:** see Facilitation Notes section below.
 
 ---
 
-### 15:00–15:30 | Team Demos, Voting & Retro (30 min)
+### 16:30–17:00 | Team Demos + Let Go + Takeaways + Close (30 min)
 
-**Slide:** 36 (Team Demos & Voting)
+**Slides:** Team Demos & Voting, Let Go of the Code, Key Takeaways, Next Steps, APJ Hackathon, Closing
 
-**Team Demos (18 min):** Each team gets 3 minutes to demo:
-- Their pipeline (what data, what transformations)
-- Their app (show it running, ask the AI a question)
-- Their Genie space (ask a natural language question)
-- One thing that surprised them
+**Team Demos (~18 min):** Each pair gets 3 minutes to demo:
+- Their pipeline (what data, what transformations).
+- Their app (show it running, ask the AI a question).
+- Their Genie space (ask a natural language question).
+- One thing that surprised them — positively or negatively.
 
-**Voting (5 min):** Each person votes for the best team (can't vote for yourself). Criteria:
+**Voting (~3 min):** Each person votes for the best pair (can't vote for own). Criteria:
 
 | Criteria | Weight |
 |----------|--------|
 | End-to-end completeness (pipeline → app → Genie) | 40% |
 | Insight quality (interesting findings, good visualizations) | 30% |
 | Creativity (unique features, clever AI use) | 20% |
-| Best use of agent (TDD, CLAUDE.md, steering) | 10% |
+| Best use of agent (R.V.P.I., CLAUDE.md, small steps) | 10% |
 
-**Retro (7 min):** Quick group discussion:
-- What was the most valuable technique you learned today?
-- What will you take back to your daily work on Monday?
-- Where do you see the biggest opportunity for your team?
+**Let Go of the Code (~3 min):**
+- *"The most experienced engineers I work with who use Claude Code best have one thing in common: they care about the system more than they care about the code. They let the agent write the code and they focus on whether the system does what it should. Production identity lives at the interface, not the implementation. That's a skill. It takes practice."*
 
----
+**Key Takeaways (~3 min):**
+1. *R.V.P.I. — name the loop, use it.*
+2. *CLAUDE.md is an artifact that rots. Validate it.*
+3. *Small Steps every time.*
+4. *Verification is the new bottleneck — you own that, no one else does.*
 
-### 15:30–15:45 | Takeaways + Close (15 min)
+**Next Steps + APJ Hackathon (~2 min):**
+- Roll out to wider team, establish pair/team CLAUDE.md standards.
+- Build shared skill libraries.
+- Explore MCP for internal tools.
+- **APJ Building Intelligent Apps Hackathon in May** — build on what you shipped today, $68K in prizes. Details in the email tomorrow.
 
-**Slides:** 37–39 (Key Takeaways, Next Steps, Closing)
-
-**Key takeaways:**
-1. _CLAUDE.md and PRDs are your leverage multipliers_
-2. _TDD + agents = deterministic outcomes_
-3. _Skills and MCP extend agents from code to systems_
-4. _Genie + AI/BI puts data in everyone's hands_
-
-**Next steps:**
-- Roll out to wider team, establish team CLAUDE.md standards
-- Build shared skill libraries
-- Explore MCP for internal tools
+**Closing (~1 min):** *"Thanks for the day. Go build something."*
 
 **David available for follow-up support.**
 
 ---
 
-### 15:45–16:00 | Buffer / Q&A (15 min)
-
-Open floor for questions, extra demos, or overflow from any session.
-
----
-
 ## Track System
 
-After the shared theory sessions, teams choose one of three tracks:
+After shared theory and the challenge brief, pairs choose one of three tracks:
 
 | Track | Lab 1 Focus | Lab 2 Focus | Key Tools |
 |-------|------------|------------|-----------|
-| **Data Engineering** | Lakeflow pipeline (Bronze→Silver→Gold) | Data quality, new sources, scheduling | Lakeflow, DABs, @dp.expect |
+| **Data Engineering** | Lakeflow pipeline (Bronze→Silver→Gold) | Data quality, FSANZ ingest, scheduling | Lakeflow, DABs, @dp.expect |
 | **Data Science** | Feature engineering, MLflow experiments | Model training, serving, prediction app | MLflow, Model Serving, scikit-learn |
 | **Analyst** | Genie spaces, AI/BI dashboards | FastAPI web app with embedded dashboards | Genie, AI/BI, FastAPI + htmx |
 
 ### Track Selection
-- Teams self-select during the Track Briefing at 11:50 (after Lab 0, before Lab 1)
-- Facilitator should recommend based on team composition (ML experience → DS, analyst background → Analyst)
-- All tracks share the same bronze layer built in Lab 0 + gold tables via Checkpoint 0
+- Pairs self-select during the Challenge Brief at 13:00 (after lunch, before Lab 1).
+- Facilitator should recommend based on pair composition (ML experience → DS, analyst background → Analyst).
+- All tracks share the same bronze-layer scaffold set up in Lab 1 Phase 1.
 
 ### Track Files
-- Shared: `LAB-0-GETTING-STARTED.md` (all tracks do this first)
 - DE: `LAB-1-DE.md`, `LAB-2-DE.md`, `starter-kit/prompts/de/`
 - DS: `LAB-1-DS.md`, `LAB-2-DS.md`, `starter-kit/prompts/ds/`
 - Analyst: `LAB-1-ANALYST.md`, `LAB-2-ANALYST.md`, `starter-kit/prompts/analyst/`
@@ -600,80 +523,93 @@ After the shared theory sessions, teams choose one of three tracks:
 
 ### What It Contains
 
-The `starter-kit/` folder is distributed to every team at the start. It contains everything teams need to hit the ground running:
+The `starter-kit/` folder is distributed to every pair at the start. It contains everything pairs need to hit the ground running:
 
 | File | Purpose |
 |------|---------|
-| `CLAUDE.md` | Pre-written project CLAUDE.md template — teams customise for their angle |
-| `test_stubs/` | Pytest test stubs for both labs — tests are pre-written, teams just need to run them |
+| `CLAUDE.md` | Pre-written project CLAUDE.md template — pairs customise for their angle |
+| `test_stubs/` | Pytest test stubs for both labs — tests are pre-written, pairs just need to run them |
 | `prompts/` | Exact copy-paste prompts for every phase of both labs — no interpretation needed |
 | `cheatsheet.md` | Quick-reference for Lakeflow syntax, DABs config, FastAPI patterns |
 | `config/` | Template `databricks.yml`, `.env` examples, project scaffold |
 
-### How Teams Use It
+### How Pairs Use It
 
-1. **During Lab 0 (Guided Hands-On):** Copy the CLAUDE.md template and customise it
-2. **At each lab phase:** Open the corresponding prompt file, copy-paste the prompt into the agent
-3. **When stuck:** Check the cheatsheet for syntax reminders
-4. **For tests:** The test stubs define exact expected behavior — teams don't need to write tests from scratch
+1. **During Lab 1 Phase 1:** Copy the CLAUDE.md template and customise it.
+2. **At each lab phase:** Open the corresponding prompt file, copy-paste the prompt into the agent.
+3. **When stuck:** Check the cheatsheet for syntax reminders.
+4. **For tests:** The test stubs define exact expected behavior — pairs don't need to write tests from scratch.
 
 ### Key Principle
 
 > Every prompt in the starter-kit is exact copy-paste. No interpretation needed.
-> Teams that follow the prompts in order will have a working platform by the end.
+> Pairs that follow the prompts in order will have a working platform by the end.
 
 ---
 
-## Parallel Task Design
+## Pair Programming Design
 
-### Why Parallel Tasks?
+### Why Pairs?
 
-Teams of 3 can achieve far more when each person works on a different piece simultaneously. The parallel task assignments ensure:
+Shipping with AI is a verification problem. Verification is cheaper with a second pair of eyes.
 
-- **No idle time** — everyone has something to do at every phase
-- **Clear ownership** — no confusion about who's doing what
-- **Natural checkpoints** — phases end with integration points where the team syncs up
-- **Resilience** — if one person is stuck, the others are still making progress
+- **Navigator catches drift** — sees what driver misses during rapid iteration.
+- **Driver swaps force fresh eyes** — a 15-min swap is a natural V-step.
+- **Small Steps cadence** — a navigator asking *"did that actually work?"* every few minutes enforces the discipline.
+- **R.V.P.I. gets lived** — navigator owns the Validate step while driver is in Implement.
 
-### How It Works
+### Driver / Navigator Roles
 
-1. **Briefing slide** shows the task table for each phase
-2. Teams assign Person A/B/C at the start of each lab
-3. Each person works on their task independently (separate terminal or UI)
-4. At phase boundaries, the team syncs: "What's done? What's blocked? What's next?"
-5. Person C often handles UI tasks (Genie, dashboards) that don't need the agent terminal
+**Driver (holds keyboard for 15 min):**
+- Types prompts, reviews agent output, accepts/rejects suggestions.
+- Runs tests, commits work.
+- Stays in flow — doesn't context-switch to reviewing git log.
 
-### For Teams of 2
+**Navigator (hands off keyboard for 15 min):**
+- Reads agent output alongside driver.
+- Verifies against CLAUDE.md and current project state.
+- Flags hallucinations, skipped tests, drifting assumptions.
+- Owns the R.V.P.I. Validate phase.
+- At swap time: hands over with a 30-second status — "what's green, what's red, what's next."
 
-Combine Person B and Person C tasks. One person drives the agent; the other handles UI tasks, testing, and review. Rotate roles between labs.
+### Swap Protocol
+
+1. At the 15-min mark, driver commits current work.
+2. Navigator takes keyboard.
+3. Former driver does a 30-second verbal handover.
+4. New driver continues.
+
+### For Odd-Numbered Groups (Triads)
+
+One triad forms with an observer who takes notes on what's surprising — not a third driver. Driver + navigator rotate every 15 min; observer rotates in after 30 min.
 
 ---
 
 ## Checkpoint System
 
-**No team should ever be stuck.** Pre-loaded checkpoints ensure everyone can participate in demos.
+**No pair should ever be stuck.** Pre-loaded checkpoints ensure everyone can participate in demos.
 
 ### How Checkpoints Work
 
 Each checkpoint is available as:
-1. **Pre-loaded data** in Unity Catalog (tables ready to query)
-2. **Code templates** in a shared Git repo (copy and go)
+1. **Pre-loaded data** in Unity Catalog (tables ready to query).
+2. **Code templates** in a shared Git repo (copy and go).
 
-Teams should try to build it themselves first. Use checkpoints only when falling behind.
+Pairs should try to build it themselves first. Use checkpoints only when falling behind.
 
 ### Lab 1 Checkpoints
 
 | Checkpoint | When to Use | What You Get |
 |-----------|-------------|-------------|
 | **1A: Bronze Tables** | Bronze ingestion failing (API issues, parsing errors) | Pre-loaded `abs_retail_trade_bronze` and `abs_cpi_food_bronze` tables in your schema |
-| **1B: Silver + Gold Tables** | Silver transformations not working at the 50-min mark | Pre-loaded `retail_turnover`, `food_price_index`, `retail_summary`, `food_inflation_yoy` |
+| **1B: Silver + Gold Tables** | Silver/Gold transformations not working at the 60-min mark | Pre-loaded `retail_turnover`, `food_price_index`, `retail_summary`, `food_inflation_yoy` |
 | **1C: Complete Pipeline** | Want to focus on Lab 2; need the full pipeline code | Complete pipeline source code + databricks.yml + all tables |
 
 ### Lab 2 Checkpoints
 
 | Checkpoint | When to Use | What You Get |
 |-----------|-------------|-------------|
-| **2A: App Skeleton** | Backend not working at the 30-min mark | Working FastAPI app with health endpoint, data connection, basic structure |
+| **2A: App Skeleton** | Backend not working at the 40-min mark | Working FastAPI app with health endpoint, data connection, basic structure |
 | **2B: Genie Instructions** | Unsure how to create a Genie space | Step-by-step Genie space creation guide with table recommendations |
 | **2C: Dashboard Template** | Need help with AI/BI dashboard | Pre-configured dashboard SQL queries and layout suggestions |
 | **2D: Complete Solution** | Want a working reference to compare against | Full app code + Genie space + dashboard config |
@@ -687,7 +623,7 @@ cp -r /Workspace/Shared/workshop-checkpoints/1A/* ./
 
 # Or tell the agent:
 # "Copy the bronze checkpoint tables from workshop_vibe_coding.checkpoints
-#  into my schema workshop_vibe_coding.<team_schema>"
+#  into my schema workshop_vibe_coding.<pair_schema>"
 ```
 
 ---
@@ -696,15 +632,18 @@ cp -r /Workspace/Shared/workshop-checkpoints/1A/* ./
 
 | Concept | Where Taught | Where Practiced | Depth |
 |---------|-------------|----------------|-------|
-| **Agents / Vibe Coding** | Theory (9:45, demo + theory) | Lab 0 + both labs | Deep |
-| **CLAUDE.md / PRDs** | Theory (9:45, theory) | Lab 0 (first thing teams write) | Deep |
-| **TDD with Agents** | Theory (9:45, theory + demo) | Lab 0 (first test + bronze) + both labs | Deep |
-| **Tokens / Context Windows** | Theory (9:45, theory) | All labs (context management) | Light |
-| **Skills** | Session 2 (11:30, overview) | Both labs (using skills throughout) | Medium |
-| **Lakeflow Pipelines** | Lab 0 (10:45, guided) + Track Briefing (11:50) | Lab 0 + Lab 1 (build full pipeline) | Deep |
-| **MCP** | Session 2 (11:30, demo + tiers) | Lab 2 (Databricks docs MCP) | Medium |
-| **Genie Spaces** | Session 2 (11:30, demo) | Lab 1/Lab 2 (create Genie space) | Medium |
-| **AI/BI Dashboards** | Session 2 (11:30, demo) | Lab 1/Lab 2 (create dashboard) | Medium |
+| **R.V.P.I. Loop** | Block 4 (10:50, named + demoed) | Both labs (facilitator asks V question on every rotation) | Deep |
+| **Agents / Vibe Coding** | Block 1 (YWS) + Block 2 (live demo) | Both labs | Deep |
+| **CLAUDE.md / PRDs** | Block 4 sub-section 2 (10:50+, hands-on) | Lab 1 Phase 1 (first thing pairs write) + Lab 2 Phase 1 (validate) | Deep |
+| **Small Steps** | Block 4 sub-section 3 (hands-on through labs) | Both labs (every prompt) | Deep |
+| **BDD / TDD with Agents** | Block 4 sub-section 5 | Lab 1 Phase 1 (first test) + both labs | Deep |
+| **Power Tools (Skills/MCP/Hooks)** | Block 4 sub-section 4 (live demos) | Both labs (using skills, MCP for docs) | Medium |
+| **Sycophancy / Memory-as-untrusted-input** | Block 4 sub-section 6 | Lab checkpoints (facilitator V question) | Medium |
+| **Tokens / Context Windows** | Block 4 sub-section 7 | Both labs (context management with /compact) | Light |
+| **Lakeflow Pipelines** | Block 2 live demo + Challenge Brief | Lab 1 (DE track, full pipeline) | Deep |
+| **Genie Spaces** | Challenge Brief callout + Block 4 tools section | Lab 1/Lab 2 (Analyst track primary) | Medium |
+| **AI/BI Dashboards** | Challenge Brief callout | Lab 1/Lab 2 (Analyst + DE) | Medium |
+| **Open Lakehouse / Managed Iceberg** | Challenge Brief callout (DE-relevant) | Lab 2 DE stretch goal | Light |
 
 ---
 
@@ -712,9 +651,9 @@ cp -r /Workspace/Shared/workshop-checkpoints/1A/* ./
 
 ### After Lab 1 (Show & Tell)
 
-- Where did TDD help the agent stay on track? Where did it go off-rails?
+- Where did Validate help you catch something early? Where did you skip it and regret it?
 - What's the most effective prompt you gave the agent today?
-- How did parallel tasks work for your team? What would you change?
+- How did the driver/navigator swap feel? What would you change?
 
 ### After Lab 2 (Retro)
 
@@ -746,7 +685,7 @@ cp -r /Workspace/Shared/workshop-checkpoints/1A/* ./
 | [AI Dev Kit Skills](https://github.com/databricks-solutions/ai-dev-kit/tree/main/databricks-skills) | Pre-built Databricks-specific agent skills |
 
 > **Tool-Agnostic Note:** While this workshop uses Claude Code as the primary agent, the
-> methodology — PRDs, CLAUDE.md, TDD, context management — transfers to Cursor, Windsurf,
+> methodology — R.V.P.I., CLAUDE.md, BDD, context management — transfers to Cursor, Windsurf,
 > GitHub Copilot, and any agentic coding tool. The discipline is the differentiator, not the tool.
 
 ---
@@ -755,22 +694,23 @@ cp -r /Workspace/Shared/workshop-checkpoints/1A/* ./
 
 ### Key Principles
 
-1. **Show, don't tell.** Every concept is demoed live before teams try it.
+1. **Show, don't tell.** Every concept is demoed live before pairs try it.
 2. **Real data, real outcomes.** Public Australian data — relevant to Coles' domain.
 3. **Fail forward.** When the agent gets something wrong, use it as a teaching moment.
-4. **Nobody gets stuck.** Checkpoints ensure every team can demo something at the end.
+4. **Nobody gets stuck.** Checkpoints ensure every pair can demo something at the end.
 5. **Energy over perfection.** It's a hackathon, not an exam.
+6. **R.V.P.I. as the recurring question.** When circulating during labs, the single question to ask every pair is *"have you validated your CLAUDE.md / context yet?"*
 
 ### Facilitator Demo Sidebars
 
-Four choreographed 60–90 second demos slotted into the labs at natural wait moments. Purpose: fill the dead air inside hour-long lab blocks with active teaching, keep energy up across all experience levels, give laggards a visible breather without slowing leaders down.
+Four choreographed 60–90 second demos slotted into the labs at natural wait moments. Purpose: fill the dead air inside lab blocks with active teaching, keep energy up across all experience levels, give laggards a visible breather without slowing leaders down.
 
 | When | Duration | Demo | Style | What it teaches |
 |---|---|---|---|---|
-| Lab 1, ~minute 20 (12:25) | 90 sec | **Model Mix Bake-Off** | Live | Haiku vs Sonnet on matched tasks — model selection as technique |
-| Lab 1, ~minute 40 (12:45) | 90 sec | **Fresh-Context `/review`** | Live (pre-selected team) | Subagents in practice; one team gets real feedback |
-| Lab 2, ~minute 20 (14:20) | 90 sec | **Small-Steps Save** | Pre-recorded video | Big-bang fail vs small-step success — the anti-pattern felt |
-| Lab 2, ~minute 40 (14:40) | 60 sec | **Commit Cadence** | Live | `/commit` after every green test — the habit that saves work |
+| Lab 1, ~min 25 (13:40) | 90 sec | **Model Mix Bake-Off** | Live | Haiku vs Sonnet on matched tasks — model selection as technique |
+| Lab 1, ~min 60 (14:15) | 90 sec | **Fresh-Context `/review`** | Live (pre-selected pair) | Subagents in practice; one pair gets real feedback |
+| Lab 2, ~min 25 (15:35) | 90 sec | **Small-Steps Save** | Pre-recorded video | Big-bang fail vs small-step success — the anti-pattern felt |
+| Lab 2, ~min 55 (16:05) | 60 sec | **Commit Cadence** | Live | `/commit` after every green test — the habit that saves work |
 
 **Scripts + pre-flight checklists:** `starter-kit/demos/` (one file per demo + `README.md` index).
 
@@ -778,37 +718,36 @@ Four choreographed 60–90 second demos slotted into the labs at natural wait mo
 - **Four is the ceiling.** Beyond this, demos stop being spotlights and start feeling like slowdowns.
 - **Live only for predictable behaviour.** If the point depends on the agent doing something specific (arguing with itself, generating flawed code), pre-record. If it depends on something reliably measurable (Haiku is faster than Sonnet for a typo fix), go live.
 - **Every demo teaches a habit, not a concept.** Each 90 seconds leaves attendees with something they can do on Monday, not just something they understand better.
-- **Consent for any demo that uses a team's work.** The `/review` demo requires asking first during the 12:35 walk. Never ambush a struggling team.
+- **Consent for any demo that uses a pair's work.** The `/review` demo requires asking first during the 14:00 walk. Never ambush a struggling pair.
 - **If a demo fails live, read the fallback paragraph and move on.** Each script has one. Don't try to fix live — cost of a failed attempt is silence; cost of trying to fix is 3–4 lost minutes and a room that's tuned out.
 
 ### Timing Flex
 
-- If theory runs long: compress Session 2 to 15 min (cut Databricks internal demo)
-- If Lab 0 runs long: borrow 5 min from the break, but ensure every team has a passing test
-- If Lab 1 runs long: borrow 5 min from lunch, reduce Lab 2 to 55 min
-- If teams are advanced: extend Lab 2, add bonus challenges (MCP server, custom skills)
-- If environment issues: have David's laptop as backup with pre-recorded demos
-- If teams finish early: bonus challenges in each lab guide, or help other teams
-- Buffer at 15:45 absorbs any overflow from demos or Q&A
+- If Block 4 (get-to-know-Claude) runs long: compress the Power Tools sub-section — keep R.V.P.I., CLAUDE.md, Small Steps, BDD, Sycophancy. Cut deep MCP demo.
+- If Lab 1 runs long: borrow 5 min from the break, reduce Lab 2 to 75 min.
+- If pairs are advanced: extend Lab 2, add bonus challenges (MCP server, custom skills, Iceberg stretch).
+- If environment issues: have David's laptop as backup with pre-recorded demos.
+- If pairs finish early: bonus challenges in each lab guide, or help other pairs.
+- Demos + close at 16:30 has no buffer — keep 30 min tight. If overflow, skip Let Go slide and go straight to takeaways.
 
 ### Materials to Prepare
 
-- [ ] Prediction cards (printed, 1 per team — grocery data questions for Show & Tell reveal)
-- [ ] Scoreboard (whiteboard or shared Google Sheet)
-- [ ] **Starter-kit folder** distributed to all teams (CLAUDE.md template, test stubs, prompts, cheatsheet, config)
+- [ ] **Quiz-app deployed and tested** (live scoring, admin-reveal mode wired to Gold tables)
+- [ ] **Starter-kit folder** distributed to all pairs (CLAUDE.md template, test stubs, prompts, cheatsheet, config)
 - [ ] Checkpoint data pre-loaded in Unity Catalog (`workshop_vibe_coding.checkpoints.*`)
 - [ ] Checkpoint code in shared Git repo
-- [ ] Coding Agents App instances deployed and tested
+- [ ] Coding Agents App instances deployed and tested (1 per participant)
 - [ ] Slides for theory sessions (slides.html)
 - [ ] Quick-reference cards (printed, 1 per person) (quick-reference.html)
+- [ ] R.V.P.I. poster (printed, visible in room) — four-phase diagram
 - [ ] Backup: pre-recorded demos on David's laptop
 
-### Team Formation Tips
+### Pair Formation Tips
 
-- Balance skill levels (1 experienced + 1-2 newer engineers per team)
-- Mix roles if possible (data engineer + analyst, or DE + DS)
-- Assign Person A/B/C roles at team formation — rotate between labs
-- Person A: primary agent driver; Person B: secondary agent driver; Person C: UI tasks + review
+- Balance skill levels (1 experienced + 1 newer engineer per pair).
+- Mix roles if possible (data engineer + analyst, or DE + DS).
+- Assign initial driver/navigator at pair formation — swap every 15 min throughout labs.
+- For odd-numbered groups: form one triad with an observer taking notes. Observer rotates in after 30 min.
 
 ---
 
@@ -818,45 +757,49 @@ Four choreographed 60–90 second demos slotted into the labs at natural wait mo
 
 ### For Platform Team (Farbod & Swee Hoe)
 
-1. Deploy Coding Agents App instances (1 per participant)
-2. Configure AI Gateway with Claude Opus 4.6 (rate limits: 20 calls/min/user)
+1. Deploy Coding Agents App instances (1 per participant).
+2. Configure AI Gateway with Claude Opus 4.6 (rate limits: 20 calls/min/user).
 3. Unity Catalog setup:
    - Catalog: `workshop_vibe_coding`
-   - Per-team schemas: `workshop_vibe_coding.team_01` through `team_05`
+   - Per-pair schemas: `workshop_vibe_coding.pair_01` through `pair_05`
    - Shared read-only: `workshop_vibe_coding.checkpoints` (pre-loaded checkpoint data)
    - Shared read-only: `workshop_vibe_coding.raw_data` (source data volumes)
-4. Pre-load checkpoint tables at every stage (Bronze, Silver, Gold)
-5. Network verification (ZScaler, WiFi, WebSocket support)
-6. Genie space permissions (teams need CREATE GENIE SPACE)
-7. AI/BI dashboard permissions (teams need CREATE DASHBOARD)
-8. End-to-end test from conference room WiFi
+4. Pre-load checkpoint tables at every stage (Bronze, Silver, Gold).
+5. **Quiz-app deployment:** live-scoring Databricks App with admin-reveal mode wired to Gold tables.
+6. Reference-implementation pipeline pre-deployed (needed for 10:10 internal demo).
+7. AI/BI dashboard pre-built + open in a tab (needed for 10:10 internal demo).
+8. Network verification (ZScaler, WiFi, WebSocket support).
+9. Genie space permissions (pairs need CREATE GENIE SPACE).
+10. AI/BI dashboard permissions (pairs need CREATE DASHBOARD).
+11. End-to-end test from conference room WiFi.
 
 ### For Participants
 
-- Laptop with modern browser (Chrome recommended)
-- Databricks workspace access (already have)
-- No software installation required — everything runs in the browser
-- Optional: think of a project you'd like to try with an agent after the workshop
+- Laptop with modern browser (Chrome recommended).
+- Phone (for quiz-app icebreaker at 10:25).
+- Databricks workspace access (already have).
+- No software installation required — everything runs in the browser.
+- Optional: think of a project you'd like to try with an agent after the workshop.
 
 ---
 
 ## Post-Workshop
 
 ### Immediate (Same Week)
-- Share workshop materials and quick-reference cards
-- Collect feedback survey (keep it short: 3 questions)
-- Debrief with Yass, Swee Hoe, Farbod on what to refine
+- Share workshop materials and quick-reference cards.
+- Collect feedback survey (keep it short: 3 questions).
+- Debrief with Yass, Swee Hoe, Farbod on what to refine.
 
 ### Short-Term (2–4 Weeks)
-- Refine content based on pilot feedback
-- Schedule full team workshop (end of March / early April 2026)
-- Help Coles establish team-wide CLAUDE.md standards
-- Set up shared skill library repo
+- Refine content based on pilot feedback.
+- Schedule full team workshop (end of May 2026).
+- Help Coles establish team-wide CLAUDE.md standards and V-step rituals.
+- Set up shared skill library repo.
 
 ### Long-Term
-- Support Coles in building internal MCP servers for their systems
-- Monthly office hours for agentic development questions
-- Track adoption metrics: developer velocity, code quality, satisfaction
+- Support Coles in building internal MCP servers for their systems.
+- Monthly office hours for agentic development questions.
+- Track adoption metrics: developer velocity, code quality, satisfaction.
 
 ---
 
@@ -864,27 +807,27 @@ Four choreographed 60–90 second demos slotted into the labs at natural wait mo
 
 ### Subagents vs Agent Teams
 
-Moved from Session 3 to appendix — available for overflow or advanced discussion.
+Moved from main teaching block to appendix — available for overflow or advanced discussion.
 
 - **Subagents = fire-and-forget**
-  - Isolated context, one job, result returns to parent
-  - Can't talk to each other — that's a feature (predictable information flow)
-  - Key benefit: **compression** — vast exploration distilled to clean signal
-  - Use when: embarrassingly parallel (research, exploration, lookups)
+  - Isolated context, one job, result returns to parent.
+  - Can't talk to each other — that's a feature (predictable information flow).
+  - Key benefit: **compression** — vast exploration distilled to clean signal.
+  - Use when: embarrassingly parallel (research, exploration, lookups).
 
 - **Agent Teams = ongoing coordination**
-  - Long-running instances with shared state and peer-to-peer messaging
-  - Shared task list with dependencies (`blockedBy`)
-  - Key benefit: **negotiation** — discovery in one thread changes what another does
-  - Use when: agents must reconcile outputs before proceeding
+  - Long-running instances with shared state and peer-to-peer messaging.
+  - Shared task list with dependencies (`blockedBy`).
+  - Key benefit: **negotiation** — discovery in one thread changes what another does.
+  - Use when: agents must reconcile outputs before proceeding.
 
 - **The #1 design principle:** Start with a single agent. Push it until it breaks. That failure point tells you exactly what to add. Design around _context boundaries_, not roles.
 
-- **Warning for coding:** Parallel agents writing code make incompatible assumptions — subagents should explore and answer questions, not write code simultaneously with the main agent
+- **Warning for coding:** Parallel agents writing code make incompatible assumptions — subagents should explore and answer questions, not write code simultaneously with the main agent.
 
-### Skills TDD Chain
+### Skills BDD Chain
 
-How skills chain together in a TDD workflow: write test → run test (fail) → implement → run test (pass) → commit → deploy. Each step can be a skill.
+How skills chain together in a BDD workflow: write feature/test → run (fail) → implement → run (pass) → commit → deploy. Each step can be a skill.
 
 ### MCP Architecture Detail
 
@@ -893,3 +836,17 @@ Detailed MCP architecture diagram and protocol flow for advanced participants wh
 ### AI Dev Kit
 
 Pre-built Databricks-specific agent skills from the AI Dev Kit. Overview of available skills and how to install/customise them.
+
+### Rosetta Stone
+
+Cross-platform reference material — maps Claude Code concepts to Cursor, Windsurf, and Copilot equivalents. Useful for attendees who use multiple agents.
+
+### Memory as Untrusted Input
+
+Detailed reference: `notes/rvpi-validate-step.md`. The R.V.P.I. Validate step is the architectural seam through which memory governance becomes a first-class concern in agentic software development.
+
+Four practical mechanisms:
+- **Trust-weighted retrieval** — adjust retrieval scores based on provenance.
+- **Canonical state auditing** — maintain a reference state against which retrieved memories are compared.
+- **Circuit breakers** — halt planning if Validate detects irreconcilable conflict or high staleness.
+- **Immutable audit logging** — log all memory reads/writes so poisoned context can be traced.

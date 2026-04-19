@@ -1,10 +1,21 @@
 # Lab 1: Genie Spaces & AI/BI Dashboards (Analyst Track)
 
-**Duration:** 55 minutes
+**Duration:** 90 minutes
 **Goal:** Create Genie spaces, build AI/BI dashboards, and tune with metadata
-**Team Size:** 2–3 people
+**Team Size:** Pairs (two-person teams)
 
 > Complete `LAB-0-GETTING-STARTED.md` first, then return here.
+
+---
+
+## Pair Programming
+
+This lab is UI-heavy, but the pair pattern still holds.
+
+- **Driver:** hands on keyboard/mouse. Clicks through Genie + Dashboard UI; runs `ALTER TABLE` prompts in the terminal.
+- **Navigator:** reads what the Driver is about to click, verifies Genie results against the raw data, challenges at the **V** step of **R.V.P.I.** (was that SQL actually right?).
+- **Swap every 15 min** — set a timer.
+- **Escalation rule:** if a single Genie-tuning cycle (add metadata → re-test a question → compare) doesn't fit in 15 min, split it.
 
 ---
 
@@ -26,14 +37,11 @@ Your gold tables are pre-loaded (from checkpoints). Build natural language inter
 
 ## Phase 1: Create Genie Space + Add Metadata (15 min)
 
-> **Team Tasks for This Phase**
-> - **Person A (Databricks UI):** Create Genie space with gold tables and instructions
-> - **Person B (Databricks UI):** Navigate to AI/BI Dashboards, start first visualization
-> - **Person C (Terminal):** Add column descriptions to gold tables in Unity Catalog
->
-> *Teams of 2: Person A does UI tasks, Person B does Terminal + UI.*
+> **Pair Tasks**
+> - **Driver:** Create the Genie space in the UI (1.1), then run the column-description prompt in the terminal (1.2).
+> - **Navigator:** Read each terminal output for SQL correctness. While the Driver is clicking through Genie setup, open a second tab and start thinking about which questions you'll test first.
 
-### 1.1 Create your Genie space (Person A)
+### 1.1 Create your Genie space (Driver, in the UI)
 
 In the Databricks workspace UI:
 
@@ -54,7 +62,7 @@ In the Databricks workspace UI:
      YoY growth and change percentages show year-over-year comparisons.
      ```
 
-### 1.2 Add column descriptions (Person C)
+### 1.2 Add column descriptions (Driver, in the terminal)
 
 Paste this into Claude Code:
 
@@ -88,14 +96,12 @@ Use ALTER TABLE ... ALTER COLUMN ... COMMENT for column comments.
 
 ## Phase 2: Build AI/BI Dashboard (20 min)
 
-> **Team Tasks for This Phase**
-> - **Person A (Databricks UI):** Create 4-5 dashboard visualizations using NL prompts
-> - **Person B (Databricks UI):** Test Genie with challenging questions, refine instructions
-> - **Person C (Terminal):** Write SQL queries for complex visualizations the NL can't generate well
->
-> *Teams of 2: Person A does dashboards, Person B does Genie + SQL.*
+> **Pair Tasks**
+> - **Swap Driver/Navigator** if it's been 15 min.
+> - **Driver:** Build dashboard visualizations one at a time in the UI (2.1). If the NL prompt doesn't produce a good chart, pivot to writing SQL directly in a terminal tab.
+> - **Navigator:** Test Genie with the 5 challenge questions in 2.2 as the dashboard is being built. Log which questions fail and propose an instruction-refinement for the Driver to try next.
 
-### 2.1 Create dashboard (Person A)
+### 2.1 Create dashboard (Driver, in the UI)
 
 In the Databricks UI:
 
@@ -126,7 +132,7 @@ Show a trend line of national food price inflation over time
 4. Arrange into a clean layout
 5. Title: "Grocery Intelligence Dashboard — TEAM_NAME"
 
-### 2.2 Test Genie (Person B)
+### 2.2 Test Genie (Navigator, in parallel)
 
 Try these questions and note which ones Genie gets right:
 
@@ -146,12 +152,10 @@ If Genie gets a question wrong, refine the General Instructions.
 
 ## Phase 3: Polish + Advanced Tuning (15 min)
 
-> **Team Tasks for This Phase**
-> - **Person A:** Refine Genie instructions — add example queries, clarify ambiguous terms
-> - **Person B:** Polish dashboard layout, add filters, publish
-> - **Person C:** Test Genie with 10 sample questions, document accuracy rate
->
-> *Teams of 2: Split between Genie tuning and dashboard polishing.*
+> **Pair Tasks**
+> - **Swap Driver/Navigator** if the timer has fired.
+> - **Driver:** Refine Genie instructions (3.1), then polish the dashboard layout + publish (3.2).
+> - **Navigator:** Test Genie with 10 sample questions after each instruction tweak. Track pass/fail — note which change moved the needle (this is pure V in R.V.P.I.).
 
 ### 3.1 Tune Genie accuracy
 

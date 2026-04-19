@@ -1,10 +1,23 @@
 # Lab 2: Build Your App & Dashboard (Analyst Track)
 
-**Duration:** 55 minutes
+**Duration:** 80 minutes
 **Goal:** Build a web app with AI features, create a Genie space, and set up an AI/BI dashboard
-**Team Size:** 2–3 people
+**Team Size:** Pairs (two-person teams)
 
 > Complete `LAB-0-GETTING-STARTED.md` and `LAB-1-ANALYST.md` first.
+
+---
+
+## Pair Programming
+
+Same pattern as Lab 1. App builds have more moving parts (FastAPI + frontend + dashboard + Genie) — keeping both Driver and Navigator engaged is what stops "we built three things that don't connect".
+
+- **Driver:** types prompts, runs tests, deploys.
+- **Navigator:** verifies each endpoint works (curl or browser) before moving on. Keeps the dashboard-embed URL ready when the Driver needs it.
+- **Swap every 15 min** — set a timer.
+- **Escalation rule:** if a task doesn't fit R.V.P.I. in 15 min, split it.
+
+Before you start, re-read your CLAUDE.md. Is it still current after Lab 1?
 
 ---
 
@@ -72,12 +85,9 @@ All connect to the same gold tables from Lab 1. **You will direct the AI agent t
 
 ## Phase 1: Write PRD + Tests (10 min)
 
-> **Team Tasks for This Phase**
-> - **Person A (Terminal):** Run PRD prompt from `starter-kit/prompts/06-write-prd.md`
-> - **Person B (Terminal):** Run API test prompt from `starter-kit/prompts/07-write-app-tests.md`
-> - **Person C (Databricks UI):** Start creating Genie space NOW (follow `starter-kit/prompts/10-setup-genie.md`) — this is a UI task that doesn't need the terminal
->
-> *Teams of 2: Person A takes Terminal tasks, Person B takes Terminal + UI tasks.*
+> **Pair Tasks**
+> - **Driver:** Run the PRD prompt (1.1), then the API-tests prompt (1.2), then create the Genie space in the UI (1.3).
+> - **Navigator:** Read the PRD — does it actually cover the three user stories? Read the generated tests — do they match the PRD endpoints? While the Driver sets up the Genie space, keep a list of questions you'll use to stress-test it in Phase 3.
 
 > **Starter Kit:** Copy-paste prompts in `starter-kit/prompts/06-write-prd.md` and `07-write-app-tests.md`. Genie setup steps in `10-setup-genie.md`.
 
@@ -146,7 +156,7 @@ Write ONLY the tests. Do NOT implement yet.
 Use httpx AsyncClient with ASGITransport for testing.
 ```
 
-### 1.3 Create your Genie space (Person C)
+### 1.3 Create your Genie space (Driver, in the UI)
 
 Genie is Databricks' natural language Q&A interface. Business users type questions in plain English, Genie generates SQL, and returns results with visualizations. No code required.
 
@@ -171,12 +181,14 @@ In the Databricks workspace UI (not the terminal):
 
 ## Phase 2: Build Backend + Frontend (25 min)
 
-> **Team Tasks for This Phase**
-> - **Person A (Terminal):** Build FastAPI backend using `starter-kit/prompts/08-build-backend.md`
-> - **Person B (Terminal):** Build frontend using `starter-kit/prompts/09-build-frontend.md`
-> - **Person C (Databricks UI):** Create AI/BI dashboard — this is another UI task. Navigate to Dashboards → Create → AI/BI Dashboard. Use gold tables.
->
-> *Teams of 2: Person A takes Terminal tasks, Person B takes Terminal + UI tasks.*
+> **[TODO: trim this phase — too long for pairs.** Originally scoped for three-person parallel work. With a pair working sequentially, realistically budget 35–40 min for Tier 1 or push dashboard-building into Phase 3. Tiers 2 & 3 won't fit in 80 min — recommend Tier 1 default for pairs.]
+
+> **Pair Tasks**
+> - **Swap Driver/Navigator** if the timer has fired.
+> - **Driver:** Build backend endpoint-by-endpoint (2.1), then frontend (2.2), then wire together (2.3), then build the AI/BI dashboard in the UI (2.4).
+> - **Navigator:** After every backend step, hit the new endpoint (`curl`, browser, or the FastAPI `/docs` page) and verify the shape matches the PRD. When the dashboard is building, draft the embed `<iframe>` HTML so it's ready to paste.
+
+> **This phase is the most likely to drift past 15 min.** Split aggressively — "build the backend" is too big. Try: scaffold → `/health` works → `/api/metrics` with no filters → add filters → `/api/ask` placeholder → real LLM call.
 
 > **Starter Kit:** Copy-paste prompts in `starter-kit/prompts/08-build-backend.md` and `09-build-frontend.md`.
 
@@ -219,7 +231,7 @@ Build a frontend in static/index.html with:
 ```
 
 To get the embed URL:
-1. Person C creates and publishes the AI/BI dashboard during this phase (see 2.4 below)
+1. Build and publish the AI/BI dashboard in 2.4 below
 2. Click **Share** → **Embed** → copy the iframe code
 3. Paste the `<iframe>` into your app's HTML
 
@@ -277,7 +289,7 @@ Create requirements.txt with all dependencies.
 Run all tests one final time.
 ```
 
-### 2.4 Create AI/BI dashboard (Person C)
+### 2.4 Create AI/BI dashboard (Driver, in the UI)
 
 AI/BI dashboards are auto-generated visualizations that understand your data. You describe what you want to see in natural language, and the dashboard creates the charts.
 
@@ -315,12 +327,10 @@ Display the top 5 states by average monthly turnover as a horizontal bar chart
 
 ## Phase 3: Wire + Polish (15 min)
 
-> **Team Tasks for This Phase**
-> - **Person A (Terminal):** Wire together app.py, deploy to Databricks Apps using `starter-kit/prompts/11-deploy-app.md`
-> - **Person B (Databricks UI):** Test Genie space with sample questions, refine instructions
-> - **Person C (Databricks UI):** Polish AI/BI dashboard, get embed URL, share with Person A for iframe
->
-> *Teams of 2: Person A takes Terminal tasks, Person B takes Terminal + UI tasks.*
+> **Pair Tasks**
+> - **Swap Driver/Navigator** if the timer has fired.
+> - **Driver:** Deploy the app to Databricks Apps (3.1). Once deployed, polish the AI/BI dashboard, publish, and paste the embed iframe into your app.
+> - **Navigator:** While the deploy runs, test the Genie space with the three sample questions in 3.2. Log which fail and suggest metadata fixes.
 
 > **Starter Kit:** Deployment prompt in `starter-kit/prompts/11-deploy-app.md`. App config template at `starter-kit/app.yaml.template`.
 
@@ -336,7 +346,7 @@ Show me the app URL when it's ready.
 
 ### 3.2 Test Genie space
 
-Person C should have created your Genie space during Phase 1. Now test it with these questions:
+The Genie space was created in Phase 1. Now test it with these questions:
 
 ```
 Which state had the highest food retail turnover last month?
@@ -355,13 +365,13 @@ Compare retail growth across all states for the last 12 months.
 
 ### 3.3 Polish AI/BI dashboard
 
-Person C should have created the dashboard during Phase 2. Now polish it:
+The dashboard was created in Phase 2.4. Now polish it:
 
 1. Arrange the visualizations into a clean layout
 2. Add a title: "Grocery Intelligence Dashboard — Team [your_team]"
 3. Click **Publish** on your dashboard
 4. Click **Share** → **Embed** → copy the iframe code
-5. Share the embed URL with Person A to add to the app:
+5. Paste the embed URL into your app's `index.html`:
 
 ```html
 <div style="width:100%;height:600px;">
@@ -391,10 +401,8 @@ Person C should have created the dashboard during Phase 2. Now polish it:
 
 ## Phase 4: Demo Prep (5 min)
 
-> **Team Tasks for This Phase**
-> - **All:** Prepare demo script, decide who presents what (pipeline, app, Genie, dashboard)
->
-> *Teams of 2: Person A takes Terminal tasks, Person B takes Terminal + UI tasks.*
+> **Pair Tasks**
+> - **Both:** Write the 3-minute demo script together. Decide who narrates which piece (app, Genie, dashboard). Do one full rehearsal.
 
 ### 4.1 Prepare your demo
 
@@ -435,7 +443,7 @@ Use the databricks skills to help scaffold the app deployment.
 
 > **Steering the agent effectively:**
 >
-> - **Divide and conquer:** One person works on the app, another sets up Genie, another does the dashboard
+> - **Sequence, don't parallelize:** Build one piece at a time — app scaffold → health endpoint → metrics endpoint → Genie → dashboard → embed. Parallel work breeds integration bugs that surface at 2:55 PM.
 > - If htmx isn't working, check the `<script>` tag: `<script src="https://unpkg.com/htmx.org@2.0.4"></script>`
 > - For the AI query feature, include the table schema in the LLM system prompt
 > - If the agent writes raw SQL concatenation, say **"parameterize all queries to prevent injection"**
