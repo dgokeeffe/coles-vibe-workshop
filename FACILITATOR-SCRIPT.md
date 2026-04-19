@@ -146,7 +146,7 @@
 
 **[FLIP TO BROWSER — AI/BI dashboard]** ~30 sec.
 
-- "This is `gold_retail_summary`. ABS retail data, monthly turnover by state. Refreshed this morning. No YoY column yet — let me add one."
+- "This is `gold_retail_summary`. ABS retail data, monthly turnover by state. Refreshed this morning. No share-of-national column yet — let me add one. *&lsquo;Share of national retail&rsquo; — per-state percentage of the monthly total. Tells you instantly who the biggest markets are.*"
 
 **[FLIP TO TERMINAL — CODA, reference-implementation loaded]**
 
@@ -154,24 +154,26 @@
 
 ```
 Write ONE pytest test in tests/test_gold_retail_summary.py named
-test_gold_has_yoy_growth. 24-month sample DataFrame for NSW,
-turnover_millions increasing 5% MoM. Assert a yoy_growth_pct column
-exists and month 13's value is approximately 79.6%.
+test_gold_has_state_share_of_national. Build a 6-row DataFrame: 2 states
+(NSW, VIC, QLD) × 3 months. Turnover values in month 1: NSW=100, VIC=60,
+QLD=40 (total 200). Assert a state_turnover_pct column exists; NSW month 1
+is 50.0, VIC month 1 is 30.0, QLD month 1 is 20.0. Also assert that shares
+sum to ~100 for any given month.
 
 Do NOT implement yet. Just the test.
 ```
 
-- Read the test aloud when it lands. "Sample data, expected value, one column. That's the spec."
+- Read the test aloud when it lands. "Six rows, numbers you can check in your head — 100 of 200 is 50%. That's the spec."
 
 **Prompt 2 — run red (~15 sec):** `Run that test. Show me the failure.` → Red. Good.
 
 **Prompt 3 — implement (~45 sec):**
 
 ```
-Add a yoy_growth_pct column to src/gold/retail_summary.py using a
-window function partitioned by state ordered by month_date, comparing
-each row's turnover_millions to the row 12 months prior. Percentage
-change. Nothing else.
+Add a state_turnover_pct column to src/gold/retail_summary.py:
+turnover_millions / sum(turnover_millions) over (partition by month_date) * 100
+
+One window function. No LAG. No date arithmetic. Nothing else.
 ```
 
 - Re-run test → green. "Two prompts."
@@ -183,7 +185,7 @@ databricks bundle deploy -t demo && databricks bundle run grocery-intelligence-d
 ```
 
 - Narrate while it runs: "Pipeline materialising the new column — about a minute."
-- When done, **[FLIP TO DASHBOARD]**, refresh, show the new `yoy_growth_pct` column.
+- When done, **[FLIP TO DASHBOARD]**, refresh, show the new `state_turnover_pct` column. NSW ~35%, VIC ~26%, QLD ~20% — land it: *"that's Australia's retail map in one column."*
 - **[LAND]** "Four prompts. One metric. End-to-end in under five minutes. Two things I want you to notice: first, I didn't *type* most of that — I directed it. Second, every step had a verification artifact. Test green, deploy succeeds, dashboard renders. **No verification, no trust.** We come back to that all day."
 
 > **Key rule from `starter-kit/demos/pipeline-and-dashboard-demo.md`:** if the deploy takes >90 sec, skip the dashboard flip. Move on. Do not wait live.
