@@ -30,20 +30,26 @@ Today you won't just write code with Claude. You'll ship a Grocery Intelligence 
 
 ### Prose arc
 
-"Before I teach you anything, I want to show you me working. Not a slide. An actual terminal. Because if I tell you vibe coding works and then show you a polished deck, you won't believe me — and you shouldn't. **[Open terminal.]** This is my Claude Code setup. Let me show you what I've been using it for the last month. **[Quick tour: git log, skills directory, CLAUDE.md, a couple of recent PRs.]** I'll write something live now — two minutes. Watch what I type, and more importantly, watch what I *verify* after each prompt."
+"Before I teach you anything, I want to show you me working. Not a slide. An actual terminal. Because if I tell you vibe coding works and then show you a polished deck, you won't believe me — and you shouldn't. **[Open terminal.]** This is my Claude Code setup. Let me show you what I've been using it for the last month. **[Quick tour: git log, skills directory, CLAUDE.md, a couple of recent PRs.]** I'll open one file and walk Claude through it — watch what I *ask*, and more importantly, watch what I *verify* after the answer comes back."
 
-**[Live mini-demo: 90-second task. Maybe "add a feature flag check to this endpoint with a test". Narrate the R.V.P.I. loop as you go, without naming it yet.]**
+**[Live mini-demo: 60–90 sec. Open one silver-layer file (e.g., `reference-implementation/src/silver/retail_turnover.py`). Ask Claude *"explain what this does and why"* — narrate Validate out loud (*"that matches my memory, but let me open the file too..."*). Then one tiny Implement: *"add a docstring capturing that summary."* Shows Read + Validate + minimal Implement.]**
 
-"That was a small task. Now let me show you a bigger one — the full loop Claude Code does when I'm building the kind of thing you'll build today. Pipeline, tests, deployment, dashboard. This ran in Lab 0 last week. It was four minutes end-to-end. Watch." **[Play or re-run pipeline + dashboard demo from Slide 25.]**
+"That was tiny. Now let me show you the full loop Claude Code does when I'm building the kind of thing you're going to build today. **[Flip to browser — reference-implementation app.]** This app has been running for three weeks. KPI cards, monthly trend, recalls table, and — *here* — a natural-language query box. Watch."
 
-"Two things I want you to notice before we go on. First: I didn't write most of that code. I *directed* it. Second: every step had a way for me to verify it worked — tests, schema contracts, a visible dashboard. No verification, no trust. We'll return to that idea all day."
+**[Type into NL box: *"which Australian state had the highest retail turnover last month?"* — app returns NSW. Pause.]**
+
+"That works because `gold_retail_summary` has state-level turnover. But I want something richer — each state's *share* of national retail. Percentages, not just totals. I won't touch the app. I'll add one column to the gold table — BDD style — and then come back and ask the same app again."
+
+**[Execute the 8-beat demo from `starter-kit/demos/pipeline-and-dashboard-demo.md`. Four prompts: write test → run red → implement window function → deploy. Then flip back to the app and ask: *"what percentage of national retail does each state account for this month?"* → app generates SQL against the fresh column, returns NSW ~35%, VIC ~26%, QLD ~20%.]**
+
+"Two things I want you to notice before we go on. First: I didn't write most of that code, and I didn't touch the app at all. I shipped one column and the app — which has no idea what my gold schema looks like — answered a question it couldn't answer five minutes ago. Second: every step had a way for me to verify it worked — tests, schema contracts, a natural-language round trip. No verification, no trust. We'll return to that idea all day."
 
 ### Slide cues
 
-- **Slide NEW — Coding Agents at Databricks**: High-level frame: "What we use Claude Code for internally." 3-4 bullet categories (PR review, refactors, test generation, compliance gates). 30-second slide.
-- **Slide 9 (Watch First — REPOSITION + EDIT)**: Move here from current position 9. Reframe: "Let's just watch me work for two minutes." Drop Karpathy quote from this slide (keep in Sycophancy block).
-- **Slide 25 (Live Demo: Pipeline + Dashboard — REPOSITION)**: Move from current 25 to right after the mini-demo. Same content, same 4-min script.
-- **Slide 24 (Live Demo Preview — CUT or MERGE)**: Redundant now that the demos themselves run. Drop or fold as a preamble card.
+- **Slide 5 (Coding Agents at Databricks)**: High-level frame: "What we use Claude Code for internally." 3-4 bullet categories (PR review, refactors, test generation, compliance gates). 30-second slide.
+- **Slide 6 (Stack You'll Touch Today)**: 2-min walk through what pairs will use today — call out MCP + Proprietary Model Serving as how Claude Code talks to the platform.
+- **Slide 7 (Watch First)**: Terminal mini-demo (60–90 sec). One file, read + validate + minimal edit. Do not name R.V.P.I. yet.
+- **Slide 8 (Live Demo — Pipeline + App)**: 4–5 min, 8 beats. Pre-deployed reference-implementation app + pipeline on `david_demo` schema, no `state_turnover_pct` column yet. Full script in `starter-kit/demos/pipeline-and-dashboard-demo.md`.
 
 ---
 
@@ -51,16 +57,15 @@ Today you won't just write code with Claude. You'll ship a Grocery Intelligence 
 
 ### Prose arc
 
-"Enough of me talking. It's your turn to do something. **[Project quiz-app URL + QR code.]** Open this on your phone. Pick a team name. You've got 60 seconds. We're going to play a live grocery-data quiz — Australian retail, CPI food, behaviour patterns. It scores in real time. Winner gets a small prize at lunch.
+"Enough of me talking. It's your turn to do something. **[Project quiz-app URL + QR code.]** Open this on your phone. Enter your name — *your* name, not a team name; you'll pair up for lab work after lunch, but this is individual. You've got 60 seconds. We're going to play a live grocery-data quiz — Australian retail, CPI food, behaviour patterns. It scores in real time. Winner gets a small prize at lunch.
 
-**[Run quiz — 8–10 min of live play. Questions mix grocery domain knowledge with prediction questions that will be revealed later from Lab 1 Gold tables.]**
+**[Run quiz — 8–10 min of live play. Three icebreaker profile questions at join (persona, stack, Databricks familiarity) auto-aggregate into an audience breakdown on the facilitator screen. Then grocery-domain questions — the prediction ones will be revealed from Lab 1 Gold tables later.]**
 
-"Three things to know before we go on. One: the app you just played with was built in one weekend by me and Claude Code. Start to deploy. Two: some of those questions — the ones about how much the average household spends on groceries, which state buys the most meat — those are the same questions your Lab 1 Gold tables will answer. We're coming back to your answers at Show & Tell to see who guessed closest. Three: this is the smallest example of what you'll ship today. By 4 PM you'll have shipped something bigger."
+"Three things to know before we go on. One: the app you just played with was built in one weekend by me and Claude Code. Start to deploy. Two: some of those questions — household spend, which state buys the most meat — those are the same questions your Lab 1 Gold tables will answer. We're coming back to your answers at Show & Tell to see who guessed closest. Three: this is the smallest example of what you'll ship today. By 5 PM you'll have shipped something bigger."
 
 ### Slide cues
 
-- **Slide NEW — Quiz-App Intro**: Large QR code + short URL + team name input hint. Minimal text — the app is the visual. "Play now. Prizes at lunch."
-- **Slide 5 (Prediction Cards Icebreaker — CUT)**: Replaced by quiz-app. Prediction-reveal logic moves into quiz-app state machine (already supports it).
+- **Slide 9 (Quiz-App Icebreaker)**: Large QR code + short URL + "enter your name" hint. Per-player, not per-team. Minimal text — the app is the visual. "Play now. Prizes at lunch."
 
 ---
 

@@ -137,33 +137,41 @@
 
 ---
 
-## Slide 8: Live Demo — Pipeline + Dashboard | 10:15 | 4–5 min
+## Slide 8: Live Demo — Pipeline + App | 10:15 | 4–5 min
 
 **[CLICK]** Slide stays up ~30 sec.
 
-- "Pipeline already running. Dashboard already open. I'm going to add one new metric, BDD-style, and you'll see it flow all the way through."
-- Point at the diagram row — Test → Implement → Deploy → Dashboard.
+- "Pipeline already running. App already open. I'm going to add one new column, BDD-style, and the app I built three weeks ago will answer a question it couldn't answer five minutes ago."
+- Point at the diagram row — Test → Implement → Deploy → App.
 
-**[FLIP TO BROWSER — AI/BI dashboard]** ~30 sec.
+**[FLIP TO BROWSER — reference-implementation app]** ~45 sec.
 
-- "This is `gold_retail_summary`. ABS retail data, monthly turnover by state. Refreshed this morning. No share-of-national column yet — let me add one. *&lsquo;Share of national retail&rsquo; — per-state percentage of the monthly total. Tells you instantly who the biggest markets are.*"
+- "This is the app I built three weeks ago. KPI cards, monthly trend, recall table. Boring. What matters is this question box — plain English in, SQL generated via Foundation Model API, runs against my gold tables."
+- Type into the NL query box:
+  ```
+  Which Australian state had the highest retail turnover last month?
+  ```
+- Wait ~2–3 sec. App returns **NSW** with a number.
+- "NSW. Works because `gold_retail_summary` has state-level turnover. Totals. But I want something richer — each state's *share* of national retail. Percentages, not just totals. Let me add that column."
 
 **[FLIP TO TERMINAL — CODA, reference-implementation loaded]**
+
+- "I won't touch the app. Just the data. Test first, implementation second, deploy third, then we come back and ask again."
 
 **Prompt 1 — test (~45 sec):**
 
 ```
 Write ONE pytest test in tests/test_gold_retail_summary.py named
-test_gold_has_state_share_of_national. Build a 6-row DataFrame: 2 states
-(NSW, VIC, QLD) × 3 months. Turnover values in month 1: NSW=100, VIC=60,
-QLD=40 (total 200). Assert a state_turnover_pct column exists; NSW month 1
-is 50.0, VIC month 1 is 30.0, QLD month 1 is 20.0. Also assert that shares
-sum to ~100 for any given month.
+test_gold_has_state_share_of_national. Build a 6-row DataFrame: 3 states
+(NSW, VIC, QLD) × 2 months. Turnover month 1: NSW=100, VIC=60, QLD=40
+(total 200). Month 2: NSW=110, VIC=70, QLD=45 (total 225).
+Assert a state_turnover_pct column exists; NSW month 1 is 50.0, VIC month 1
+is 30.0, QLD month 1 is 20.0. Assert shares sum to ~100 per month.
 
 Do NOT implement yet. Just the test.
 ```
 
-- Read the test aloud when it lands. "Six rows, numbers you can check in your head — 100 of 200 is 50%. That's the spec."
+- Read the test aloud when it lands. "Six rows. Numbers you can check in your head — 100 of 200 is 50%. That's the spec."
 
 **Prompt 2 — run red (~15 sec):** `Run that test. Show me the failure.` → Red. Good.
 
@@ -176,19 +184,28 @@ turnover_millions / sum(turnover_millions) over (partition by month_date) * 100
 One window function. No LAG. No date arithmetic. Nothing else.
 ```
 
-- Re-run test → green. "Two prompts."
+- Re-run test → green. "Two prompts. One column."
 
-**Prompt 4 — deploy + dashboard (~90 sec):**
+**Prompt 4 — deploy (~60–90 sec):**
 
 ```
 databricks bundle deploy -t demo && databricks bundle run grocery-intelligence-demo -t demo
 ```
 
-- Narrate while it runs: "Pipeline materialising the new column — about a minute."
-- When done, **[FLIP TO DASHBOARD]**, refresh, show the new `state_turnover_pct` column. NSW ~35%, VIC ~26%, QLD ~20% — land it: *"that's Australia's retail map in one column."*
-- **[LAND]** "Four prompts. One metric. End-to-end in under five minutes. Two things I want you to notice: first, I didn't *type* most of that — I directed it. Second, every step had a verification artifact. Test green, deploy succeeds, dashboard renders. **No verification, no trust.** We come back to that all day."
+- Narrate while it runs: "Pipeline materialising the new column. The app doesn't know it exists yet — it'll find out when we ask."
 
-> **Key rule from `starter-kit/demos/pipeline-and-dashboard-demo.md`:** if the deploy takes >90 sec, skip the dashboard flip. Move on. Do not wait live.
+**[FLIP TO BROWSER — same app tab]** (~30 sec)
+
+- Clear the previous answer. Type:
+  ```
+  What percentage of national retail does each state account for this month?
+  ```
+- Wait ~2–3 sec. App generates SQL that selects the new `state_turnover_pct` column, returns a table: NSW ~35%, VIC ~26%, QLD ~20%, WA ~10%, SA ~6%, TAS ~2%.
+- **[LAND]** "Four prompts. One column. The app I built three weeks ago just answered a question it couldn't answer five minutes ago. Two things to notice: I didn't touch the app — I only touched the data. And every step had a verification artifact — test green, deploy succeeds, NL query returns real numbers. **No verification, no trust.** We come back to that all day."
+
+> **Key rule from `starter-kit/demos/pipeline-and-dashboard-demo.md`:**
+> - If deploy takes >90 sec: skip the second NL query. Jump to LAND.
+> - If NL query returns wrong SQL: fall back to direct `SELECT state, state_turnover_pct FROM ... ORDER BY state_turnover_pct DESC` in a SQL editor tab. Same payoff.
 
 **Transition:** "Enough of me talking. Your turn."
 
