@@ -4,7 +4,7 @@
 >
 > This document uses an older slide numbering (no YWS, no AI Coding Moment, no current CLAUDE.md slides) and has not been kept in sync with the deck.
 >
-> **Canonical facilitator doc:** `FACILITATOR-SCRIPT.md` (lists every current slide with timing and cue cards, kept in sync with `slides.html`, `slides-facilitator.html`, and `WORKSHOP-PLAN.md`).
+> **Canonical facilitator doc:** `FACILITATOR-SCRIPT.md` (lists every current slide with timing and cue cards, kept in sync with `slides.html` and `WORKSHOP-PLAN.md`). Speaker notes for each slide are embedded as `data-notes` attributes in `slides.html`; press **N** during presentation to toggle the overlay.
 >
 > The Pre-Workshop Checklist and Lab facilitation notes below may still be useful as reference material, but the slide-by-slide content is stale. Consider deleting this file once its useful content is ported.
 

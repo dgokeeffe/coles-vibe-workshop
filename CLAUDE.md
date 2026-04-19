@@ -38,15 +38,16 @@ cd reference-implementation && uv run pytest tests/test_app.py -x --no-header -q
 - **15:00** Team Demos (30 min)
 - **15:30** Takeaways + Close (15 min)
 
-## Six Files Must Stay In Sync
+## Five Files Must Stay In Sync
 
-When changing workshop content, update all six:
-1. `slides.html` — the deck attendees see
-2. `slides-facilitator.html` — same deck with speaker notes (JS-injected from `data-notes` attributes)
-3. `FACILITATOR-SCRIPT.md` — dot-point cue cards per slide
-4. `WORKSHOP-PLAN.md` — master plan with session details and timing
-5. `VIBE-CODING-GUIDE.md` — markdown version of common track theory content
-6. `track-common.html` — HTML workbook version of the same content
+When changing workshop content, update all five:
+1. `slides.html` — the deck attendees see. Speaker notes live in `data-notes` attributes on each `<section>`; press **N** to toggle the overlay.
+2. `FACILITATOR-SCRIPT.md` — dot-point cue cards per slide
+3. `WORKSHOP-PLAN.md` — master plan with session details and timing
+4. `VIBE-CODING-GUIDE.md` — markdown version of common track theory content
+5. `track-common.html` — HTML workbook version of the same content
+
+> **Note:** `slides-facilitator.html` was previously a twin deck with JS-injected notes from `data-notes`. Removed 2026-04-19 — the same `data-notes` now live on `slides.html` and the press-N overlay covers the use case without the drift risk of maintaining two files. If you need a plain-text notes dump, grep `data-notes="` out of `slides.html`.
 
 The three track HTMLs (`track-de.html`, `track-ds.html`, `track-analyst.html`) pull content from the corresponding lab markdown files (`LAB-1-DE.md`, `LAB-2-DE.md`, etc.) and must stay aligned with them.
 

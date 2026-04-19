@@ -39,6 +39,11 @@
       --coles-red:     #ED1C24;
       --coles-red-glow: rgba(237, 28, 36, 0.12);
 
+      /* Track accent palette — matches track-*.html workbooks */
+      --track-de:      var(--db-lava);  /* Data Engineering: lava red */
+      --track-ds:      #7c3aed;          /* Data Science: purple */
+      --track-analyst: #0891b2;          /* Analyst: cyan */
+
       /* Derived / Functional */
       --bg-primary:    var(--db-oat);
       --bg-secondary:  var(--db-white);
@@ -1295,6 +1300,9 @@
           </div>
         </div>
       </div>
+      <div style="margin-top:1.25rem;padding:0.85rem 1.25rem;background:var(--db-navy);color:white;border-radius:8px;text-align:center;">
+        <p style="font-size:1rem;margin:0;line-height:1.5;">&ldquo;Ask not what Claude can do for you &mdash; <strong style="color:var(--db-lava-light);">ask what you can do for Claude</strong>.&rdquo; <span style="color:rgba(255,255,255,0.55);font-size:0.85rem;">&mdash; Eric (Anthropic, 2026)</span></p>
+      </div>
     </div>
     <div class="slide-footer">14</div>
   </section>
@@ -1450,11 +1458,11 @@
         </div>
         <div class="card" style="border-top:3px solid var(--db-green);">
           <h3 style="color:var(--db-green);font-size:1rem;margin-bottom:0.4rem;">Hooks</h3>
-          <p style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:0.5rem;">Deterministic guardrails.</p>
+          <p style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:0.5rem;">Circuit breakers, not just guardrails.</p>
           <ul style="font-size:0.8rem;padding-left:1.1rem;margin:0;color:var(--text-secondary);">
-            <li><code>PreToolUse</code>: block bad tool calls</li>
-            <li><code>PostToolUse</code>: enforce policy after calls</li>
-            <li><code>Stop</code>: refuse to finish until clean</li>
+            <li><code>PreToolUse</code>: block bad tool calls <em>before</em> they run</li>
+            <li><code>PostToolUse</code>: enforce policy <em>after</em> calls</li>
+            <li><code>Stop</code>: refuse to finish until state is clean</li>
           </ul>
         </div>
         <div class="card" style="border-top:3px solid var(--db-navy);">
@@ -1567,8 +1575,8 @@
               <p style="font-size:0.78rem;color:rgba(255,255,255,0.65);margin-top:0.25rem;">Tests don&rsquo;t rely on claims; code passes or it doesn&rsquo;t. <strong>Prompt 1 writes tests, Prompt 2 implements</strong> &mdash; otherwise the agent writes tests that match its implementation. AI-authored code has <strong>1.7&times; more issues, 2.7&times; more security vulnerabilities</strong> (Code Rabbit, 2026).</p>
             </div>
             <div class="card" style="padding:0.75rem 1rem;border-left:3px solid var(--db-green);">
-              <h3 style="color:var(--db-green);font-size:0.85rem;">Reproducibility &mdash; Lock the Inputs</h3>
-              <p style="font-size:0.78rem;color:rgba(255,255,255,0.65);margin-top:0.25rem;">For analysis you&rsquo;ll defend: <strong>set seeds, pin dependencies, version your CLAUDE.md, register model versions</strong>. Sycophancy vanishes when you can re-run the same prompt against the same environment and get the same answer &mdash; or prove you can&rsquo;t.</p>
+              <h3 style="color:var(--db-green);font-size:0.85rem;">Treat Memory as Untrusted Input</h3>
+              <p style="font-size:0.78rem;color:rgba(255,255,255,0.65);margin-top:0.25rem;">Sycophancy has <strong>two modes</strong>: agent agrees with you now, or agent agrees with itself from a past session. The second is worse &mdash; a poisoned CLAUDE.md or stale retrieved memory propagates forever. Defence: <strong>set seeds, pin deps, version your CLAUDE.md</strong>; validate retrieved context before you plan on it. <em>Retrieved memory is untrusted input &mdash; same posture as an external API response.</em></p>
             </div>
           </div>
         </div>
@@ -1631,7 +1639,8 @@
       </div>
 
       <div class="card" style="margin-top:1.25rem;border-left:4px solid var(--db-lava);background:var(--db-oat);">
-        <p style="margin:0;font-size:1rem;line-height:1.55;"><strong style="color:var(--db-lava);">Heuristic:</strong> <em>&ldquo;After this prompt finishes, will I <u>know</u> whether it worked?&rdquo;</em> &mdash; if &ldquo;no,&rdquo; <strong>the prompt is too big. Split it.</strong></p>
+        <p style="margin:0 0 0.5rem 0;font-size:1rem;line-height:1.55;"><strong style="color:var(--db-lava);">Heuristic:</strong> <em>&ldquo;After this prompt finishes, will I <u>know</u> whether it worked?&rdquo;</em> &mdash; if &ldquo;no,&rdquo; <strong>the prompt is too big. Split it.</strong></p>
+        <p style="margin:0;font-size:0.9rem;line-height:1.5;color:var(--text-secondary);"><strong style="color:var(--db-green);">And one more rule:</strong> <strong>vibe code at the leaves, review the trunks.</strong> Small steps on leaf nodes (end features nothing depends on). Core architecture and extensible systems still need human review. Anthropic calls this &ldquo;leaf nodes only&rdquo; &mdash; it&rsquo;s how they merged a 22K-line PR to their RL codebase responsibly.</p>
       </div>
     </div>
     <div class="slide-footer">21</div>
@@ -1922,6 +1931,9 @@
           <h3 style="color:var(--db-green);font-size:0.95rem;">Bronze Ingest</h3>
           <p style="font-size:0.8rem;color:rgba(255,255,255,0.6);">First pipeline layer</p>
         </div>
+      </div>
+      <div style="margin-top:1.5rem;display:inline-block;padding:0.6em 1.2em;background:rgba(255,255,255,0.08);border-radius:8px;border-left:3px solid var(--db-lava-light);font-size:0.9rem;color:rgba(255,255,255,0.85);">
+        Follow <code style="color:var(--db-lava-light);">LAB-0-GETTING-STARTED.md</code> &nbsp;&middot;&nbsp; reference workbook: <code style="color:var(--db-lava-light);">track-common.html</code>
       </div>
     </div>
   </section>
@@ -2318,15 +2330,15 @@ with food CPI overlay"</span>
 <!-- ============================================================ -->
 <!-- SLIDE 36: LAB 1 BRIEFING -->
 <!-- ============================================================ -->
-<section class="slide slide-light" aria-label="Slide 36: Lab 1 Briefing" data-notes="Track briefing. 3 tracks. ~3 min.">
+<section class="slide slide-light" aria-label="Slide 36: Lab 1 Briefing" data-notes="Track briefing. 3 tracks. Point teams at BOTH the lab markdown (step-by-step) AND the matching track workbook HTML (reference card / slide-format summary). DE = lava red, DS = purple (matches track-ds.html), Analyst = cyan (matches track-analyst.html). ~3 min.">
   <div class="slide-content">
     <span class="eyebrow">LAB SESSION</span>
     <h2>Choose Your Track</h2>
     <div class="accent-line"></div>
-    <p style="text-align:center;color:var(--text-secondary);margin-bottom:1.5em;">All teams start with <code>LAB-0-GETTING-STARTED.md</code> (10 min), then fork into your track</p>
+    <p style="text-align:center;color:var(--text-secondary);margin-bottom:1.5em;">All teams start with <code>LAB-0-GETTING-STARTED.md</code> (10 min), then fork into your track &mdash; open your track workbook (<code>track-*.html</code>) alongside the lab guide</p>
     <div class="card-grid grid-cols-3" style="max-width:950px;margin:0 auto;">
-      <div class="card" style="border-top:4px solid var(--db-lava);padding:1.2em;">
-        <h3 style="color:var(--db-lava);margin-bottom:0.5em;font-size:1.1em;">Data Engineering</h3>
+      <div class="card" style="border-top:4px solid var(--track-de);padding:1.2em;">
+        <h3 style="color:var(--track-de);margin-bottom:0.5em;font-size:1.1em;">Data Engineering</h3>
         <p style="font-size:0.8em;color:var(--text-secondary);margin-bottom:0.8em;">Build the data foundation</p>
         <ul style="list-style:none;font-size:0.78em;line-height:1.8;">
           <li>Lakeflow pipeline</li>
@@ -2334,10 +2346,10 @@ with food CPI overlay"</span>
           <li>Data quality expectations</li>
           <li>DABs deployment</li>
         </ul>
-        <div style="margin-top:0.8em;font-size:0.75em;color:var(--db-lava);font-weight:600;">LAB-1-DE.md</div>
+        <div style="margin-top:0.8em;font-size:0.75em;color:var(--track-de);font-weight:600;">LAB-1-DE.md<br><span style="opacity:0.75;font-weight:500;">track-de.html</span></div>
       </div>
-      <div class="card" style="border-top:4px solid var(--db-teal);padding:1.2em;">
-        <h3 style="color:var(--db-teal);margin-bottom:0.5em;font-size:1.1em;">Data Science</h3>
+      <div class="card" style="border-top:4px solid var(--track-ds);padding:1.2em;">
+        <h3 style="color:var(--track-ds);margin-bottom:0.5em;font-size:1.1em;">Data Science</h3>
         <p style="font-size:0.8em;color:var(--text-secondary);margin-bottom:0.8em;">Build ML models from the data</p>
         <ul style="list-style:none;font-size:0.78em;line-height:1.8;">
           <li>Feature engineering</li>
@@ -2345,10 +2357,10 @@ with food CPI overlay"</span>
           <li>Correlation analysis</li>
           <li>EDA visualizations</li>
         </ul>
-        <div style="margin-top:0.8em;font-size:0.75em;color:var(--db-teal);font-weight:600;">LAB-1-DS.md</div>
+        <div style="margin-top:0.8em;font-size:0.75em;color:var(--track-ds);font-weight:600;">LAB-1-DS.md<br><span style="opacity:0.75;font-weight:500;">track-ds.html</span></div>
       </div>
-      <div class="card" style="border-top:4px solid var(--db-green);padding:1.2em;">
-        <h3 style="color:var(--db-green);margin-bottom:0.5em;font-size:1.1em;">Analyst</h3>
+      <div class="card" style="border-top:4px solid var(--track-analyst);padding:1.2em;">
+        <h3 style="color:var(--track-analyst);margin-bottom:0.5em;font-size:1.1em;">Analyst</h3>
         <p style="font-size:0.8em;color:var(--text-secondary);margin-bottom:0.8em;">Build interfaces for business users</p>
         <ul style="list-style:none;font-size:0.78em;line-height:1.8;">
           <li>Genie spaces (NL queries)</li>
@@ -2356,7 +2368,7 @@ with food CPI overlay"</span>
           <li>Column metadata tuning</li>
           <li>Dashboard publishing</li>
         </ul>
-        <div style="margin-top:0.8em;font-size:0.75em;color:var(--db-green);font-weight:600;">LAB-1-ANALYST.md</div>
+        <div style="margin-top:0.8em;font-size:0.75em;color:var(--track-analyst);font-weight:600;">LAB-1-ANALYST.md<br><span style="opacity:0.75;font-weight:500;">track-analyst.html</span></div>
       </div>
     </div>
     <div style="text-align:center;margin-top:1.2em;">
@@ -2415,7 +2427,7 @@ with food CPI overlay"</span>
 <!-- ============================================================ -->
 <!-- SLIDE 38: SECTION DIVIDER — LAB 2 -->
 <!-- ============================================================ -->
-<section class="slide slide-dark dark-bg texture-lines" aria-label="Section: Lab 2" data-notes="Lab 2 section divider. ~30 sec.">
+<section class="slide slide-dark dark-bg texture-lines" aria-label="Slide 38: Section: Lab 2" data-notes="Lab 2 section divider. ~30 sec.">
   <div class="slide-content" style="text-align:center;">
     <span class="section-num">Lab 2 &middot; 2:00 PM &middot; 60 Minutes</span>
     <h1>The Great Grocery<br>Data Challenge &mdash; Phase 2</h1>
@@ -2427,15 +2439,15 @@ with food CPI overlay"</span>
 <!-- ============================================================ -->
 <!-- SLIDE 39: LAB 2 BRIEFING -->
 <!-- ============================================================ -->
-<section class="slide slide-light" aria-label="Lab 2 Briefing" data-notes="Same tracks, continue where they left off. ~3 min.">
+<section class="slide slide-light" aria-label="Slide 39: Lab 2 Briefing" data-notes="Same tracks, continue where they left off. Track workbook HTMLs (track-de / track-ds / track-analyst) contain Lab 2 phases as reference. ~3 min.">
   <div class="slide-content">
     <span class="eyebrow">LABS</span>
     <h2>Continue Your Track</h2>
     <div class="accent-line"></div>
-    <p style="text-align:center;color:var(--text-secondary);margin-bottom:1.5em;">Same track as Lab 1 &mdash; pick up where you left off</p>
+    <p style="text-align:center;color:var(--text-secondary);margin-bottom:1.5em;">Same track as Lab 1 &mdash; pick up where you left off (track workbook: <code>track-*.html</code>)</p>
     <div class="card-grid grid-cols-3" style="max-width:950px;margin:0 auto;">
-      <div class="card" style="border-top:4px solid var(--db-lava);padding:1.2em;">
-        <h3 style="color:var(--db-lava);margin-bottom:0.5em;font-size:1.1em;">Data Engineering</h3>
+      <div class="card" style="border-top:4px solid var(--track-de);padding:1.2em;">
+        <h3 style="color:var(--track-de);margin-bottom:0.5em;font-size:1.1em;">Data Engineering</h3>
         <p style="font-size:0.8em;color:var(--text-secondary);margin-bottom:0.8em;">Make it production-grade</p>
         <ul style="list-style:none;font-size:0.78em;line-height:1.8;">
           <li>Add FSANZ food recalls source</li>
@@ -2443,10 +2455,10 @@ with food CPI overlay"</span>
           <li>Cross-source gold view</li>
           <li>Cron scheduling</li>
         </ul>
-        <div style="margin-top:0.8em;font-size:0.75em;color:var(--db-lava);font-weight:600;">LAB-2-DE.md</div>
+        <div style="margin-top:0.8em;font-size:0.75em;color:var(--track-de);font-weight:600;">LAB-2-DE.md<br><span style="opacity:0.75;font-weight:500;">track-de.html</span></div>
       </div>
-      <div class="card" style="border-top:4px solid var(--db-teal);padding:1.2em;">
-        <h3 style="color:var(--db-teal);margin-bottom:0.5em;font-size:1.1em;">Data Science</h3>
+      <div class="card" style="border-top:4px solid var(--track-ds);padding:1.2em;">
+        <h3 style="color:var(--track-ds);margin-bottom:0.5em;font-size:1.1em;">Data Science</h3>
         <p style="font-size:0.8em;color:var(--text-secondary);margin-bottom:0.8em;">Train, serve, and ship</p>
         <ul style="list-style:none;font-size:0.78em;line-height:1.8;">
           <li>Train forecasting model</li>
@@ -2454,10 +2466,10 @@ with food CPI overlay"</span>
           <li>Model Serving endpoint</li>
           <li>Prediction web app</li>
         </ul>
-        <div style="margin-top:0.8em;font-size:0.75em;color:var(--db-teal);font-weight:600;">LAB-2-DS.md</div>
+        <div style="margin-top:0.8em;font-size:0.75em;color:var(--track-ds);font-weight:600;">LAB-2-DS.md<br><span style="opacity:0.75;font-weight:500;">track-ds.html</span></div>
       </div>
-      <div class="card" style="border-top:4px solid var(--db-green);padding:1.2em;">
-        <h3 style="color:var(--db-green);margin-bottom:0.5em;font-size:1.1em;">Analyst</h3>
+      <div class="card" style="border-top:4px solid var(--track-analyst);padding:1.2em;">
+        <h3 style="color:var(--track-analyst);margin-bottom:0.5em;font-size:1.1em;">Analyst</h3>
         <p style="font-size:0.8em;color:var(--text-secondary);margin-bottom:0.8em;">Build the app layer</p>
         <ul style="list-style:none;font-size:0.78em;line-height:1.8;">
           <li>FastAPI + Tailwind app</li>
@@ -2465,7 +2477,7 @@ with food CPI overlay"</span>
           <li>NL query feature</li>
           <li>Deploy to Databricks Apps</li>
         </ul>
-        <div style="margin-top:0.8em;font-size:0.75em;color:var(--db-green);font-weight:600;">LAB-2-ANALYST.md</div>
+        <div style="margin-top:0.8em;font-size:0.75em;color:var(--track-analyst);font-weight:600;">LAB-2-ANALYST.md<br><span style="opacity:0.75;font-weight:500;">track-analyst.html</span></div>
       </div>
     </div>
     <div style="text-align:center;margin-top:1.2em;">
@@ -2532,6 +2544,7 @@ with food CPI overlay"</span>
     </div>
 
     <p style="color:rgba(255,255,255,0.85); font-size:1.1rem; line-height:1.55; max-width:760px; margin:0 auto;">The agent writes the code. Your work is what you <strong style="color:white;">ask for</strong>, what you <strong style="color:white;">refuse</strong>, what you make <strong style="color:white;">prove itself</strong>, and <strong style="color:white;">what you still take the time to read</strong>.</p>
+    <p style="color:white; font-size:1.05rem; line-height:1.5; max-width:760px; margin:1rem auto 0 auto; font-style:italic;">Forget the code exists. <strong style="color:var(--db-lava-light); font-style:normal;">Do not forget the product exists.</strong> <span style="color:rgba(255,255,255,0.5); font-size:0.85rem; font-style:normal;">&mdash; Eric, Anthropic</span></p>
     <p style="color:var(--db-lava-light); font-size:1.15rem; font-weight:600; margin-top:1.25rem;">When production is cheap, judgement is what&rsquo;s left of you.</p>
   </div>
   <div class="slide-footer" style="color:rgba(255,255,255,0.3);">41</div>
