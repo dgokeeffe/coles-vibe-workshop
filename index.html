@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vibe Coding Workshop — Coda</title>
+  <meta name="description" content="Agentic software development with Databricks. A 7-hour hackathon for the Coda Data & AI Engineering team.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --db-lava: #FF3621;
+      --db-lava-light: #FF5F46;
+      --db-navy: #1B3139;
+      --db-ink: #0B2026;
+      --db-teal: #1B5162;
+      --db-green: #00A972;
+      --db-oat: #F9F7F4;
+      --db-oat-medium: #EEEDE9;
+      --db-white: #FFFFFF;
+      --coda-red: #DB2777;
+      --track-de: var(--db-lava);
+      --track-ds: #7c3aed;
+      --track-analyst: #0891b2;
+      --font-body: 'DM Sans', sans-serif;
+      --font-mono: 'DM Mono', monospace;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      background: var(--db-oat);
+      color: var(--db-ink);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+    a { color: var(--db-lava); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* Hero */
+    .hero {
+      background: var(--db-navy);
+      color: white;
+      padding: 4rem 2rem 5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -80px; right: -80px;
+      width: 300px; height: 300px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -60px; left: -60px;
+      width: 260px; height: 260px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+    .hero-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+    .eyebrow {
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--db-lava-light);
+      margin-bottom: 1rem;
+    }
+    h1 {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      margin-bottom: 1rem;
+    }
+    .subtitle {
+      font-size: clamp(1.1rem, 2vw, 1.4rem);
+      color: rgba(255,255,255,0.75);
+      max-width: 640px;
+      margin-bottom: 2rem;
+    }
+    .accent-line {
+      width: 80px;
+      height: 4px;
+      background: linear-gradient(90deg, var(--db-lava), var(--db-lava-light));
+      border-radius: 2px;
+      margin-bottom: 1.5rem;
+    }
+    .meta {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.65);
+      font-family: var(--font-mono);
+    }
+    .tag {
+      background: var(--coda-red);
+      color: white;
+      padding: 0.3rem 0.75rem;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+
+    /* Main content */
+    main {
+      max-width: 1100px;
+      margin: -3rem auto 0;
+      padding: 0 2rem 4rem;
+      position: relative;
+      z-index: 3;
+    }
+    section {
+      margin-bottom: 3rem;
+    }
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      margin-bottom: 1rem;
+      color: var(--db-navy);
+    }
+    .section-sub {
+      color: #4A5E68;
+      margin-bottom: 1.5rem;
+      max-width: 640px;
+    }
+
+    /* Cards */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1rem;
+    }
+    .card {
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+      border-top: 3px solid var(--db-oat-medium);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      display: flex;
+      flex-direction: column;
+    }
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    }
+    .card.main { border-top-color: var(--db-lava); }
+    .card.track-de { border-top-color: var(--track-de); }
+    .card.track-ds { border-top-color: var(--track-ds); }
+    .card.track-analyst { border-top-color: var(--track-analyst); }
+    .card.common { border-top-color: var(--db-green); }
+    .card h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: var(--db-ink);
+    }
+    .card p {
+      font-size: 0.9rem;
+      color: #4A5E68;
+      margin-bottom: 1rem;
+      flex-grow: 1;
+    }
+    .card-tag {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--db-lava);
+      margin-bottom: 0.5rem;
+    }
+    .card.track-de .card-tag { color: var(--track-de); }
+    .card.track-ds .card-tag { color: var(--track-ds); }
+    .card.track-analyst .card-tag { color: var(--track-analyst); }
+    .card.common .card-tag { color: var(--db-green); }
+    .card-actions {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .btn {
+      display: inline-block;
+      padding: 0.5rem 0.9rem;
+      font-size: 0.85rem;
+      font-weight: 500;
+      border-radius: 6px;
+      transition: background 0.15s ease;
+    }
+    .btn-primary {
+      background: var(--db-navy);
+      color: white;
+    }
+    .btn-primary:hover {
+      background: var(--db-ink);
+      text-decoration: none;
+    }
+    .btn-secondary {
+      background: var(--db-oat-medium);
+      color: var(--db-ink);
+    }
+    .btn-secondary:hover {
+      background: var(--db-oat-dark, #DBD7CE);
+      text-decoration: none;
+    }
+
+    /* Agenda strip */
+    .agenda-strip {
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+      overflow-x: auto;
+    }
+    .agenda-strip table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+    }
+    .agenda-strip th {
+      text-align: left;
+      padding: 0.6rem 0.8rem;
+      color: var(--db-navy);
+      border-bottom: 2px solid var(--db-oat-medium);
+      font-weight: 700;
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+    .agenda-strip td {
+      padding: 0.55rem 0.8rem;
+      border-bottom: 1px solid var(--db-oat-medium);
+      color: var(--db-ink);
+    }
+    .agenda-strip td:first-child {
+      font-family: var(--font-mono);
+      color: var(--db-lava);
+      white-space: nowrap;
+      font-size: 0.82rem;
+    }
+    .agenda-strip tr:last-child td { border-bottom: none; }
+    .agenda-strip tr.lunch td { color: #4A5E68; font-style: italic; }
+
+    /* Footer */
+    footer {
+      background: var(--db-ink);
+      color: rgba(255,255,255,0.65);
+      padding: 2.5rem 2rem;
+      font-size: 0.88rem;
+    }
+    footer .inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+    footer a { color: var(--db-lava-light); }
+    footer a:hover { color: white; }
+
+    @media (max-width: 640px) {
+      .hero { padding: 3rem 1.25rem 4rem; }
+      main { padding: 0 1.25rem 3rem; margin-top: -2rem; }
+      .card { padding: 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">The Great Grocery Data Challenge</div>
+    <h1>Vibe Coding Workshop</h1>
+    <div class="accent-line"></div>
+    <p class="subtitle">Agentic software development with Databricks. One platform, three tracks, six hours, pairs building Grocery Intelligence.</p>
+    <div class="meta">
+      <span class="tag">Coda</span>
+      <span>10:00 &mdash; 17:00</span>
+      <span>David O'Keeffe &middot; Databricks</span>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <section>
+    <h2>Main Deck</h2>
+    <p class="section-sub">The presentation attendees see. 53 slides, press <strong>N</strong> for speaker notes, arrows to navigate.</p>
+    <div class="card-grid">
+      <div class="card main">
+        <span class="card-tag">Deck &middot; 53 slides</span>
+        <h3>Workshop Presentation</h3>
+        <p>Opener, internal demo, quiz-app icebreaker, R.V.P.I. teaching block, lab briefings, close. Speaker notes inline.</p>
+        <div class="card-actions">
+          <a class="btn btn-primary" href="slides.html">Open deck &rarr;</a>
+          <a class="btn btn-secondary" href="quick-reference.html">Quick reference</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Track Workbooks</h2>
+    <p class="section-sub">After lunch, pairs pick one track. Workbooks are reference-card versions of the lab content &mdash; open alongside the lab markdown guides.</p>
+    <div class="card-grid">
+      <div class="card common">
+        <span class="card-tag">Common &middot; All tracks</span>
+        <h3>Foundations</h3>
+        <p>CLAUDE.md scopes, BDD workflow, R.V.P.I. loop, and the techniques every track shares.</p>
+        <div class="card-actions">
+          <a class="btn btn-primary" href="track-common.html">Open &rarr;</a>
+        </div>
+      </div>
+      <div class="card track-de">
+        <span class="card-tag">Data Engineering</span>
+        <h3>Lakeflow Pipeline</h3>
+        <p>Bronze &rarr; Silver &rarr; Gold with Lakeflow Declarative Pipelines, data quality expectations, DABs deploy.</p>
+        <div class="card-actions">
+          <a class="btn btn-primary" href="track-de.html">Open &rarr;</a>
+        </div>
+      </div>
+      <div class="card track-ds">
+        <span class="card-tag">Data Science</span>
+        <h3>Features to Serving</h3>
+        <p>Feature engineering, MLflow experiments, model training + serving, prediction app.</p>
+        <div class="card-actions">
+          <a class="btn btn-primary" href="track-ds.html">Open &rarr;</a>
+        </div>
+      </div>
+      <div class="card track-analyst">
+        <span class="card-tag">Analyst</span>
+        <h3>Genie + AI/BI + App</h3>
+        <p>Genie spaces, AI/BI dashboards, FastAPI app embedding natural-language queries.</p>
+        <div class="card-actions">
+          <a class="btn btn-primary" href="track-analyst.html">Open &rarr;</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Agenda</h2>
+    <p class="section-sub">10:00 &mdash; 17:00, lunch at 12:00. Six contact hours. Pairs form at 13:00 for lab work.</p>
+    <div class="agenda-strip">
+      <table>
+        <thead>
+          <tr><th>Time</th><th>Block</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>10:00</td><td>Opener &mdash; why this matters, end-output teaser</td></tr>
+          <tr><td>10:10</td><td>Internal demo &mdash; coding agents at Databricks + live pipeline</td></tr>
+          <tr><td>10:50</td><td>Get-to-know-Claude &mdash; R.V.P.I., CLAUDE.md, Small Steps, BDD, Sycophancy, Context</td></tr>
+          <tr class="lunch"><td>12:00</td><td>Lunch</td></tr>
+          <tr><td>13:00</td><td>Challenge brief + pair formation</td></tr>
+          <tr><td>13:15</td><td>Lab 1 &mdash; track-specific, pairs (90 min)</td></tr>
+          <tr><td>14:45</td><td>Show &amp; Tell</td></tr>
+          <tr><td>15:10</td><td>Lab 2 &mdash; track-specific, pairs (80 min)</td></tr>
+          <tr><td>16:30</td><td>Team demos + takeaways + close</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="inner">
+    <div>
+      <strong style="color: rgba(255,255,255,0.9);">Coda &times; Databricks Vibe Coding Workshop</strong><br>
+      Materials open-sourced for the community.
+    </div>
+    <div style="text-align: right;">
+      <a href="https://github.com/dgokeeffe/databricks-vibe-coding-with-coda">GitHub repository &rarr;</a><br>
+      <span style="font-family: var(--font-mono); font-size: 0.8rem;">Last updated: April 2026</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

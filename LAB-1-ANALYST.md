@@ -1,0 +1,213 @@
+# Lab 1: Genie Spaces & AI/BI Dashboards (Analyst Track)
+
+**Duration:** 90 minutes
+**Goal:** Create Genie spaces, build AI/BI dashboards, and tune with metadata
+**Team Size:** Pairs (two-person teams)
+
+> Complete `LAB-0-GETTING-STARTED.md` first, then return here.
+
+---
+
+## Pair Programming
+
+This lab is UI-heavy, but the pair pattern still holds.
+
+- **Driver:** hands on keyboard/mouse. Clicks through Genie + Dashboard UI; runs `ALTER TABLE` prompts in the terminal.
+- **Navigator:** reads what the Driver is about to click, verifies Genie results against the raw data, challenges at the **V** step of **R.V.P.I.** (was that SQL actually right?).
+- **Swap every 15 min** — set a timer.
+- **Escalation rule:** if a single Genie-tuning cycle (add metadata → re-test a question → compare) doesn't fit in 15 min, split it.
+
+---
+
+## The Mission
+
+Your gold tables are pre-loaded (from checkpoints). Build natural language interfaces that let business users query this data without writing code.
+
+**Most of this lab is in the Databricks UI.** The terminal is used for adding metadata and writing SQL.
+
+---
+
+> **The Small Steps Principle**
+>
+> This lab is UI-heavy, so "small steps" means: *add ONE metadata annotation, test ONE question in Genie, iterate*. Don't try to add all metadata in one go and then test — you won't know which annotation helped. See `LAB-1-DE.md` Phases 2–3 for the canonical pattern (one change → one verification → next).
+>
+> **Heuristic:** *"After this change, will I know which question got better?"* If no → too big, make one change at a time.
+
+---
+
+## Phase 1: Create Genie Space + Add Metadata (15 min)
+
+> **Pair Tasks**
+> - **Driver:** Create the Genie space in the UI (1.1), then run the column-description prompt in the terminal (1.2).
+> - **Navigator:** Read each terminal output for SQL correctness. While the Driver is clicking through Genie setup, open a second tab and start thinking about which questions you'll test first.
+
+### 1.1 Create your Genie space (Driver, in the UI)
+
+In the Databricks workspace UI:
+
+1. Click **Genie** in the left sidebar
+2. Click **New Genie Space**
+3. Configure:
+   - **Name:** "Grocery Intelligence — TEAM_NAME"
+   - **SQL Warehouse:** Select the workshop warehouse
+   - **Tables:** Add:
+     - `workshop_vibe_coding.TEAM_SCHEMA.retail_summary`
+     - `workshop_vibe_coding.TEAM_SCHEMA.food_inflation_yoy`
+   - **General Instructions:** Paste this:
+     ```
+     This data contains Australian retail trade and food price data.
+     States are Australian states (New South Wales, Victoria, Queensland, etc.).
+     Turnover is in millions of AUD.
+     CPI index values are relative to a base period.
+     YoY growth and change percentages show year-over-year comparisons.
+     ```
+
+### 1.2 Add column descriptions (Driver, in the terminal)
+
+Paste this into Claude Code:
+
+```
+Add column comments to our gold tables for better Genie and AI/BI accuracy:
+
+For workshop_vibe_coding.TEAM_SCHEMA.retail_summary:
+- Table comment: "Monthly retail turnover summary by Australian state and industry with rolling averages and YoY growth"
+- state: "Australian state name (New South Wales, Victoria, Queensland, etc.)"
+- industry: "Retail industry category (Food retailing, Department stores, etc.)"
+- month: "Date of the monthly observation (first of month)"
+- turnover_millions: "Monthly retail turnover in millions of AUD"
+- turnover_3m_avg: "3-month rolling average of turnover in millions AUD"
+- turnover_12m_avg: "12-month rolling average of turnover in millions AUD"
+- yoy_growth_pct: "Year-over-year turnover growth as a percentage"
+
+For workshop_vibe_coding.TEAM_SCHEMA.food_inflation_yoy:
+- Table comment: "Quarterly food price inflation by Australian state with YoY CPI changes"
+- state: "Australian state name"
+- quarter: "Calendar quarter"
+- cpi_index: "Consumer Price Index value (base period = 100)"
+- yoy_change_pct: "Year-over-year CPI change as a percentage (positive = inflation)"
+
+Use ALTER TABLE ... SET TBLPROPERTIES for table comments.
+Use ALTER TABLE ... ALTER COLUMN ... COMMENT for column comments.
+```
+
+> **Starter Kit:** Steps in `starter-kit/prompts/analyst/01-setup-genie.md` and `analyst/02-tune-genie.md`
+
+---
+
+## Phase 2: Build AI/BI Dashboard (20 min)
+
+> **Pair Tasks**
+> - **Swap Driver/Navigator** if it's been 15 min.
+> - **Driver:** Build dashboard visualizations one at a time in the UI (2.1). If the NL prompt doesn't produce a good chart, pivot to writing SQL directly in a terminal tab.
+> - **Navigator:** Test Genie with the 5 challenge questions in 2.2 as the dashboard is being built. Log which questions fail and propose an instruction-refinement for the Driver to try next.
+
+### 2.1 Create dashboard (Driver, in the UI)
+
+In the Databricks UI:
+
+1. Navigate to **Dashboards** → **Create Dashboard** → **AI/BI Dashboard**
+2. Connect to your gold tables
+3. Use these natural language prompts:
+
+```
+Show monthly food retail turnover by state as a line chart for the last 2 years
+```
+
+```
+Create a bar chart comparing year-over-year retail growth by state for the latest month
+```
+
+```
+Show a heatmap of food inflation by state and quarter
+```
+
+```
+Display the top 5 states by average monthly turnover as a horizontal bar chart
+```
+
+```
+Show a trend line of national food price inflation over time
+```
+
+4. Arrange into a clean layout
+5. Title: "Grocery Intelligence Dashboard — TEAM_NAME"
+
+### 2.2 Test Genie (Navigator, in parallel)
+
+Try these questions and note which ones Genie gets right:
+
+- "Which state had the highest food retail turnover last month?"
+- "Show me the year-over-year food price inflation trend for Victoria"
+- "Compare retail growth across all states for the last 12 months"
+- "What's the average monthly turnover for department stores in NSW?"
+- "Which industry has the fastest growing turnover nationally?"
+
+If Genie gets a question wrong, refine the General Instructions.
+
+> **Starter Kit:** Dashboard steps in `starter-kit/prompts/analyst/03-build-dashboard.md`
+
+> **Stuck?** Grab **Checkpoint AN-1B**: dashboard with 3 pre-built visualizations.
+
+---
+
+## Phase 3: Polish + Advanced Tuning (15 min)
+
+> **Pair Tasks**
+> - **Swap Driver/Navigator** if the timer has fired.
+> - **Driver:** Refine Genie instructions (3.1), then polish the dashboard layout + publish (3.2).
+> - **Navigator:** Test Genie with 10 sample questions after each instruction tweak. Track pass/fail — note which change moved the needle (this is pure V in R.V.P.I.).
+
+### 3.1 Tune Genie accuracy
+
+Based on testing, update General Instructions with:
+- Example questions and expected SQL patterns
+- Clarifications for ambiguous terms (e.g., "last month" = most recent month in data)
+- Specific column mappings for common questions
+
+### 3.2 Publish dashboard
+
+1. Click **Publish** on your dashboard
+2. Click **Share** → get the URL for your demo
+3. Optionally click **Embed** → copy iframe code (for Lab 2 app integration)
+
+---
+
+## Phase 4: Verify + Prepare (5 min)
+
+- Test 5 sample questions against Genie — aim for 80%+ accuracy
+- Review dashboard — all visualizations render, filters work
+- Prepare for Show & Tell: What did you build? What was Genie best/worst at?
+
+---
+
+## Troubleshooting
+
+| Problem | Solution |
+|---------|----------|
+| **Can't find Genie in sidebar** | Ask facilitator — Genie may need to be enabled |
+| **"No permission" for Genie** | Need CREATE GENIE SPACE permission. Ask facilitator. |
+| **Genie gives wrong SQL** | Add column descriptions and example queries to instructions |
+| **AI/BI dashboard slow** | Check SQL warehouse is running (Compute → SQL Warehouses) |
+| **Dashboard viz doesn't match** | Rephrase the NL prompt or write SQL directly |
+| **Column descriptions not showing** | Run ALTER TABLE with correct syntax (see starter-kit prompt) |
+| **Running out of time** | Grab Checkpoint AN-1B (dashboard) or AN-1C (complete solution) |
+
+---
+
+## Success Criteria
+
+- [ ] Genie space created with gold tables and instructions
+- [ ] Gold tables have column descriptions in Unity Catalog
+- [ ] AI/BI dashboard has at least 4 visualizations
+- [ ] Genie answers 7/10 test questions correctly
+- [ ] Dashboard published with clean layout
+- [ ] Ready for Show & Tell
+
+---
+
+## Reflection Questions (for Show & Tell)
+
+1. How did column descriptions affect Genie's accuracy?
+2. Which questions was Genie best/worst at answering?
+3. How does this compare to building a custom query interface?
+4. What would you do differently with more time?
